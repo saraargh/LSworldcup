@@ -19,19 +19,17 @@ from threading import Thread
 UK_TZ = pytz.timezone("Europe/London")
 
 # Discord token (Render: WC_TOKEN)
-TOKEN = os.getenv("WC_TOKEN") or os.getenv("TOKEN")
+TOKEN = os.getenv("WC_TOKEN")
 
 # GitHub repo + file
 GITHUB_REPO = os.getenv("GITHUB_REPO", "saraargh/LSworldcup")
 GITHUB_FILE_PATH = os.getenv("GITHUB_FILE_PATH", "tournament_data.json")
-GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 
 # GitHub PAT (Render: WC_GITHUB_TOKEN recommended)
 # Fallbacks included so you don't get bricked by env name differences.
 GITHUB_TOKEN = (
-    os.getenv("WC_GITHUB_TOKEN")
-    or os.getenv("GITHUB_TOKEN")
-    or os.getenv("WC_TOKEN")  # last resort fallback if you insisted on one env
+    os.getenv("GITHUB_TOKEN")
+    
 )
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
