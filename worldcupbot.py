@@ -494,7 +494,7 @@ async def listwcitems(interaction: discord.Interaction):
                 pass
         except asyncio.TimeoutError:
             break
-            @client.tree.command(name="closematch", description="Lock the current match (admin only)")
+@client.tree.command(name="closematch", description="Lock the current match (admin only)")
 async def closematch(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
 
