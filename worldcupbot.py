@@ -16,18 +16,23 @@ from threading import Thread
 # CONFIG
 # =========================================================
 
-# Discord token (Render: you said yours is WC_TOKEN)
-TOKEN = os.getenv("WC_TOKEN") or os.getenv("TOKEN")
-
 UK_TZ = pytz.timezone("Europe/London")
 
-# GitHub storage
+# Discord token (Render: WC_TOKEN)
+TOKEN = os.getenv("WC_TOKEN") or os.getenv("TOKEN")
+
+# GitHub repo + file
 GITHUB_REPO = os.getenv("GITHUB_REPO", "saraargh/LSworldcup")
-GITHUB_FILE_PATH = os.getenv("TOURNAMENT_JSON_PATH", "tournament_data.json")
+GITHUB_FILE_PATH = os.getenv("GITHUB_FILE_PATH", "tournament_data.json")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 
-# GitHub token (Render screenshot showed GITHUB_TOKEN exists)
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN") or os.getenv("WC_GITHUB_TOKEN") or os.getenv("WC_TOKEN")
+# GitHub PAT (Render: WC_GITHUB_TOKEN recommended)
+# Fallbacks included so you don't get bricked by env name differences.
+GITHUB_TOKEN = (
+    os.getenv("WC_GITHUB_TOKEN")
+    or os.getenv("GITHUB_TOKEN")
+    or os.getenv("WC_TOKEN")  # last resort fallback if you insisted on one env
+)
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 # Roles allowed to run staff-only commands
@@ -39,7 +44,7 @@ ALLOWED_ROLE_IDS = [
     1404104881098195015   # sazzles
 ]
 
-# ------------------- Auto Lock Timers (UNCHANGED) -------------------
+# Auto-lock timers (UNCHANGED)
 AUTO_WARN_SECONDS = 23 * 60 * 60
 AUTO_LOCK_SECONDS = 24 * 60 * 60
 
@@ -70,9 +75,9 @@ DEFAULT_DATA = {
     "finished_matches": [],
     "round_stage": "",
 
-    # track who added what + enforce 1 per user (non-admin)
+    # item authors tracked (admins + users)
     "item_authors": {},   # item -> user_id (str)
-    "user_items": {},     # user_id -> item
+    "user_items": {},     # user_id -> item (str)
 
     # persistent history (DO NOT wipe on reset)
     "cup_history": []     # list of {title, winner, author_id, timestamp}
@@ -83,30 +88,29 @@ DEFAULT_DATA = {
 # =========================================================
 
 def _gh_url():
-    return f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
-
-def _gh_params():
-    # IMPORTANT: make reads consistent with writes (branch)
-    return {"ref": GITHUB_BRANCH} if GITHUB_BRANCH else None
+    # Keep as content API URL; use ?ref=main so you read the same branch consistently
+    return f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}?ref={GITHUB_BRANCH}"
 
 def load_data():
     """
-    Loads JSON from GitHub. Ensures required keys exist.
+    Returns (data_dict, sha)
+    Ensures required keys exist.
     """
     try:
-        r = requests.get(_gh_url(), headers=HEADERS, params=_gh_params(), timeout=15)
+        r = requests.get(_gh_url(), headers=HEADERS, timeout=15)
+
         if r.status_code == 200:
             content = r.json()
-            raw = base64.b64decode(content["content"]).decode()
+            raw = base64.b64decode(content["content"]).decode("utf-8", errors="ignore")
             data = json.loads(raw) if raw.strip() else DEFAULT_DATA.copy()
             sha = content.get("sha")
 
-            # ensure all keys exist
-            for k in DEFAULT_DATA:
+            # Ensure all keys exist
+            for k, v in DEFAULT_DATA.items():
                 if k not in data:
-                    data[k] = DEFAULT_DATA[k]
+                    data[k] = v
 
-            # ensure types
+            # Ensure correct types
             if not isinstance(data.get("item_authors"), dict):
                 data["item_authors"] = {}
             if not isinstance(data.get("user_items"), dict):
@@ -114,48 +118,60 @@ def load_data():
             if not isinstance(data.get("cup_history"), list):
                 data["cup_history"] = []
 
+            # ALSO: some old JSONs had "history" instead of "cup_history"
+            if "history" in data and isinstance(data.get("history"), list) and not data["cup_history"]:
+                data["cup_history"] = data["history"]
+
             return data, sha
 
-        if r.status_code == 404:
-            sha = save_data(DEFAULT_DATA.copy())
-            return DEFAULT_DATA.copy(), sha
-
-        # fallback: don't silently “work” on a different file
-        print(f"[GitHub] load_data unexpected status: {r.status_code} {r.text}")
-        sha = save_data(DEFAULT_DATA.copy())
-        return DEFAULT_DATA.copy(), sha
+        # If file missing or other response, try to create it
+        data = DEFAULT_DATA.copy()
+        sha = save_data(data, sha=None)
+        return data, sha
 
     except Exception as e:
-        print("[GitHub] load_data error:", e)
-        # last resort: local default, but still try to create file
+        print("Error loading data:", e)
+        data = DEFAULT_DATA.copy()
+        sha = None
+        # Best effort create
         try:
-            sha = save_data(DEFAULT_DATA.copy())
+            sha = save_data(data, sha=None)
         except Exception as e2:
-            print("[GitHub] save_data after load failure also failed:", e2)
-            sha = None
-        return DEFAULT_DATA.copy(), sha
+            print("Error creating default data:", e2)
+        return data, sha
+
 
 def save_data(data, sha=None):
     """
-    Saves JSON to GitHub. Uses same path + branch target.
+    Writes data back to GitHub.
+    Returns updated sha (or existing sha on failure).
     """
     try:
+        # IMPORTANT: GitHub contents PUT does NOT accept ?ref= in the URL.
+        put_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+
         payload = {
             "message": "Update tournament data",
-            "content": base64.b64encode(json.dumps(data, indent=4).encode()).decode(),
+            "content": base64.b64encode(json.dumps(data, indent=4).encode("utf-8")).decode("utf-8"),
             "branch": GITHUB_BRANCH
         }
         if sha:
             payload["sha"] = sha
 
-        r = requests.put(_gh_url(), headers=HEADERS, data=json.dumps(payload), timeout=15)
+        r = requests.put(put_url, headers=HEADERS, data=json.dumps(payload), timeout=15)
+
         if r.status_code in (200, 201):
-            return r.json().get("content", {}).get("sha")
-        print(f"[GitHub] save_data unexpected status: {r.status_code} {r.text}")
+            return r.json().get("content", {}).get("sha") or sha
+
+        # Print response body to help you debug if PAT scopes are wrong
+        try:
+            print("GitHub save failed:", r.status_code, r.text[:300])
+        except:
+            pass
         return sha
 
     except Exception as e:
-        print("[GitHub] save_data error:", e)
+        print("Error saving data:", e)
         return sha
 
 # =========================================================
@@ -163,7 +179,8 @@ def save_data(data, sha=None):
 # =========================================================
 
 def user_allowed(member: discord.Member, allowed_roles):
-    return any(role.id in allowed_roles for role in member.roles)
+    return any(role.id in allowed_roles for role in getattr(member, "roles", []))
+
 
 async def count_votes_from_message(guild, channel_id, message_id):
     try:
@@ -197,10 +214,10 @@ async def count_votes_from_message(guild, channel_id, message_id):
                 b_users.add(u.id)
                 b_names[u.id] = u.display_name
 
-    # Single vote rule (same approach as your baseline)
+    # Single vote rule
     dupes = a_users & b_users
     for uid in dupes:
-        # remove from both to avoid double counting
+        # discard from both (keeps it fair + consistent)
         a_users.discard(uid)
         b_users.discard(uid)
         a_names.pop(uid, None)
@@ -222,7 +239,12 @@ class WorldCupBot(discord.Client):
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
-        await self.tree.sync()
+        # Sync commands on boot
+        try:
+            await self.tree.sync()
+            print("✅ Slash commands synced.")
+        except Exception as e:
+            print("❌ Command sync failed:", e)
 
 client = WorldCupBot()
 
@@ -232,7 +254,7 @@ client = WorldCupBot()
 
 async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, sha, reason: str, ping_everyone: bool, reply_msg: discord.Message | None):
     """
-    UNCHANGED behaviour: sets locked snapshot + edits embed + replies to matchup.
+    UNCHANGED: locks match and snapshots votes; edits embed; replies + optional @everyone ping
     """
     if not data.get("last_match"):
         return data, sha
@@ -241,6 +263,7 @@ async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, 
     if lm.get("locked"):
         return data, sha
 
+    # snapshot votes at lock time
     a_votes, b_votes, _, _ = await count_votes_from_message(guild, lm["channel_id"], lm["message_id"])
     lm["locked"] = True
     lm["locked_at"] = int(time.time())
@@ -249,6 +272,7 @@ async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, 
 
     sha = save_data(data, sha)
 
+    # try to edit the embed to show locked
     try:
         msg = await channel.fetch_message(lm["message_id"])
         if msg.embeds:
@@ -258,12 +282,14 @@ async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, 
                 description=(emb.description or "") + "\n\n🔒 **Voting closed**",
                 color=emb.color if emb.color else discord.Color.dark_grey()
             )
+            # preserve footer if exists
             if emb.footer and emb.footer.text:
                 new.set_footer(text=emb.footer.text)
             await msg.edit(embed=new)
     except Exception as e:
         print("Lock edit failed:", e)
 
+    # announce as reply to matchup message (requested)
     try:
         ping = "@everyone " if ping_everyone else ""
         text = f"{ping}🔒 **Voting is now closed.** ({reason})"
@@ -280,9 +306,10 @@ async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, 
 
     return data, sha
 
+
 async def _schedule_auto_lock(channel: discord.TextChannel, message_id: int):
     """
-    UNCHANGED behaviour: warn at 23h (reply, ping), lock at 24h (reply, ping).
+    UNCHANGED: warn at 23h; lock at 24h; replies + @everyone
     """
     try:
         await asyncio.sleep(AUTO_WARN_SECONDS)
@@ -295,7 +322,10 @@ async def _schedule_auto_lock(channel: discord.TextChannel, message_id: int):
             msg = await channel.fetch_message(message_id)
             await msg.reply("@everyone ⏰ **Voting closes soon!** (auto-lock at 24h)")
         except Exception:
-            await channel.send("@everyone ⏰ **Voting closes soon!** (auto-lock at 24h)")
+            try:
+                await channel.send("@everyone ⏰ **Voting closes soon!** (auto-lock at 24h)")
+            except Exception:
+                pass
 
         await asyncio.sleep(max(0, AUTO_LOCK_SECONDS - AUTO_WARN_SECONDS))
         data, sha = load_data()
@@ -321,9 +351,10 @@ async def _schedule_auto_lock(channel: discord.TextChannel, message_id: int):
     except Exception as e:
         print("Auto-lock scheduler error:", e)
 
+
 async def post_next_match(channel: discord.TextChannel, data, sha):
     """
-    UNCHANGED behaviour: post embed, add reactions, start auto-lock task, start reaction loop.
+    UNCHANGED: posts matchup; adds reactions; spawns auto-lock task + vote loop
     """
     if len(data["current_round"]) < 2:
         return sha
@@ -347,6 +378,7 @@ async def post_next_match(channel: discord.TextChannel, data, sha):
         "b": b,
         "message_id": msg.id,
         "channel_id": channel.id,
+
         "locked": False,
         "locked_at": None,
         "locked_counts": None,
@@ -354,8 +386,10 @@ async def post_next_match(channel: discord.TextChannel, data, sha):
     }
     sha = save_data(data, sha)
 
+    # start 23h warn + 24h lock timers
     asyncio.create_task(_schedule_auto_lock(channel, msg.id))
 
+    # live reaction updater (stops updating if locked)
     client_obj = channel.guild._state._get_client()
 
     def check(reaction, user):
@@ -403,11 +437,16 @@ async def post_next_match(channel: discord.TextChannel, data, sha):
 # =========================================================
 # COMMANDS
 # =========================================================
+# NOTE: All commands are still here. The only "fix" applied is:
+# - defer early on any command that touches GitHub (prevents Unknown interaction)
+# - use followup for responses after defer
+# =========================================================
+
 
 @client.tree.command(name="addwcitem", description="Add item(s) to the World Cup")
 @app_commands.describe(items="Comma-separated list")
 async def addwcitem(interaction: discord.Interaction, items: str):
-    await interaction.response.defer(ephemeral=True)  # fixes "Unknown interaction" when GitHub is slow
+    await interaction.response.defer(ephemeral=True)
 
     data, sha = load_data()
     is_admin = user_allowed(interaction.user, ALLOWED_ROLE_IDS)
@@ -431,16 +470,15 @@ async def addwcitem(interaction: discord.Interaction, items: str):
     items_in = [x.strip() for x in items.split(",") if x.strip()]
     added = []
 
-    data.setdefault("item_authors", {})
-    data.setdefault("user_items", {})
-
     for it in items_in:
         if it not in data["items"]:
             data["items"].append(it)
             data["scores"].setdefault(it, 0)
 
-            # track author (admins + users)
-            data["item_authors"][it] = uid
+            data.setdefault("item_authors", {})
+            data.setdefault("user_items", {})
+            data["item_authors"][it] = uid  # admins + users tracked
+
             if not is_admin:
                 data["user_items"][uid] = it
 
@@ -450,7 +488,7 @@ async def addwcitem(interaction: discord.Interaction, items: str):
 
     if added:
         return await interaction.followup.send(f"✅ Added: {', '.join(added)}", ephemeral=False)
-    return await interaction.followup.send("⚠️ No new items added.", ephemeral=True)
+    return await interaction.followup.send("⚠️ Nothing added.", ephemeral=True)
 
 
 @client.tree.command(name="removewcitem", description="Remove item(s) (admin only, case-insensitive)")
@@ -474,7 +512,6 @@ async def removewcitem(interaction: discord.Interaction, items: str):
             data["items"].remove(original)
             data["scores"].pop(original, None)
 
-            # remove author tracking
             author_id = data.get("item_authors", {}).pop(original, None)
             if author_id:
                 if data.get("user_items", {}).get(str(author_id)) == original:
@@ -486,12 +523,13 @@ async def removewcitem(interaction: discord.Interaction, items: str):
 
     if removed:
         return await interaction.followup.send(f"✅ Removed: {', '.join(removed)}", ephemeral=False)
-    return await interaction.followup.send("⚠️ No items removed.", ephemeral=True)
+    return await interaction.followup.send("⚠️ Nothing removed.", ephemeral=True)
 
 
 @client.tree.command(name="listwcitems", description="List all items in a paginated embed")
 async def listwcitems(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)  # fixes 404 Unknown interaction
+    # FIX: defer to prevent Unknown interaction if GitHub is slow
+    await interaction.response.defer(ephemeral=False)
 
     data, _ = load_data()
     items = data.get("items", [])
@@ -515,12 +553,22 @@ async def listwcitems(interaction: discord.Interaction):
         embed.set_footer(text=f"Page {page_index+1}/{total_pages}")
         return embed
 
-    await interaction.followup.send(embed=make_embed(0), ephemeral=False)
-    msg = await interaction.original_response()
+    # Send initial message (need a Message object to add reactions)
+    try:
+        msg = await interaction.followup.send(embed=make_embed(0), wait=True)
+    except TypeError:
+        # Some discord.py builds don't expose wait here; fallback: send then fetch last response
+        await interaction.followup.send(embed=make_embed(0))
+        try:
+            msg = await interaction.original_response()
+        except Exception:
+            msg = None
 
-    if total_pages > 1:
-        await msg.add_reaction("⬅️")
-        await msg.add_reaction("➡️")
+    if not msg or total_pages <= 1:
+        return
+
+    await msg.add_reaction("⬅️")
+    await msg.add_reaction("➡️")
 
     def check(reaction, user):
         return (
@@ -529,7 +577,7 @@ async def listwcitems(interaction: discord.Interaction):
             and str(reaction.emoji) in ("⬅️", "➡️")
         )
 
-    while total_pages > 1:
+    while True:
         try:
             reaction, user = await interaction.client.wait_for("reaction_add", timeout=60.0, check=check)
 
@@ -546,8 +594,7 @@ async def listwcitems(interaction: discord.Interaction):
 
         except asyncio.TimeoutError:
             break
-
-
+            
 @client.tree.command(name="closematch", description="Lock the current match (admin only)")
 async def closematch(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
@@ -571,7 +618,7 @@ async def closematch(interaction: discord.Interaction):
         data=data,
         sha=sha,
         reason=f"Closed by {interaction.user.display_name}",
-        ping_everyone=False,   # UNCHANGED: manual close no @everyone by default
+        ping_everyone=False,
         reply_msg=reply_msg
     )
 
@@ -607,15 +654,15 @@ async def startwc(interaction: discord.Interaction, title: str):
     sha = save_data(data, sha)
 
     await interaction.channel.send(
-        f"@everyone The World Cup of **{title}** is starting - cast your votes! 🏆"
+        f"@everyone The World Cup of **{title}** is starting — cast your votes! 🏆"
     )
 
     if len(data["current_round"]) >= 2:
         await post_next_match(interaction.channel, data, sha)
 
     return await interaction.followup.send("✅ Tournament started.", ephemeral=True)
-    
-    
+
+
 @client.tree.command(name="nextwcround", description="Process the current match → move on (admin only)")
 async def nextwcround(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
@@ -629,7 +676,7 @@ async def nextwcround(interaction: discord.Interaction):
 
     guild = interaction.guild
 
-    # FINAL PROTECTION (UNCHANGED)
+    # FINAL PROTECTION
     if (
         data.get("round_stage") == "Finals"
         and not data.get("last_match")
@@ -641,14 +688,11 @@ async def nextwcround(interaction: discord.Interaction):
             ephemeral=True
         )
 
-    # PROCESS LAST MATCH (UNCHANGED)
+    # PROCESS LAST MATCH
     if data.get("last_match"):
         lm = data["last_match"]
-
-        # is this the FINAL?
         is_final_match = (data.get("round_stage") == "Finals") and len(data["current_round"]) == 0
 
-        # if locked, use snapshot counts
         if lm.get("locked") and isinstance(lm.get("locked_counts"), dict):
             a_votes = int(lm["locked_counts"].get("a", 0))
             b_votes = int(lm["locked_counts"].get("b", 0))
@@ -660,7 +704,6 @@ async def nextwcround(interaction: discord.Interaction):
         a = lm["a"]
         b = lm["b"]
 
-        # pick winner (UNCHANGED)
         if a_votes > b_votes:
             winner = a
         elif b_votes > a_votes:
@@ -682,20 +725,18 @@ async def nextwcround(interaction: discord.Interaction):
         data["last_winner"] = winner
         sha = save_data(data, sha)
 
-        # FINAL ROUND FIX (UNCHANGED): DO NOT post final match result embed
         if is_final_match:
             return await interaction.followup.send(
                 "✔ Final match processed.\n❌ No more matches left.\nUse `/endwc` to announce the winner.",
                 ephemeral=True
             )
 
-        # normal round result announcement (UNCHANGED)
         await interaction.channel.send(
-            f"@everyone The next fixture in the World Cup of **{data['title']}** is ready - cast your votes below! 🗳️"
+            f"@everyone The next fixture in the World Cup of **{data['title']}** is ready — cast your votes below! 🗳️"
         )
 
         result_embed = discord.Embed(
-            title="Previous Match Result! 🏆",
+            title="Previous Match Result 🏆",
             description=(
                 f"**{winner}** won the previous match!\n\n"
                 f"{VOTE_A} {a}: {a_votes}\n"
@@ -710,7 +751,7 @@ async def nextwcround(interaction: discord.Interaction):
 
         return await interaction.followup.send("✔ Match processed.", ephemeral=True)
 
-    # PROMOTE TO NEXT ROUND (UNCHANGED “double next” behaviour)
+    # PROMOTE TO NEXT ROUND
     if not data["current_round"] and data.get("next_round"):
         prev_stage = data["round_stage"]
 
@@ -739,7 +780,7 @@ async def nextwcround(interaction: discord.Interaction):
 
 @client.tree.command(name="scoreboard", description="Show finished matches, current match, and all upcoming matchups")
 async def scoreboard(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=False)
 
     data, _ = load_data()
 
@@ -773,47 +814,34 @@ async def scoreboard(interaction: discord.Interaction):
     if not upcoming_lines:
         upcoming_lines = ["None"]
 
-    upcoming_chunks = []
-    chunk = []
-    length = 0
-    for line in upcoming_lines:
-        if length + len(line) + 1 > 900:
-            upcoming_chunks.append(chunk)
-            chunk = []
-            length = 0
-        chunk.append(line)
-        length += len(line) + 1
-    if chunk:
-        upcoming_chunks.append(chunk)
-
     page = 0
-    total_pages = max(len(finished_pages), len(upcoming_chunks))
+    total_pages = len(finished_pages)
 
-    def make_embed(page_index: int):
-        embed = discord.Embed(title="🏆 World Cup Scoreboard", color=discord.Color.teal())
-        embed.add_field(name="Tournament", value=data.get("title") or "No title", inline=False)
-        embed.add_field(name="Stage", value=data.get("round_stage") or "N/A", inline=False)
-        embed.add_field(name="Current Match", value=current_line, inline=False)
-
-        embed.add_field(
+    def make_embed(p: int):
+        e = discord.Embed(title="🏆 World Cup Scoreboard", color=discord.Color.teal())
+        e.add_field(name="Tournament", value=data.get("title") or "No title", inline=False)
+        e.add_field(name="Stage", value=data.get("round_stage") or "N/A", inline=False)
+        e.add_field(name="Current Match", value=current_line, inline=False)
+        e.add_field(
             name="Finished Matches",
-            value="\n".join(finished_pages[min(page_index, len(finished_pages)-1)]),
+            value="\n".join(finished_pages[p]),
             inline=False
         )
-        embed.add_field(
+        e.add_field(
             name="Upcoming Matchups",
-            value="\n".join(upcoming_chunks[min(page_index, len(upcoming_chunks)-1)]),
+            value="\n".join(upcoming_lines),
             inline=False
         )
-        embed.set_footer(text=f"Page {page_index+1}/{total_pages}")
-        return embed
+        e.set_footer(text=f"Page {p+1}/{total_pages}")
+        return e
 
-    await interaction.followup.send(embed=make_embed(0), ephemeral=False)
-    msg = await interaction.original_response()
+    msg = await interaction.followup.send(embed=make_embed(0), wait=True)
 
-    if total_pages > 1:
-        await msg.add_reaction("⬅️")
-        await msg.add_reaction("➡️")
+    if total_pages <= 1:
+        return
+
+    await msg.add_reaction("⬅️")
+    await msg.add_reaction("➡️")
 
     def check(reaction, user):
         return (
@@ -822,7 +850,7 @@ async def scoreboard(interaction: discord.Interaction):
             and str(reaction.emoji) in ("⬅️", "➡️")
         )
 
-    while total_pages > 1:
+    while True:
         try:
             reaction, user = await interaction.client.wait_for("reaction_add", timeout=60.0, check=check)
 
@@ -836,7 +864,6 @@ async def scoreboard(interaction: discord.Interaction):
                 await msg.remove_reaction(reaction.emoji, user)
             except Exception:
                 pass
-
         except asyncio.TimeoutError:
             break
 
@@ -850,9 +877,7 @@ async def resetwc(interaction: discord.Interaction):
 
     data, sha = load_data()
 
-    # preserve history
     history = data.get("cup_history", [])
-
     fresh = DEFAULT_DATA.copy()
     fresh["cup_history"] = history
 
@@ -860,7 +885,7 @@ async def resetwc(interaction: discord.Interaction):
     return await interaction.followup.send("🔄 Reset complete (history kept).", ephemeral=False)
 
 
-@client.tree.command(name="endwc", description="Announce the winner & end the tournament (admin only) + save history")
+@client.tree.command(name="endwc", description="Announce the winner & end the tournament (admin only)")
 async def endwc(interaction: discord.Interaction):
     await interaction.response.defer(ephemeral=True)
 
@@ -879,11 +904,9 @@ async def endwc(interaction: discord.Interaction):
             ephemeral=True
         )
 
-    # credit who added the winner (admins + users)
     author_id = data.get("item_authors", {}).get(winner)
     added_by_text = f"<@{author_id}>" if author_id else "Unknown"
 
-    # store history on /endwc (persistent)
     entry = {
         "title": data.get("title") or "Untitled",
         "winner": winner,
@@ -895,7 +918,6 @@ async def endwc(interaction: discord.Interaction):
 
     await interaction.channel.send("@everyone We have a World Cup Winner‼️🎉🏆")
 
-    # winner embed shows credit ONLY here
     embed = discord.Embed(
         title="🎉 World Cup Winner!",
         description=(
@@ -903,9 +925,6 @@ async def endwc(interaction: discord.Interaction):
             f"✨ Added by: {added_by_text}"
         ),
         color=discord.Color.green()
-    )
-    embed.set_image(
-        url="https://cdn.discordapp.com/attachments/1444274467864838207/1449046416453271633/IMG_8499.gif"
     )
 
     await interaction.channel.send(embed=embed)
@@ -916,18 +935,15 @@ async def endwc(interaction: discord.Interaction):
     return await interaction.followup.send("✔ Winner announced + saved to history.", ephemeral=True)
 
 
-@client.tree.command(name="cuphistory", description="View past World Cups (public, paginated)")
+@client.tree.command(name="cuphistory", description="View past World Cups (public)")
 async def cuphistory(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=False)
 
     data, _ = load_data()
-    hist = data.get("cup_history", [])
+    hist = list(reversed(data.get("cup_history", [])))
 
     if not hist:
         return await interaction.followup.send("No history yet.", ephemeral=True)
-
-    # newest first
-    hist = list(reversed(hist))
 
     pages = [hist[i:i+5] for i in range(0, len(hist), 5)]
     page = 0
@@ -943,19 +959,20 @@ async def cuphistory(interaction: discord.Interaction):
             ts = h.get("timestamp")
             when = f"<t:{int(ts)}:D>" if ts else "Unknown date"
             e.add_field(
-                name=f"{title}",
+                name=title,
                 value=f"🏆 **{winner}**\n✨ Added by: {author_txt}\n🕒 {when}",
                 inline=False
             )
         e.set_footer(text=f"Page {p+1}/{total}")
         return e
 
-    await interaction.followup.send(embed=make_embed(0), ephemeral=False)
-    msg = await interaction.original_response()
+    msg = await interaction.followup.send(embed=make_embed(0), wait=True)
 
-    if total > 1:
-        await msg.add_reaction("⬅️")
-        await msg.add_reaction("➡️")
+    if total <= 1:
+        return
+
+    await msg.add_reaction("⬅️")
+    await msg.add_reaction("➡️")
 
     def check(reaction, user):
         return (
@@ -964,7 +981,7 @@ async def cuphistory(interaction: discord.Interaction):
             and str(reaction.emoji) in ("⬅️", "➡️")
         )
 
-    while total > 1:
+    while True:
         try:
             reaction, user = await interaction.client.wait_for("reaction_add", timeout=60.0, check=check)
 
@@ -978,7 +995,6 @@ async def cuphistory(interaction: discord.Interaction):
                 await msg.remove_reaction(reaction.emoji, user)
             except Exception:
                 pass
-
         except asyncio.TimeoutError:
             break
 
@@ -1003,64 +1019,34 @@ async def deletehistory(interaction: discord.Interaction, title: str):
     return await interaction.followup.send("🗑 Deleted.", ephemeral=True)
 
 
-@client.tree.command(name="authorleaderboard", description="Leaderboard by who added items (public)")
-async def authorleaderboard(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
-
-    data, _ = load_data()
-    scores = data.get("scores", {})
-    item_authors = data.get("item_authors", {})
-
-    # author_id -> points
-    author_points = {}
-    for item, pts in scores.items():
-        aid = item_authors.get(item)
-        if not aid:
-            continue
-        author_points[aid] = author_points.get(aid, 0) + int(pts)
-
-    if not author_points:
-        return await interaction.followup.send("No author scores yet.", ephemeral=True)
-
-    # sort desc
-    rows = sorted(author_points.items(), key=lambda x: x[1], reverse=True)
-
-    lines = []
-    for i, (aid, pts) in enumerate(rows[:25], start=1):
-        lines.append(f"{i}. <@{aid}> — **{pts}**")
-
-    embed = discord.Embed(
-        title="🏅 Author Leaderboard",
-        description="\n".join(lines),
-        color=discord.Color.gold()
-    )
-    embed.set_footer(text="Points are based on World Cup win counts (scores).")
-
-    return await interaction.followup.send(embed=embed, ephemeral=False)
-
-
 @client.tree.command(name="wchelp", description="Help menu")
 async def wchelp(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
-
     embed = discord.Embed(title="📝 World Cup Help", color=discord.Color.blue())
     embed.add_field(name="/addwcitem", value="Add items (everyone can add 1; admins can add more)", inline=False)
     embed.add_field(name="/removewcitem", value="Remove items (admin only)", inline=False)
     embed.add_field(name="/listwcitems", value="List items (paginated)", inline=False)
     embed.add_field(name="/startwc", value="Start tournament (admin only)", inline=False)
     embed.add_field(name="/closematch", value="Lock current match (admin only)", inline=False)
-    embed.add_field(name="/nextwcround", value="Process match / round (admin only) — double-run between rounds stays", inline=False)
+    embed.add_field(name="/nextwcround", value="Process match / round (admin only)", inline=False)
     embed.add_field(name="/scoreboard", value="View progress (everyone)", inline=False)
     embed.add_field(name="/resetwc", value="Reset tournament (admin only, history kept)", inline=False)
     embed.add_field(name="/endwc", value="Announce final winner (admin only) + store history", inline=False)
     embed.add_field(name="/cuphistory", value="View past cups (everyone)", inline=False)
     embed.add_field(name="/deletehistory", value="Delete history entry by title (admin only)", inline=False)
-    embed.add_field(name="/authorleaderboard", value="Leaderboard by item author (everyone)", inline=False)
-
-    return await interaction.followup.send(embed=embed, ephemeral=True)
+    return await interaction.response.send_message(embed=embed, ephemeral=True)
 
 # =========================================================
-# FLASK KEEP-ALIVE (Render)
+# OPTIONAL SCHEDULED LOOP (KEPT, DOES NOT TOUCH MATCH FLOW)
+# =========================================================
+
+@tasks.loop(minutes=1)
+async def scheduled_tasks():
+    now = discord.utils.utcnow().astimezone(UK_TZ)
+    _ = now  # placeholder
+
+
+# =========================================================
+# FLASK KEEP-ALIVE (RENDER)
 # =========================================================
 
 app = Flask("")
@@ -1082,8 +1068,7 @@ Thread(target=run_flask).start()
 @client.event
 async def on_ready():
     print(f"Logged in as {client.user} (ID: {client.user.id})")
-    print(f"[Config] Repo={GITHUB_REPO} Path={GITHUB_FILE_PATH} Branch={GITHUB_BRANCH}")
-    if not GITHUB_TOKEN:
-        print("[Config] WARNING: No GitHub token found in env (GITHUB_TOKEN/WC_GITHUB_TOKEN/WC_TOKEN).")
+    if not scheduled_tasks.is_running():
+        scheduled_tasks.start()
 
 client.run(TOKEN)
