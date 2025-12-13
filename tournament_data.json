@@ -94,12 +94,11 @@
             "a_votes": 0,
             "b_votes": 1
         }
-        // (unchanged – rest of your matches remain exactly the same)
+        
     ],
 
     "round_stage": "Finals",
 
-    /* ================= NEW FIELDS ================= */
 
     "item_authors": {},
 
