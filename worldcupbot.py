@@ -26,7 +26,7 @@ GITHUB_FILE_PATH = os.getenv("GITHUB_FILE_PATH", "tournament_data.json")
 # IMPORTANT:
 # If your GitHub token env var is ALSO called WC_TOKEN, keep this.
 # If you have a separate one (recommended), set it in Render and change to that name.
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN") or os.getenv("WC_GITHUB_TOKEN") or os.getenv("WC_TOKEN")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 UK_TZ = pytz.timezone("Europe/London")
