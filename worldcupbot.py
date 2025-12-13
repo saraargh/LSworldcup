@@ -261,7 +261,14 @@ async def post_next_match(channel, data, sha):
     sha = save_data(data, sha)
 
     embed = discord.Embed(
-        title=f"🎮 {data['round_stage']}",
+    title=f"🎮 {data['round_stage']}",
+    description=(
+        f"{VOTE_A} {a}\n\n_No votes yet_\n\n"
+        f"{VOTE_B} {b}\n\n_No votes yet_"
+    ),
+    color=discord.Color.random()
+)
+
        # =========================================================
 # COMMANDS
 # =========================================================
