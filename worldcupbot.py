@@ -16,12 +16,11 @@ from threading import Thread
 # CONFIG
 # =========================================================
 
-print("🔥 THIS IS WORLDCUPBOT.PY 🔥")
-
-TOKEN = os.getenv("WC_TOKEN")
-GITHUB_REPO = os.getenv("GITHUB_REPO", "saraargh/LSworldcup")
+TOKEN = os.getenv("TOKEN")
+GITHUB_REPO = os.getenv("GITHUB_REPO")
 GITHUB_FILE_PATH = "tournament_data.json"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 UK_TZ = pytz.timezone("Europe/London")
@@ -43,9 +42,9 @@ VOTE_B = "🔵"
 STAGE_BY_COUNT = {
     32: "Round of 32",
     16: "Round of 16",
-    8:  "Quarter Finals",
-    4:  "Semi Finals",
-    2:  "Finals"
+    8: "Quarter Finals",
+    4: "Semi Finals",
+    2: "Finals"
 }
 
 # =========================================================
@@ -72,25 +71,22 @@ DEFAULT_DATA = {
 # GITHUB HELPERS
 # =========================================================
 
-def _gh_url():
+def gh_url():
     return f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
 
 def load_data():
     try:
-        r = requests.get(_gh_url(), headers=HEADERS, timeout=10)
+        r = requests.get(gh_url(), headers=HEADERS, timeout=10)
         if r.status_code == 200:
             content = r.json()
             raw = base64.b64decode(content["content"]).decode()
-            data = json.loads(raw) if raw.strip() else DEFAULT_DATA.copy()
-            sha = content.get("sha")
-
+            data = json.loads(raw)
+            sha = content["sha"]
             for k in DEFAULT_DATA:
-                if k not in data:
-                    data[k] = DEFAULT_DATA[k]
-
+                data.setdefault(k, DEFAULT_DATA[k])
             return data, sha
-    except Exception as e:
-        print("LOAD ERROR:", e)
+    except:
+        pass
 
     sha = save_data(DEFAULT_DATA.copy())
     return DEFAULT_DATA.copy(), sha
@@ -103,7 +99,7 @@ def save_data(data, sha=None):
     if sha:
         payload["sha"] = sha
 
-    r = requests.put(_gh_url(), headers=HEADERS, data=json.dumps(payload))
+    r = requests.put(gh_url(), headers=HEADERS, data=json.dumps(payload))
     if r.status_code in (200, 201):
         return r.json()["content"]["sha"]
     return sha
@@ -112,18 +108,17 @@ def save_data(data, sha=None):
 # UTILITIES
 # =========================================================
 
-def user_allowed(member: discord.Member):
-    return any(role.id in ALLOWED_ROLE_IDS for role in member.roles)
+def is_admin(member):
+    return any(r.id in ALLOWED_ROLE_IDS for r in member.roles)
 
-async def count_votes_from_message(guild, channel_id, message_id):
+async def count_votes(guild, channel_id, message_id):
     try:
         channel = guild.get_channel(channel_id)
         msg = await channel.fetch_message(message_id)
     except:
-        return 0, 0, {}, {}
+        return 0, 0
 
-    a_users, b_users = set(), set()
-    a_names, b_names = {}, {}
+    a, b = set(), set()
 
     for reaction in msg.reactions:
         if str(reaction.emoji) not in (VOTE_A, VOTE_B):
@@ -132,23 +127,18 @@ async def count_votes_from_message(guild, channel_id, message_id):
             if u.bot:
                 continue
             if str(reaction.emoji) == VOTE_A:
-                a_users.add(u.id)
-                a_names[u.id] = u.display_name
+                a.add(u.id)
             else:
-                b_users.add(u.id)
-                b_names[u.id] = u.display_name
+                b.add(u.id)
 
-    dupes = a_users & b_users
-    for uid in dupes:
-        a_users.discard(uid)
-        b_users.discard(uid)
-        a_names.pop(uid, None)
-        b_names.pop(uid, None)
+    dupes = a & b
+    a -= dupes
+    b -= dupes
 
-    return len(a_users), len(b_users), a_names, b_names
+    return len(a), len(b)
 
 # =========================================================
-# DISCORD CLIENT (CRITICAL FIX)
+# DISCORD CLIENT
 # =========================================================
 
 intents = discord.Intents.default()
@@ -162,56 +152,38 @@ class WorldCupBot(discord.Client):
 
     async def setup_hook(self):
         await self.tree.sync()
-        print("✅ SLASH COMMANDS SYNCED")
-        print("📌 COMMANDS:", [c.name for c in self.tree.get_commands()])
 
 client = WorldCupBot()
 
 # =========================================================
-# AUTO LOCK + MATCH FLOW (UNCHANGED)
+# MATCH LOGIC
 # =========================================================
 
-async def _lock_match(guild, channel, data, sha, reason, ping, reply_msg):
+async def lock_match(guild, channel, data, sha, reason):
     lm = data.get("last_match")
     if not lm or lm.get("locked"):
-        return data, sha
+        return
 
-    a_votes, b_votes, _, _ = await count_votes_from_message(
-        guild, lm["channel_id"], lm["message_id"]
-    )
-
+    a, b = await count_votes(guild, lm["channel_id"], lm["message_id"])
     lm.update({
         "locked": True,
         "locked_at": int(time.time()),
-        "locked_counts": {"a": a_votes, "b": b_votes},
+        "locked_counts": {"a": a, "b": b},
         "lock_reason": reason
     })
 
-    sha = save_data(data, sha)
+    save_data(data, sha)
 
     try:
         msg = await channel.fetch_message(lm["message_id"])
         emb = msg.embeds[0]
-        await msg.edit(embed=discord.Embed(
-            title=emb.title,
-            description=(emb.description or "") + "\n\n🔒 **Voting closed**",
-            color=emb.color
-        ))
+        emb.description += "\n\n🔒 **Voting closed**"
+        await msg.edit(embed=emb)
+        await msg.reply(f"@everyone 🔒 **Voting closed** ({reason})")
     except:
         pass
 
-    try:
-        text = f"{'@everyone ' if ping else ''}🔒 **Voting closed** ({reason})"
-        if reply_msg:
-            await reply_msg.reply(text)
-        else:
-            await channel.send(text)
-    except:
-        pass
-
-    return data, sha
-
-async def _schedule_auto_lock(channel, message_id):
+async def auto_lock(channel, message_id):
     await asyncio.sleep(AUTO_WARN_SECONDS)
     data, sha = load_data()
     lm = data.get("last_match")
@@ -227,58 +199,182 @@ async def _schedule_auto_lock(channel, message_id):
     await asyncio.sleep(AUTO_LOCK_SECONDS - AUTO_WARN_SECONDS)
     data, sha = load_data()
     lm = data.get("last_match")
-    if not lm or lm["message_id"] != message_id or lm["locked"]:
-        return
+    if lm and not lm["locked"]:
+        await lock_match(channel.guild, channel, data, sha, "Auto-locked after 24h")
 
-    try:
-        reply_msg = await channel.fetch_message(message_id)
-    except:
-        reply_msg = None
+async def post_match(channel, data, sha):
+    a = data["current_round"].pop(0)
+    b = data["current_round"].pop(0)
 
-    await _lock_match(channel.guild, channel, data, sha, "Auto-locked after 24h", True, reply_msg)
+    embed = discord.Embed(
+        title=f"🎮 {data['round_stage']}",
+        description=f"{VOTE_A} {a}\n\n{VOTE_B} {b}",
+        color=discord.Color.random()
+    )
 
-# =========================================================
-# COMMANDS (ALL REGISTERED CORRECTLY)
-# =========================================================
+    msg = await channel.send(embed=embed)
+    await msg.add_reaction(VOTE_A)
+    await msg.add_reaction(VOTE_B)
 
-@client.tree.command(name="ping")
-async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message("🏓 Pong!")
+    data["last_match"] = {
+        "a": a,
+        "b": b,
+        "message_id": msg.id,
+        "channel_id": channel.id,
+        "locked": False
+    }
 
-@client.tree.command(name="wchelp")
-async def wchelp(interaction: discord.Interaction):
-    embed = discord.Embed(title="📝 World Cup Commands", color=discord.Color.blue())
-    embed.add_field(name="/addwcitem", value="Add item (1 per user)", inline=False)
-    embed.add_field(name="/listwcitems", value="List items", inline=False)
-    embed.add_field(name="/startwc", value="Start tournament", inline=False)
-    embed.add_field(name="/nextwcround", value="Advance match", inline=False)
-    embed.add_field(name="/closematch", value="Lock voting", inline=False)
-    embed.add_field(name="/scoreboard", value="View progress", inline=False)
-    embed.add_field(name="/endwc", value="Announce winner", inline=False)
-    await interaction.response.send_message(embed=embed, ephemeral=True)
+    sha = save_data(data, sha)
+    asyncio.create_task(auto_lock(channel, msg.id))
 
 # =========================================================
-# KEEP ALIVE (RENDER)
+# COMMANDS
+# =========================================================
+
+@client.tree.command(name="addwcitem")
+async def addwcitem(interaction: discord.Interaction, items: str):
+    data, sha = load_data()
+    uid = str(interaction.user.id)
+
+    if not is_admin(interaction.user):
+        if uid in data["user_items"]:
+            return await interaction.response.send_message(
+                "You can only add one item to the World Cup. Don’t be greedy 😌",
+                ephemeral=True
+            )
+        if "," in items:
+            return await interaction.response.send_message(
+                "You can only add one item to the World Cup. Don’t be greedy 😌",
+                ephemeral=True
+            )
+
+    added = []
+    for item in [i.strip() for i in items.split(",") if i.strip()]:
+        if item not in data["items"]:
+            data["items"].append(item)
+            data["scores"][item] = 0
+            data["item_authors"][item] = uid
+            if not is_admin(interaction.user):
+                data["user_items"][uid] = item
+            added.append(item)
+
+    save_data(data, sha)
+    await interaction.response.send_message(f"✅ Added: {', '.join(added)}")
+
+@client.tree.command(name="startwc")
+async def startwc(interaction: discord.Interaction, title: str):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("❌ No permission.", ephemeral=True)
+
+    data, sha = load_data()
+    if len(data["items"]) != 32:
+        return await interaction.response.send_message("❌ Need exactly 32 items.", ephemeral=True)
+
+    data.update({
+        "title": title,
+        "running": True,
+        "current_round": random.sample(data["items"], 32),
+        "next_round": [],
+        "finished_matches": [],
+        "round_stage": STAGE_BY_COUNT[32],
+        "last_match": None,
+        "last_winner": None
+    })
+
+    save_data(data, sha)
+    await interaction.channel.send(f"@everyone 🏆 **World Cup of {title} has started!**")
+    await post_match(interaction.channel, data, sha)
+    await interaction.response.send_message("✅ Started.", ephemeral=True)
+
+@client.tree.command(name="nextwcround")
+async def nextwcround(interaction: discord.Interaction):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("❌ No permission.", ephemeral=True)
+
+    data, sha = load_data()
+    lm = data.get("last_match")
+    if not lm:
+        return await interaction.response.send_message("⚠ Nothing to process.", ephemeral=True)
+
+    a_votes, b_votes = lm.get("locked_counts", {}).values() if lm.get("locked") else await count_votes(
+        interaction.guild, lm["channel_id"], lm["message_id"]
+    )
+
+    winner = lm["a"] if a_votes >= b_votes else lm["b"]
+    data["finished_matches"].append({
+        "a": lm["a"],
+        "b": lm["b"],
+        "winner": winner
+    })
+
+    data["next_round"].append(winner)
+    data["last_winner"] = winner
+    data["last_match"] = None
+
+    save_data(data, sha)
+
+    if len(data["current_round"]) >= 2:
+        await post_match(interaction.channel, data, sha)
+    else:
+        data["current_round"] = data["next_round"]
+        data["next_round"] = []
+        if len(data["current_round"]) == 1:
+            await interaction.response.send_message("❌ No more rounds. Use /endwc", ephemeral=True)
+            return
+        data["round_stage"] = STAGE_BY_COUNT[len(data["current_round"])]
+        save_data(data, sha)
+        await post_match(interaction.channel, data, sha)
+
+    await interaction.response.send_message("✔ Processed.", ephemeral=True)
+
+@client.tree.command(name="endwc")
+async def endwc(interaction: discord.Interaction):
+    data, sha = load_data()
+    winner = data.get("last_winner")
+    if not winner:
+        return await interaction.response.send_message("No winner yet.", ephemeral=True)
+
+    author = data["item_authors"].get(winner)
+    mention = f"<@{author}>" if author else "Unknown"
+
+    data["cup_history"].append({
+        "title": data["title"],
+        "winner": winner,
+        "author_id": author,
+        "timestamp": int(time.time())
+    })
+
+    data["running"] = False
+    save_data(data, sha)
+
+    embed = discord.Embed(
+        title="🏆 World Cup Winner!",
+        description=f"**{winner}**\n✨ Added by {mention}",
+        color=discord.Color.green()
+    )
+
+    await interaction.channel.send("@everyone 🎉 **WE HAVE A WINNER!**")
+    await interaction.channel.send(embed=embed)
+    await interaction.response.send_message("✔ Winner announced.", ephemeral=True)
+
+# =========================================================
+# FLASK KEEP-ALIVE
 # =========================================================
 
 app = Flask("")
 
 @app.route("/")
 def home():
-    return "World Cup Bot is alive!"
+    return "World Cup Bot running"
 
-def run_flask():
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
-
-Thread(target=run_flask).start()
+Thread(target=lambda: app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))).start()
 
 # =========================================================
-# READY + START
+# START
 # =========================================================
 
 @client.event
 async def on_ready():
-    print(f"🚀 Logged in as {client.user} ({client.user.id})")
+    print(f"Logged in as {client.user}")
 
 client.run(TOKEN)
