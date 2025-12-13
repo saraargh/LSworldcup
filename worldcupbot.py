@@ -21,7 +21,7 @@ print("🔥 THIS IS WORLDCUPBOT.PY 🔥")
 TOKEN = os.getenv("WC_TOKEN")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "saraargh/LSworldcup")
 GITHUB_FILE_PATH = "tournament_data.json"
-GITHUB_TOKEN = os.getenv("WC_TOKEN")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 UK_TZ = pytz.timezone("Europe/London")
