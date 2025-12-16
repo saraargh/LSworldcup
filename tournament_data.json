@@ -1,14 +1,17 @@
 {
     "items": [
-        "sl"
+        "sl",
+        "csm"
     ],
     "item_images": {
-        "sl": "wc_images/sl_323607881f.png"
+        "sl": "wc_images/sl_323607881f.png",
+        "csm": "wc_images/csm_dbde7e5d11.png"
     },
     "current_round": [],
     "next_round": [],
     "scores": {
-        "sl": 0
+        "sl": 0,
+        "csm": 0
     },
     "running": false,
     "title": "",
@@ -17,7 +20,8 @@
     "finished_matches": [],
     "round_stage": "",
     "item_authors": {
-        "sl": "1238834298338152498"
+        "sl": "1238834298338152498",
+        "csm": "1238834298338152498"
     },
     "user_items": {},
     "cup_history": []
