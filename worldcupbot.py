@@ -161,30 +161,27 @@ def gh_get_file_bytes(path: str) -> bytes | None:
         if r.status_code != 200:
             print(f"[GitHub] gh_get_file_bytes failed {r.status_code}: {r.text}")
             return None
+
         content = r.json()
-        raw = base64.b64decode(content["content"])
-        return raw
+
+        # ✅ Small files: GitHub includes base64 inline
+        if "content" in content and content.get("encoding") == "base64":
+            return base64.b64decode(content["content"])
+
+        # ✅ Larger files: GitHub may omit "content" and provide a download_url instead
+        download_url = content.get("download_url")
+        if download_url:
+            r2 = requests.get(download_url, timeout=20)
+            if r2.status_code == 200:
+                return r2.content
+            print(f"[GitHub] download_url fetch failed {r2.status_code}: {r2.text}")
+            return None
+
+        print("[GitHub] No 'content' or 'download_url' in response for:", path)
+        return None
+
     except Exception as e:
         print("[GitHub] gh_get_file_bytes error:", e)
-        return None
-
-def gh_put_file_bytes(path: str, content_bytes: bytes, sha: str | None = None) -> str | None:
-    try:
-        payload = {
-            "message": f"Add/update {path}",
-            "content": base64.b64encode(content_bytes).decode(),
-            "branch": GITHUB_BRANCH
-        }
-        if sha:
-            payload["sha"] = sha
-
-        r = requests.put(_gh_url(path), headers=HEADERS, data=json.dumps(payload), timeout=30)
-        if r.status_code in (200, 201):
-            return r.json().get("content", {}).get("sha")
-        print(f"[GitHub] gh_put_file_bytes failed {r.status_code}: {r.text}")
-        return None
-    except Exception as e:
-        print("[GitHub] gh_put_file_bytes error:", e)
         return None
 
 # =========================================================
