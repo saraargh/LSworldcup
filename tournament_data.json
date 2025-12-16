@@ -34,8 +34,6 @@
         "Chloe or Sam or Sophia or Marcus"
     ],
     "current_round": [
-        "Never Grow Up",
-        "Innocent",
         "Haunted",
         "The Lakes",
         "Dancing With Our Hands Tied",
@@ -104,7 +102,13 @@
     "running": true,
     "title": "Test",
     "last_winner": "Picture to Burn",
-    "last_match": null,
+    "last_match": {
+        "a": "Never Grow Up",
+        "b": "Innocent",
+        "message_id": 1450556041296089262,
+        "channel_id": 1438277790179921971,
+        "locked": false
+    },
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
