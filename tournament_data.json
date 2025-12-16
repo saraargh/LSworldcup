@@ -49,7 +49,8 @@
         "Is It Over Now?",
         "Last Kiss",
         "Breathe",
-        "White Horse"
+        "White Horse",
+        "Come Back\u2026 Be Here"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -67,7 +68,7 @@
         "Never Grow Up": 8,
         "Sad Beautiful Tragic": 3,
         "Starlight": 0,
-        "Come Back\u2026 Be Here": 1,
+        "Come Back\u2026 Be Here": 2,
         "The Moment I Knew": 6,
         "Welcome to New York": 2,
         "I Wish You Would": 3,
@@ -87,17 +88,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "White Horse",
-    "last_match": {
-        "a": "Come Back\u2026 Be Here",
-        "b": "It\u2019s Nice to Have a Friend",
-        "message_id": 1450565584529002547,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Come Back\u2026 Be Here",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -203,6 +195,13 @@
             "winner": "White Horse",
             "a_votes": 0,
             "b_votes": 1
+        },
+        {
+            "a": "Come Back\u2026 Be Here",
+            "b": "It\u2019s Nice to Have a Friend",
+            "winner": "Come Back\u2026 Be Here",
+            "a_votes": 1,
+            "b_votes": 0
         }
     ],
     "round_stage": "Round of 32",
