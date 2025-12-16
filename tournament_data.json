@@ -33,188 +33,50 @@
         "Peter",
         "Chloe or Sam or Sophia or Marcus"
     ],
+    "item_images": {},
     "current_round": [],
-    "next_round": [
-        "Sad Beautiful Tragic",
-        "Picture to Burn",
-        "Never Grow Up",
-        "The Lakes",
-        "The Bolter",
-        "Tim McGraw",
-        "Better Than Revenge",
-        "Peter",
-        "Forever & Always",
-        "The Moment I Knew",
-        "Now That We Don\u2019t Talk",
-        "Is It Over Now?",
-        "Last Kiss",
-        "Breathe",
-        "White Horse",
-        "Come Back\u2026 Be Here"
-    ],
+    "next_round": [],
     "scores": {
-        "Tim McGraw": 2,
-        "Picture to Burn": 3,
-        "Our Song": 1,
+        "Tim McGraw": 0,
+        "Picture to Burn": 0,
+        "Our Song": 0,
         "Teardrops on My Guitar": 0,
-        "White Horse": 5,
-        "Forever & Always": 9,
-        "Breathe": 6,
-        "Better Than Revenge": 2,
-        "Innocent": 3,
-        "Last Kiss": 5,
-        "Haunted": 2,
-        "Ours": 2,
-        "Never Grow Up": 8,
-        "Sad Beautiful Tragic": 3,
+        "White Horse": 0,
+        "Forever & Always": 0,
+        "Breathe": 0,
+        "Better Than Revenge": 0,
+        "Innocent": 0,
+        "Last Kiss": 0,
+        "Haunted": 0,
+        "Ours": 0,
+        "Never Grow Up": 0,
+        "Sad Beautiful Tragic": 0,
         "Starlight": 0,
-        "Come Back\u2026 Be Here": 2,
-        "The Moment I Knew": 6,
-        "Welcome to New York": 2,
-        "I Wish You Would": 3,
-        "This Love": 5,
-        "Dancing With Our Hands Tied": 3,
-        "Dress": 2,
-        "It\u2019s Nice to Have a Friend": 1,
-        "Daylight": 1,
-        "Paris": 3,
-        "The Lakes": 13,
-        "Now That We Don\u2019t Talk": 4,
-        "Is It Over Now?": 8,
-        "Slut!": 1,
-        "The Bolter": 6,
-        "Peter": 11,
-        "Chloe or Sam or Sophia or Marcus": 4
+        "Come Back\u2026 Be Here": 0,
+        "The Moment I Knew": 0,
+        "Welcome to New York": 0,
+        "I Wish You Would": 0,
+        "This Love": 0,
+        "Dancing With Our Hands Tied": 0,
+        "Dress": 0,
+        "It\u2019s Nice to Have a Friend": 0,
+        "Daylight": 0,
+        "Paris": 0,
+        "The Lakes": 0,
+        "Now That We Don\u2019t Talk": 0,
+        "Is It Over Now?": 0,
+        "Slut!": 0,
+        "The Bolter": 0,
+        "Peter": 0,
+        "Chloe or Sam or Sophia or Marcus": 0
     },
-    "running": true,
-    "title": "Test",
-    "last_winner": "Come Back\u2026 Be Here",
+    "running": false,
+    "title": "",
+    "last_winner": null,
     "last_match": null,
-    "finished_matches": [
-        {
-            "a": "Chloe or Sam or Sophia or Marcus",
-            "b": "Sad Beautiful Tragic",
-            "winner": "Sad Beautiful Tragic",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Picture to Burn",
-            "b": "Teardrops on My Guitar",
-            "winner": "Picture to Burn",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Never Grow Up",
-            "b": "Innocent",
-            "winner": "Never Grow Up",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Haunted",
-            "b": "The Lakes",
-            "winner": "The Lakes",
-            "a_votes": 0,
-            "b_votes": 0
-        },
-        {
-            "a": "Dancing With Our Hands Tied",
-            "b": "The Bolter",
-            "winner": "The Bolter",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Tim McGraw",
-            "b": "Daylight",
-            "winner": "Tim McGraw",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Ours",
-            "b": "Better Than Revenge",
-            "winner": "Better Than Revenge",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Peter",
-            "b": "This Love",
-            "winner": "Peter",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Forever & Always",
-            "b": "Paris",
-            "winner": "Forever & Always",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Welcome to New York",
-            "b": "The Moment I Knew",
-            "winner": "The Moment I Knew",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Now That We Don\u2019t Talk",
-            "b": "Dress",
-            "winner": "Now That We Don\u2019t Talk",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "I Wish You Would",
-            "b": "Is It Over Now?",
-            "winner": "Is It Over Now?",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Last Kiss",
-            "b": "Starlight",
-            "winner": "Last Kiss",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Slut!",
-            "b": "Breathe",
-            "winner": "Breathe",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Our Song",
-            "b": "White Horse",
-            "winner": "White Horse",
-            "a_votes": 0,
-            "b_votes": 1
-        },
-        {
-            "a": "Come Back\u2026 Be Here",
-            "b": "It\u2019s Nice to Have a Friend",
-            "winner": "Come Back\u2026 Be Here",
-            "a_votes": 1,
-            "b_votes": 0
-        }
-    ],
-    "round_stage": "Round of 32",
+    "finished_matches": [],
+    "round_stage": "",
     "item_authors": {},
-    "user_added": {},
     "user_items": {},
-    "history": [
-        {
-            "title": "TS SONGS",
-            "winner": "The Moment I Knew",
-            "added_by": "Unknown",
-            "ended_at": "2025-12-12T00:00:00Z"
-        }
-    ],
     "cup_history": []
 }
