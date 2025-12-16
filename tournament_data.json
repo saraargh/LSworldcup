@@ -101,10 +101,10 @@
         "Arctic Wolf": 0,
         "phoebe (black cat)": 2
     },
-    "current_round": [],
-    "next_round": [
+    "current_round": [
         "phoebe (black cat)"
     ],
+    "next_round": [],
     "finished_matches": [
         {
             "a": "Golden Retriever",
@@ -142,7 +142,7 @@
     "user_items": {},
     "running": true,
     "title": "Animals",
-    "round_stage": "Quarter Finals",
+    "round_stage": "1-items round",
     "last_winner": "phoebe (black cat)",
     "cup_history": []
 }
