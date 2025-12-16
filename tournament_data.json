@@ -53,7 +53,8 @@
         "Forever & Always",
         "The Moment I Knew",
         "Now That We Don\u2019t Talk",
-        "Is It Over Now?"
+        "Is It Over Now?",
+        "Last Kiss"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -65,7 +66,7 @@
         "Breathe": 5,
         "Better Than Revenge": 2,
         "Innocent": 3,
-        "Last Kiss": 4,
+        "Last Kiss": 5,
         "Haunted": 2,
         "Ours": 2,
         "Never Grow Up": 8,
@@ -91,17 +92,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Is It Over Now?",
-    "last_match": {
-        "a": "Last Kiss",
-        "b": "Starlight",
-        "message_id": 1450565454954364978,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Last Kiss",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -186,6 +178,13 @@
             "winner": "Is It Over Now?",
             "a_votes": 0,
             "b_votes": 1
+        },
+        {
+            "a": "Last Kiss",
+            "b": "Starlight",
+            "winner": "Last Kiss",
+            "a_votes": 1,
+            "b_votes": 0
         }
     ],
     "round_stage": "Round of 32",
