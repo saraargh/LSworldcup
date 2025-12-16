@@ -62,7 +62,8 @@
     "next_round": [
         "Sad Beautiful Tragic",
         "Picture to Burn",
-        "Never Grow Up"
+        "Never Grow Up",
+        "The Lakes"
     ],
     "scores": {
         "Tim McGraw": 1,
@@ -90,7 +91,7 @@
         "It\u2019s Nice to Have a Friend": 1,
         "Daylight": 1,
         "Paris": 3,
-        "The Lakes": 12,
+        "The Lakes": 13,
         "Now That We Don\u2019t Talk": 3,
         "Is It Over Now?": 7,
         "Slut!": 1,
@@ -100,14 +101,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Never Grow Up",
-    "last_match": {
-        "a": "Haunted",
-        "b": "The Lakes",
-        "message_id": 1450556524492754954,
-        "channel_id": 1438277790179921971,
-        "locked": false
-    },
+    "last_winner": "The Lakes",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -128,6 +123,13 @@
             "b": "Innocent",
             "winner": "Never Grow Up",
             "a_votes": 1,
+            "b_votes": 0
+        },
+        {
+            "a": "Haunted",
+            "b": "The Lakes",
+            "winner": "The Lakes",
+            "a_votes": 0,
             "b_votes": 0
         }
     ],
