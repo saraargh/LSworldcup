@@ -59,7 +59,8 @@
         "Never Grow Up",
         "The Lakes",
         "The Bolter",
-        "Tim McGraw"
+        "Tim McGraw",
+        "Better Than Revenge"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -69,7 +70,7 @@
         "White Horse": 4,
         "Forever & Always": 8,
         "Breathe": 5,
-        "Better Than Revenge": 1,
+        "Better Than Revenge": 2,
         "Innocent": 3,
         "Last Kiss": 4,
         "Haunted": 2,
@@ -97,17 +98,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Tim McGraw",
-    "last_match": {
-        "a": "Ours",
-        "b": "Better Than Revenge",
-        "message_id": 1450565128343916574,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Better Than Revenge",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -150,6 +142,13 @@
             "winner": "Tim McGraw",
             "a_votes": 1,
             "b_votes": 0
+        },
+        {
+            "a": "Ours",
+            "b": "Better Than Revenge",
+            "winner": "Better Than Revenge",
+            "a_votes": 0,
+            "b_votes": 1
         }
     ],
     "round_stage": "Round of 32",
