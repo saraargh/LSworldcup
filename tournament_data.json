@@ -5,7 +5,8 @@
         "dn",
         "phoebe",
         "joey",
-        "ref"
+        "ref",
+        "arrival"
     ],
     "item_images": {
         "sl": "wc_images/sl_323607881f.png",
@@ -13,7 +14,8 @@
         "dn": "wc_images/dn_d984cbcd37.png",
         "phoebe": "wc_images/phoebe_c1ca765123.png",
         "joey": "wc_images/joey_261995a2f8.png",
-        "ref": "wc_images/ref_f6fcb970fa.png"
+        "ref": "wc_images/ref_f6fcb970fa.png",
+        "arrival": "wc_images/arrival_67e051a5a2.png"
     },
     "current_round": [],
     "next_round": [],
@@ -23,7 +25,8 @@
         "dn": 0,
         "phoebe": 0,
         "joey": 0,
-        "ref": 0
+        "ref": 0,
+        "arrival": 0
     },
     "running": false,
     "title": "",
@@ -37,7 +40,8 @@
         "dn": "1238834298338152498",
         "phoebe": "1238834298338152498",
         "joey": "1238834298338152498",
-        "ref": "1238834298338152498"
+        "ref": "1238834298338152498",
+        "arrival": "1238834298338152498"
     },
     "user_items": {},
     "cup_history": []
