@@ -33,10 +33,41 @@
         "Peter",
         "Chloe or Sam or Sophia or Marcus"
     ],
-    "current_round": [],
-    "next_round": [
-        "The Moment I Knew"
+    "current_round": [
+        "Chloe or Sam or Sophia or Marcus",
+        "Sad Beautiful Tragic",
+        "Picture to Burn",
+        "Teardrops on My Guitar",
+        "Never Grow Up",
+        "Innocent",
+        "Haunted",
+        "The Lakes",
+        "Dancing With Our Hands Tied",
+        "The Bolter",
+        "Tim McGraw",
+        "Daylight",
+        "Ours",
+        "Better Than Revenge",
+        "Peter",
+        "This Love",
+        "Forever & Always",
+        "Paris",
+        "Welcome to New York",
+        "The Moment I Knew",
+        "Now That We Don\u2019t Talk",
+        "Dress",
+        "I Wish You Would",
+        "Is It Over Now?",
+        "Last Kiss",
+        "Starlight",
+        "Slut!",
+        "Breathe",
+        "Our Song",
+        "White Horse",
+        "Come Back\u2026 Be Here",
+        "It\u2019s Nice to Have a Friend"
     ],
+    "next_round": [],
     "scores": {
         "Tim McGraw": 1,
         "Picture to Burn": 2,
@@ -71,27 +102,12 @@
         "Peter": 10,
         "Chloe or Sam or Sophia or Marcus": 4
     },
-    "running": false,
-    "title": "TS SONGS",
-    "last_winner": "The Moment I Knew",
+    "running": true,
+    "title": "Test",
+    "last_winner": null,
     "last_match": null,
-    "finished_matches": [
-        {
-            "a": "Forever & Always",
-            "b": "Sad Beautiful Tragic",
-            "winner": "Forever & Always",
-            "a_votes": 1,
-            "b_votes": 0
-        },
-        {
-            "a": "Welcome to New York",
-            "b": "This Love",
-            "winner": "This Love",
-            "a_votes": 0,
-            "b_votes": 1
-        }
-    ],
-    "round_stage": "Finals",
+    "finished_matches": [],
+    "round_stage": "Round of 32",
     "item_authors": {},
     "user_added": {},
     "user_items": {},
