@@ -100,7 +100,16 @@
     "running": true,
     "title": "Test",
     "last_winner": "The Lakes",
-    "last_match": null,
+    "last_match": {
+        "a": "Dancing With Our Hands Tied",
+        "b": "The Bolter",
+        "message_id": 1450564866782793908,
+        "channel_id": 1438277790179921971,
+        "locked": false,
+        "locked_at": null,
+        "locked_counts": null,
+        "lock_reason": null
+    },
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
