@@ -34,8 +34,6 @@
         "Phoebe (Black Cat)"
     ],
     "current_round": [
-        "Hedgehog",
-        "Lemur",
         "Corgi",
         "Koala",
         "Samoyed",
@@ -104,7 +102,24 @@
     "running": true,
     "title": "Animals",
     "last_winner": "Axolotl",
-    "last_match": null,
+    "last_match": {
+        "a": "Hedgehog",
+        "b": "Lemur",
+        "message_id": null,
+        "channel_id": 1438277790179921971,
+        "locked": false,
+        "locked_at": null,
+        "locked_counts": null,
+        "lock_reason": null,
+        "prev_result": {
+            "a": "Axolotl",
+            "b": "Fennec Fox",
+            "winner": "Axolotl",
+            "a_votes": 1,
+            "b_votes": 0,
+            "timestamp": 1765921318
+        }
+    },
     "finished_matches": [
         {
             "a": "Capybara",
