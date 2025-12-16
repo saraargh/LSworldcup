@@ -1048,7 +1048,10 @@ async def scoreboard(interaction: discord.Interaction):
             break
 
 
-@client.tree.command(name="resetwc", description="Reset the tournament (staff only). History is kept.")
+@client.tree.command(
+    name="resetwc",
+    description="Reset the tournament (staff only). Past cup history is kept."
+)
 async def resetwc(interaction: discord.Interaction):
     await interaction.response.defer(thinking=True, ephemeral=True)
 
@@ -1057,24 +1060,22 @@ async def resetwc(interaction: discord.Interaction):
 
     data, sha = load_data()
 
+    # ✅ Preserve ONLY history
     history = data.get("cup_history", [])
-    # keep items + images too (so you don't lose submissions)
-    items = data.get("items", [])
-    item_images = data.get("item_images", {})
-    item_authors = data.get("item_authors", {})
-    user_items = data.get("user_items", {})
 
     fresh = DEFAULT_DATA.copy()
     fresh["cup_history"] = history
-    fresh["items"] = items
-    fresh["item_images"] = item_images
-    fresh["item_authors"] = item_authors
-    fresh["user_items"] = user_items
-    # scores reset? you previously used it as points; keep them? you were using win counts, so reset:
-    fresh["scores"] = {it: 0 for it in items}
 
     save_data(fresh, sha)
-    return await interaction.followup.send("🔄 Reset complete (items kept, history kept).", ephemeral=True)
+
+    return await interaction.followup.send(
+        "🔄 Reset complete.\n"
+        "• All items deleted\n"
+        "• All votes cleared\n"
+        "• Tournament stopped\n"
+        "• History preserved",
+        ephemeral=True
+    )
 
 
 @client.tree.command(name="endwc", description="Announce the winner & end the tournament (staff only) + save history")
