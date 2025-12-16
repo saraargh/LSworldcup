@@ -108,10 +108,13 @@
         "b": "Fennec Fox",
         "message_id": 1450603532498501764,
         "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null,
+        "locked": true,
+        "locked_at": 1765921317,
+        "locked_counts": {
+            "a": 1,
+            "b": 0
+        },
+        "lock_reason": "Processed by s. just s.",
         "prev_result": {
             "a": "Capybara",
             "b": "Squirrel",
