@@ -52,7 +52,8 @@
         "The Moment I Knew",
         "Now That We Don\u2019t Talk",
         "Is It Over Now?",
-        "Last Kiss"
+        "Last Kiss",
+        "Breathe"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -61,7 +62,7 @@
         "Teardrops on My Guitar": 0,
         "White Horse": 4,
         "Forever & Always": 9,
-        "Breathe": 5,
+        "Breathe": 6,
         "Better Than Revenge": 2,
         "Innocent": 3,
         "Last Kiss": 5,
@@ -90,17 +91,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Last Kiss",
-    "last_match": {
-        "a": "Slut!",
-        "b": "Breathe",
-        "message_id": 1450565509681774782,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Breathe",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -192,6 +184,13 @@
             "winner": "Last Kiss",
             "a_votes": 1,
             "b_votes": 0
+        },
+        {
+            "a": "Slut!",
+            "b": "Breathe",
+            "winner": "Breathe",
+            "a_votes": 0,
+            "b_votes": 1
         }
     ],
     "round_stage": "Round of 32",
