@@ -1,16 +1,24 @@
 {
-    "items": [],
-    "item_images": {},
+    "items": [
+        "sl"
+    ],
+    "item_images": {
+        "sl": "wc_images/sl_323607881f.png"
+    },
     "current_round": [],
     "next_round": [],
-    "scores": {},
+    "scores": {
+        "sl": 0
+    },
     "running": false,
     "title": "",
     "last_winner": null,
     "last_match": null,
     "finished_matches": [],
     "round_stage": "",
-    "item_authors": {},
+    "item_authors": {
+        "sl": "1238834298338152498"
+    },
     "user_items": {},
     "cup_history": []
 }
