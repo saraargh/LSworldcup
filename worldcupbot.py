@@ -9,13 +9,10 @@ import random
 import asyncio
 import time
 import pytz
+import re
 from flask import Flask
 from threading import Thread
-from io import BytesIO
-from PIL import Image, ImageOps, ImageDraw, ImageFont
-import re
-import hashlib
-from urllib.parse import urlparse
+from typing import Optional, Tuple, Dict, Any
 
 # =========================================================
 # CONFIG
@@ -55,73 +52,67 @@ STAGE_BY_COUNT = {
     2:  "Finals"
 }
 
-IMAGES_DIR = "wc_images"  # stored in repo root folder
-
 # =========================================================
 # DEFAULT DATA
 # =========================================================
 
-DEFAULT_DATA = {
+DEFAULT_DATA: Dict[str, Any] = {
     "items": [],
-    "item_images": {},     # item -> github path (e.g., wc_images/<file>.png) OR https://...
     "current_round": [],
     "next_round": [],
     "scores": {},
+
     "running": False,
     "title": "",
+
     "last_winner": None,
-    "last_match": None,    # includes matchup + message ids + prev_result snapshot
-    "finished_matches": [],
+    "last_match": None,          # active match info
+    "finished_matches": [],      # list of {a,b,winner,a_votes,b_votes,ts}
+
     "round_stage": "",
-    "item_authors": {},    # item -> user_id (str)
-    "user_items": {},      # user_id -> item
-    "cup_history": []
+
+    "item_authors": {},          # item -> user_id (str)
+    "user_items": {},            # user_id -> item (ONLY for non-staff 1-item rule)
+
+    "cup_history": []            # list of {title,winner,author_id,timestamp}
 }
 
 # =========================================================
-# GITHUB HELPERS
+# GITHUB HELPERS (JSON ONLY)
 # =========================================================
 
-def _gh_url(path: str):
+def _gh_url(path: str) -> str:
     return f"https://api.github.com/repos/{GITHUB_REPO}/contents/{path}"
 
 def _gh_params():
     return {"ref": GITHUB_BRANCH} if GITHUB_BRANCH else None
 
-def _json_url():
+def _json_url() -> str:
     return _gh_url(GITHUB_FILE_PATH)
 
-def _safe_filename(s: str) -> str:
-    s = s.strip().lower()
-    s = re.sub(r"[^a-z0-9]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s or "item"
-
-def load_data():
+def load_data() -> Tuple[Dict[str, Any], Optional[str]]:
     try:
         r = requests.get(_json_url(), headers=HEADERS, params=_gh_params(), timeout=20)
+
         if r.status_code == 200:
             content = r.json()
             raw = base64.b64decode(content["content"]).decode()
             data = json.loads(raw) if raw.strip() else DEFAULT_DATA.copy()
             sha = content.get("sha")
 
-            # ensure keys
-            for k in DEFAULT_DATA:
+            # Ensure keys/types
+            for k, v in DEFAULT_DATA.items():
                 if k not in data:
-                    data[k] = DEFAULT_DATA[k]
+                    data[k] = v
 
-            # ensure types
-            if not isinstance(data.get("items"), list):
-                data["items"] = []
-            if not isinstance(data.get("item_images"), dict):
-                data["item_images"] = {}
-            if not isinstance(data.get("item_authors"), dict):
-                data["item_authors"] = {}
-            if not isinstance(data.get("user_items"), dict):
-                data["user_items"] = {}
-            if not isinstance(data.get("cup_history"), list):
-                data["cup_history"] = []
+            if not isinstance(data.get("items"), list): data["items"] = []
+            if not isinstance(data.get("current_round"), list): data["current_round"] = []
+            if not isinstance(data.get("next_round"), list): data["next_round"] = []
+            if not isinstance(data.get("scores"), dict): data["scores"] = {}
+            if not isinstance(data.get("finished_matches"), list): data["finished_matches"] = []
+            if not isinstance(data.get("item_authors"), dict): data["item_authors"] = {}
+            if not isinstance(data.get("user_items"), dict): data["user_items"] = {}
+            if not isinstance(data.get("cup_history"), list): data["cup_history"] = []
 
             return data, sha
 
@@ -136,7 +127,7 @@ def load_data():
         print("[GitHub] load_data error:", e)
         return DEFAULT_DATA.copy(), None
 
-def save_data(data, sha=None):
+def save_data(data: Dict[str, Any], sha: Optional[str] = None) -> Optional[str]:
     try:
         payload = {
             "message": "Update tournament data",
@@ -156,82 +147,30 @@ def save_data(data, sha=None):
         print("[GitHub] save_data error:", e)
         return sha
 
-def gh_get_file_bytes(path: str) -> bytes | None:
-    try:
-        r = requests.get(_gh_url(path), headers=HEADERS, params=_gh_params(), timeout=20)
-        if r.status_code != 200:
-            print(f"[GitHub] gh_get_file_bytes failed {r.status_code}: {r.text}")
-            return None
-        content = r.json()
-        raw = base64.b64decode(content["content"])
-        return raw
-    except Exception as e:
-        print("[GitHub] gh_get_file_bytes error:", e)
-        return None
-
-def gh_put_file_bytes(path: str, content_bytes: bytes, sha: str | None = None) -> str | None:
-    try:
-        payload = {
-            "message": f"Add/update {path}",
-            "content": base64.b64encode(content_bytes).decode(),
-            "branch": GITHUB_BRANCH
-        }
-        if sha:
-            payload["sha"] = sha
-
-        r = requests.put(_gh_url(path), headers=HEADERS, data=json.dumps(payload), timeout=30)
-        if r.status_code in (200, 201):
-            return r.json().get("content", {}).get("sha")
-        print(f"[GitHub] gh_put_file_bytes failed {r.status_code}: {r.text}")
-        return None
-    except Exception as e:
-        print("[GitHub] gh_put_file_bytes error:", e)
-        return None
-
-# =========================================================
-# IMAGE LOADING (NEW): supports GitHub path OR direct URL
-# =========================================================
-
-def _is_http_url(s: str) -> bool:
-    if not s or not isinstance(s, str):
-        return False
-    try:
-        u = urlparse(s)
-        return u.scheme in ("http", "https") and bool(u.netloc)
-    except Exception:
-        return False
-
-def load_image_bytes(image_ref: str) -> bytes | None:
-    """
-    image_ref can be:
-      - "wc_images/foo.png" (GitHub repo file)
-      - "https://..." direct URL
-    """
-    if not image_ref or not isinstance(image_ref, str):
-        return None
-
-    if _is_http_url(image_ref):
-        try:
-            r = requests.get(image_ref, timeout=25, headers={"User-Agent": "WorldCupBot/1.0"})
-            if r.status_code != 200:
-                print(f"[IMG] URL fetch failed {r.status_code}: {image_ref}")
-                return None
-            return r.content
-        except Exception as e:
-            print("[IMG] URL fetch error:", e)
-            return None
-
-    # otherwise assume repo path
-    return gh_get_file_bytes(image_ref)
-
 # =========================================================
 # UTILITIES
 # =========================================================
 
-def user_allowed(member: discord.Member, allowed_roles):
-    return any(role.id in allowed_roles for role in member.roles)
+def user_allowed(member: discord.Member, allowed_roles) -> bool:
+    return any(role.id in allowed_roles for role in getattr(member, "roles", []))
 
-async def count_votes_from_message(guild, channel_id, message_id):
+def _separator() -> str:
+    return "\n\n━━━━━━━━━━━━━━━━━━\n\n"
+
+def _format_voter_list(names: Dict[int, str]) -> str:
+    if not names:
+        return "_No votes yet_"
+    # keep deterministic-ish ordering
+    return "\n".join([f"• {names[k]}" for k in sorted(names.keys())])
+
+def _make_status_line(is_locked: bool) -> str:
+    return "🔒 **Voting closed**" if is_locked else "⏰ Auto-lock in 24h"
+
+async def count_votes_from_message(
+    guild: discord.Guild,
+    channel_id: int,
+    message_id: int
+) -> Tuple[int, int, Dict[int, str], Dict[int, str]]:
     try:
         channel = guild.get_channel(channel_id)
         if channel is None:
@@ -241,7 +180,8 @@ async def count_votes_from_message(guild, channel_id, message_id):
         return 0, 0, {}, {}
 
     a_users, b_users = set(), set()
-    a_names, b_names = {}, {}
+    a_names: Dict[int, str] = {}
+    b_names: Dict[int, str] = {}
 
     for reaction in msg.reactions:
         emoji = str(reaction.emoji)
@@ -263,7 +203,7 @@ async def count_votes_from_message(guild, channel_id, message_id):
                 b_users.add(u.id)
                 b_names[u.id] = u.display_name
 
-    # if they voted both, count as zero
+    # if they voted both, count as zero (remove from both)
     dupes = a_users & b_users
     for uid in dupes:
         a_users.discard(uid)
@@ -273,76 +213,50 @@ async def count_votes_from_message(guild, channel_id, message_id):
 
     return len(a_users), len(b_users), a_names, b_names
 
-def _separator():
-    # extra spacing so sections don’t look crushed
-    return "\n\n\n━━━━━━━━━━━━━━━━━━\n\n\n"
+def build_match_embed(
+    stage: str,
+    a: str,
+    b: str,
+    a_count: int,
+    b_count: int,
+    a_names: Dict[int, str],
+    b_names: Dict[int, str],
+    locked: bool,
+    prev_result: Optional[Dict[str, Any]]
+) -> discord.Embed:
+    title = f"🎮 {stage}" if stage else "🎮 Matchup"
+    parts = []
 
-def _format_voter_list(names: dict[int, str]) -> str:
-    if not names:
-        return "_No votes yet_"
-    return "\n".join([f"• {n}" for n in names.values()])
+    if prev_result:
+        winner = prev_result.get("winner")
+        pa = prev_result.get("a")
+        pb = prev_result.get("b")
+        av = int(prev_result.get("a_votes", 0))
+        bv = int(prev_result.get("b_votes", 0))
 
-def _make_status_line(is_locked: bool) -> str:
-    return "🔒 **Voting closed**" if is_locked else "⏰ Auto-lock in 24h"
+        prev_block = (
+            f"🏆 **Previous Match**\n"
+            f"**{winner}** won\n"
+            f"{VOTE_A} {pa} — **{av}**   {VOTE_B} {pb} — **{bv}**"
+        )
+        parts.append(prev_block)
 
-def _try_font(size: int = 36):
-    try:
-        return ImageFont.truetype("DejaVuSans.ttf", size=size)
-    except Exception:
-        return ImageFont.load_default()
+    current_block = (
+        f"📦 **Current Match**\n"
+        f"{VOTE_A} **{a}** — **{a_count}** votes\n"
+        f"{_format_voter_list(a_names)}\n\n"
+        f"{VOTE_B} **{b}** — **{b_count}** votes\n"
+        f"{_format_voter_list(b_names)}"
+    )
+    parts.append(current_block)
+    parts.append(_make_status_line(locked))
 
-def build_composite_image_bytes(img_a: bytes, img_b: bytes, label_a: str, label_b: str) -> bytes:
-    im_a = Image.open(BytesIO(img_a)).convert("RGB")
-    im_b = Image.open(BytesIO(img_b)).convert("RGB")
-
-    target_h = 720
-
-    def resize_to_h(im: Image.Image, h: int):
-        w = int(im.width * (h / im.height))
-        return im.resize((w, h), Image.LANCZOS)
-
-    im_a = resize_to_h(im_a, target_h)
-    im_b = resize_to_h(im_b, target_h)
-
-    min_w = min(im_a.width, im_b.width, 720)
-
-    def center_crop(im: Image.Image, w: int, h: int):
-        left = max(0, (im.width - w) // 2)
-        top = max(0, (im.height - h) // 2)
-        return im.crop((left, top, left + w, top + h))
-
-    im_a = center_crop(im_a, min_w, target_h)
-    im_b = center_crop(im_b, min_w, target_h)
-
-    border = 16
-    im_a = ImageOps.expand(im_a, border=border, fill=(220, 20, 60))
-    im_b = ImageOps.expand(im_b, border=border, fill=(30, 144, 255))
-
-    gap = 12
-    out_w = im_a.width + gap + im_b.width
-    out_h = max(im_a.height, im_b.height)
-    out = Image.new("RGB", (out_w, out_h), (20, 20, 20))
-    out.paste(im_a, (0, 0))
-    out.paste(im_b, (im_a.width + gap, 0))
-
-    draw = ImageDraw.Draw(out)
-    font = _try_font(34)
-
-    pad = 18
-    box_h = 92
-    y0 = out_h - box_h
-    draw.rectangle((0, y0, out_w, out_h), fill=(0, 0, 0))
-
-    left_text = f"{VOTE_A} {label_a}"
-    right_text = f"{VOTE_B} {label_b}"
-
-    draw.text((pad, y0 + 22), left_text, font=font, fill=(255, 255, 255))
-    rt_w = draw.textlength(right_text, font=font)
-    draw.text((out_w - rt_w - pad, y0 + 22), right_text, font=font, fill=(255, 255, 255))
-
-    buf = BytesIO()
-    out.save(buf, format="PNG", optimize=True)
-    return buf.getvalue()
+    emb = discord.Embed(
+        title=title,
+        description=_separator().join(parts),
+        color=discord.Color.random()
+    )
+    return emb
 
 # =========================================================
 # DISCORD CLIENT
@@ -357,7 +271,6 @@ class WorldCupBot(discord.Client):
     def __init__(self):
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
-        self._vote_update_tasks = {}  # message_id -> task
 
     async def setup_hook(self):
         await self.tree.sync()
@@ -365,119 +278,24 @@ class WorldCupBot(discord.Client):
 client = WorldCupBot()
 
 # =========================================================
-# REACTION CLEANUP + VOTE REFRESH
+# MATCH LOGIC
 # =========================================================
 
-async def _refresh_vote_embed_for_message(guild: discord.Guild, channel_id: int, message_id: int):
-    data, _ = load_data()
-    lm = data.get("last_match") or {}
-    if not lm:
-        return
-    if lm.get("locked"):
-        return
-    if lm.get("channel_id") != channel_id or lm.get("message_id") != message_id:
-        return
-
-    try:
-        channel = guild.get_channel(channel_id)
-        if not channel:
-            return
-        msg = await channel.fetch_message(message_id)
-    except Exception:
-        return
-
-    a = lm.get("a")
-    b = lm.get("b")
-    if not a or not b:
-        return
-
-    a_count, b_count, a_names, b_names = await count_votes_from_message(guild, channel_id, message_id)
-    prev = lm.get("prev_result")
-
-    emb2 = build_match_embed(
-        stage=data.get("round_stage", "Matchup"),
-        a=a,
-        b=b,
-        a_count=a_count,
-        b_count=b_count,
-        a_names=a_names,
-        b_names=b_names,
-        locked=False,
-        prev_result=prev
-    )
-    if msg.embeds and msg.embeds[0].image and msg.embeds[0].image.url:
-        emb2.set_image(url=msg.embeds[0].image.url)
-
-    try:
-        await msg.edit(embed=emb2)
-    except Exception:
-        pass
-
-@client.event
-async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
-    if user.bot:
-        return
-
-    try:
-        data, _ = load_data()
-        lm = data.get("last_match") or {}
-        if not lm:
-            return
-
-        if reaction.message.id != lm.get("message_id"):
-            return
-
-        emoji = str(reaction.emoji)
-        if emoji not in ALLOWED_VOTE_EMOJIS:
-            try:
-                await reaction.remove(user)
-            except Exception:
-                pass
-            return
-
-        # refresh votes (debounced-ish)
-        await _refresh_vote_embed_for_message(
-            guild=reaction.message.guild,
-            channel_id=reaction.message.channel.id,
-            message_id=reaction.message.id
-        )
-
-    except Exception:
-        return
-
-@client.event
-async def on_reaction_remove(reaction: discord.Reaction, user: discord.User):
-    if user.bot:
-        return
-
-    try:
-        data, _ = load_data()
-        lm = data.get("last_match") or {}
-        if not lm:
-            return
-        if reaction.message.id != lm.get("message_id"):
-            return
-        if str(reaction.emoji) not in ALLOWED_VOTE_EMOJIS:
-            return
-
-        await _refresh_vote_embed_for_message(
-            guild=reaction.message.guild,
-            channel_id=reaction.message.channel.id,
-            message_id=reaction.message.id
-        )
-    except Exception:
-        return
-
-# =========================================================
-# AUTO LOCK + MATCH POSTING (single embed, single composite image)
-# =========================================================
-
-async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, sha, reason: str, ping_everyone: bool, reply_msg: discord.Message | None):
+async def _lock_match(
+    guild: discord.Guild,
+    channel: discord.TextChannel,
+    data: Dict[str, Any],
+    sha: Optional[str],
+    reason: str,
+    ping_everyone: bool
+) -> Tuple[Dict[str, Any], Optional[str]]:
     lm = data.get("last_match")
     if not lm or lm.get("locked"):
         return data, sha
 
-    a_votes, b_votes, a_names, b_names = await count_votes_from_message(guild, lm["channel_id"], lm["message_id"])
+    a_votes, b_votes, a_names, b_names = await count_votes_from_message(
+        guild, lm["channel_id"], lm["message_id"]
+    )
 
     lm["locked"] = True
     lm["locked_at"] = int(time.time())
@@ -486,27 +304,30 @@ async def _lock_match(guild: discord.Guild, channel: discord.TextChannel, data, 
 
     sha = save_data(data, sha)
 
+    # Update the embed to show locked
     try:
         msg = await channel.fetch_message(lm["message_id"])
-        if msg.embeds:
-            emb = msg.embeds[0]
-            desc = emb.description or ""
-            if "🔒 **Voting closed**" not in desc:
-                desc = desc + _separator() + "🔒 **Voting closed**"
-            new = discord.Embed(title=emb.title, description=desc, color=emb.color)
-            if emb.image and emb.image.url:
-                new.set_image(url=emb.image.url)
-            await msg.edit(embed=new)
+        prev = lm.get("prev_result")
+
+        emb = build_match_embed(
+            stage=data.get("round_stage", "Matchup"),
+            a=lm["a"],
+            b=lm["b"],
+            a_count=a_votes,
+            b_count=b_votes,
+            a_names=a_names,
+            b_names=b_names,
+            locked=True,
+            prev_result=prev
+        )
+        await msg.edit(embed=emb)
     except Exception as e:
         print("Lock edit failed:", e)
 
+    # Announce
     try:
         ping = "@everyone " if ping_everyone else ""
-        text = f"{ping}🔒 **Voting is now closed.** ({reason})"
-        if reply_msg:
-            await reply_msg.reply(text)
-        else:
-            await channel.send(text)
+        await channel.send(f"{ping}🔒 **Voting is now closed.** ({reason})")
     except Exception as e:
         print("Lock announce failed:", e)
 
@@ -527,15 +348,11 @@ async def _schedule_auto_lock(channel: discord.TextChannel, message_id: int):
             await channel.send("@everyone ⏰ **Voting closes soon!** (auto-lock at 24h)")
 
         await asyncio.sleep(max(0, AUTO_LOCK_SECONDS - AUTO_WARN_SECONDS))
+
         data, sha = load_data()
         lm = data.get("last_match")
         if not lm or lm.get("message_id") != message_id or lm.get("locked"):
             return
-
-        try:
-            reply_msg = await channel.fetch_message(message_id)
-        except Exception:
-            reply_msg = None
 
         await _lock_match(
             guild=channel.guild,
@@ -543,100 +360,28 @@ async def _schedule_auto_lock(channel: discord.TextChannel, message_id: int):
             data=data,
             sha=sha,
             reason="Auto-locked after 24h",
-            ping_everyone=True,
-            reply_msg=reply_msg
+            ping_everyone=True
         )
+
     except Exception as e:
         print("Auto-lock scheduler error:", e)
 
-def build_match_embed(stage: str, a: str, b: str, a_count: int, b_count: int, a_names: dict, b_names: dict,
-                      locked: bool, prev_result: dict | None):
-    title = f"🎮 {stage}" if stage else "🎮 Matchup"
-    parts = []
-
-    if prev_result:
-        winner = prev_result.get("winner")
-        pa = prev_result.get("a")
-        pb = prev_result.get("b")
-        av = prev_result.get("a_votes", 0)
-        bv = prev_result.get("b_votes", 0)
-
-        prev_block = (
-            f"🏆 **Previous Match**\n"
-            f"**{winner}** won\n"
-            f"{VOTE_A} {pa} — **{av}**   {VOTE_B} {pb} — **{bv}**"
-        )
-        parts.append(prev_block)
-
-    current_block = (
-        f"📦 **Current Match**\n"
-        f"{VOTE_A} **{a}** — **{a_count}** votes\n"
-        f"{_format_voter_list(a_names)}\n\n"
-        f"{VOTE_B} **{b}** — **{b_count}** votes\n"
-        f"{_format_voter_list(b_names)}"
-    )
-    parts.append(current_block)
-    parts.append(_make_status_line(locked))
-
-    description = _separator().join(parts)
-    emb = discord.Embed(title=title, description=description, color=discord.Color.random())
-    return emb
-
-async def post_next_match(channel: discord.TextChannel, data, sha, prev_result: dict | None = None):
-    if len(data["current_round"]) < 2:
+async def post_next_match(
+    channel: discord.TextChannel,
+    data: Dict[str, Any],
+    sha: Optional[str],
+    prev_result: Optional[Dict[str, Any]] = None
+) -> Optional[str]:
+    if len(data.get("current_round", [])) < 2:
         return sha
 
     a = data["current_round"].pop(0)
     b = data["current_round"].pop(0)
-    sha = save_data(data, sha)
-
-    img_ref_a = data.get("item_images", {}).get(a)
-    img_ref_b = data.get("item_images", {}).get(b)
-
-    if not img_ref_a or not img_ref_b:
-        await channel.send(
-            f"⚠️ Missing images for matchup:\n- {a}: {img_ref_a}\n- {b}: {img_ref_b}\n"
-            f"Fix by re-adding with an upload OR a URL."
-        )
-        return sha
-
-    bytes_a = load_image_bytes(img_ref_a)
-    bytes_b = load_image_bytes(img_ref_b)
-
-    if not bytes_a or not bytes_b:
-        await channel.send(
-            "⚠️ Could not load matchup images.\n"
-            f"- {a}: {img_ref_a}\n- {b}: {img_ref_b}\n"
-            "If these are GitHub paths, check token perms + paths.\n"
-            "If these are URLs, check they are public and direct."
-        )
-        return sha
-
-    composite = build_composite_image_bytes(bytes_a, bytes_b, a, b)
-
-    emb = build_match_embed(
-        stage=data.get("round_stage", "Matchup"),
-        a=a,
-        b=b,
-        a_count=0,
-        b_count=0,
-        a_names={},
-        b_names={},
-        locked=False,
-        prev_result=prev_result
-    )
-
-    file = discord.File(BytesIO(composite), filename="matchup.png")
-    emb.set_image(url="attachment://matchup.png")
-
-    msg = await channel.send(embed=emb, file=file)
-    await msg.add_reaction(VOTE_A)
-    await msg.add_reaction(VOTE_B)
 
     data["last_match"] = {
         "a": a,
         "b": b,
-        "message_id": msg.id,
+        "message_id": None,
         "channel_id": channel.id,
         "locked": False,
         "locked_at": None,
@@ -646,8 +391,120 @@ async def post_next_match(channel: discord.TextChannel, data, sha, prev_result: 
     }
     sha = save_data(data, sha)
 
+    # initial embed
+    emb = build_match_embed(
+        stage=data.get("round_stage", "Matchup"),
+        a=a, b=b,
+        a_count=0, b_count=0,
+        a_names={}, b_names={},
+        locked=False,
+        prev_result=prev_result
+    )
+
+    msg = await channel.send(embed=emb)
+    await msg.add_reaction(VOTE_A)
+    await msg.add_reaction(VOTE_B)
+
+    # persist msg id
+    data, sha2 = load_data()
+    if data.get("last_match"):
+        data["last_match"]["message_id"] = msg.id
+        sha = save_data(data, sha2)
+
     asyncio.create_task(_schedule_auto_lock(channel, msg.id))
     return sha
+# =========================================================
+# LIVE VOTE UPDATES (fixes “voter list not updating”)
+# - updates on reaction ADD and REMOVE
+# - removes any emoji that isn’t 🔴/🔵 from the active match
+# =========================================================
+
+async def _refresh_active_match_embed(message: discord.Message):
+    try:
+        data, sha = load_data()
+        lm = data.get("last_match")
+        if not lm:
+            return
+        if lm.get("locked"):
+            return
+        if message.id != lm.get("message_id"):
+            return
+
+        a_votes, b_votes, a_names, b_names = await count_votes_from_message(
+            message.guild, lm["channel_id"], lm["message_id"]
+        )
+
+        emb = build_match_embed(
+            stage=data.get("round_stage", "Matchup"),
+            a=lm["a"],
+            b=lm["b"],
+            a_count=a_votes,
+            b_count=b_votes,
+            a_names=a_names,
+            b_names=b_names,
+            locked=False,
+            prev_result=lm.get("prev_result")
+        )
+        await message.edit(embed=emb)
+
+    except Exception:
+        # we keep silent to avoid spam
+        return
+
+@client.event
+async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
+    if user.bot:
+        return
+
+    # only care about guild text messages
+    if not reaction.message.guild:
+        return
+
+    try:
+        data, _ = load_data()
+        lm = data.get("last_match")
+        if not lm:
+            return
+        if reaction.message.id != lm.get("message_id"):
+            return
+
+        emoji = str(reaction.emoji)
+
+        # remove any non vote emoji
+        if emoji not in ALLOWED_VOTE_EMOJIS:
+            try:
+                await reaction.remove(user)
+            except Exception:
+                pass
+            return
+
+        await _refresh_active_match_embed(reaction.message)
+
+    except Exception:
+        return
+
+@client.event
+async def on_reaction_remove(reaction: discord.Reaction, user: discord.User):
+    if user.bot:
+        return
+    if not reaction.message.guild:
+        return
+
+    try:
+        data, _ = load_data()
+        lm = data.get("last_match")
+        if not lm:
+            return
+        if reaction.message.id != lm.get("message_id"):
+            return
+
+        emoji = str(reaction.emoji)
+        if emoji not in ALLOWED_VOTE_EMOJIS:
+            return
+
+        await _refresh_active_match_embed(reaction.message)
+    except Exception:
+        return
 
 # =========================================================
 # COMMANDS
@@ -657,105 +514,41 @@ async def post_next_match(channel: discord.TextChannel, data, sha, prev_result: 
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("🏓 Pong!", ephemeral=True)
 
-@client.tree.command(name="addwcitem", description="Add ONE item to the World Cup (upload OR image URL)")
-@app_commands.describe(
-    item="Item name",
-    image="Upload an image (optional if using image_url)",
-    image_url="Direct image URL (optional if uploading image)"
-)
-async def addwcitem(
-    interaction: discord.Interaction,
-    item: str,
-    image: discord.Attachment | None = None,
-    image_url: str | None = None
-):
-    # Public outcome, but defer non-ephemeral so slow GitHub/URL doesn't break the interaction
+@client.tree.command(name="addwcitem", description="Add ONE item to the World Cup (no images)")
+@app_commands.describe(item="Item name")
+async def addwcitem(interaction: discord.Interaction, item: str):
     await interaction.response.defer(thinking=True)
 
     data, sha = load_data()
-    is_admin = user_allowed(interaction.user, ALLOWED_ROLE_IDS)
-    uid = str(interaction.user.id)
 
+    is_staff = user_allowed(interaction.user, ALLOWED_ROLE_IDS)
+    uid = str(interaction.user.id)
     item = item.strip()
+
     if not item:
         return await interaction.followup.send("⚠️ Item name can’t be empty.", ephemeral=True)
 
-    # hard cap 32 always
+    # hard cap 32 total items
     if item not in data.get("items", []) and len(data.get("items", [])) >= 32:
-        return await interaction.followup.send("❌ Already at **32** items. Remove one before adding more.", ephemeral=True)
+        return await interaction.followup.send("❌ The World Cup already has **32 items**.", ephemeral=True)
 
-    # non-admin: only 1 item total
-    if not is_admin and uid in data.get("user_items", {}):
-        return await interaction.followup.send("You can only add **one** item to the World Cup.", ephemeral=True)
+    # Rule A: non-staff can only add ONE item total
+    if not is_staff and uid in data.get("user_items", {}):
+        return await interaction.followup.send("❌ You can only add **one** item to this World Cup.", ephemeral=True)
 
+    # duplicates
     if item in data.get("items", []):
         return await interaction.followup.send("⚠️ That item already exists.", ephemeral=True)
 
-    # Must supply either upload or URL
-    if (image is None) and (not image_url):
-        return await interaction.followup.send("❌ You must upload an image OR provide an image URL.", ephemeral=True)
-
-    # If URL is supplied, validate format + store URL directly
-    stored_image_ref: str | None = None
-
-    if image_url:
-        image_url = image_url.strip()
-        if not _is_http_url(image_url):
-            return await interaction.followup.send("❌ That image_url isn’t a valid http(s) URL.", ephemeral=True)
-
-        # test fetch now so you don’t start a tournament with dead links
-        test_bytes = load_image_bytes(image_url)
-        if not test_bytes:
-            return await interaction.followup.send("❌ I couldn’t download that URL. Use a public direct image link.", ephemeral=True)
-
-        # store URL directly in JSON
-        stored_image_ref = image_url
-
-    # If an upload is supplied, store it to GitHub (existing behaviour)
-    if image is not None:
-        if not (image.content_type or "").startswith("image/"):
-            return await interaction.followup.send("❌ That upload isn’t an image. Please upload a PNG/JPG.", ephemeral=True)
-
-        try:
-            img_bytes = await image.read()
-        except Exception:
-            return await interaction.followup.send("❌ I couldn’t read that image upload. Try again.", ephemeral=True)
-
-        safe = _safe_filename(item)
-        short = hashlib.sha1(f"{item}|{uid}|{time.time()}".encode()).hexdigest()[:10]
-        img_path = f"{IMAGES_DIR}/{safe}_{short}.png"
-
-        # normalize to PNG
-        try:
-            im = Image.open(BytesIO(img_bytes)).convert("RGB")
-            out = BytesIO()
-            im.save(out, format="PNG", optimize=True)
-            img_bytes = out.getvalue()
-        except Exception:
-            pass
-
-        img_sha = gh_put_file_bytes(img_path, img_bytes, sha=None)
-        if not img_sha:
-            return await interaction.followup.send("❌ Failed to store the uploaded image to GitHub. Check PAT scopes + repo access.", ephemeral=True)
-
-        stored_image_ref = img_path
-
-    # Final check
-    if not stored_image_ref:
-        return await interaction.followup.send("❌ No image reference could be stored. Try again.", ephemeral=True)
-
-    # store item
     data.setdefault("items", [])
     data.setdefault("scores", {})
-    data.setdefault("item_images", {})
     data.setdefault("item_authors", {})
     data.setdefault("user_items", {})
 
     data["items"].append(item)
     data["scores"].setdefault(item, 0)
-    data["item_images"][item] = stored_image_ref
     data["item_authors"][item] = uid
-    if not is_admin:
+    if not is_staff:
         data["user_items"][uid] = item
 
     sha = save_data(data, sha)
@@ -774,18 +567,21 @@ async def removewcitem(interaction: discord.Interaction, items: str):
     removed = []
 
     lower_map = {i.lower(): i for i in data.get("items", [])}
-
     for raw in [x.strip() for x in items.split(",") if x.strip()]:
         key = raw.lower()
         if key in lower_map:
             original = lower_map[key]
+
+            # remove from items
             data["items"].remove(original)
+
+            # remove score entry
             data.get("scores", {}).pop(original, None)
 
+            # remove author tracking
             author_id = data.get("item_authors", {}).pop(original, None)
-            data.get("item_images", {}).pop(original, None)
             if author_id and data.get("user_items", {}).get(str(author_id)) == original:
-                data["user_items"].pop(str(author_id), None)
+                data.get("user_items", {}).pop(str(author_id), None)
 
             removed.append(original)
 
@@ -797,7 +593,7 @@ async def removewcitem(interaction: discord.Interaction, items: str):
 
 @client.tree.command(name="listwcitems", description="List all items (paginated, public)")
 async def listwcitems(interaction: discord.Interaction):
-    await interaction.response.defer(thinking=True)  # NOT EPHEMERAL
+    await interaction.response.defer(thinking=True)
 
     data, _ = load_data()
     items = data.get("items", [])
@@ -854,19 +650,13 @@ async def closematch(interaction: discord.Interaction):
     if not lm:
         return await interaction.followup.send("⚠️ No active match.", ephemeral=True)
 
-    try:
-        reply_msg = await interaction.channel.fetch_message(lm["message_id"])
-    except Exception:
-        reply_msg = None
-
     await _lock_match(
         guild=interaction.guild,
         channel=interaction.channel,
         data=data,
         sha=sha,
         reason=f"Closed by {interaction.user.display_name}",
-        ping_everyone=False,
-        reply_msg=reply_msg
+        ping_everyone=False
     )
 
     return await interaction.followup.send("🔒 Match locked.", ephemeral=True)
@@ -887,24 +677,6 @@ async def startwc(interaction: discord.Interaction, title: str):
     if len(data.get("items", [])) != 32:
         return await interaction.followup.send("❌ Must have **exactly 32** items to start.", ephemeral=True)
 
-    # Accept BOTH GitHub paths and URLs — just ensure it exists and can be fetched
-    missing_imgs = []
-    for it in data["items"]:
-        ref = data.get("item_images", {}).get(it)
-        if not ref:
-            missing_imgs.append(it)
-            continue
-        if load_image_bytes(ref) is None:
-            missing_imgs.append(it)
-
-    if missing_imgs:
-        return await interaction.followup.send(
-            "❌ These items have missing/broken images:\n" +
-            "\n".join([f"• {x}" for x in missing_imgs[:15]]) +
-            ("\n…and more" if len(missing_imgs) > 15 else ""),
-            ephemeral=True
-        )
-
     data["title"] = title
     data["current_round"] = data["items"].copy()
     random.shuffle(data["current_round"])
@@ -918,6 +690,7 @@ async def startwc(interaction: discord.Interaction, title: str):
     sha = save_data(data, sha)
 
     await interaction.channel.send(f"@everyone The World Cup of **{title}** is starting — cast your votes! 🏆")
+
     await post_next_match(interaction.channel, data, sha, prev_result=None)
 
     return await interaction.followup.send("✅ Tournament started.", ephemeral=True)
@@ -935,9 +708,25 @@ async def nextwcround(interaction: discord.Interaction):
 
     guild = interaction.guild
 
+    # Process active match if present
     if data.get("last_match"):
         lm = data["last_match"]
 
+        # If not locked yet, lock it NOW (so results are stable)
+        if not lm.get("locked"):
+            data, sha = await _lock_match(
+                guild=guild,
+                channel=interaction.channel,
+                data=data,
+                sha=sha,
+                reason=f"Processed by {interaction.user.display_name}",
+                ping_everyone=False
+            )
+            # reload after save
+            data, sha = load_data()
+            lm = data.get("last_match") or lm
+
+        # Use locked snapshot if available
         if lm.get("locked") and isinstance(lm.get("locked_counts"), dict):
             a_votes = int(lm["locked_counts"].get("a", 0))
             b_votes = int(lm["locked_counts"].get("b", 0))
@@ -949,6 +738,7 @@ async def nextwcround(interaction: discord.Interaction):
         a = lm["a"]
         b = lm["b"]
 
+        # pick winner
         if a_votes > b_votes:
             winner = a
         elif b_votes > a_votes:
@@ -956,28 +746,42 @@ async def nextwcround(interaction: discord.Interaction):
         else:
             winner = random.choice([a, b])
 
-        prev_result = {"a": a, "b": b, "winner": winner, "a_votes": a_votes, "b_votes": b_votes}
+        prev_result = {
+            "a": a,
+            "b": b,
+            "winner": winner,
+            "a_votes": a_votes,
+            "b_votes": b_votes,
+            "timestamp": int(time.time())
+        }
 
         data["finished_matches"].append(prev_result)
         data["next_round"].append(winner)
-        data["scores"][winner] = data["scores"].get(winner, 0) + 1
+        data["scores"][winner] = int(data["scores"].get(winner, 0)) + 1
         data["last_match"] = None
         data["last_winner"] = winner
         sha = save_data(data, sha)
 
+        # Finals end behaviour
         if data.get("round_stage") == "Finals" and not data.get("current_round"):
-            return await interaction.followup.send("✔ Final match processed.\nUse `/endwc` to announce the winner.", ephemeral=True)
+            return await interaction.followup.send(
+                "✔ Final match processed.\nUse `/endwc` to announce the winner.",
+                ephemeral=True
+            )
 
         await interaction.channel.send(
             f"@everyone The next fixture in the World Cup of **{data.get('title','')}** is ready — vote below! 🗳️"
         )
 
-        if len(data["current_round"]) >= 2:
-            await post_next_match(interaction.channel, data, sha, prev_result=prev_result)
+        # Post next match if available
+        data2, sha2 = load_data()
+        if len(data2.get("current_round", [])) >= 2:
+            await post_next_match(interaction.channel, data2, sha2, prev_result=prev_result)
             return await interaction.followup.send("✔ Match processed.", ephemeral=True)
 
         return await interaction.followup.send("✔ Match processed. Run again to advance rounds.", ephemeral=True)
 
+    # Between rounds: move next_round -> current_round
     if not data.get("current_round") and data.get("next_round"):
         prev_stage = data.get("round_stage", "Round")
 
@@ -1005,7 +809,7 @@ async def nextwcround(interaction: discord.Interaction):
 
 @client.tree.command(name="scoreboard", description="Show tournament progress (public)")
 async def scoreboard(interaction: discord.Interaction):
-    await interaction.response.defer(thinking=True)  # NOT EPHEMERAL
+    await interaction.response.defer(thinking=True)
 
     data, _ = load_data()
 
@@ -1017,7 +821,7 @@ async def scoreboard(interaction: discord.Interaction):
     for i, f in enumerate(finished):
         finished_lines.append(
             f"{i+1}. {f['a']} vs {f['b']} → **{f['winner']}** "
-            f"({VOTE_A} {f['a_votes']} | {VOTE_B} {f['b_votes']})"
+            f"({VOTE_A} {int(f.get('a_votes',0))} | {VOTE_B} {int(f.get('b_votes',0))})"
         )
     if not finished_lines:
         finished_lines = ["No matches played yet."]
@@ -1039,6 +843,7 @@ async def scoreboard(interaction: discord.Interaction):
     if not upcoming_lines:
         upcoming_lines = ["None"]
 
+    # chunk upcoming for embed safety
     upcoming_chunks = []
     chunk = []
     length = 0
@@ -1107,6 +912,7 @@ async def resetwc(interaction: discord.Interaction):
     data, sha = load_data()
 
     history = data.get("cup_history", [])
+
     fresh = DEFAULT_DATA.copy()
     fresh["cup_history"] = history
 
@@ -1140,7 +946,12 @@ async def endwc(interaction: discord.Interaction):
     author_id = data.get("item_authors", {}).get(winner)
     added_by_text = f"<@{author_id}>" if author_id else "Unknown"
 
-    entry = {"title": data.get("title") or "Untitled", "winner": winner, "author_id": author_id, "timestamp": int(time.time())}
+    entry = {
+        "title": data.get("title") or "Untitled",
+        "winner": winner,
+        "author_id": author_id,
+        "timestamp": int(time.time())
+    }
     data.setdefault("cup_history", [])
     data["cup_history"].append(entry)
 
@@ -1148,10 +959,12 @@ async def endwc(interaction: discord.Interaction):
 
     embed = discord.Embed(
         title="🎉 World Cup Winner!",
-        description=(f"🏆 **{winner}** wins the World Cup of **{data.get('title')}**!\n\n✨ Added by: {added_by_text}"),
+        description=(
+            f"🏆 **{winner}** wins the World Cup of **{data.get('title')}**!\n\n"
+            f"✨ Added by: {added_by_text}"
+        ),
         color=discord.Color.green()
     )
-    embed.set_image(url="https://cdn.discordapp.com/attachments/1444274467864838207/1449046416453271633/IMG_8499.gif")
     await interaction.channel.send(embed=embed)
 
     data["running"] = False
@@ -1161,7 +974,7 @@ async def endwc(interaction: discord.Interaction):
 
 @client.tree.command(name="cuphistory", description="View past World Cups (public, paginated)")
 async def cuphistory(interaction: discord.Interaction):
-    await interaction.response.defer(thinking=True)  # NOT EPHEMERAL
+    await interaction.response.defer(thinking=True)
 
     data, _ = load_data()
     hist = data.get("cup_history", [])
@@ -1182,7 +995,11 @@ async def cuphistory(interaction: discord.Interaction):
             author_txt = f"<@{author}>" if author else "Unknown"
             ts = h.get("timestamp")
             when = f"<t:{int(ts)}:D>" if ts else "Unknown date"
-            e.add_field(name=f"{title}", value=f"🏆 **{winner}**\n✨ Added by: {author_txt}\n🕒 {when}", inline=False)
+            e.add_field(
+                name=f"{title}",
+                value=f"🏆 **{winner}**\n✨ Added by: {author_txt}\n🕒 {when}",
+                inline=False
+            )
         e.set_footer(text=f"Page {p+1}/{total}")
         return e
 
@@ -1210,34 +1027,15 @@ async def cuphistory(interaction: discord.Interaction):
         except asyncio.TimeoutError:
             break
 
-@client.tree.command(name="deletehistory", description="Delete a cup from history by exact title (staff only)")
-@app_commands.describe(title="Exact title to delete")
-async def deletehistory(interaction: discord.Interaction, title: str):
-    await interaction.response.defer(thinking=True, ephemeral=True)
-
-    if not user_allowed(interaction.user, ALLOWED_ROLE_IDS):
-        return await interaction.followup.send("❌ No permission.", ephemeral=True)
-
-    data, sha = load_data()
-    before = len(data.get("cup_history", []))
-
-    data["cup_history"] = [h for h in data.get("cup_history", []) if (h.get("title") or "") != title]
-
-    if len(data["cup_history"]) == before:
-        return await interaction.followup.send("⚠️ Not found.", ephemeral=True)
-
-    save_data(data, sha)
-    return await interaction.followup.send("🗑 Deleted.", ephemeral=True)
-
 @client.tree.command(name="authorleaderboard", description="Leaderboard by who added items (public)")
 async def authorleaderboard(interaction: discord.Interaction):
-    await interaction.response.defer(thinking=True)  # NOT EPHEMERAL
+    await interaction.response.defer(thinking=True)
 
     data, _ = load_data()
     scores = data.get("scores", {})
     item_authors = data.get("item_authors", {})
 
-    author_points = {}
+    author_points: Dict[str, int] = {}
     for item, pts in scores.items():
         aid = item_authors.get(item)
         if not aid:
@@ -1250,8 +1048,12 @@ async def authorleaderboard(interaction: discord.Interaction):
     rows = sorted(author_points.items(), key=lambda x: x[1], reverse=True)
     lines = [f"{i}. <@{aid}> — **{pts}**" for i, (aid, pts) in enumerate(rows[:25], start=1)]
 
-    embed = discord.Embed(title="🏅 Author Leaderboard", description="\n".join(lines), color=discord.Color.gold())
-    embed.set_footer(text="Points are based on World Cup win counts (scores).")
+    embed = discord.Embed(
+        title="🏅 Author Leaderboard",
+        description="\n".join(lines),
+        color=discord.Color.gold()
+    )
+    embed.set_footer(text="Points are based on match wins (scores).")
 
     return await interaction.followup.send(embed=embed, ephemeral=False)
 
@@ -1260,23 +1062,22 @@ async def wchelp(interaction: discord.Interaction):
     await interaction.response.defer(thinking=True, ephemeral=True)
 
     embed = discord.Embed(title="📝 World Cup Help", color=discord.Color.blue())
-    embed.add_field(name="/addwcitem", value="Add 1 item with an upload OR an image_url. Non-staff can only add one item total.", inline=False)
+    embed.add_field(name="/addwcitem", value="Add 1 item (everyone). Staff can add unlimited. Max 32 total.", inline=False)
     embed.add_field(name="/removewcitem", value="Remove item(s) (staff only)", inline=False)
     embed.add_field(name="/listwcitems", value="List items (public, paginated)", inline=False)
     embed.add_field(name="/startwc", value="Start tournament (staff only, needs exactly 32 items)", inline=False)
     embed.add_field(name="/closematch", value="Lock current match (staff only)", inline=False)
     embed.add_field(name="/nextwcround", value="Process match / advance rounds (staff only). Run twice between rounds.", inline=False)
     embed.add_field(name="/scoreboard", value="View progress (public)", inline=False)
-    embed.add_field(name="/resetwc", value="Reset tournament (staff only) — items deleted, history kept", inline=False)
+    embed.add_field(name="/resetwc", value="Reset tournament (staff only) — deletes items, keeps history", inline=False)
     embed.add_field(name="/endwc", value="Announce final winner (staff only) + save history", inline=False)
     embed.add_field(name="/cuphistory", value="View past cups (public)", inline=False)
-    embed.add_field(name="/deletehistory", value="Delete history entry by title (staff only)", inline=False)
     embed.add_field(name="/authorleaderboard", value="Leaderboard by item author (public)", inline=False)
 
     return await interaction.followup.send(embed=embed, ephemeral=True)
 
 # =========================================================
-# OPTIONAL: SCHEDULED TASKS LOOP (kept minimal)
+# OPTIONAL: SCHEDULED TASK LOOP (kept minimal)
 # =========================================================
 
 @tasks.loop(minutes=1)
