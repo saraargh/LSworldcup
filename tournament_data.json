@@ -140,9 +140,16 @@
         "phoebe (black cat)": "1238834298338152498"
     },
     "user_items": {},
-    "running": true,
+    "running": false,
     "title": "Animals",
     "round_stage": "1-items round",
     "last_winner": "phoebe (black cat)",
-    "cup_history": []
+    "cup_history": [
+        {
+            "title": "Animals",
+            "winner": "phoebe (black cat)",
+            "author_id": "1238834298338152498",
+            "timestamp": 1765919188
+        }
+    ]
 }
