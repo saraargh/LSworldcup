@@ -65,7 +65,9 @@
         "Husky",
         "Chinchilla"
     ],
-    "next_round": [],
+    "next_round": [
+        "Capybara"
+    ],
     "scores": {
         "Golden Retriever": 2,
         "Red Panda": 1,
@@ -73,7 +75,7 @@
         "Snow Leopard": 1,
         "Otter": 0,
         "Barn Owl": 1,
-        "Capybara": 0,
+        "Capybara": 1,
         "Fox": 0,
         "Hedgehog": 0,
         "Raccoon": 0,
@@ -102,22 +104,18 @@
     },
     "running": true,
     "title": "Animals",
-    "last_winner": null,
-    "last_match": {
-        "a": "Capybara",
-        "b": "Squirrel",
-        "message_id": 1450603413313290291,
-        "channel_id": 1438277790179921971,
-        "locked": true,
-        "locked_at": 1765921221,
-        "locked_counts": {
-            "a": 1,
-            "b": 0
-        },
-        "lock_reason": "Closed by s. just s.",
-        "prev_result": null
-    },
-    "finished_matches": [],
+    "last_winner": "Capybara",
+    "last_match": null,
+    "finished_matches": [
+        {
+            "a": "Capybara",
+            "b": "Squirrel",
+            "winner": "Capybara",
+            "a_votes": 1,
+            "b_votes": 0,
+            "timestamp": 1765921231
+        }
+    ],
     "round_stage": "Round of 32",
     "item_authors": {
         "Phoebe (Black Cat)": "1238834298338152498"
