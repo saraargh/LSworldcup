@@ -55,7 +55,8 @@
         "Better Than Revenge",
         "Peter",
         "Forever & Always",
-        "The Moment I Knew"
+        "The Moment I Knew",
+        "Now That We Don\u2019t Talk"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -84,7 +85,7 @@
         "Daylight": 1,
         "Paris": 3,
         "The Lakes": 13,
-        "Now That We Don\u2019t Talk": 3,
+        "Now That We Don\u2019t Talk": 4,
         "Is It Over Now?": 7,
         "Slut!": 1,
         "The Bolter": 6,
@@ -93,17 +94,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "The Moment I Knew",
-    "last_match": {
-        "a": "Now That We Don\u2019t Talk",
-        "b": "Dress",
-        "message_id": 1450565379100512396,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Now That We Don\u2019t Talk",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -174,6 +166,13 @@
             "winner": "The Moment I Knew",
             "a_votes": 0,
             "b_votes": 1
+        },
+        {
+            "a": "Now That We Don\u2019t Talk",
+            "b": "Dress",
+            "winner": "Now That We Don\u2019t Talk",
+            "a_votes": 1,
+            "b_votes": 0
         }
     ],
     "round_stage": "Round of 32",
