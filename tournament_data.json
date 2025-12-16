@@ -98,7 +98,16 @@
     "running": true,
     "title": "Test",
     "last_winner": "Tim McGraw",
-    "last_match": null,
+    "last_match": {
+        "a": "Ours",
+        "b": "Better Than Revenge",
+        "message_id": 1450565128343916574,
+        "channel_id": 1438277790179921971,
+        "locked": false,
+        "locked_at": null,
+        "locked_counts": null,
+        "lock_reason": null
+    },
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
