@@ -88,7 +88,16 @@
     "running": true,
     "title": "Test",
     "last_winner": "White Horse",
-    "last_match": null,
+    "last_match": {
+        "a": "Come Back\u2026 Be Here",
+        "b": "It\u2019s Nice to Have a Friend",
+        "message_id": 1450565584529002547,
+        "channel_id": 1438277790179921971,
+        "locked": false,
+        "locked_at": null,
+        "locked_counts": null,
+        "lock_reason": null
+    },
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
