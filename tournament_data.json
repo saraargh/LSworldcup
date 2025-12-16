@@ -63,7 +63,8 @@
     ],
     "next_round": [
         "Sad Beautiful Tragic",
-        "Picture to Burn"
+        "Picture to Burn",
+        "Never Grow Up"
     ],
     "scores": {
         "Tim McGraw": 1,
@@ -78,7 +79,7 @@
         "Last Kiss": 4,
         "Haunted": 2,
         "Ours": 2,
-        "Never Grow Up": 7,
+        "Never Grow Up": 8,
         "Sad Beautiful Tragic": 3,
         "Starlight": 0,
         "Come Back\u2026 Be Here": 1,
@@ -101,18 +102,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Picture to Burn",
-    "last_match": {
-        "a": "Never Grow Up",
-        "b": "Innocent",
-        "message_id": 1450556041296089262,
-        "channel_id": 1438277790179921971,
-        "locked": true,
-        "locked_counts": {
-            "a": 1,
-            "b": 0
-        }
-    },
+    "last_winner": "Never Grow Up",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -125,6 +116,13 @@
             "a": "Picture to Burn",
             "b": "Teardrops on My Guitar",
             "winner": "Picture to Burn",
+            "a_votes": 1,
+            "b_votes": 0
+        },
+        {
+            "a": "Never Grow Up",
+            "b": "Innocent",
+            "winner": "Never Grow Up",
             "a_votes": 1,
             "b_votes": 0
         }
