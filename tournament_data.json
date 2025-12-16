@@ -87,23 +87,7 @@
     "Corgi",
     "Samoyed",
     "Seal",
-    "Fennec Fox",
-    "Tiger",
-    "Elephant",
-    "Panda",
-    "Giraffe",
-    "Dolphin",
-    "Orca",
-    "Manatee",
-    "Meerkat",
-    "Lemur",
-    "Sloth",
-    "Squirrel",
-    "Chinchilla",
-    "Husky",
-    "Shiba Inu",
-    "Arctic Wolf",
-    "Black Cat"
+    "Fennec Fox"
   ],
 
   "next_round": [],
@@ -115,7 +99,7 @@
 
   "running": true,
   "title": "Animals Test Cup",
-  "round_stage": "Round of 32",
+  "round_stage": "Round of 16",
   "last_winner": null,
 
   "cup_history": []
