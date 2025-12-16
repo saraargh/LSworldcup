@@ -61,7 +61,8 @@
         "Sad Beautiful Tragic",
         "Picture to Burn",
         "Never Grow Up",
-        "The Lakes"
+        "The Lakes",
+        "The Bolter"
     ],
     "scores": {
         "Tim McGraw": 1,
@@ -93,26 +94,14 @@
         "Now That We Don\u2019t Talk": 3,
         "Is It Over Now?": 7,
         "Slut!": 1,
-        "The Bolter": 5,
+        "The Bolter": 6,
         "Peter": 10,
         "Chloe or Sam or Sophia or Marcus": 4
     },
     "running": true,
     "title": "Test",
-    "last_winner": "The Lakes",
-    "last_match": {
-        "a": "Dancing With Our Hands Tied",
-        "b": "The Bolter",
-        "message_id": 1450564866782793908,
-        "channel_id": 1438277790179921971,
-        "locked": true,
-        "locked_at": 1765912039,
-        "locked_counts": {
-            "a": 0,
-            "b": 1
-        },
-        "lock_reason": "Closed by s. just s."
-    },
+    "last_winner": "The Bolter",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -141,6 +130,13 @@
             "winner": "The Lakes",
             "a_votes": 0,
             "b_votes": 0
+        },
+        {
+            "a": "Dancing With Our Hands Tied",
+            "b": "The Bolter",
+            "winner": "The Bolter",
+            "a_votes": 0,
+            "b_votes": 1
         }
     ],
     "round_stage": "Round of 32",
