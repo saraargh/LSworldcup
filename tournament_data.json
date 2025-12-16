@@ -60,10 +60,11 @@
         "Picture to Burn",
         "Never Grow Up",
         "The Lakes",
-        "The Bolter"
+        "The Bolter",
+        "Tim McGraw"
     ],
     "scores": {
-        "Tim McGraw": 1,
+        "Tim McGraw": 2,
         "Picture to Burn": 3,
         "Our Song": 1,
         "Teardrops on My Guitar": 0,
@@ -98,17 +99,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "The Bolter",
-    "last_match": {
-        "a": "Tim McGraw",
-        "b": "Daylight",
-        "message_id": 1450565059939008554,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Tim McGraw",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -144,6 +136,13 @@
             "winner": "The Bolter",
             "a_votes": 0,
             "b_votes": 1
+        },
+        {
+            "a": "Tim McGraw",
+            "b": "Daylight",
+            "winner": "Tim McGraw",
+            "a_votes": 1,
+            "b_votes": 0
         }
     ],
     "round_stage": "Round of 32",
