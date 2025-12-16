@@ -54,7 +54,8 @@
         "Peter",
         "Forever & Always",
         "The Moment I Knew",
-        "Now That We Don\u2019t Talk"
+        "Now That We Don\u2019t Talk",
+        "Is It Over Now?"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -84,7 +85,7 @@
         "Paris": 3,
         "The Lakes": 13,
         "Now That We Don\u2019t Talk": 4,
-        "Is It Over Now?": 7,
+        "Is It Over Now?": 8,
         "Slut!": 1,
         "The Bolter": 6,
         "Peter": 11,
@@ -92,17 +93,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Now That We Don\u2019t Talk",
-    "last_match": {
-        "a": "I Wish You Would",
-        "b": "Is It Over Now?",
-        "message_id": 1450565410280968344,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Is It Over Now?",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -180,6 +172,13 @@
             "winner": "Now That We Don\u2019t Talk",
             "a_votes": 1,
             "b_votes": 0
+        },
+        {
+            "a": "I Wish You Would",
+            "b": "Is It Over Now?",
+            "winner": "Is It Over Now?",
+            "a_votes": 0,
+            "b_votes": 1
         }
     ],
     "round_stage": "Round of 32",
