@@ -51,14 +51,15 @@
         "Now That We Don\u2019t Talk",
         "Is It Over Now?",
         "Last Kiss",
-        "Breathe"
+        "Breathe",
+        "White Horse"
     ],
     "scores": {
         "Tim McGraw": 2,
         "Picture to Burn": 3,
         "Our Song": 1,
         "Teardrops on My Guitar": 0,
-        "White Horse": 4,
+        "White Horse": 5,
         "Forever & Always": 9,
         "Breathe": 6,
         "Better Than Revenge": 2,
@@ -89,17 +90,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Breathe",
-    "last_match": {
-        "a": "Our Song",
-        "b": "White Horse",
-        "message_id": 1450565549552832685,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "White Horse",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -196,6 +188,13 @@
             "a": "Slut!",
             "b": "Breathe",
             "winner": "Breathe",
+            "a_votes": 0,
+            "b_votes": 1
+        },
+        {
+            "a": "Our Song",
+            "b": "White Horse",
+            "winner": "White Horse",
             "a_votes": 0,
             "b_votes": 1
         }
