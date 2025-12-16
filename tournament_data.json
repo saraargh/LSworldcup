@@ -15,30 +15,29 @@
         "Never Grow Up",
         "Sad Beautiful Tragic",
         "Starlight",
-        "Come Back… Be Here",
+        "Come Back\u2026 Be Here",
         "The Moment I Knew",
         "Welcome to New York",
         "I Wish You Would",
         "This Love",
         "Dancing With Our Hands Tied",
         "Dress",
-        "It’s Nice to Have a Friend",
+        "It\u2019s Nice to Have a Friend",
         "Daylight",
         "Paris",
         "The Lakes",
-        "Now That We Don’t Talk",
+        "Now That We Don\u2019t Talk",
         "Is It Over Now?",
         "Slut!",
         "The Bolter",
         "Peter",
-        "Chloe or Sam or Sophia or Marcus"
+        "Chloe or Sam or Sophia or Marcus",
+        "1"
     ],
-
     "current_round": [],
     "next_round": [
         "The Moment I Knew"
     ],
-
     "scores": {
         "Tim McGraw": 1,
         "Picture to Burn": 2,
@@ -55,30 +54,29 @@
         "Never Grow Up": 7,
         "Sad Beautiful Tragic": 2,
         "Starlight": 0,
-        "Come Back… Be Here": 1,
+        "Come Back\u2026 Be Here": 1,
         "The Moment I Knew": 5,
         "Welcome to New York": 2,
         "I Wish You Would": 3,
         "This Love": 5,
         "Dancing With Our Hands Tied": 3,
         "Dress": 2,
-        "It’s Nice to Have a Friend": 1,
+        "It\u2019s Nice to Have a Friend": 1,
         "Daylight": 1,
         "Paris": 3,
         "The Lakes": 12,
-        "Now That We Don’t Talk": 3,
+        "Now That We Don\u2019t Talk": 3,
         "Is It Over Now?": 7,
         "Slut!": 1,
         "The Bolter": 5,
         "Peter": 10,
-        "Chloe or Sam or Sophia or Marcus": 4
+        "Chloe or Sam or Sophia or Marcus": 4,
+        "1": 0
     },
-
     "running": false,
     "title": "TS SONGS",
     "last_winner": "The Moment I Knew",
     "last_match": null,
-
     "finished_matches": [
         {
             "a": "Forever & Always",
@@ -94,18 +92,13 @@
             "a_votes": 0,
             "b_votes": 1
         }
-        
     ],
-
     "round_stage": "Finals",
-
-
-    "item_authors": {},
-
+    "item_authors": {
+        "1": "1238834298338152498"
+    },
     "user_added": {},
-
     "user_items": {},
-
     "history": [
         {
             "title": "TS SONGS",
@@ -113,5 +106,6 @@
             "added_by": "Unknown",
             "ended_at": "2025-12-12T00:00:00Z"
         }
-    ]
+    ],
+    "cup_history": []
 }
