@@ -64,12 +64,13 @@
         "Chinchilla"
     ],
     "next_round": [
-        "Capybara"
+        "Capybara",
+        "Axolotl"
     ],
     "scores": {
         "Golden Retriever": 2,
         "Red Panda": 1,
-        "Axolotl": 0,
+        "Axolotl": 1,
         "Snow Leopard": 1,
         "Otter": 0,
         "Barn Owl": 1,
@@ -102,28 +103,8 @@
     },
     "running": true,
     "title": "Animals",
-    "last_winner": "Capybara",
-    "last_match": {
-        "a": "Axolotl",
-        "b": "Fennec Fox",
-        "message_id": 1450603532498501764,
-        "channel_id": 1438277790179921971,
-        "locked": true,
-        "locked_at": 1765921317,
-        "locked_counts": {
-            "a": 1,
-            "b": 0
-        },
-        "lock_reason": "Processed by s. just s.",
-        "prev_result": {
-            "a": "Capybara",
-            "b": "Squirrel",
-            "winner": "Capybara",
-            "a_votes": 1,
-            "b_votes": 0,
-            "timestamp": 1765921231
-        }
-    },
+    "last_winner": "Axolotl",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Capybara",
@@ -132,6 +113,14 @@
             "a_votes": 1,
             "b_votes": 0,
             "timestamp": 1765921231
+        },
+        {
+            "a": "Axolotl",
+            "b": "Fennec Fox",
+            "winner": "Axolotl",
+            "a_votes": 1,
+            "b_votes": 0,
+            "timestamp": 1765921318
         }
     ],
     "round_stage": "Round of 32",
