@@ -105,10 +105,13 @@
         "b": "The Bolter",
         "message_id": 1450564866782793908,
         "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
+        "locked": true,
+        "locked_at": 1765912039,
+        "locked_counts": {
+            "a": 0,
+            "b": 1
+        },
+        "lock_reason": "Closed by s. just s."
     },
     "finished_matches": [
         {
