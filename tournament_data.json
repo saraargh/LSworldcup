@@ -2,19 +2,22 @@
     "items": [
         "sl",
         "csm",
-        "dn"
+        "dn",
+        "phoebe"
     ],
     "item_images": {
         "sl": "wc_images/sl_323607881f.png",
         "csm": "wc_images/csm_dbde7e5d11.png",
-        "dn": "wc_images/dn_d984cbcd37.png"
+        "dn": "wc_images/dn_d984cbcd37.png",
+        "phoebe": "wc_images/phoebe_c1ca765123.png"
     },
     "current_round": [],
     "next_round": [],
     "scores": {
         "sl": 0,
         "csm": 0,
-        "dn": 0
+        "dn": 0,
+        "phoebe": 0
     },
     "running": false,
     "title": "",
@@ -25,7 +28,8 @@
     "item_authors": {
         "sl": "1238834298338152498",
         "csm": "1238834298338152498",
-        "dn": "1238834298338152498"
+        "dn": "1238834298338152498",
+        "phoebe": "1238834298338152498"
     },
     "user_items": {},
     "cup_history": []
