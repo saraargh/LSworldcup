@@ -113,9 +113,9 @@
   "item_authors": {},
   "user_items": {},
 
-  "running": true,
-  "title": "Animals Test Cup",
-  "round_stage": "Round of 32",
+  "running": false,
+  "title": "",
+  "round_stage": "",
   "last_winner": null,
 
   "cup_history": []
