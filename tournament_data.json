@@ -102,47 +102,49 @@
         "phoebe (black cat)": 2
     },
     "current_round": [
-        "phoebe (black cat)"
+        "Koala",
+        "Barn Owl",
+        "Otter",
+        "Fennec Fox",
+        "Shiba Inu",
+        "Lemur",
+        "Squirrel",
+        "Chinchilla",
+        "Penguin",
+        "Arctic Wolf",
+        "Raccoon",
+        "Sloth",
+        "Seal",
+        "Husky",
+        "Snow Leopard",
+        "Giraffe",
+        "Hedgehog",
+        "Manatee",
+        "Axolotl",
+        "Fox",
+        "Orca",
+        "Capybara",
+        "Golden Retriever",
+        "Samoyed",
+        "Panda",
+        "Dolphin",
+        "Red Panda",
+        "phoebe (black cat)",
+        "Elephant",
+        "Meerkat",
+        "Tiger",
+        "Corgi"
     ],
     "next_round": [],
-    "finished_matches": [
-        {
-            "a": "Golden Retriever",
-            "b": "Red Panda",
-            "winner": "Red Panda",
-            "a_votes": 3,
-            "b_votes": 6
-        },
-        {
-            "a": "Axolotl",
-            "b": "Snow Leopard",
-            "winner": "Snow Leopard",
-            "a_votes": 2,
-            "b_votes": 5
-        },
-        {
-            "a": "Otter",
-            "b": "Barn Owl",
-            "winner": "Otter",
-            "a_votes": 7,
-            "b_votes": 4
-        },
-        {
-            "a": "phoebe (black cat)",
-            "b": "Capybara",
-            "winner": "phoebe (black cat)",
-            "a_votes": 5,
-            "b_votes": 2
-        }
-    ],
+    "finished_matches": [],
     "last_match": null,
     "item_authors": {
         "phoebe (black cat)": "1238834298338152498"
     },
     "user_items": {},
-    "running": false,
+    "running": true,
     "title": "Animals",
-    "round_stage": "1-items round",
-    "last_winner": "phoebe (black cat)",
+    "round_stage": "Round of 32",
+    "last_winner": null,
     "cup_history": []
 }
