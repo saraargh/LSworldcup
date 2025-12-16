@@ -57,7 +57,8 @@
         "The Bolter",
         "Tim McGraw",
         "Better Than Revenge",
-        "Peter"
+        "Peter",
+        "Forever & Always"
     ],
     "scores": {
         "Tim McGraw": 2,
@@ -65,7 +66,7 @@
         "Our Song": 1,
         "Teardrops on My Guitar": 0,
         "White Horse": 4,
-        "Forever & Always": 8,
+        "Forever & Always": 9,
         "Breathe": 5,
         "Better Than Revenge": 2,
         "Innocent": 3,
@@ -95,17 +96,8 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": "Peter",
-    "last_match": {
-        "a": "Forever & Always",
-        "b": "Paris",
-        "message_id": 1450565194391621722,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
+    "last_winner": "Forever & Always",
+    "last_match": null,
     "finished_matches": [
         {
             "a": "Chloe or Sam or Sophia or Marcus",
@@ -160,6 +152,13 @@
             "a": "Peter",
             "b": "This Love",
             "winner": "Peter",
+            "a_votes": 1,
+            "b_votes": 0
+        },
+        {
+            "a": "Forever & Always",
+            "b": "Paris",
+            "winner": "Forever & Always",
             "a_votes": 1,
             "b_votes": 0
         }
