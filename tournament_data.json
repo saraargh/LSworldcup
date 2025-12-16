@@ -65,7 +65,9 @@
         "Come Back\u2026 Be Here",
         "It\u2019s Nice to Have a Friend"
     ],
-    "next_round": [],
+    "next_round": [
+        "Sad Beautiful Tragic"
+    ],
     "scores": {
         "Tim McGraw": 1,
         "Picture to Burn": 2,
@@ -80,7 +82,7 @@
         "Haunted": 2,
         "Ours": 2,
         "Never Grow Up": 7,
-        "Sad Beautiful Tragic": 2,
+        "Sad Beautiful Tragic": 3,
         "Starlight": 0,
         "Come Back\u2026 Be Here": 1,
         "The Moment I Knew": 5,
@@ -102,18 +104,17 @@
     },
     "running": true,
     "title": "Test",
-    "last_winner": null,
-    "last_match": {
-        "a": "Chloe or Sam or Sophia or Marcus",
-        "b": "Sad Beautiful Tragic",
-        "message_id": 1450546067819991203,
-        "channel_id": 1438277790179921971,
-        "locked": false,
-        "locked_at": null,
-        "locked_counts": null,
-        "lock_reason": null
-    },
-    "finished_matches": [],
+    "last_winner": "Sad Beautiful Tragic",
+    "last_match": null,
+    "finished_matches": [
+        {
+            "a": "Chloe or Sam or Sophia or Marcus",
+            "b": "Sad Beautiful Tragic",
+            "winner": "Sad Beautiful Tragic",
+            "a_votes": 0,
+            "b_votes": 1
+        }
+    ],
     "round_stage": "Round of 32",
     "item_authors": {},
     "user_added": {},
