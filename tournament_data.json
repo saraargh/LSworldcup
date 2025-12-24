@@ -384,6 +384,12 @@
             "desc": "Regularly has conversations with his houseplants.",
             "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
             "user": "System"
+        },
+        {
+            "name": "CJ",
+            "desc": "Once accidentally joined a parade in Switzerland.",
+            "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -394,25 +400,12 @@
         {
             "name": "StMase vs Carl",
             "winner": "Carl"
+        },
+        {
+            "name": "CJ vs KD",
+            "winner": "CJ"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "CJ",
-            "desc": "Once accidentally joined a parade in Switzerland.",
-            "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "KD",
-            "desc": "so so so so so so pretty and nice",
-            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
-            "user": "System"
-        },
-        "message_id": 1453357204177682503,
-        "channel_id": 1438277790179921971,
-        "end_at": 1766577819.616359,
-        "votes": {}
-    }
+    "current_match": null
 }
