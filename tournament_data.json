@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Atmushorse",
-            "desc": "Half horse, half atmosphere, all chaos.",
-            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "William",
-            "desc": "Once tried to high-five a seagull and failed.",
-            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
-            "user": "System"
-        },
-        {
             "name": "Glazebot",
             "desc": "Spends way too much time staring at shiny rocks.",
             "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
@@ -413,22 +401,20 @@
     "leaderboard": [],
     "current_match": {
         "item_a": {
-            "name": "Brandi",
-            "desc": "Can identify any 90s pop song in under two seconds.",
-            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
+            "name": "Atmushorse",
+            "desc": "Half horse, half atmosphere, all chaos.",
+            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
             "user": "System"
         },
         "item_b": {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "name": "William",
+            "desc": "Once tried to high-five a seagull and failed.",
+            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
             "user": "System"
         },
-        "message_id": 1453354360632508456,
+        "message_id": 1453354569726689383,
         "channel_id": 1438277790179921971,
-        "end_at": 1766663485.981788,
-        "votes": {
-            "1238834298338152498": "B"
-        }
+        "end_at": 1766663531.536027,
+        "votes": {}
     }
 }
