@@ -214,7 +214,7 @@ class WC_Bot(discord.Client):
         view = VoteView(a['name'], b['name'])
         poll_msg = await channel.send("Cast your vote! (One choice only):", view=view)
         
-        data['current_match'] = {"item_a": a, "item_b": b, "message_id": poll_msg.id, "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 86400, "votes": {}}
+        data['current_match'] = {"item_a": a, "item_b": b, "message_id": poll_msg.id, "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 60, "votes": {}}
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
 
