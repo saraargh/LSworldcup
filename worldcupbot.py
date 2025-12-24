@@ -110,6 +110,45 @@ class VoteView(ui.View):
         save_data(data, sha)
         await interaction.response.send_message(f"✅ Vote recorded for **{self.item_b_name}**!", ephemeral=True)
 
+class ItemGallery(ui.View):
+    def __init__(self, items):
+        super().__init__(timeout=120)
+        self.items = items
+        self.index = 0
+        self.mode = "GALLERY"
+
+    def create_content(self):
+        if self.mode == "GALLERY":
+            item = self.items[self.index]
+            embed = discord.Embed(title=item['name'], description=item['desc'], color=0x3498db)
+            embed.set_image(url=item['image'])
+            embed.set_footer(text=f"Item {self.index+1}/{len(self.items)} | Added by {item['user']}")
+            return embed
+        else:
+            list_text = "\n".join([f"{i+1}. **{item['name']}**" for i, item in enumerate(self.items)])
+            return discord.Embed(title="📋 Entry List", description=list_text, color=0x3498db)
+
+    @ui.button(label="⬅️", style=discord.ButtonStyle.gray)
+    async def prev(self, interaction: discord.Interaction, button: ui.Button):
+        if self.mode == "GALLERY":
+            self.index = (self.index - 1) % len(self.items)
+            await interaction.response.edit_message(embed=self.create_content())
+        else:
+            await interaction.response.defer()
+
+    @ui.button(label="➡️", style=discord.ButtonStyle.gray)
+    async def next(self, interaction: discord.Interaction, button: ui.Button):
+        if self.mode == "GALLERY":
+            self.index = (self.index + 1) % len(self.items)
+            await interaction.response.edit_message(embed=self.create_content())
+        else:
+            await interaction.response.defer()
+
+    @ui.button(label="Toggle List/Gallery", style=discord.ButtonStyle.blurple)
+    async def toggle(self, interaction: discord.Interaction, button: ui.Button):
+        self.mode = "LIST" if self.mode == "GALLERY" else "GALLERY"
+        await interaction.response.edit_message(embed=self.create_content())
+
 # =========================================================
 # BOT CORE
 # =========================================================
@@ -135,7 +174,6 @@ class WC_Bot(discord.Client):
         v1 = list(votes.values()).count("A")
         v2 = list(votes.values()).count("B")
         
-        # Determine winner
         if v1 > v2: winner = match['item_a']
         elif v2 > v1: winner = match['item_b']
         else: winner = random.choice([match['item_a'], match['item_b']])
@@ -183,12 +221,20 @@ class WC_Bot(discord.Client):
         
         data['current_match'] = {
             "item_a": a, "item_b": b, "message_id": poll_msg.id, 
-            "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 60, "votes": {}
+            "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 86400, "votes": {}
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
 
 bot = WC_Bot()
+
+@bot.tree.command(name="listitems", description="View all entries in gallery or list mode")
+async def listitems(interaction: discord.Interaction):
+    data, _ = load_data()
+    items = data.get('items', [])
+    if not items: return await interaction.response.send_message("The list is currently empty.")
+    view = ItemGallery(items)
+    await interaction.response.send_message(embed=view.create_content(), view=view)
 
 @bot.tree.command(name="choosecategory")
 async def choosecategory(interaction: discord.Interaction):
@@ -205,7 +251,7 @@ async def choosecategory(interaction: discord.Interaction):
 async def startworldcup(interaction: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in interaction.user.roles): return
     data, sha = load_data()
-    if not data.get('current_cat'): return await interaction.response.send_message("Pick a category first with /choosecategory!")
+    if not data.get('current_cat'): return await interaction.response.send_message("Pick a category first!")
     random.shuffle(data['items'])
     data['bracket'] = data['items']
     data['finished_matches'], data['winners_pool'] = [], []
