@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "People in the landing strip",
     "title": "People in the landing strip",
     "items": [
@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "AKI",
-            "desc": "Landing Strip Resident",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "KD",
-            "desc": "Landing Strip Resident",
-            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
-            "user": "System"
-        },
-        {
             "name": "William",
             "desc": "Landing Strip Resident",
             "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
@@ -411,5 +399,21 @@
     "winners_pool": [],
     "finished_matches": [],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "AKI",
+            "desc": "Landing Strip Resident",
+            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "KD",
+            "desc": "Landing Strip Resident",
+            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
+            "user": "System"
+        },
+        "message_id": 1453342819476312176,
+        "channel_id": 1438277790179921971,
+        "end_at": 1766660731.078354
+    }
 }
