@@ -3,7 +3,12 @@
     "current_cat": null,
     "title": "World Cup",
     "items": [],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "Animals",
+            "user": "s. just s."
+        }
+    ],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
