@@ -33,8 +33,6 @@ def keep_alive():
 # CONFIG
 # =========================================================
 TOKEN = os.getenv("WC_TOKEN") or os.getenv("TOKEN")
-UK_TZ = pytz.timezone("Europe/London")
-
 GITHUB_REPO = os.getenv("GITHUB_REPO", "saraargh/LSworldcup")
 GITHUB_FILE_PATH = os.getenv("TOURNAMENT_JSON_PATH", "tournament_data.json")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
@@ -55,7 +53,7 @@ def load_data():
             return json.loads(raw), content.get("sha")
     except Exception as e:
         print(f"Load Error: {e}")
-    return {"status": "IDLE", "items": [], "suggestions": [], "leaderboard": [], "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None}, None
+    return {"status": "IDLE", "items": [], "suggestions": [], "leaderboard": [], "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None, "current_cat": "World Cup"}, None
 
 def save_data(data, sha=None):
     try:
@@ -78,13 +76,12 @@ def get_round_name(count):
     return "Grand Final"
 
 # =========================================================
-# VOTING SYSTEM
+# UI COMPONENTS
 # =========================================================
 class VoteView(ui.View):
     def __init__(self, item_a_name, item_b_name):
         super().__init__(timeout=None)
-        self.item_a_name = item_a_name
-        self.item_b_name = item_b_name
+        self.item_a_name, self.item_b_name = item_a_name, item_b_name
 
     @ui.button(label="Vote Red", style=discord.ButtonStyle.danger, custom_id="vote_red")
     async def vote_red(self, interaction: discord.Interaction, button: ui.Button):
@@ -92,9 +89,8 @@ class VoteView(ui.View):
         match = data.get("current_match")
         if not match: return await interaction.response.send_message("No active match!", ephemeral=True)
         votes = match.get("votes", {})
-        user_id = str(interaction.user.id)
-        if user_id in votes: return await interaction.response.send_message("You have already voted!", ephemeral=True)
-        votes[user_id] = "A"
+        if str(interaction.user.id) in votes: return await interaction.response.send_message("You already voted!", ephemeral=True)
+        votes[str(interaction.user.id)] = "A"
         match["votes"] = votes
         save_data(data, sha)
         await interaction.response.send_message(f"✅ Vote recorded for **{self.item_a_name}**!", ephemeral=True)
@@ -105,55 +101,40 @@ class VoteView(ui.View):
         match = data.get("current_match")
         if not match: return await interaction.response.send_message("No active match!", ephemeral=True)
         votes = match.get("votes", {})
-        user_id = str(interaction.user.id)
-        if user_id in votes: return await interaction.response.send_message("You have already voted!", ephemeral=True)
-        votes[user_id] = "B"
+        if str(interaction.user.id) in votes: return await interaction.response.send_message("You already voted!", ephemeral=True)
+        votes[str(interaction.user.id)] = "B"
         match["votes"] = votes
         save_data(data, sha)
         await interaction.response.send_message(f"✅ Vote recorded for **{self.item_b_name}**!", ephemeral=True)
 
-# =========================================================
-# GALLERY / LIST TOGGLE VIEW
-# =========================================================
 class ItemGallery(ui.View):
     def __init__(self, items):
         super().__init__(timeout=120)
-        self.items = items
-        self.index = 0
-        self.mode = "GALLERY" # GALLERY or LIST
+        self.items, self.index, self.mode = items, 0, "GALLERY"
 
     def create_content(self):
         if self.mode == "GALLERY":
             item = self.items[self.index]
-            embed = discord.Embed(title=item['name'], description=item['desc'], color=0x3498db)
-            embed.set_image(url=item['image'])
+            embed = discord.Embed(title=item['name'], description=item['desc'], color=0x3498db).set_image(url=item['image'])
             embed.set_footer(text=f"Item {self.index+1}/{len(self.items)} | Added by {item['user']}")
-            return embed, None
-        else:
-            list_text = "\n".join([f"{i+1}. **{item['name']}**" for i, item in enumerate(self.items)])
-            embed = discord.Embed(title="📋 Entry List", description=list_text, color=0x3498db)
-            return embed, None
+            return embed
+        list_text = "\n".join([f"{i+1}. **{item['name']}**" for i, item in enumerate(self.items)])
+        return discord.Embed(title="📋 Entry List", description=list_text, color=0x3498db)
 
     @ui.button(label="⬅️", style=discord.ButtonStyle.gray)
-    async def prev(self, interaction: discord.Interaction, button: ui.Button):
-        if self.mode == "LIST": return await interaction.response.defer()
-        self.index = (self.index - 1) % len(self.items)
-        embed, _ = self.create_content()
-        await interaction.response.edit_message(embed=embed, view=self)
+    async def prev(self, i, b):
+        if self.mode == "GALLERY": self.index = (self.index - 1) % len(self.items)
+        await i.response.edit_message(embed=self.create_content())
 
     @ui.button(label="➡️", style=discord.ButtonStyle.gray)
-    async def next(self, interaction: discord.Interaction, button: ui.Button):
-        if self.mode == "LIST": return await interaction.response.defer()
-        self.index = (self.index + 1) % len(self.items)
-        embed, _ = self.create_content()
-        await interaction.response.edit_message(embed=embed, view=self)
+    async def next(self, i, b):
+        if self.mode == "GALLERY": self.index = (self.index + 1) % len(self.items)
+        await i.response.edit_message(embed=self.create_content())
 
     @ui.button(label="Toggle View", style=discord.ButtonStyle.blurple)
-    async def toggle(self, interaction: discord.Interaction, button: ui.Button):
+    async def toggle(self, i, b):
         self.mode = "LIST" if self.mode == "GALLERY" else "GALLERY"
-        button.label = "Switch to Gallery" if self.mode == "LIST" else "Switch to List"
-        embed, _ = self.create_content()
-        await interaction.response.edit_message(embed=embed, view=self)
+        await i.response.edit_message(embed=self.create_content())
 
 # =========================================================
 # BOT CORE
@@ -173,33 +154,6 @@ class WC_Bot(discord.Client):
             if datetime.datetime.now().timestamp() > data['current_match']['end_at']:
                 await self.resolve_match(data, sha)
 
-    async def resolve_match(self, data, sha):
-        match = data['current_match']
-        chan = self.get_channel(match['channel_id'])
-        votes = match.get("votes", {})
-        v1 = list(votes.values()).count("A")
-        v2 = list(votes.values()).count("B")
-        winner = match['item_a'] if v1 > v2 else match['item_b'] if v2 > v1 else random.choice([match['item_a'], match['item_b']])
-        data.setdefault('finished_matches', []).append({"name": f"{match['item_a']['name']} vs {match['item_b']['name']}", "winner": winner['name']})
-        data.setdefault('winners_pool', []).append(winner)
-        data['current_match'] = None
-        embed = discord.Embed(title=f"🏆 Winner: {winner['name']}", description=f"{winner.get('desc', '')}\n\nFinal Score: {v1} - {v2}", color=0x2ecc71).set_image(url=winner['image'])
-        await chan.send(embed=embed)
-
-        if not data['bracket'] and len(data['winners_pool']) > 1:
-            data['bracket'], data['winners_pool'] = data['winners_pool'], []
-            await chan.send(f"🛡️ **Round Complete! Moving to {get_round_name(len(data['bracket']))}.**")
-            save_data(data, sha)
-            await self.post_next(chan)
-        elif not data['bracket'] and len(data['winners_pool']) == 1:
-            await chan.send(f"🎊 **TOURNAMENT CHAMPION: {winner['name']}!**")
-            data.setdefault('leaderboard', []).append({"user": winner['user'], "item": winner['name']})
-            data['status'] = "FINISHED"
-            save_data(data, sha)
-        else:
-            save_data(data, sha)
-            await self.post_next(chan)
-
     async def post_next(self, channel):
         data, sha = load_data()
         if len(data['bracket']) < 2: return
@@ -213,45 +167,42 @@ class WC_Bot(discord.Client):
 
         view = VoteView(a['name'], b['name'])
         poll_msg = await channel.send("Cast your vote! (One choice only):", view=view)
-        
         data['current_match'] = {"item_a": a, "item_b": b, "message_id": poll_msg.id, "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 60, "votes": {}}
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
 
 bot = WC_Bot()
 
-@bot.tree.command(name="listitems", description="View all entries in gallery or list mode")
+@bot.tree.command(name="choosecategory")
+async def choosecategory(interaction: discord.Interaction):
+    if not any(r.id in ALLOWED_ROLE_IDS for r in interaction.user.roles): return
+    data, sha = load_data()
+    if not data['suggestions']: return await interaction.response.send_message("No suggestions.")
+    pick = random.choice(data['suggestions'])
+    data['current_cat'] = pick['name']
+    data['title'] = pick['name'] # Set title automatically here
+    save_data(data, sha)
+    await interaction.response.send_message(f"Selected Category: **{pick['name']}**")
+
+@bot.tree.command(name="startworldcup")
+async def startworldcup(interaction: discord.Interaction):
+    if not any(r.id in ALLOWED_ROLE_IDS for r in interaction.user.roles): return
+    data, sha = load_data()
+    if not data.get('current_cat'): return await interaction.response.send_message("Pick a category first!")
+    random.shuffle(data['items'])
+    data['bracket'] = data['items']
+    data['finished_matches'], data['winners_pool'] = [], []
+    save_data(data, sha)
+    await interaction.response.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP BEGINS!**")
+    await bot.post_next(interaction.channel)
+
+@bot.tree.command(name="listitems")
 async def listitems(interaction: discord.Interaction):
     data, _ = load_data()
     items = data.get('items', [])
-    if not items: return await interaction.response.send_message("The list is currently empty.")
-    
+    if not items: return await interaction.response.send_message("Empty.")
     view = ItemGallery(items)
-    embed, _ = view.create_content() # Loads the first item immediately
-    await interaction.response.send_message(embed=embed, view=view)
-
-@bot.tree.command(name="scoreboard")
-async def scoreboard(interaction: discord.Interaction):
-    data, _ = load_data()
-    embed = discord.Embed(title="📊 Tournament Scoreboard", color=0x3498db)
-    upcoming = []
-    temp_bracket = data.get('bracket', [])
-    for i in range(0, len(temp_bracket), 2):
-        if i+1 < len(temp_bracket): upcoming.append(f"• {temp_bracket[i]['name']} vs {temp_bracket[i+1]['name']}")
-    embed.add_field(name="⏳ Upcoming Fixtures", value="\n".join(upcoming[:10]) or "No more matches left in this round!", inline=False)
-    history = data.get('finished_matches', [])
-    if history: embed.add_field(name="🏆 Recent Results", value="\n".join([f"✅ {m['name']} -> **{m['winner']}**" for m in history[-5:]]), inline=False)
-    await interaction.response.send_message(embed=embed)
-
-@bot.tree.command(name="startworldcup")
-async def startworldcup(interaction: discord.Interaction, title: str):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in interaction.user.roles): return
-    data, sha = load_data()
-    random.shuffle(data['items'])
-    data['bracket'], data['title'], data['finished_matches'], data['winners_pool'] = data['items'], title, [], []
-    save_data(data, sha)
-    await interaction.response.send_message(f"🏆 **{title} HAS BEGUN!**")
-    await bot.post_next(interaction.channel)
+    await interaction.response.send_message(embed=view.create_content(), view=view)
 
 @bot.event
 async def on_ready():
