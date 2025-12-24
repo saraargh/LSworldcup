@@ -4,9 +4,9 @@
     "title": "People in the landing strip",
     "items": [
         {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "name": "Pops",
+            "desc": "Has a lucky penny named 'Reginald'.",
+            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
             "user": "System"
         },
         {
@@ -16,15 +16,9 @@
             "user": "System"
         },
         {
-            "name": "Prongcat",
-            "desc": "Has a secret collection of vintage staplers.",
-            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Glazebot",
-            "desc": "Spends way too much time staring at shiny rocks.",
-            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
+            "name": "Brandi",
+            "desc": "Can identify any 90s pop song in under two seconds.",
+            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
             "user": "System"
         },
         {
@@ -34,63 +28,9 @@
             "user": "System"
         },
         {
-            "name": "Goalie",
-            "desc": "Believes he is actually a wizard in training.",
-            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Natsuki",
-            "desc": "Loves the smell of old library books and rain.",
-            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Annyan",
-            "desc": "Accidentally wore two different shoes to a wedding once.",
-            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        {
             "name": "The Pilot",
             "desc": "Refuses to land if the vibes aren't correct.",
             "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Micah",
-            "desc": "Master of the unicycle but only in private.",
-            "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500",
-            "user": "System"
-        },
-        {
-            "name": "KD",
-            "desc": "so so so so so so pretty and nice",
-            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Space",
-            "desc": "Thinks gravity is just a suggestion, really.",
-            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Koko",
-            "desc": "Thinks pineapple belongs on absolutely everything.",
-            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
             "user": "System"
         },
         {
@@ -100,15 +40,21 @@
             "user": "System"
         },
         {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "name": "Ghosty",
+            "desc": "Not a phantom, just very pale and quiet.",
+            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
             "user": "System"
         },
         {
-            "name": "Shadow",
-            "desc": "Claims to have invented the word 'chillax'.",
-            "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
+            "name": "Prongcat",
+            "desc": "Has a secret collection of vintage staplers.",
+            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Goalie",
+            "desc": "Believes he is actually a wizard in training.",
+            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
             "user": "System"
         },
         {
@@ -118,45 +64,9 @@
             "user": "System"
         },
         {
-            "name": "Atmushorse",
-            "desc": "Half horse, half atmosphere, all chaos.",
-            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Mimu",
-            "desc": "Accidentally learned how to play the spoons.",
-            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Vee",
-            "desc": "Is secretly 500 bees in a trench coat.",
-            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Satanl",
-            "desc": "Surprisingly good at baking miniature cupcakes.",
-            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Ryo",
-            "desc": "Can't look at a triangle without getting nervous.",
-            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Ghosty",
-            "desc": "Not a phantom, just very pale and quiet.",
-            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
+            "name": "Glazebot",
+            "desc": "Spends way too much time staring at shiny rocks.",
+            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
             "user": "System"
         },
         {
@@ -166,9 +76,87 @@
             "user": "s. just s."
         },
         {
-            "name": "AKI",
-            "desc": "Expert at finding the best snacks in the terminal.",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "name": "Annyan",
+            "desc": "Accidentally wore two different shoes to a wedding once.",
+            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Micah",
+            "desc": "Master of the unicycle but only in private.",
+            "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Bry",
+            "desc": "Owns three identical hats for 'different occasions'.",
+            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Shadow",
+            "desc": "Claims to have invented the word 'chillax'.",
+            "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Satanl",
+            "desc": "Surprisingly good at baking miniature cupcakes.",
+            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Space",
+            "desc": "Thinks gravity is just a suggestion, really.",
+            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Natsuki",
+            "desc": "Loves the smell of old library books and rain.",
+            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Ryo",
+            "desc": "Can't look at a triangle without getting nervous.",
+            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Koko",
+            "desc": "Thinks pineapple belongs on absolutely everything.",
+            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
+            "user": "System"
+        },
+        {
+            "name": "Zombie",
+            "desc": "Only eats things that are bright neon green.",
+            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Atmushorse",
+            "desc": "Half horse, half atmosphere, all chaos.",
+            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
+            "user": "System"
+        },
+        {
+            "name": "KD",
+            "desc": "so so so so so so pretty and nice",
+            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
             "user": "System"
         },
         {
@@ -178,21 +166,33 @@
             "user": "System"
         },
         {
-            "name": "Brandi",
-            "desc": "Can identify any 90s pop song in under two seconds.",
-            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
+            "name": "AKI",
+            "desc": "Expert at finding the best snacks in the terminal.",
+            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Vee",
+            "desc": "Is secretly 500 bees in a trench coat.",
+            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Mimu",
+            "desc": "Accidentally learned how to play the spoons.",
+            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
             "user": "System"
         },
         {
             "name": "Rev",
             "desc": "Always has a spare battery for some reason.",
             "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
             "user": "System"
         }
     ],
@@ -216,165 +216,15 @@
     ],
     "bracket": [
         {
-            "name": "Prongcat",
-            "desc": "Has a secret collection of vintage staplers.",
-            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
+            "name": "Pops",
+            "desc": "Has a lucky penny named 'Reginald'.",
+            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
             "user": "System"
         },
         {
-            "name": "Glazebot",
-            "desc": "Spends way too much time staring at shiny rocks.",
-            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
-            "user": "System"
-        },
-        {
-            "name": "William",
-            "desc": "Once tried to high-five a seagull and failed.",
-            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Goalie",
-            "desc": "Believes he is actually a wizard in training.",
-            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Natsuki",
-            "desc": "Loves the smell of old library books and rain.",
-            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Annyan",
-            "desc": "Accidentally wore two different shoes to a wedding once.",
-            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        {
-            "name": "The Pilot",
-            "desc": "Refuses to land if the vibes aren't correct.",
-            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Micah",
-            "desc": "Master of the unicycle but only in private.",
-            "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500",
-            "user": "System"
-        },
-        {
-            "name": "KD",
-            "desc": "so so so so so so pretty and nice",
-            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Space",
-            "desc": "Thinks gravity is just a suggestion, really.",
-            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Koko",
-            "desc": "Thinks pineapple belongs on absolutely everything.",
-            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
-            "user": "System"
-        },
-        {
-            "name": "CJ",
-            "desc": "Once accidentally joined a parade in Switzerland.",
-            "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Shadow",
-            "desc": "Claims to have invented the word 'chillax'.",
-            "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
-            "user": "System"
-        },
-        {
-            "name": "StMase",
-            "desc": "Always knows exactly which way is North.",
-            "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg",
-            "user": "System"
-        },
-        {
-            "name": "Atmushorse",
-            "desc": "Half horse, half atmosphere, all chaos.",
-            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Mimu",
-            "desc": "Accidentally learned how to play the spoons.",
-            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Vee",
-            "desc": "Is secretly 500 bees in a trench coat.",
-            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Satanl",
-            "desc": "Surprisingly good at baking miniature cupcakes.",
-            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Ryo",
-            "desc": "Can't look at a triangle without getting nervous.",
-            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Ghosty",
-            "desc": "Not a phantom, just very pale and quiet.",
-            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Variety fridays",
-            "desc": "Washed but looking for a new laundry detergent.",
-            "image": "https://cdn.discordapp.com/attachments/1438277790179921971/1453336568369774694/ChatGPT_Image_Sep_20_2025_11_21_16_PM.png?ex=694d14a7&is=694bc327&hm=b31c210fd49f8d8247f5462fa2c89771c4ee35641348d334975e1b3c68635684&",
-            "user": "s. just s."
-        },
-        {
-            "name": "AKI",
-            "desc": "Expert at finding the best snacks in the terminal.",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "name": "Carl",
+            "desc": "Regularly has conversations with his houseplants.",
+            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
             "user": "System"
         },
         {
@@ -384,15 +234,177 @@
             "user": "System"
         },
         {
-            "name": "Rev",
-            "desc": "Always has a spare battery for some reason.",
-            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
+            "name": "William",
+            "desc": "Once tried to high-five a seagull and failed.",
+            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
             "user": "System"
         },
         {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
+            "name": "The Pilot",
+            "desc": "Refuses to land if the vibes aren't correct.",
+            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
+            "user": "System"
+        },
+        {
+            "name": "CJ",
+            "desc": "Once accidentally joined a parade in Switzerland.",
+            "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Ghosty",
+            "desc": "Not a phantom, just very pale and quiet.",
+            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Prongcat",
+            "desc": "Has a secret collection of vintage staplers.",
+            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Goalie",
+            "desc": "Believes he is actually a wizard in training.",
+            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
+            "user": "System"
+        },
+        {
+            "name": "StMase",
+            "desc": "Always knows exactly which way is North.",
+            "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg",
+            "user": "System"
+        },
+        {
+            "name": "Glazebot",
+            "desc": "Spends way too much time staring at shiny rocks.",
+            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Variety fridays",
+            "desc": "Washed but looking for a new laundry detergent.",
+            "image": "https://cdn.discordapp.com/attachments/1438277790179921971/1453336568369774694/ChatGPT_Image_Sep_20_2025_11_21_16_PM.png?ex=694d14a7&is=694bc327&hm=b31c210fd49f8d8247f5462fa2c89771c4ee35641348d334975e1b3c68635684&",
+            "user": "s. just s."
+        },
+        {
+            "name": "Annyan",
+            "desc": "Accidentally wore two different shoes to a wedding once.",
+            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Micah",
+            "desc": "Master of the unicycle but only in private.",
+            "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Bry",
+            "desc": "Owns three identical hats for 'different occasions'.",
+            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Shadow",
+            "desc": "Claims to have invented the word 'chillax'.",
+            "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Satanl",
+            "desc": "Surprisingly good at baking miniature cupcakes.",
+            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Space",
+            "desc": "Thinks gravity is just a suggestion, really.",
+            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Natsuki",
+            "desc": "Loves the smell of old library books and rain.",
+            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Ryo",
+            "desc": "Can't look at a triangle without getting nervous.",
+            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Koko",
+            "desc": "Thinks pineapple belongs on absolutely everything.",
+            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
+            "user": "System"
+        },
+        {
+            "name": "Zombie",
+            "desc": "Only eats things that are bright neon green.",
+            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Atmushorse",
+            "desc": "Half horse, half atmosphere, all chaos.",
+            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
+            "user": "System"
+        },
+        {
+            "name": "KD",
+            "desc": "so so so so so so pretty and nice",
+            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
+        },
+        {
+            "name": "AKI",
+            "desc": "Expert at finding the best snacks in the terminal.",
+            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Vee",
+            "desc": "Is secretly 500 bees in a trench coat.",
+            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Mimu",
+            "desc": "Accidentally learned how to play the spoons.",
+            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
+            "user": "System"
+        },
+        {
+            "name": "Rev",
+            "desc": "Always has a spare battery for some reason.",
+            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
             "user": "System"
         }
     ],
