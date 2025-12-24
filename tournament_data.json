@@ -33,13 +33,13 @@
         { "name": "Mimu", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500", "user": "System" },
         { "name": "Rev", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500", "user": "System" },
         { "name": "Carl", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500", "user": "System" },
-        { "name": "Koko", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1513284411032-95d4665ce74c?w=500", "user": "System" },
+        { "name": "Koko", "desc": "Landing Strip Resident", "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg", "user": "System" },
         { "name": "CJ", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500", "user": "System" },
         { "name": "Annyan", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500", "user": "System" },
         { "name": "The Pilot", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500", "user": "System" },
         { "name": "Mudae", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500", "user": "System" },
         { "name": "Glazebot", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500", "user": "System" },
-        { "name": "StMase", "desc": "Landing Strip Resident", "image": "https://images.unsplash.com/photo-1589952283406-b53a7d1347e8?w=500", "user": "System" }
+        { "name": "StMase", "desc": "Landing Strip Resident", "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg", "user": "System" }
     ],
     "suggestions": [
         { "name": "Animals", "user": "s. just s." },
