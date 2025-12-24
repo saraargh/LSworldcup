@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Brandi",
-            "desc": "Can identify any 90s pop song in under two seconds.",
-            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        {
             "name": "Natsuki",
             "desc": "Loves the smell of old library books and rain.",
             "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
@@ -407,5 +395,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Brandi",
+            "desc": "Can identify any 90s pop song in under two seconds.",
+            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
+        },
+        "message_id": 1453358446173884488,
+        "channel_id": 1438277790179921971,
+        "end_at": 1766578120.508566,
+        "votes": {}
+    }
 }
