@@ -390,33 +390,24 @@
             "desc": "Always has a spare battery for some reason.",
             "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
             "user": "System"
+        },
+        {
+            "name": "Carl",
+            "desc": "Regularly has conversations with his houseplants.",
+            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
         {
             "name": "Satanl vs Rev",
             "winner": "Rev"
+        },
+        {
+            "name": "StMase vs Carl",
+            "winner": "Carl"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "StMase",
-            "desc": "Always knows exactly which way is North.",
-            "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Carl",
-            "desc": "Regularly has conversations with his houseplants.",
-            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
-            "user": "System"
-        },
-        "message_id": 1453355931659276319,
-        "channel_id": 1438277790179921971,
-        "end_at": 1766577520.910579,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
