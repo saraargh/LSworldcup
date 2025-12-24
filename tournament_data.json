@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "People in the landing strip",
     "title": "People in the landing strip",
     "items": [
@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Carl",
-            "desc": "Regularly has conversations with his houseplants.",
-            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
-            "user": "System"
-        },
-        {
             "name": "Prongcat",
             "desc": "Has a secret collection of vintage staplers.",
             "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
@@ -411,5 +399,22 @@
     "winners_pool": [],
     "finished_matches": [],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Bry",
+            "desc": "Owns three identical hats for 'different occasions'.",
+            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Carl",
+            "desc": "Regularly has conversations with his houseplants.",
+            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
+            "user": "System"
+        },
+        "message_id": 1453348194112245843,
+        "channel_id": 1438277790179921971,
+        "end_at": 1766575671.595199,
+        "votes": {}
+    }
 }
