@@ -1,6 +1,8 @@
 import discord
 from discord import app_commands, ui
 from discord.ext import tasks
+from flask import Flask
+from threading import Thread
 import datetime
 import random
 import json
@@ -20,7 +22,9 @@ def home():
     return "Bot is alive!"
 
 def run_flask():
-    app.run(host='0.0.0.0', port=8080)
+    # Render and other hosts use environment variable PORT
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run_flask)
@@ -75,6 +79,16 @@ def save_data(data, sha=None):
         print(f"Save Error: {e}")
 
 # =========================================================
+# ROUND NAME HELPER
+# =========================================================
+def get_round_name(count):
+    if count > 16: return "Round of 32"
+    if count > 8: return "Round of 16"
+    if count > 4: return "Quarter-Finals"
+    if count > 2: return "Semi-Finals"
+    return "The Grand Final"
+
+# =========================================================
 # UI COMPONENTS
 # =========================================================
 
@@ -122,7 +136,7 @@ class ItemGallery(ui.View):
     def create_embed(self):
         item = self.items[self.index]
         embed = discord.Embed(title=item['name'], description=item['desc'], color=0x3498db).set_image(url=item['image'])
-        embed.set_footer(text=f"Item {self.index+1}/{len(self.items)} | Suggested by {item['user']}")
+        embed.set_footer(text=f"Item {self.index+1}/{len(self.items)} | Added by {item['user']}")
         return embed
     @ui.button(label="⬅️", style=discord.ButtonStyle.gray)
     async def prev(self, i, b):
@@ -144,7 +158,7 @@ class WC_Bot(discord.Client):
     async def setup_hook(self):
         self.auto_checker.start()
 
-    @tasks.loop(minutes=5)
+    @tasks.loop(minutes=5) # FOR TESTING: Change to seconds=30
     async def auto_checker(self):
         data, sha = load_data()
         if data.get("status") == "MATCH_ACTIVE" and data.get("current_match"):
@@ -168,13 +182,13 @@ class WC_Bot(discord.Client):
 
         if not data['bracket'] and len(data['winners_pool']) > 1:
             data['bracket'], data['winners_pool'] = data['winners_pool'], []
-            await chan.send("🛡️ **Round Complete! Next stage begins...**")
+            await chan.send(f"🛡️ **Round Complete! Moving to {get_round_name(len(data['bracket']))}.**")
             save_data(data, sha)
             await self.post_next(chan)
         elif not data['bracket'] and len(data['winners_pool']) == 1:
             await chan.send(f"🎊 **THE FINAL CHAMPION IS {winner['name']}!**")
             data.setdefault('leaderboard', []).append({"user": winner['user'], "item": winner['name']})
-            data['status'] = "IDLE"
+            data['status'] = "FINISHED"
             save_data(data, sha)
         else:
             save_data(data, sha)
@@ -185,12 +199,14 @@ class WC_Bot(discord.Client):
         if len(data['bracket']) < 2: return
         a, b = data['bracket'].pop(0), data['bracket'].pop(0)
         
-        await channel.send(f"⚔️ **NEW MATCH:** {a['name']} vs {b['name']}")
+        await channel.send(f"⚔️ **{get_round_name(len(data['bracket'])+2)}:** {a['name']} vs {b['name']}")
         for x in [a,b]:
             await channel.send(embed=discord.Embed(title=x['name']).set_image(url=x['image']))
         
         poll = await channel.send("Vote: 🔴 or 🔵")
         await poll.add_reaction("🔴"); await poll.add_reaction("🔵")
+        
+        # FOR TESTING: Change 86400 (24h) to 120 (2 mins)
         data['current_match'] = {"item_a": a, "item_b": b, "message_id": poll.id, "channel_id": channel.id, "end_at": datetime.datetime.now().timestamp() + 86400}
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
@@ -261,7 +277,7 @@ async def startworldcup(interaction: discord.Interaction, title: str):
     if not any(r.id in ALLOWED_ROLE_IDS for r in interaction.user.roles): return
     data, sha = load_data()
     random.shuffle(data['items'])
-    data['bracket'], data['title'], data['finished_matches'] = data['items'], title, []
+    data['bracket'], data['title'], data['finished_matches'], data['winners_pool'] = data['items'], title, [], []
     save_data(data, sha)
     await interaction.response.send_message(f"🏆 Starting: {title}")
     await bot.post_next(interaction.channel)
@@ -275,8 +291,5 @@ async def on_ready():
 # STARTING THE BOT
 # =========================================================
 if __name__ == "__main__":
-    keep_alive() # Starts the Flask server in a separate thread
-    try:
-        bot.run(TOKEN)
-    except discord.errors.LoginFailure:
-        print("Invalid Token. Check your environment variables.")
+    keep_alive() 
+    bot.run(TOKEN)
