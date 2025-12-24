@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "People in the landing strip",
     "title": "People in the landing strip",
     "items": [
@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Carl",
-            "desc": "Regularly has conversations with his houseplants.",
-            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
-            "user": "System"
-        },
-        {
             "name": "Brandi",
             "desc": "Can identify any 90s pop song in under two seconds.",
             "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
@@ -413,9 +401,9 @@
     "leaderboard": [],
     "current_match": {
         "item_a": {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "name": "Pops",
+            "desc": "Has a lucky penny named 'Reginald'.",
+            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
             "user": "System"
         },
         "item_b": {
@@ -424,11 +412,9 @@
             "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
             "user": "System"
         },
-        "message_id": 1453348194112245843,
+        "message_id": 1453353541115842564,
         "channel_id": 1438277790179921971,
-        "end_at": 1766575671.595199,
-        "votes": {
-            "1238834298338152498": "A"
-        }
+        "end_at": 1766663286.430761,
+        "votes": {}
     }
 }
