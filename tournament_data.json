@@ -2,7 +2,14 @@
     "status": "IDLE",
     "current_cat": "People in the landing strip",
     "title": "World Cup",
-    "items": [],
+    "items": [
+        {
+            "name": "Variety fridays",
+            "desc": "washed",
+            "image": "https://cdn.discordapp.com/attachments/1438277790179921971/1453336568369774694/ChatGPT_Image_Sep_20_2025_11_21_16_PM.png?ex=694d14a7&is=694bc327&hm=b31c210fd49f8d8247f5462fa2c89771c4ee35641348d334975e1b3c68635684&",
+            "user": "s. just s."
+        }
+    ],
     "suggestions": [
         {
             "name": "Animals",
