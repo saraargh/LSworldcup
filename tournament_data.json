@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "People in the landing strip",
     "title": "People in the landing strip",
     "items": [
@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Brandi",
-            "desc": "Can identify any 90s pop song in under two seconds.",
-            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
-            "user": "System"
-        },
-        {
             "name": "Variety fridays",
             "desc": "Washed but looking for a new laundry detergent.",
             "image": "https://cdn.discordapp.com/attachments/1438277790179921971/1453336568369774694/ChatGPT_Image_Sep_20_2025_11_21_16_PM.png?ex=694d14a7&is=694bc327&hm=b31c210fd49f8d8247f5462fa2c89771c4ee35641348d334975e1b3c68635684&",
@@ -413,22 +401,20 @@
     "leaderboard": [],
     "current_match": {
         "item_a": {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
+            "name": "Brandi",
+            "desc": "Can identify any 90s pop song in under two seconds.",
+            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
             "user": "System"
         },
         "item_b": {
-            "name": "Carl",
-            "desc": "Regularly has conversations with his houseplants.",
-            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
+            "name": "Bry",
+            "desc": "Owns three identical hats for 'different occasions'.",
+            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
             "user": "System"
         },
-        "message_id": 1453353541115842564,
+        "message_id": 1453354360632508456,
         "channel_id": 1438277790179921971,
-        "end_at": 1766663286.430761,
-        "votes": {
-            "1238834298338152498": "A"
-        }
+        "end_at": 1766663485.981788,
+        "votes": {}
     }
 }
