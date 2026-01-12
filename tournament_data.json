@@ -331,6 +331,12 @@
             "desc": "Collects clouds but only in his imagination.",
             "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
             "user": "System"
+        },
+        {
+            "name": "Glazebot",
+            "desc": "Spends way too much time staring at shiny rocks.",
+            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -373,27 +379,13 @@
             "name": "Kdai vs Natsuki",
             "winner": "Kdai",
             "score": "1-0"
+        },
+        {
+            "name": "Annyan vs Glazebot",
+            "winner": "Glazebot",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Annyan",
-            "desc": "Accidentally wore two different shoes to a wedding once.",
-            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Glazebot",
-            "desc": "Spends way too much time staring at shiny rocks.",
-            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
-            "user": "System"
-        },
-        "message_id": 1460312339646513429,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322393.151821,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
