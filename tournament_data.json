@@ -197,20 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "Carl",
-            "desc": "Regularly has conversations with his houseplants.",
-            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "The Pilot",
-            "desc": "Refuses to land if the vibes aren't correct.",
-            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
-            "user": "System"
-        }
-    ],
+    "bracket": [],
     "winners_pool": [
         {
             "name": "Satanl",
@@ -381,5 +368,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Carl",
+            "desc": "Regularly has conversations with his houseplants.",
+            "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "The Pilot",
+            "desc": "Refuses to land if the vibes aren't correct.",
+            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315148131504279,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323062.827463,
+        "votes": {}
+    }
 }
