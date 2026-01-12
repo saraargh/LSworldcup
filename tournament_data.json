@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Natsuki",
-            "desc": "Loves the smell of old library books and rain.",
-            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
-            "user": "System"
-        },
-        {
             "name": "Annyan",
             "desc": "Accidentally wore two different shoes to a wedding once.",
             "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
@@ -389,5 +377,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Natsuki",
+            "desc": "Loves the smell of old library books and rain.",
+            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
+            "user": "System"
+        },
+        "message_id": 1460312076160602205,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322330.359272,
+        "votes": {}
+    }
 }
