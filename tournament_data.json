@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Rev",
-            "desc": "Always has a spare battery for some reason.",
-            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        {
             "name": "Glazebot",
             "desc": "Spends way too much time staring at shiny rocks.",
             "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
@@ -371,5 +359,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Rev",
+            "desc": "Always has a spare battery for some reason.",
+            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
+        },
+        "message_id": 1460316418510819424,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323365.696278,
+        "votes": {}
+    }
 }
