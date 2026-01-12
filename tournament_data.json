@@ -325,6 +325,12 @@
             "desc": "Spends way too much time staring at shiny rocks.",
             "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
             "user": "System"
+        },
+        {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -372,27 +378,13 @@
             "name": "Annyan vs Glazebot",
             "winner": "Glazebot",
             "score": "0-1"
+        },
+        {
+            "name": "Mudae vs William",
+            "winner": "Mudae",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "William",
-            "desc": "Once tried to high-five a seagull and failed.",
-            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
-            "user": "System"
-        },
-        "message_id": 1460312409238540530,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322409.748418,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
