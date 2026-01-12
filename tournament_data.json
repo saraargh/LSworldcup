@@ -253,6 +253,12 @@
             "desc": "Spends way too much time staring at shiny rocks.",
             "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
             "user": "System"
+        },
+        {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -360,27 +366,13 @@
             "name": "Glazebot vs Mudae",
             "winner": "Glazebot",
             "score": "1-0"
+        },
+        {
+            "name": "Goalie vs Nagi",
+            "winner": "Nagi",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Goalie",
-            "desc": "Believes he is actually a wizard in training.",
-            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
-            "user": "System"
-        },
-        "message_id": 1460315524050452644,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323152.441471,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
