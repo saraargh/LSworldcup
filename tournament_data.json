@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Annyan",
-            "desc": "Accidentally wore two different shoes to a wedding once.",
-            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Glazebot",
-            "desc": "Spends way too much time staring at shiny rocks.",
-            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
-            "user": "System"
-        },
-        {
             "name": "Mudae",
             "desc": "A professional at losing car keys in plain sight.",
             "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
@@ -388,5 +376,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Annyan",
+            "desc": "Accidentally wore two different shoes to a wedding once.",
+            "image": "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Glazebot",
+            "desc": "Spends way too much time staring at shiny rocks.",
+            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
+            "user": "System"
+        },
+        "message_id": 1460312339646513429,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322393.151821,
+        "votes": {}
+    }
 }
