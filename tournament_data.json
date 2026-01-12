@@ -367,6 +367,12 @@
             "desc": "Only eats things that are bright neon green.",
             "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
             "user": "System"
+        },
+        {
+            "name": "Pops",
+            "desc": "Has a lucky penny named 'Reginald'.",
+            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -379,27 +385,13 @@
             "name": "Zombie vs CJ",
             "winner": "Zombie",
             "score": "1-0"
+        },
+        {
+            "name": "Pops vs Micah",
+            "winner": "Pops",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Micah",
-            "desc": "Master of the unicycle but only in private.",
-            "image": "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500",
-            "user": "System"
-        },
-        "message_id": 1460311498969710753,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322192.727381,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
