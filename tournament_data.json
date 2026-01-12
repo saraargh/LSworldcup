@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        {
-            "name": "AKI",
-            "desc": "Expert at finding the best snacks in the terminal.",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
-            "user": "System"
-        },
-        {
             "name": "Carl",
             "desc": "Regularly has conversations with his houseplants.",
             "image": "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500",
@@ -382,5 +370,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "AKI",
+            "desc": "Expert at finding the best snacks in the terminal.",
+            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315099188170836,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323051.302272,
+        "votes": {}
+    }
 }
