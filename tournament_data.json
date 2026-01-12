@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Brandi",
-            "desc": "Can identify any 90s pop song in under two seconds.",
-            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
-            "user": "System"
-        },
-        {
             "name": "Shadow",
             "desc": "Claims to have invented the word 'chillax'.",
             "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
@@ -385,5 +373,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Brandi",
+            "desc": "Can identify any 90s pop song in under two seconds.",
+            "image": "https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500",
+            "user": "System"
+        },
+        "message_id": 1460312897933807751,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322526.468688,
+        "votes": {}
+    }
 }
