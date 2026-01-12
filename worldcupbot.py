@@ -74,21 +74,21 @@ class ItemGallery(ui.View):
         txt = "\n".join([f"{idx+1}. **{x['name']}**" for idx, x in enumerate(self.items)])
         return discord.Embed(title="📋 All Entries", description=txt, color=0x3498db)
 
-    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="gal_prev")
+    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="gal_prev", row=0)
     async def prev(self, i, b):
         data, _ = load_data()
         self.items = data.get('items', [])
         self.index = (self.index - 1) % len(self.items)
         await i.response.edit_message(embed=self.create_content())
 
-    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="gal_next")
+    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="gal_next", row=0)
     async def next(self, i, b):
         data, _ = load_data()
         self.items = data.get('items', [])
         self.index = (self.index + 1) % len(self.items)
         await i.response.edit_message(embed=self.create_content())
 
-    @ui.button(label="Toggle View", style=discord.ButtonStyle.blurple, custom_id="gal_toggle")
+    @ui.button(label="Toggle View", style=discord.ButtonStyle.blurple, custom_id="gal_toggle", row=1)
     async def toggle(self, i, b):
         data, _ = load_data()
         self.items = data.get('items', [])
@@ -100,6 +100,7 @@ class MatchView(ui.View):
         super().__init__(timeout=None)
         self.item_a, self.item_b = item_a, item_b
         self.round_name, self.match_num = round_name, match_num
+        
         if item_a and item_b:
             self.vote_a.label = f"Vote for {item_a['name']}"
             self.vote_b.label = f"Vote for {item_b['name']}"
@@ -108,13 +109,13 @@ class MatchView(ui.View):
         item = self.item_a if page == 0 else self.item_b
         embed = discord.Embed(
             title=f"Match {self.match_num}: {self.round_name}",
-            description=f"**Comparing: {self.item_a['name']} vs {self.item_b['name']}**\n\n**Viewing:** {item['name']}\n{item.get('desc', '')}",
+            description=f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n**Currently Viewing:** {item['name']}\n{item.get('desc', '')}",
             color=0x3498db
         ).set_image(url=item['image'])
-        embed.set_footer(text=f"Entry {page+1} of 2 | Use arrows to switch view")
+        embed.set_footer(text=f"Entry {page+1} of 2 | Use arrows to compare entries")
         return embed
 
-    @ui.button(label="⬅️ Previous", style=discord.ButtonStyle.gray, custom_id="match_prev")
+    @ui.button(label="⬅️ Previous Entry", style=discord.ButtonStyle.gray, custom_id="match_prev", row=0)
     async def prev_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
@@ -122,7 +123,7 @@ class MatchView(ui.View):
         self.match_num, self.round_name = len(data['finished_matches'])+1, get_round_name(len(data['bracket'])+2)
         await i.response.edit_message(embed=self.create_embed(0))
 
-    @ui.button(label="Next ➡️", style=discord.ButtonStyle.gray, custom_id="match_next")
+    @ui.button(label="Next Entry ➡️", style=discord.ButtonStyle.gray, custom_id="match_next", row=0)
     async def next_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
@@ -130,22 +131,22 @@ class MatchView(ui.View):
         self.match_num, self.round_name = len(data['finished_matches'])+1, get_round_name(len(data['bracket'])+2)
         await i.response.edit_message(embed=self.create_embed(1))
 
-    @ui.button(style=discord.ButtonStyle.success, custom_id="vote_a")
+    @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a", row=1)
     async def vote_a(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
         if not match or str(i.user.id) in match.get("votes", {}):
-            return await i.response.send_message("Vote blocked: Already voted or match ended.", ephemeral=True)
+            return await i.response.send_message("You've already voted!", ephemeral=True)
         match["votes"][str(i.user.id)] = "A"
         save_data(data, sha)
         await i.response.send_message(f"✅ Voted for {match['item_a']['name']}!", ephemeral=True)
 
-    @ui.button(style=discord.ButtonStyle.success, custom_id="vote_b")
+    @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b", row=1)
     async def vote_b(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
         if not match or str(i.user.id) in match.get("votes", {}):
-            return await i.response.send_message("Vote blocked: Already voted or match ended.", ephemeral=True)
+            return await i.response.send_message("You've already voted!", ephemeral=True)
         match["votes"][str(i.user.id)] = "B"
         save_data(data, sha)
         await i.response.send_message(f"✅ Voted for {match['item_b']['name']}!", ephemeral=True)
@@ -183,7 +184,7 @@ class WC_Bot(discord.Client):
         await chan.send(embed=embed)
         if not data['bracket'] and len(data['winners_pool']) > 1:
             data['bracket'], data['winners_pool'] = data['winners_pool'], []
-            await chan.send(f"🛡️ **Moving to {get_round_name(len(data['bracket']))}**")
+            await chan.send(f"🛡️ **Round Over. Moving to {get_round_name(len(data['bracket']))}**")
         elif not data['bracket'] and len(data['winners_pool']) == 1:
             data.setdefault('leaderboard', []).append({"user": winner['user'], "item": winner['name'], "cat": data['current_cat']})
             data['status'] = "FINISHED"
@@ -206,12 +207,12 @@ class WC_Bot(discord.Client):
 
 bot = WC_Bot()
 
-# --- COMMANDS ---
+# --- TOURNAMENT CONTROL ---
 
 @bot.tree.command(name="opensuggestions")
 async def opensuggestions(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    await i.response.send_message(embed=discord.Embed(title="💡 Suggestions Open!", description="Theme suggestions are now open! Use `/suggestcategory`.", color=0xf1c40f))
+    await i.response.send_message(embed=discord.Embed(title="💡 Suggestions Open!", description="Theme suggestions are open! Use `/suggestcategory`.", color=0xf1c40f))
 
 @bot.tree.command(name="listcategories")
 async def listcategories(i: discord.Interaction):
@@ -224,20 +225,25 @@ async def listcategories(i: discord.Interaction):
 async def choosecategory(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
-    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Active tournament!", ephemeral=True)
+    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Tournament active!", ephemeral=True)
     if not data['suggestions']: return await i.response.send_message("No suggestions.")
     await i.response.send_message("🎰 **Picking a theme...**")
-    await asyncio.sleep(3)
+    await asyncio.sleep(2)
     pick = random.choice(data['suggestions'])
     data['current_cat'], data['suggestions'] = pick['name'], []
     save_data(data, sha)
-    await i.edit_original_response(content=f"🎉 The category is: **{pick['name'].upper()}**!\nUse `/additem` to enter!")
+    await i.edit_original_response(content=f"🎉 Category: **{pick['name'].upper()}**!\nUse `/additem` to enter!")
 
 @bot.tree.command(name="additem")
 async def additem(i: discord.Interaction, name: str, description: str, image_url: str):
     data, sha = load_data()
-    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Entries locked during match!", ephemeral=True)
-    if not data.get("current_cat"): return await i.response.send_message("Category not picked yet!", ephemeral=True)
+    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Locked during tournament!", ephemeral=True)
+    if not data.get("current_cat"): return await i.response.send_message("Pick category first!", ephemeral=True)
+    
+    # Character Limit Check
+    if len(name) > 75:
+        return await i.response.send_message(f"❌ **Error:** Name is too long ({len(name)}/75 chars). Please shorten it.", ephemeral=True)
+        
     data['items'].append({"name": name, "desc": description, "image": image_url, "user": i.user.name})
     save_data(data, sha)
     await i.response.send_message(f"✅ Added **{name}**!")
@@ -245,7 +251,7 @@ async def additem(i: discord.Interaction, name: str, description: str, image_url
 @bot.tree.command(name="listitems")
 async def listitems(i: discord.Interaction):
     data, _ = load_data()
-    if not data.get('items'): return await i.response.send_message("No entries yet.")
+    if not data.get('items'): return await i.response.send_message("No entries.")
     view = ItemGallery(data['items'])
     await i.response.send_message(embed=view.create_content(), view=view)
 
@@ -253,8 +259,8 @@ async def listitems(i: discord.Interaction):
 async def startworldcup(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
-    if not data.get('current_cat'): return await i.response.send_message("Pick category first!")
-    if len(data['items']) < 2: return await i.response.send_message("Need more items!")
+    if not data.get('current_cat'): return await i.response.send_message("Pick category!")
+    if len(data['items']) < 2: return await i.response.send_message("Need 2+ items!")
     random.shuffle(data['items'])
     data['bracket'], data['finished_matches'], data['winners_pool'] = data['items'], [], []
     save_data(data, sha)
@@ -283,12 +289,12 @@ async def resetcup(i: discord.Interaction):
     data, sha = load_data()
     new_data = {"status": "IDLE", "items": [], "suggestions": [], "leaderboard": data.get('leaderboard', []), "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None, "current_cat": None}
     save_data(new_data, sha)
-    await i.response.send_message("🧨 **Reset!** Items, suggestions, and current theme wiped.")
+    await i.response.send_message("🧨 **Reset!** Items, suggestions, and theme wiped.")
 
 @bot.tree.command(name="suggestcategory")
 async def suggestcategory(i: discord.Interaction, name: str):
     data, sha = load_data()
-    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Locked during tournament!", ephemeral=True)
+    if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Locked!", ephemeral=True)
     data.setdefault('suggestions', []).append({"name": name, "user": i.user.name})
     save_data(data, sha)
     await i.response.send_message(f"💡 Suggestion: **{name}**", ephemeral=True)
