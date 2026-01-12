@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Goalie",
-            "desc": "Believes he is actually a wizard in training.",
-            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
-            "user": "System"
-        },
-        {
             "name": "KD",
             "desc": "so so so so so so pretty and nice",
             "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
@@ -375,5 +363,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Goalie",
+            "desc": "Believes he is actually a wizard in training.",
+            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315524050452644,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323152.441471,
+        "votes": {}
+    }
 }
