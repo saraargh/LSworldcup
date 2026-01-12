@@ -372,6 +372,12 @@
             "desc": "Thinks gravity is just a suggestion, really.",
             "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
             "user": "System"
+        },
+        {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -394,27 +400,13 @@
             "name": "Space vs Ryo",
             "winner": "Space",
             "score": "1-0"
+        },
+        {
+            "name": "Bry vs Mudae",
+            "winner": "Mudae",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        "message_id": 1460286218725101609,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768316165.470276,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
