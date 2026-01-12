@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        {
-            "name": "William",
-            "desc": "Once tried to high-five a seagull and failed.",
-            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
-            "user": "System"
-        },
-        {
             "name": "Mimu",
             "desc": "Accidentally learned how to play the spoons.",
             "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
@@ -387,5 +375,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "William",
+            "desc": "Once tried to high-five a seagull and failed.",
+            "image": "https://images.unsplash.com/photo-1555169062-013468b47731?w=500",
+            "user": "System"
+        },
+        "message_id": 1460312409238540530,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322409.748418,
+        "votes": {}
+    }
 }
