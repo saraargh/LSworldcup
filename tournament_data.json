@@ -384,6 +384,12 @@
             "desc": "Refuses to land if the vibes aren't correct.",
             "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
             "user": "System"
+        },
+        {
+            "name": "Koko",
+            "desc": "Thinks pineapple belongs on absolutely everything.",
+            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -396,27 +402,13 @@
             "name": "AKI vs The Pilot",
             "winner": "The Pilot",
             "score": "0-1"
+        },
+        {
+            "name": "Atmushorse vs Koko",
+            "winner": "Koko",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Atmushorse",
-            "desc": "Half horse, half atmosphere, all chaos.",
-            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Koko",
-            "desc": "Thinks pineapple belongs on absolutely everything.",
-            "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
-            "user": "System"
-        },
-        "message_id": 1460285722010452063,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768316047.04739,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
