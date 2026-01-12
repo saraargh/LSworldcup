@@ -265,6 +265,12 @@
             "desc": "Always has a spare battery for some reason.",
             "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
             "user": "System"
+        },
+        {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -362,27 +368,13 @@
             "name": "Rev vs Atmushorse",
             "winner": "Rev",
             "score": "1-0"
+        },
+        {
+            "name": "Prongcat vs Kdai",
+            "winner": "Kdai",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Prongcat",
-            "desc": "Has a secret collection of vintage staplers.",
-            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        "message_id": 1460315425819852923,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323128.960343,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
