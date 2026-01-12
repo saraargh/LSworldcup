@@ -197,20 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        {
-            "name": "The Pilot",
-            "desc": "Refuses to land if the vibes aren't correct.",
-            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
-            "user": "System"
-        }
-    ],
+    "bracket": [],
     "winners_pool": [
         {
             "name": "Zombie",
@@ -373,5 +360,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "The Pilot",
+            "desc": "Refuses to land if the vibes aren't correct.",
+            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315759799439556,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323208.706539,
+        "votes": {}
+    }
 }
