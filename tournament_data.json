@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "Fuck knows",
     "title": "People in the landing strip",
     "items": [
@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "StMase",
-            "desc": "Always knows exactly which way is North.",
-            "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg",
-            "user": "System"
-        },
-        {
-            "name": "Satanl",
-            "desc": "Surprisingly good at baking miniature cupcakes.",
-            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
-            "user": "System"
-        },
-        {
             "name": "Zombie",
             "desc": "Only eats things that are bright neon green.",
             "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
@@ -394,5 +382,22 @@
     "winners_pool": [],
     "finished_matches": [],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "StMase",
+            "desc": "Always knows exactly which way is North.",
+            "image": "https://i.natgeofe.com/n/8e3af918-ba9a-4a31-8baf-f5b2244811e1/19991130_jab_cs9_163.jpg",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Satanl",
+            "desc": "Surprisingly good at baking miniature cupcakes.",
+            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
+            "user": "System"
+        },
+        "message_id": 1460307746586103974,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768321298.163346,
+        "votes": {}
+    }
 }
