@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "AKI",
-            "desc": "Expert at finding the best snacks in the terminal.",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
-            "user": "System"
-        },
-        {
-            "name": "The Pilot",
-            "desc": "Refuses to land if the vibes aren't correct.",
-            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
-            "user": "System"
-        },
-        {
             "name": "Atmushorse",
             "desc": "Half horse, half atmosphere, all chaos.",
             "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
@@ -412,5 +400,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "AKI",
+            "desc": "Expert at finding the best snacks in the terminal.",
+            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "The Pilot",
+            "desc": "Refuses to land if the vibes aren't correct.",
+            "image": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500",
+            "user": "System"
+        },
+        "message_id": 1460285498261110794,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768315993.693596,
+        "votes": {}
+    }
 }
