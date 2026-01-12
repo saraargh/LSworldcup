@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Prongcat",
-            "desc": "Has a secret collection of vintage staplers.",
-            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Space",
-            "desc": "Thinks gravity is just a suggestion, really.",
-            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
-            "user": "System"
-        },
-        {
             "name": "Kdai",
             "desc": "Collects clouds but only in his imagination.",
             "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
@@ -390,5 +378,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Prongcat",
+            "desc": "Has a secret collection of vintage staplers.",
+            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Space",
+            "desc": "Thinks gravity is just a suggestion, really.",
+            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
+            "user": "System"
+        },
+        "message_id": 1460311910636585123,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322290.868798,
+        "votes": {}
+    }
 }
