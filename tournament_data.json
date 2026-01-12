@@ -295,6 +295,12 @@
             "desc": "Owns three identical hats for 'different occasions'.",
             "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
             "user": "System"
+        },
+        {
+            "name": "Greggles",
+            "desc": "Can wiggle his ears in three different tempos.",
+            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -367,27 +373,13 @@
             "name": "Bry vs Variety fridays",
             "winner": "Bry",
             "score": "1-0"
+        },
+        {
+            "name": "Greggles vs AKI",
+            "winner": "Greggles",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Greggles",
-            "desc": "Can wiggle his ears in three different tempos.",
-            "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "AKI",
-            "desc": "Expert at finding the best snacks in the terminal.",
-            "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=500",
-            "user": "System"
-        },
-        "message_id": 1460315099188170836,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323051.302272,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
