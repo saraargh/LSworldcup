@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "KD",
-            "desc": "so so so so so so pretty and nice",
-            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Bry",
-            "desc": "Owns three identical hats for 'different occasions'.",
-            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
-            "user": "System"
-        },
-        {
             "name": "Greggles",
             "desc": "Can wiggle his ears in three different tempos.",
             "image": "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500",
@@ -374,5 +362,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "KD",
+            "desc": "so so so so so so pretty and nice",
+            "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Bry",
+            "desc": "Owns three identical hats for 'different occasions'.",
+            "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315587212218520,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323167.44319,
+        "votes": {}
+    }
 }
