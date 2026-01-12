@@ -366,6 +366,12 @@
             "desc": "A professional at losing car keys in plain sight.",
             "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
             "user": "System"
+        },
+        {
+            "name": "Ghosty",
+            "desc": "Not a phantom, just very pale and quiet.",
+            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -393,27 +399,13 @@
             "name": "Bry vs Mudae",
             "winner": "Mudae",
             "score": "0-1"
+        },
+        {
+            "name": "Ghosty vs Natsuki",
+            "winner": "Ghosty",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Ghosty",
-            "desc": "Not a phantom, just very pale and quiet.",
-            "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Natsuki",
-            "desc": "Loves the smell of old library books and rain.",
-            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
-            "user": "System"
-        },
-        "message_id": 1460290752788562097,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768317246.482873,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
