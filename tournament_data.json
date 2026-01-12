@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Mimu",
-            "desc": "Accidentally learned how to play the spoons.",
-            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Goalie",
-            "desc": "Believes he is actually a wizard in training.",
-            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
-            "user": "System"
-        },
-        {
             "name": "Nagi",
             "desc": "Can fall asleep standing up in a thunderstorm.",
             "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
@@ -386,5 +374,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Mimu",
+            "desc": "Accidentally learned how to play the spoons.",
+            "image": "https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Goalie",
+            "desc": "Believes he is actually a wizard in training.",
+            "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500",
+            "user": "System"
+        },
+        "message_id": 1460312457166983169,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322421.348366,
+        "votes": {}
+    }
 }
