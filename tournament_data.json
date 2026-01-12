@@ -337,6 +337,12 @@
             "desc": "Has a secret collection of vintage staplers.",
             "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
             "user": "System"
+        },
+        {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -374,27 +380,13 @@
             "name": "Prongcat vs Space",
             "winner": "Prongcat",
             "score": "1-0"
+        },
+        {
+            "name": "Kdai vs Natsuki",
+            "winner": "Kdai",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Natsuki",
-            "desc": "Loves the smell of old library books and rain.",
-            "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500",
-            "user": "System"
-        },
-        "message_id": 1460312076160602205,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322330.359272,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
