@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        {
             "name": "Nagi",
             "desc": "Can fall asleep standing up in a thunderstorm.",
             "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
@@ -367,5 +355,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Zombie",
+            "desc": "Only eats things that are bright neon green.",
+            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
+        },
+        "message_id": 1460317524615757866,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323629.481594,
+        "votes": {}
+    }
 }
