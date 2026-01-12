@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Vee",
-            "desc": "Is secretly 500 bees in a trench coat.",
-            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Ryo",
-            "desc": "Can't look at a triangle without getting nervous.",
-            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
-            "user": "System"
-        },
-        {
             "name": "Rev",
             "desc": "Always has a spare battery for some reason.",
             "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
@@ -393,5 +381,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Vee",
+            "desc": "Is secretly 500 bees in a trench coat.",
+            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Ryo",
+            "desc": "Can't look at a triangle without getting nervous.",
+            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
+            "user": "System"
+        },
+        "message_id": 1460311656914747689,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768322230.420654,
+        "votes": {}
+    }
 }
