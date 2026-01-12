@@ -1,6 +1,6 @@
 {
     "status": "IDLE",
-    "current_cat": "Taylor Swift Song",
+    "current_cat": "Fuck knows",
     "title": "People in the landing strip",
     "items": [
         {
@@ -196,32 +196,7 @@
             "user": "System"
         }
     ],
-    "suggestions": [
-        {
-            "name": "Animals",
-            "user": "s. just s."
-        },
-        {
-            "name": "Taylor Swift Song",
-            "user": "s. just s."
-        },
-        {
-            "name": "Crisps",
-            "user": "s. just s."
-        },
-        {
-            "name": "People in the landing strip",
-            "user": "s. just s."
-        },
-        {
-            "name": "poo",
-            "user": "saraargh"
-        },
-        {
-            "name": "Fuck knows",
-            "user": "saraargh"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [
         {
