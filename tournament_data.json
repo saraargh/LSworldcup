@@ -271,6 +271,12 @@
             "desc": "Has a lucky penny named 'Reginald'.",
             "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
             "user": "System"
+        },
+        {
+            "name": "Rev",
+            "desc": "Always has a spare battery for some reason.",
+            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -363,27 +369,13 @@
             "name": "Pops vs Vee",
             "winner": "Pops",
             "score": "1-0"
+        },
+        {
+            "name": "Rev vs Atmushorse",
+            "winner": "Rev",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Rev",
-            "desc": "Always has a spare battery for some reason.",
-            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Atmushorse",
-            "desc": "Half horse, half atmosphere, all chaos.",
-            "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
-            "user": "System"
-        },
-        "message_id": 1460315356626157619,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323112.460946,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
