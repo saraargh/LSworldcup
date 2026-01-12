@@ -378,6 +378,12 @@
             "desc": "Thinks pineapple belongs on absolutely everything.",
             "image": "https://www.worldanimalprotection.ca/cdn-cgi/image/width=800,format=auto,fit=cover/contentassets/c4942cee30f24056a05ddfe5139abbcd/charge-the-globe-fahxha46fqm-unsplash.jpg",
             "user": "System"
+        },
+        {
+            "name": "Space",
+            "desc": "Thinks gravity is just a suggestion, really.",
+            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -395,27 +401,13 @@
             "name": "Atmushorse vs Koko",
             "winner": "Koko",
             "score": "0-1"
+        },
+        {
+            "name": "Space vs Ryo",
+            "winner": "Space",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Space",
-            "desc": "Thinks gravity is just a suggestion, really.",
-            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Ryo",
-            "desc": "Can't look at a triangle without getting nervous.",
-            "image": "https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=500",
-            "user": "System"
-        },
-        "message_id": 1460285795633201245,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768316064.660271,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
