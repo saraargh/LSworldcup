@@ -216,18 +216,6 @@
     ],
     "bracket": [
         {
-            "name": "Rev",
-            "desc": "Always has a spare battery for some reason.",
-            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Mudae",
-            "desc": "A professional at losing car keys in plain sight.",
-            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
-            "user": "System"
-        },
-        {
             "name": "CJ",
             "desc": "Once accidentally joined a parade in Switzerland.",
             "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
@@ -411,5 +399,22 @@
     "winners_pool": [],
     "finished_matches": [],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Rev",
+            "desc": "Always has a spare battery for some reason.",
+            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Mudae",
+            "desc": "A professional at losing car keys in plain sight.",
+            "image": "https://images.unsplash.com/photo-1472053217156-31b42df2319c?w=500",
+            "user": "System"
+        },
+        "message_id": 1460291474380820553,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768317418.53619,
+        "votes": {}
+    }
 }
