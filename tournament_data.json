@@ -277,6 +277,12 @@
             "desc": "Only eats things that are bright neon green.",
             "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
             "user": "System"
+        },
+        {
+            "name": "Pops",
+            "desc": "Has a lucky penny named 'Reginald'.",
+            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -364,27 +370,13 @@
             "name": "Satanl vs Zombie",
             "winner": "Zombie",
             "score": "0-1"
+        },
+        {
+            "name": "Pops vs Vee",
+            "winner": "Pops",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Pops",
-            "desc": "Has a lucky penny named 'Reginald'.",
-            "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Vee",
-            "desc": "Is secretly 500 bees in a trench coat.",
-            "image": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500",
-            "user": "System"
-        },
-        "message_id": 1460315298971258880,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323098.705367,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
