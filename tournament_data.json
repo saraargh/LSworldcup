@@ -211,7 +211,14 @@
             "user": "System"
         }
     ],
-    "winners_pool": [],
+    "winners_pool": [
+        {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
+        }
+    ],
     "finished_matches": [
         {
             "name": "StMase vs Satanl",
@@ -352,27 +359,13 @@
             "name": "KD vs The Pilot",
             "winner": "KD",
             "score": "1-0"
+        },
+        {
+            "name": "Zombie vs Kdai",
+            "winner": "Kdai",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        "message_id": 1460317524615757866,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323629.481594,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
