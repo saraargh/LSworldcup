@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Satanl",
-            "desc": "Surprisingly good at baking miniature cupcakes.",
-            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
-            "user": "System"
-        },
-        {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        {
             "name": "Pops",
             "desc": "Has a lucky penny named 'Reginald'.",
             "image": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?w=500",
@@ -379,5 +367,22 @@
         }
     ],
     "leaderboard": [],
-    "current_match": null
+    "current_match": {
+        "item_a": {
+            "name": "Satanl",
+            "desc": "Surprisingly good at baking miniature cupcakes.",
+            "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
+            "user": "System"
+        },
+        "item_b": {
+            "name": "Zombie",
+            "desc": "Only eats things that are bright neon green.",
+            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
+            "user": "System"
+        },
+        "message_id": 1460315196080787557,
+        "channel_id": 1438277790179921971,
+        "end_at": 1768323074.359969,
+        "votes": {}
+    }
 }
