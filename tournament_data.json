@@ -396,27 +396,21 @@
             "user": "System"
         }
     ],
-    "winners_pool": [],
-    "finished_matches": [],
-    "leaderboard": [],
-    "current_match": {
-        "item_a": {
+    "winners_pool": [
+        {
             "name": "Prongcat",
             "desc": "Has a secret collection of vintage staplers.",
             "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
             "user": "System"
-        },
-        "item_b": {
-            "name": "Shadow",
-            "desc": "Claims to have invented the word 'chillax'.",
-            "image": "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500",
-            "user": "System"
-        },
-        "message_id": 1460285282342404161,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768315942.314964,
-        "votes": {
-            "1238834298338152498": "A"
         }
-    }
+    ],
+    "finished_matches": [
+        {
+            "name": "Prongcat vs Shadow",
+            "winner": "Prongcat",
+            "score": "1-0"
+        }
+    ],
+    "leaderboard": [],
+    "current_match": null
 }
