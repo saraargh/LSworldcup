@@ -229,6 +229,12 @@
             "desc": "Only eats things that are bright neon green.",
             "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
             "user": "System"
+        },
+        {
+            "name": "Kdai",
+            "desc": "Collects clouds but only in his imagination.",
+            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -356,27 +362,13 @@
             "name": "Zombie vs Pops",
             "winner": "Zombie",
             "score": "1-0"
+        },
+        {
+            "name": "Rev vs Kdai",
+            "winner": "Kdai",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Rev",
-            "desc": "Always has a spare battery for some reason.",
-            "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Kdai",
-            "desc": "Collects clouds but only in his imagination.",
-            "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
-            "user": "System"
-        },
-        "message_id": 1460316418510819424,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323365.696278,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
