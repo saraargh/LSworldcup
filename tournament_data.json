@@ -373,6 +373,12 @@
             "desc": "Surprisingly good at baking miniature cupcakes.",
             "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
             "user": "System"
+        },
+        {
+            "name": "Zombie",
+            "desc": "Only eats things that are bright neon green.",
+            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -380,27 +386,13 @@
             "name": "StMase vs Satanl",
             "winner": "Satanl",
             "score": "0-1"
+        },
+        {
+            "name": "Zombie vs CJ",
+            "winner": "Zombie",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Zombie",
-            "desc": "Only eats things that are bright neon green.",
-            "image": "https://images.unsplash.com/photo-1574068468668-a05a11f871da?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "CJ",
-            "desc": "Once accidentally joined a parade in Switzerland.",
-            "image": "https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=500",
-            "user": "System"
-        },
-        "message_id": 1460311432531935427,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322176.883599,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
