@@ -223,6 +223,12 @@
             "desc": "Collects clouds but only in his imagination.",
             "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500",
             "user": "System"
+        },
+        {
+            "name": "Nagi",
+            "desc": "Can fall asleep standing up in a thunderstorm.",
+            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -355,27 +361,13 @@
             "name": "Rev vs Kdai",
             "winner": "Kdai",
             "score": "0-1"
+        },
+        {
+            "name": "Glazebot vs Nagi",
+            "winner": "Nagi",
+            "score": "0-1"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Glazebot",
-            "desc": "Spends way too much time staring at shiny rocks.",
-            "image": "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Nagi",
-            "desc": "Can fall asleep standing up in a thunderstorm.",
-            "image": "https://images.unsplash.com/photo-1503777119540-ce54b422baff?w=500",
-            "user": "System"
-        },
-        "message_id": 1460316454539759828,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768323374.278794,
-        "votes": {
-            "1238834298338152498": "B"
-        }
-    }
+    "current_match": null
 }
