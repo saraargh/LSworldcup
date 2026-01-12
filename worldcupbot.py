@@ -119,6 +119,8 @@ class MatchView(ui.View):
     async def prev_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
+        if not m or i.message.id != m.get('message_id'):
+            return await i.response.send_message("❌ This match post is inactive. View the current match.", ephemeral=True)
         self.item_a, self.item_b = m['item_a'], m['item_b']
         self.match_num, self.round_name = len(data['finished_matches'])+1, get_round_name(len(data['bracket'])+2)
         await i.response.edit_message(embed=self.create_embed(0))
@@ -127,6 +129,8 @@ class MatchView(ui.View):
     async def next_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
+        if not m or i.message.id != m.get('message_id'):
+            return await i.response.send_message("❌ This match post is inactive. View the current match.", ephemeral=True)
         self.item_a, self.item_b = m['item_a'], m['item_b']
         self.match_num, self.round_name = len(data['finished_matches'])+1, get_round_name(len(data['bracket'])+2)
         await i.response.edit_message(embed=self.create_embed(1))
@@ -135,8 +139,13 @@ class MatchView(ui.View):
     async def vote_a(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        if not match or str(i.user.id) in match.get("votes", {}):
+        # SECURITY CHECK: Is this message the active one?
+        if not match or i.message.id != match.get("message_id"):
+            return await i.response.send_message("❌ This match has already ended. Please vote in the latest match post!", ephemeral=True)
+        
+        if str(i.user.id) in match.get("votes", {}):
             return await i.response.send_message("You've already voted!", ephemeral=True)
+        
         match["votes"][str(i.user.id)] = "A"
         save_data(data, sha)
         await i.response.send_message(f"✅ Voted for {match['item_a']['name']}!", ephemeral=True)
@@ -145,8 +154,13 @@ class MatchView(ui.View):
     async def vote_b(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        if not match or str(i.user.id) in match.get("votes", {}):
+        # SECURITY CHECK: Is this message the active one?
+        if not match or i.message.id != match.get("message_id"):
+            return await i.response.send_message("❌ This match has already ended. Please vote in the latest match post!", ephemeral=True)
+            
+        if str(i.user.id) in match.get("votes", {}):
             return await i.response.send_message("You've already voted!", ephemeral=True)
+            
         match["votes"][str(i.user.id)] = "B"
         save_data(data, sha)
         await i.response.send_message(f"✅ Voted for {match['item_b']['name']}!", ephemeral=True)
@@ -207,7 +221,7 @@ class WC_Bot(discord.Client):
 
 bot = WC_Bot()
 
-# --- TOURNAMENT CONTROL ---
+# --- COMMANDS ---
 
 @bot.tree.command(name="opensuggestions")
 async def opensuggestions(i: discord.Interaction):
@@ -239,11 +253,7 @@ async def additem(i: discord.Interaction, name: str, description: str, image_url
     data, sha = load_data()
     if data.get("status") == "MATCH_ACTIVE": return await i.response.send_message("Locked during tournament!", ephemeral=True)
     if not data.get("current_cat"): return await i.response.send_message("Pick category first!", ephemeral=True)
-    
-    # Character Limit Check
-    if len(name) > 75:
-        return await i.response.send_message(f"❌ **Error:** Name is too long ({len(name)}/75 chars). Please shorten it.", ephemeral=True)
-        
+    if len(name) > 75: return await i.response.send_message(f"❌ Name too long ({len(name)}/75 chars).", ephemeral=True)
     data['items'].append({"name": name, "desc": description, "image": image_url, "user": i.user.name})
     save_data(data, sha)
     await i.response.send_message(f"✅ Added **{name}**!")
