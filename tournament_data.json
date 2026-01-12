@@ -343,6 +343,12 @@
             "desc": "Half horse, half atmosphere, all chaos.",
             "image": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=500",
             "user": "System"
+        },
+        {
+            "name": "Prongcat",
+            "desc": "Has a secret collection of vintage staplers.",
+            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
+            "user": "System"
         }
     ],
     "finished_matches": [
@@ -375,27 +381,13 @@
             "name": "Koko vs Atmushorse",
             "winner": "Atmushorse",
             "score": "0-1"
+        },
+        {
+            "name": "Prongcat vs Space",
+            "winner": "Prongcat",
+            "score": "1-0"
         }
     ],
     "leaderboard": [],
-    "current_match": {
-        "item_a": {
-            "name": "Prongcat",
-            "desc": "Has a secret collection of vintage staplers.",
-            "image": "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=500",
-            "user": "System"
-        },
-        "item_b": {
-            "name": "Space",
-            "desc": "Thinks gravity is just a suggestion, really.",
-            "image": "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=500",
-            "user": "System"
-        },
-        "message_id": 1460311910636585123,
-        "channel_id": 1438277790179921971,
-        "end_at": 1768322290.868798,
-        "votes": {
-            "1238834298338152498": "A"
-        }
-    }
+    "current_match": null
 }
