@@ -2,7 +2,14 @@
     "status": "IDLE",
     "current_cat": null,
     "title": "People in the landing strip",
-    "items": [],
+    "items": [
+        {
+            "name": "poo",
+            "desc": "poo",
+            "image": "www.poo.com",
+            "user": "saraargh"
+        }
+    ],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
