@@ -2,20 +2,8 @@
     "status": "IDLE",
     "current_cat": null,
     "title": [],
-    "items": [
-        {
-            "name": "1",
-            "desc": "?))???)&(\u00a3\u00a3?)&&",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461063638918893732/IMG_9264.jpg?ex=6969310c&is=6967df8c&hm=fbb7459d4d633a20614231ff2b3b47636c7fee67f8c1a1fc97013b6f5ce6c5c5&",
-            "user": "saraargh"
-        }
-    ],
-    "suggestions": [
-        {
-            "name": "Selfies",
-            "user": "saraargh"
-        }
-    ],
+    "items": [],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
