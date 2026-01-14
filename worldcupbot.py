@@ -219,7 +219,7 @@ async def removeitem(i: discord.Interaction, name: str):
     data, sha = load_data()
     data['items'] = [x for x in data['items'] if x['name'].lower() != name.lower()]
     save_data(data, sha)
-    await i.response.send_message(f"🗑️ Removed **{name}** from entries.", ephemeral=True)
+    await i.response.send_message(f"🗑️ Removed **{name}** from entries.", ephemeral=False)
 
 @bot.tree.command(name="removecategory")
 async def removecategory(i: discord.Interaction, name: str):
@@ -227,7 +227,7 @@ async def removecategory(i: discord.Interaction, name: str):
     data, sha = load_data()
     data['suggestions'] = [x for x in data['suggestions'] if x['name'].lower() != name.lower()]
     save_data(data, sha)
-    await i.response.send_message(f"🗑️ Removed **{name}** from suggestions.", ephemeral=True)
+    await i.response.send_message(f"🗑️ Removed **{name}** from suggestions.", ephemeral=False)
 
 @bot.tree.command(name="opensuggestions")
 async def opensuggestions(i: discord.Interaction):
