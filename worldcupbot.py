@@ -152,7 +152,7 @@ class HistoryView(ui.View):
             desc += f"┕ Submitter: {entry['user']}\n\n"
             
         embed = discord.Embed(
-            title="📜 Hall of Fame History", 
+            title="🎖️ Hall of Fame History", 
             description=desc or "The archives are currently empty.", 
             color=0xf1c40f
         )
