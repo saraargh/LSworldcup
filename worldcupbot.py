@@ -28,13 +28,13 @@ def keep_alive():
     t.start()
 
 # =========================================================
-# CONFIGURATION & REPO SETTINGS
+# CONFIGURATION (MATCHED TO YOUR RENDER VARIABLES)
 # =========================================================
-TOKEN = os.getenv("WC_TOKEN") or os.getenv("TOKEN")
-GITHUB_REPO = "saraargh/LSworldcup"
-GITHUB_FILE_PATH = "tournament_data.json"
-GITHUB_BRANCH = "main"
-GITHUB_TOKEN = os.getenv("WC_GITHUB_TOKEN") or os.getenv("WC_TOKEN")
+TOKEN = os.getenv("WC_TOKEN")
+GITHUB_REPO = os.getenv("GITHUB_REPO")
+GITHUB_FILE_PATH = os.getenv("TOURNAMENT_JSON_PATH")
+GITHUB_BRANCH = os.getenv("GITHUB_BRANCH")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 ALLOWED_ROLE_IDS = [
@@ -47,18 +47,23 @@ ALLOWED_ROLE_IDS = [
 STORAGE_CHANNEL_ID = 1461047591528562801
 
 # =========================================================
-# GITHUB DATA PERSISTENCE ENGINE
+# DATA PERSISTENCE (GITHUB ENGINE)
 # =========================================================
 def load_data():
     try:
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+        # Cache Buster: Forces GitHub to bypass its 60s cache
+        cb = random.randint(1, 999999)
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}?cb={cb}"
         r = requests.get(url, headers=HEADERS, params={"ref": GITHUB_BRANCH}, timeout=20)
+        
         if r.status_code == 200:
             content = r.json()
             raw_data = base64.b64decode(content["content"]).decode()
             return json.loads(raw_data), content.get("sha")
+            
     except Exception as e:
         print(f"Load Error: {e}")
+        
     return {
         "status": "IDLE",
         "items": [],
@@ -75,22 +80,29 @@ def load_data():
 def save_data(data, sha=None):
     if not sha:
         _, sha = load_data()
+        
     url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
     encoded = base64.b64encode(json.dumps(data, indent=4).encode()).decode()
+    
     payload = {
         "message": "Tournament Data Sync",
         "content": encoded,
         "branch": GITHUB_BRANCH,
         "sha": sha
     }
+    
     r = requests.put(url, headers=HEADERS, data=json.dumps(payload), timeout=20)
     return r.status_code
 
 def get_round_name(count):
-    if count > 16: return "Round of 32"
-    if count > 8: return "Round of 16"
-    if count > 4: return "Quarter-Finals"
-    if count > 2: return "Semi-Finals"
+    if count > 16:
+        return "Round of 32"
+    if count > 8:
+        return "Round of 16"
+    if count > 4:
+        return "Quarter-Finals"
+    if count > 2:
+        return "Semi-Finals"
     return "Grand Final"
 
 # =========================================================
@@ -126,7 +138,6 @@ class EndConfirmView(ui.View):
     @ui.button(label="Force End Tournament", style=discord.ButtonStyle.danger)
     async def confirm(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
-        await i.response.edit_message(content="⚠️ **Tournament ended early by Admin override.**", view=None)
         data.update({
             "status": "IDLE", 
             "items": [], 
@@ -139,6 +150,7 @@ class EndConfirmView(ui.View):
             "final_winner": None
         })
         save_data(data, sha)
+        await i.response.edit_message(content="⚠️ **Tournament ended early by Admin override.**", view=None)
 
 class HistoryView(ui.View):
     def __init__(self, history_data):
@@ -217,8 +229,10 @@ class ItemGallery(ui.View):
 class MatchView(ui.View):
     def __init__(self, item_a=None, item_b=None, round_name=None, match_num=None):
         super().__init__(timeout=None)
-        self.item_a, self.item_b = item_a, item_b
-        self.round_name, self.match_num = round_name, match_num
+        self.item_a = item_a
+        self.item_b = item_b
+        self.round_name = round_name
+        self.match_num = match_num
         if item_a and item_b:
             self.vote_a.label = f"Vote: {item_a['name']}"
             self.vote_b.label = f"Vote: {item_b['name']}"
@@ -237,7 +251,8 @@ class MatchView(ui.View):
     async def prev_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
-        self.item_a, self.item_b = m['item_a'], m['item_b']
+        self.item_a = m['item_a']
+        self.item_b = m['item_b']
         self.match_num = len(data['finished_matches']) + 1
         self.round_name = get_round_name(len(data['bracket']) + 2)
         await i.response.edit_message(embed=self.create_embed(0))
@@ -246,7 +261,8 @@ class MatchView(ui.View):
     async def next_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
-        self.item_a, self.item_b = m['item_a'], m['item_b']
+        self.item_a = m['item_a']
+        self.item_b = m['item_b']
         self.match_num = len(data['finished_matches']) + 1
         self.round_name = get_round_name(len(data['bracket']) + 2)
         await i.response.edit_message(embed=self.create_embed(1))
@@ -280,13 +296,15 @@ class WC_Bot(discord.Client):
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
+        # Persistent views survive bot restarts
         self.add_view(MatchView())
         self.add_view(HistoryView([]))
         self.add_view(ItemGallery([]))
 
     async def resolve_match(self, data, sha):
         match = data['current_match']
-        if not match: return
+        if not match: 
+            return
         
         chan = self.get_channel(match['channel_id'])
         votes = list(match.get("votes", {}).values())
@@ -307,20 +325,21 @@ class WC_Bot(discord.Client):
         data.setdefault('winners_pool', []).append(winner)
         data['current_match'] = None
         
-        embed = discord.Embed(title="Match Result", description=f"**{winner['name']}** advances! ({v1}-{v2})", color=0x2ecc71)
+        embed = discord.Embed(title="Match Result", description=f"**{winner['name']}** advances to the next round! ({v1}-{v2})", color=0x2ecc71)
         embed.set_image(url=winner['image'])
         await chan.send(embed=embed)
         
+        # Round Management Logic
         if not data['bracket'] and len(data['winners_pool']) > 1:
             data['bracket'] = data['winners_pool']
             data['winners_pool'] = []
             next_r = get_round_name(len(data['bracket']))
-            await chan.send(f"🛡️ **Round Complete. Moving to {next_r}!**")
+            await chan.send(f"🛡️ **All matches in this round are complete. Moving to {next_r}!**")
         elif not data['bracket'] and len(data['winners_pool']) == 1:
             data['final_winner'] = winner
             data['status'] = "FINISHED"
             save_data(data, sha)
-            await chan.send("🏁 **THE GRAND FINAL IS OVER!** Use `/endcup` to archive!")
+            await chan.send("🏁 **THE GRAND FINAL IS OVER!** Admin, please use `/endcup` to archive the results!")
             return
         
         save_data(data, sha)
@@ -359,10 +378,9 @@ bot = WC_Bot()
 
 @bot.tree.command(name="additem")
 async def additem(i: discord.Interaction, name: str, description: str, image: discord.Attachment):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    if "image" not in image.content_type:
-        return await i.response.send_message("❌ Attached file must be an image.", ephemeral=True)
-    
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): 
+        return
+        
     data, sha = load_data()
     if len(data['items']) >= 32:
         return await i.response.send_message("❌ **Bracket Full!** You cannot add more than 32 items.", ephemeral=True)
@@ -379,29 +397,13 @@ async def additem(i: discord.Interaction, name: str, description: str, image: di
     })
     save_data(data, sha)
     remaining = 32 - len(data['items'])
-    await i.followup.send(f"✅ **{i.user.name}** added **{name}**. ({len(data['items'])}/32 items - {remaining} slots left!)")
-
-@bot.tree.command(name="startworldcup")
-async def startworldcup(i: discord.Interaction):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    data, sha = load_data()
-    
-    count = len(data['items'])
-    if count != 32:
-        return await i.response.send_message(f"❌ **Error:** You have **{count}/32** items. You must have exactly 32 items to start the tournament.", ephemeral=True)
-    
-    random.shuffle(data['items'])
-    data['bracket'] = data['items']
-    data['finished_matches'] = []
-    data['winners_pool'] = []
-    save_data(data, sha)
-    
-    await i.response.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS OFFICIALLY BEGUN!**")
-    await bot.post_next(i.channel)
+    await i.followup.send(f"✅ **{i.user.name}** has added **{name}** to the entry pool! ({len(data['items'])}/32 - {remaining} left)")
 
 @bot.tree.command(name="edititem")
 async def edititem(i: discord.Interaction, target_name: str, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): 
+        return
+        
     await i.response.defer()
     data, sha = load_data()
     item = next((x for x in data['items'] if x['name'].lower() == target_name.lower()), None)
@@ -423,28 +425,107 @@ async def edititem(i: discord.Interaction, target_name: str, new_name: str = Non
         changes.append("Image updated")
     
     if not changes:
-        return await i.followup.send("⚠️ No changes specified.")
+        return await i.followup.send("⚠️ You didn't specify any changes!")
         
     save_data(data, sha)
-    await i.followup.send(f"🛠️ **{i.user.name}** updated **{target_name}**:\n" + "\n".join([f"• {c}" for c in changes]))
+    log = "\n".join([f"• {c}" for c in changes])
+    await i.followup.send(f"🛠️ **{i.user.name}** has updated **{target_name}**:\n{log}")
 
 @bot.tree.command(name="removeitem")
 async def removeitem(i: discord.Interaction, name: str):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): 
+        return
+        
     data, sha = load_data()
-    old_count = len(data['items'])
+    original_count = len(data['items'])
     data['items'] = [x for x in data['items'] if x['name'].lower() != name.lower()]
     
-    if len(data['items']) == old_count:
-        return await i.response.send_message(f"❌ '{name}' not found.")
+    if len(data['items']) == original_count:
+        return await i.response.send_message(f"❌ '{name}' not found.", ephemeral=True)
     
     save_data(data, sha)
-    await i.response.send_message(f"🗑️ **{i.user.name}** removed **{name}**. ({len(data['items'])}/32 items left)")
+    await i.response.send_message(f"🗑️ **{i.user.name}** removed **{name}** from the tournament. ({len(data['items'])}/32 items remaining)")
+
+@bot.tree.command(name="startworldcup")
+async def startworldcup(i: discord.Interaction):
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): 
+        return
+        
+    data, sha = load_data()
+    count = len(data['items'])
+    
+    if count != 32:
+        return await i.response.send_message(f"❌ **Error:** You have **{count}/32** items. You must have exactly 32 items to start the tournament.", ephemeral=True)
+    
+    random.shuffle(data['items'])
+    data['bracket'] = data['items']
+    data['finished_matches'] = []
+    data['winners_pool'] = []
+    save_data(data, sha)
+    
+    await i.response.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS OFFICIALLY BEGUN!**")
+    await bot.post_next(i.channel)
+
+@bot.tree.command(name="endcup")
+async def endcup(i: discord.Interaction):
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): 
+        return
+        
+    data, sha = load_data()
+    
+    if data.get("final_winner"):
+        w = data["final_winner"]
+        embed = discord.Embed(
+            title="🎊 TOURNAMENT CHAMPION 🎊", 
+            description=f"# 👑 {w['name'].upper()} 👑\nWinner of the **{data['current_cat']}** Cup!\nSubmitted by: **{w['user']}**", 
+            color=0xf1c40f
+        )
+        embed.set_image(url=w['image'])
+        await i.channel.send("@everyone 🏆 **WE HAVE A WINNER!**", embed=embed)
+        
+        data.setdefault('leaderboard', []).append({
+            "item": w['name'], 
+            "cat": data['current_cat'], 
+            "user": w['user']
+        })
+        
+        # Reset current cup but keep leaderboard
+        data.update({
+            "status": "IDLE", 
+            "items": [], 
+            "suggestions": [], 
+            "bracket": [], 
+            "winners_pool": [], 
+            "finished_matches": [], 
+            "current_match": None, 
+            "current_cat": None, 
+            "final_winner": None
+        })
+        save_data(data, sha)
+        await i.response.send_message("Tournament finalized and archived.", ephemeral=True)
+    else:
+        await i.response.send_message(
+            "⚠️ **Warning:** The Grand Final has not been reached. Do you want to force-end the cup early?", 
+            view=EndConfirmView(bot), 
+            ephemeral=True
+        )
+
+@bot.tree.command(name="cuphistory")
+async def cuphistory(i: discord.Interaction):
+    await i.response.defer()
+    data, _ = load_data()
+    history_list = data.get('leaderboard', [])
+    
+    if not history_list:
+        return await i.followup.send("📜 The Hall of Fame is currently empty in the database.")
+    
+    view = HistoryView(history_list)
+    await i.followup.send(embed=view.create_embed(), view=view)
 
 @bot.tree.command(name="opensuggestions")
 async def opensuggestions(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    await i.response.send_message("@everyone 💡 **Theme suggestions are now OPEN!** Use `/suggestcategory`!")
+    await i.response.send_message("@everyone 💡 **Theme suggestions are now OPEN!** Use `/suggestcategory` to submit yours!")
 
 @bot.tree.command(name="suggestcategory")
 async def suggestcategory(i: discord.Interaction, name: str):
@@ -458,7 +539,7 @@ async def choosecategory(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
     if not data['suggestions']:
-        return await i.response.send_message("No suggestions available.")
+        return await i.response.send_message("No suggestions available to pick from.")
     
     await i.response.send_message("🎰 **Rerolling the theme slot machine...**")
     await asyncio.sleep(2.5)
@@ -467,65 +548,34 @@ async def choosecategory(i: discord.Interaction):
     data['current_cat'] = pick['name']
     data['suggestions'] = []
     save_data(data, sha)
-    await i.channel.send(f"@everyone 🎉 The official theme is: **{pick['name'].upper()}**! Submit 32 entries with `/additem`!")
+    await i.channel.send(f"@everyone 🎉 The official theme is: **{pick['name'].upper()}**! Start submitting 32 entries with `/additem`!")
 
 @bot.tree.command(name="nextmatch")
 async def nextmatch(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
     if not data.get("current_match"):
-        return await i.response.send_message("No active match.")
+        return await i.response.send_message("There is no active match to resolve.")
     
-    await i.response.send_message("Closing polls...", ephemeral=True)
+    await i.response.send_message("Closing the polls and calculating results...", ephemeral=True)
     await bot.resolve_match(data, sha)
-
-@bot.tree.command(name="endcup")
-async def endcup(i: discord.Interaction):
-    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    data, sha = load_data()
-    
-    if data.get("final_winner"):
-        w = data["final_winner"]
-        embed = discord.Embed(title="🎊 CHAMPION 🎊", description=f"# 👑 {w['name'].upper()} 👑\nTheme: {data['current_cat']}\nSubmitted by: **{w['user']}**", color=0xf1c40f)
-        embed.set_image(url=w['image'])
-        await i.channel.send("@everyone 🏆 **WE HAVE A WINNER!**", embed=embed)
-        
-        data.setdefault('leaderboard', []).append({"item": w['name'], "cat": data['current_cat'], "user": w['user']})
-        data.update({"status": "IDLE", "items": [], "suggestions": [], "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None})
-        save_data(data, sha)
-        await i.response.send_message("Tournament archived.", ephemeral=True)
-    else:
-        await i.response.send_message("⚠️ **Warning:** The Grand Final has not been reached. Do you want to force-end early?", view=EndConfirmView(bot), ephemeral=True)
 
 @bot.tree.command(name="scoreboard")
 async def scoreboard(i: discord.Interaction):
     data, _ = load_data()
-    embed = discord.Embed(title="📊 Live Scoreboard", color=0x3498db)
-    results = "\n".join([f"✅ {m['name']} (Winner: {m['winner']})" for m in data.get('finished_matches', [])[-5:]])
-    embed.add_field(name="Recent Results", value=results or "No matches finished.", inline=False)
+    embed = discord.Embed(title="📊 Tournament Live Scoreboard", color=0x3498db)
+    
+    results = ""
+    for m in data.get('finished_matches', [])[-5:]:
+        results += f"✅ {m['name']} (Winner: {m['winner']})\n"
+        
+    embed.add_field(name="Recent Results", value=results or "No matches finished yet.", inline=False)
     
     curr = data.get('current_match')
     if curr:
         embed.add_field(name="Current Match", value=f"🔥 **{curr['item_a']['name']}** vs **{curr['item_b']['name']}**", inline=False)
     
     await i.response.send_message(embed=embed)
-
-@bot.tree.command(name="cuphistory")
-async def cuphistory(i: discord.Interaction):
-    # We defer because fetching from GitHub can take a second 
-    # and we don't want the interaction to time out/fail.
-    await i.response.defer(ephemeral=False)
-    
-    # Force a fresh pull
-    data, _ = load_data()
-    history_list = data.get('leaderboard', [])
-    
-    if not history_list:
-        return await i.followup.send("📜 The Hall of Fame is currently empty in the database.")
-    
-    view = HistoryView(history_list)
-    await i.followup.send(embed=view.create_embed(), view=view)
-
 
 @bot.tree.command(name="listitems")
 async def listitems(i: discord.Interaction):
@@ -536,12 +586,13 @@ async def listitems(i: discord.Interaction):
 @bot.tree.command(name="resetcup")
 async def resetcup(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    await i.response.send_message("⚠️ **DANGER:** Reset all progress?", view=ResetConfirmView(), ephemeral=True)
+    await i.response.send_message("⚠️ **DANGER:** This will wipe all current tournament progress. Are you sure?", view=ResetConfirmView(), ephemeral=True)
 
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    print(f"Logged in as {bot.user}")
+    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    print("------")
 
 if __name__ == "__main__":
     keep_alive()
