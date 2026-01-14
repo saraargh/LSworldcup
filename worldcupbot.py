@@ -117,7 +117,8 @@ class ResetConfirmView(ui.View):
     async def confirm(self, i: discord.Interaction, b: ui.Button):
         data, sha = load_data()
         data.update({
-            "status": "IDLE", 
+            "status": "IDLE",
+            "title": [],
             "items": [], 
             "suggestions": [], 
             "bracket": [], 
