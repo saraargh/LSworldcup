@@ -224,6 +224,7 @@ class ItemGallery(ui.View):
 
 class MatchView(ui.View):
     def __init__(self, item_a=None, item_b=None, round_name=None, match_num=None):
+        # timeout must be None for persistence
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
@@ -245,14 +246,16 @@ class MatchView(ui.View):
         embed.set_footer(text=f"Check both entries before voting! (Page {page+1}/2)")
         return embed
 
-    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray)
+    # Added custom_id to fix the ValueError
+    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="view_a_btn")
     async def prev_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
         self.item_a, self.item_b = m['item_a'], m['item_b']
         await i.response.edit_message(embed=self.create_embed(0))
 
-    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray)
+    # Added custom_id to fix the ValueError
+    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="view_b_btn")
     async def next_page(self, i: discord.Interaction, b: ui.Button):
         data, _ = load_data()
         m = data['current_match']
@@ -280,6 +283,7 @@ class MatchView(ui.View):
         match["votes"][str(i.user.id)] = "B"
         save_data(data, sha)
         await i.response.send_message(f"✅ Your vote for **{match['item_b']['name']}** has been recorded.", ephemeral=True)
+
 
 # =========================================================
 # BOT CORE CLASS
