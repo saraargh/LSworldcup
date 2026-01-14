@@ -191,7 +191,8 @@ class WC_Bot(discord.Client):
         save_data(data, sha); await self.post_next(chan)
 
     async def post_next(self, channel):
-        data, sha = load_data(); if not data['bracket']: return
+        data, sha = load_data()
+        if not data['bracket']: return
         a, b = data['bracket'].pop(0), data['bracket'].pop(0)
         round_n, match_n = get_round_name(len(data['bracket']) + 2), len(data['finished_matches']) + 1
         view = MatchView(a, b, round_n, match_n)
@@ -243,12 +244,17 @@ async def edititem(i: discord.Interaction, target_name: str, new_name: str = Non
     item = next((x for x in data['items'] if x['name'].lower() == target_name.lower()), None)
     if not item: return await i.followup.send(f"❌ Item '{target_name}' not found.")
     changes = []
-    if new_name: item['name'] = new_name[:75]; changes.append(f"Name ➔ {new_name}")
-    if new_desc: item['desc'] = new_desc; changes.append("Description updated")
+    if new_name: 
+        item['name'] = new_name[:75]
+        changes.append(f"Name ➔ {new_name}")
+    if new_desc: 
+        item['desc'] = new_desc
+        changes.append("Description updated")
     if new_image:
         storage = bot.get_channel(STORAGE_CHANNEL_ID)
         stored = await storage.send(content=f"Edit: {item['name']}", file=await new_image.to_file())
-        item['image'] = stored.attachments[0].url; changes.append("Image updated")
+        item['image'] = stored.attachments[0].url
+        changes.append("Image updated")
     if not changes: return await i.followup.send("⚠️ No changes specified.")
     save_data(data, sha)
     await i.followup.send(f"🛠️ **{i.user.name}** updated **{target_name}**:\n" + "\n".join([f"• {c}" for c in changes]))
@@ -292,7 +298,8 @@ async def startworldcup(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
     if len(data['items']) < 2: return await i.response.send_message("Need at least 2 items!")
-    random.shuffle(data['items']); data['bracket'], data['finished_matches'], data['winners_pool'] = data['items'], [], []
+    random.shuffle(data['items'])
+    data['bracket'], data['finished_matches'], data['winners_pool'] = data['items'], [], []
     save_data(data, sha)
     await i.response.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     await bot.post_next(i.channel)
@@ -301,7 +308,7 @@ async def startworldcup(i: discord.Interaction):
 async def nextmatch(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
-    if not data.get("current_match"): return await i.response.send_message("No match is active.")
+    if not data.get("current_match"): return await i.response.send_message("No match active.")
     await i.response.send_message("Closing votes...", ephemeral=True)
     await bot.resolve_match(data, sha)
 
@@ -315,7 +322,8 @@ async def endcup(i: discord.Interaction):
         await i.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
         data.setdefault('leaderboard', []).append({"item": w['name'], "cat": data['current_cat'], "user": w['user']})
         data.update({"status": "IDLE", "items": [], "suggestions": [], "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None})
-        save_data(data, sha); await i.response.send_message("Finalized.", ephemeral=True)
+        save_data(data, sha)
+        await i.response.send_message("Finalized.", ephemeral=True)
     else: await i.response.send_message("⚠️ Grand Final not finished.", ephemeral=True)
 
 @bot.tree.command(name="scoreboard")
@@ -330,12 +338,15 @@ async def scoreboard(i: discord.Interaction):
 
 @bot.tree.command(name="cuphistory")
 async def cuphistory(i: discord.Interaction):
-    data, _ = load_data(); if not data.get('leaderboard'): return await i.response.send_message("No history.")
-    view = HistoryView(data['leaderboard']); await i.response.send_message(embed=view.create_embed(), view=view)
+    data, _ = load_data()
+    if not data.get('leaderboard'): return await i.response.send_message("No history.")
+    view = HistoryView(data['leaderboard'])
+    await i.response.send_message(embed=view.create_embed(), view=view)
 
 @bot.tree.command(name="listitems")
 async def listitems(i: discord.Interaction):
-    data, _ = load_data(); view = ItemGallery(data['items'])
+    data, _ = load_data()
+    view = ItemGallery(data['items'])
     await i.response.send_message(embed=view.create_content(), view=view)
 
 @bot.tree.command(name="resetcup")
@@ -345,7 +356,9 @@ async def resetcup(i: discord.Interaction):
 
 @bot.event
 async def on_ready():
-    await bot.tree.sync(); print(f"Online as {bot.user}")
+    await bot.tree.sync()
+    print(f"Online as {bot.user}")
 
 if __name__ == "__main__":
-    keep_alive(); bot.run(TOKEN)
+    keep_alive()
+    bot.run(TOKEN)
