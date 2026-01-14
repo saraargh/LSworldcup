@@ -512,22 +512,20 @@ async def scoreboard(i: discord.Interaction):
 
 @bot.tree.command(name="cuphistory")
 async def cuphistory(i: discord.Interaction):
-    # 1. Force a fresh pull from GitHub
-    data, _ = load_data()
+    # We defer because fetching from GitHub can take a second 
+    # and we don't want the interaction to time out/fail.
+    await i.response.defer(ephemeral=False)
     
-    # 2. Extract the leaderboard
+    # Force a fresh pull
+    data, _ = load_data()
     history_list = data.get('leaderboard', [])
     
-    # 3. Check if it's actually empty or just a missing key
     if not history_list:
-        return await i.response.send_message("📜 The Hall of Fame is currently empty.", ephemeral=True)
+        return await i.followup.send("📜 The Hall of Fame is currently empty in the database.")
     
-    # 4. Pass the FRESH data into the view
     view = HistoryView(history_list)
-    await i.response.send_message(embed=view.create_embed(), view=view)
+    await i.followup.send(embed=view.create_embed(), view=view)
 
-    view = HistoryView(data['leaderboard'])
-    await i.response.send_message(embed=view.create_embed(), view=view)
 
 @bot.tree.command(name="listitems")
 async def listitems(i: discord.Interaction):
