@@ -2,14 +2,7 @@
     "status": "IDLE",
     "current_cat": null,
     "title": "poo",
-    "items": [
-        {
-            "name": "poo",
-            "desc": "poo",
-            "image": "www.poo.com",
-            "user": "saraargh"
-        }
-    ],
+    "items": [],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
