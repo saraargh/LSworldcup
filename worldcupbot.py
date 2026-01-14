@@ -160,27 +160,42 @@ class HistoryView(ui.View):
         self.page = 0
 
     def create_embed(self):
-        start = self.page * 10
-        chunk = self.data[start:start+10]
+        # Changed to 5 entries per page
+        start = self.page * 5
+        chunk = self.data[start:start+5]
         desc = ""
-        for idx, entry in enumerate(chunk):
-            desc += f"{start+idx+1}. **{entry['item']}**\n🏆 Cup: {entry['cat']}\n👤 Submitter: {entry['user']}\n\n"
         
-        embed = discord.Embed(title="📜 Hall of Fame History", description=desc or "No history found.", color=0xf1c40f)
-        total_pages = (len(self.data) - 1) // 10 + 1 if self.data else 1
+        for idx, entry in enumerate(chunk):
+            # Layout: Bold Category first, then Item and User
+            desc += (
+                f"{start+idx+1}. 🏆 **{entry['cat'].upper()}**\n"
+                f"└ Winner: **{entry['item']}**\n"
+                f"└ Submitted by: {entry['user']}\n\n"
+            )
+            
+        embed = discord.Embed(
+            title="🎖️ Hall of Fame History", 
+            description=desc or "The archives are currently empty.", 
+            color=0xf1c40f
+        )
+        
+        # Adjust total pages calculation for 5 per page
+        total_pages = (len(self.data) - 1) // 5 + 1 if self.data else 1
         embed.set_footer(text=f"Page {self.page+1} of {total_pages}")
         return embed
 
-    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="hist_prev")
+    @ui.button(label="⬅️ Previous", style=discord.ButtonStyle.gray, custom_id="hist_prev")
     async def prev(self, i, b):
         self.page = max(0, self.page - 1)
         await i.response.edit_message(embed=self.create_embed())
 
-    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="hist_next")
+    @ui.button(label="Next ➡️", style=discord.ButtonStyle.gray, custom_id="hist_next")
     async def next(self, i, b):
-        if (self.page + 1) * 10 < len(self.data):
+        # Adjusting page limit check for 5 per page
+        if (self.page + 1) * 5 < len(self.data):
             self.page += 1
         await i.response.edit_message(embed=self.create_embed())
+
 
 class ItemGallery(ui.View):
     def __init__(self, items=None):
