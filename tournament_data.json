@@ -10,7 +10,12 @@
             "user": "saraargh"
         }
     ],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "Selfies",
+            "user": "saraargh"
+        }
+    ],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
