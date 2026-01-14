@@ -67,6 +67,35 @@ class ResetConfirmView(ui.View):
         save_data(data, sha)
         await i.response.edit_message(content="🧨 Tournament has been completely reset.", view=None)
 
+class LeaderboardView(ui.View):
+    def __init__(self, lb_data):
+        super().__init__(timeout=None)
+        self.lb_data = lb_data
+        self.page = 0
+
+    def create_embed(self):
+        start = self.page * 10
+        end = start + 10
+        chunk = self.lb_data[start:end]
+        desc = ""
+        for idx, entry in enumerate(chunk):
+            desc += f"{start+idx+1}. **{entry['item']}** ({entry['cat']}) - Winner: {entry['user']}\n"
+        
+        embed = discord.Embed(title="🏆 World Cup Hall of Fame", description=desc or "No winners yet.", color=0xf1c40f)
+        embed.set_footer(text=f"Page {self.page + 1} of {(len(self.lb_data)-1)//10 + 1}")
+        return embed
+
+    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="lb_prev")
+    async def prev(self, i, b):
+        self.page = max(0, self.page - 1)
+        await i.response.edit_message(embed=self.create_embed())
+
+    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="lb_next")
+    async def next(self, i, b):
+        if (self.page + 1) * 10 < len(self.lb_data):
+            self.page += 1
+        await i.response.edit_message(embed=self.create_embed())
+
 class ItemGallery(ui.View):
     def __init__(self, items=None):
         super().__init__(timeout=None)
@@ -116,7 +145,7 @@ class MatchView(ui.View):
             description=f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n**Viewing:** {item['name']}\n{item.get('desc', '')}",
             color=0x3498db
         ).set_image(url=item['image'])
-        embed.set_footer(text=f"Entry {page+1} of 2 | Compare before voting!")
+        embed.set_footer(text=f"Entry {page+1} of 2 | Use arrows to compare!")
         return embed
     @ui.button(label="⬅️ Previous Entry", style=discord.ButtonStyle.gray, custom_id="match_prev", row=0)
     async def prev_page(self, i: discord.Interaction, b: ui.Button):
@@ -161,6 +190,7 @@ class WC_Bot(discord.Client):
     async def setup_hook(self):
         self.add_view(MatchView()) 
         self.add_view(ItemGallery())
+        self.add_view(LeaderboardView([]))
     async def resolve_match(self, data, sha):
         match = data['current_match']
         chan = self.get_channel(match['channel_id'])
@@ -202,16 +232,13 @@ bot = WC_Bot()
 @bot.tree.command(name="help")
 async def help_command(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
-    flow = (
-        "1️⃣ `/opensuggestions` - Open themes\n"
-        "2️⃣ `/choosecategory` - Slot machine pick\n"
-        "3️⃣ `/additem` - Users enter items (75 char limit)\n"
-        "4️⃣ `/removeitem` or `/removecategory` - Delete trolls\n"
-        "5️⃣ `/startworldcup` - Build bracket & start\n"
-        "6️⃣ `/nextmatch` - Resolve current & post next\n"
-        "7️⃣ `/endcup` - Final Celebration & @everyone"
-    )
+    flow = "1️⃣ `/opensuggestions` | 2️⃣ `/choosecategory` | 3️⃣ `/additem` | 4️⃣ `/startworldcup` | 5️⃣ `/nextmatch` | 6️⃣ `/endcup`"
     await i.response.send_message(embed=discord.Embed(title="📖 Admin Manual", description=flow, color=0x9b59b6), ephemeral=True)
+
+@bot.tree.command(name="resetcup")
+async def resetcup(i: discord.Interaction):
+    if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
+    await i.response.send_message("💣 **DANGER:** This wipes all items and suggestions. Are you sure?", view=ResetConfirmView(), ephemeral=True)
 
 @bot.tree.command(name="removeitem")
 async def removeitem(i: discord.Interaction, name: str):
@@ -219,7 +246,7 @@ async def removeitem(i: discord.Interaction, name: str):
     data, sha = load_data()
     data['items'] = [x for x in data['items'] if x['name'].lower() != name.lower()]
     save_data(data, sha)
-    await i.response.send_message(f"🗑️ Removed **{name}** from entries.", ephemeral=False)
+    await i.response.send_message(f"🗑️ Removed **{name}**.", ephemeral=True)
 
 @bot.tree.command(name="removecategory")
 async def removecategory(i: discord.Interaction, name: str):
@@ -227,7 +254,7 @@ async def removecategory(i: discord.Interaction, name: str):
     data, sha = load_data()
     data['suggestions'] = [x for x in data['suggestions'] if x['name'].lower() != name.lower()]
     save_data(data, sha)
-    await i.response.send_message(f"🗑️ Removed **{name}** from suggestions.", ephemeral=False)
+    await i.response.send_message(f"🗑️ Removed **{name}**.", ephemeral=True)
 
 @bot.tree.command(name="opensuggestions")
 async def opensuggestions(i: discord.Interaction):
@@ -238,7 +265,7 @@ async def opensuggestions(i: discord.Interaction):
 async def choosecategory(i: discord.Interaction):
     if not any(r.id in ALLOWED_ROLE_IDS for r in i.user.roles): return
     data, sha = load_data()
-    if not data['suggestions']: return await i.response.send_message("No suggestions available.")
+    if not data['suggestions']: return await i.response.send_message("No suggestions.")
     await i.response.send_message("🎰 **Selecting...**")
     await asyncio.sleep(2.5)
     pick = random.choice(data['suggestions'])
@@ -272,14 +299,14 @@ async def endcup(i: discord.Interaction):
     data, sha = load_data()
     if data.get("final_winner"):
         winner = data["final_winner"]
-        embed = discord.Embed(title="🎊 WE HAVE A CHAMPION! 🎊", description=f"# 👑 {winner['name'].upper()} 👑\nWinner of **{data['current_cat']}**!", color=0xf1c40f).set_image(url=winner['image'])
-        await i.channel.send("@everyone 🏆 **TOURNAMENT CONCLUDED!**", embed=embed)
+        embed = discord.Embed(title="🎊 CHAMPION 🎊", description=f"# 👑 {winner['name'].upper()} 👑\nWinner of **{data['current_cat']}**!", color=0xf1c40f).set_image(url=winner['image'])
+        await i.channel.send("@everyone 🏆 **TOURNAMENT OVER!**", embed=embed)
         data.setdefault('leaderboard', []).append({"user": winner['user'], "item": winner['name'], "cat": data['current_cat']})
         data.update({"status": "IDLE", "items": [], "suggestions": [], "bracket": [], "winners_pool": [], "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None})
         save_data(data, sha)
-        await i.response.send_message("Celebration posted.", ephemeral=True)
+        await i.response.send_message("Done.", ephemeral=True)
     else:
-        await i.response.send_message("⚠️ Not finished. Reset anyway?", view=ResetConfirmView(), ephemeral=True)
+        await i.response.send_message("⚠️ Reset?", view=ResetConfirmView(), ephemeral=True)
 
 @bot.tree.command(name="nextmatch")
 async def nextmatch(i: discord.Interaction):
@@ -301,8 +328,9 @@ async def scoreboard(i: discord.Interaction):
 @bot.tree.command(name="leaderboard")
 async def leaderboard(i: discord.Interaction):
     data, _ = load_data()
-    lb = "\n".join([f"👑 **{x['item']}** ({x['cat']})" for x in data.get('leaderboard', [])])
-    await i.response.send_message(f"🏆 **Hall of Fame**\n{lb or 'None'}")
+    if not data.get('leaderboard'): return await i.response.send_message("No history yet.")
+    view = LeaderboardView(data['leaderboard'])
+    await i.response.send_message(embed=view.create_embed(), view=view)
 
 @bot.tree.command(name="suggestcategory")
 async def suggestcategory(i: discord.Interaction, name: str):
