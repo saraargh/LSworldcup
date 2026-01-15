@@ -390,8 +390,8 @@ class WC_Bot(discord.Client):
         self.add_view(HistoryView())
         self.add_view(ItemGallery())
 
-    # MOVED OUTSIDE setup_hook
-        async def resolve_match(self, data, sha):
+    # --- MAKE SURE THESE ARE INDENTED INSIDE THE CLASS ---
+    async def resolve_match(self, data, sha):
         match = data['current_match']
         if not match:
             return
@@ -427,30 +427,24 @@ class WC_Bot(discord.Client):
         result_embed.set_image(url=winner['image'])
         await channel.send(embed=result_embed)
         
-        # --- FIXED LOGIC SECTION ---
         if not data['bracket']:
             if len(data['winners_pool']) > 1:
-                # Round finished, reset winners into bracket for next round
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 next_round = get_round_name(len(data['bracket']))
                 await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
             elif len(data['winners_pool']) == 1:
-                # Tournament finished
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
-                return # Stop here!
+                return 
         
-        # Save once and post the next match once
         save_data(data, sha)
         await self.post_next(channel)
 
     async def post_next(self, channel):
-        # We load fresh to make sure we have the updated bracket from resolve_match
         data, sha = load_data()
-        
         if not data['bracket'] or len(data['bracket']) < 2:
             return
             
@@ -475,7 +469,7 @@ class WC_Bot(discord.Client):
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
 
-
+# --- CLASS ENDS HERE ---
 bot = WC_Bot()
 
 # =========================================================
