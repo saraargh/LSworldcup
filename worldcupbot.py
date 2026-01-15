@@ -636,45 +636,62 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
+    # 1. Defer immediately to give GitHub time to respond
+    await interaction.response.defer(ephemeral=True)
+    
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
-    clean_name = name.strip().lower() # Standardize for comparison
+    clean_name = name.strip().lower()
     
     if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.response.send_message("❌ Suggestions are closed.", ephemeral=True)
+        return await interaction.followup.send("❌ Suggestions are closed.", ephemeral=True)
     
-    # NEW: Check if the theme already exists
+    # Check for duplicates
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.response.send_message(f"❌ '{name}' has already been suggested!", ephemeral=True)
+            return await interaction.followup.send(f"❌ '{name}' has already been suggested!", ephemeral=True)
     
-    if not is_admin(interaction.user) and any(s['user'] == user_mention for s in data['suggestions']):
-        return await interaction.response.send_message("❌ You've already submitted a theme!", ephemeral=True)
+    # Check if user already suggested something (Admins bypass)
+    if not is_admin(interaction.user):
+        if any(s['user'] == user_mention for s in data['suggestions']):
+            return await interaction.followup.send("❌ You've already submitted a theme!", ephemeral=True)
     
-    data['suggestions'].append({"name": name[:100], "user": user_mention})
+    # Save the data
+    data.setdefault('suggestions', []).append({
+        "name": name[:100], 
+        "user": user_mention
+    })
     save_data(data, sha)
-    await interaction.response.send_message(f"💡 Logged: **{name}**", ephemeral=False)
+    
+    # 2. Use followup.send instead of response.send_message
+    await interaction.followup.send(f"💡 Logged suggestion: **{name}**", ephemeral=False)
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
+    # 1. Immediate Defer (Gives the bot 15 minutes to think instead of 3 seconds)
+    # We set ephemeral=False here because you wanted the final message to be public
+    await interaction.response.defer(ephemeral=False)
+    
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
 
     if data['status'] != "ADDING_ITEMS":
-        return await interaction.response.send_message("❌ Submissions closed.", ephemeral=True)
+        return await interaction.followup.send("❌ Submissions are not open yet.", ephemeral=True)
     
-    # NEW: Check if item name is already in the list
+    # Duplicate check
     for item in data['items']:
         if item['name'].lower() == clean_name:
-            return await interaction.response.send_message(f"❌ '{name}' is already in the tournament!", ephemeral=True)
+            return await interaction.followup.send(f"❌ '{name}' is already in the tournament!", ephemeral=True)
 
     if len(data['items']) >= 32:
-        return await interaction.response.send_message("❌ Bracket full!", ephemeral=True)
+        return await interaction.followup.send("❌ The bracket is full! (32/32)", ephemeral=True)
     
-    # (Rest of your image upload and save logic stays the same...)
-
-    # Secure storage of the image
+    if not is_admin(interaction.user):
+        if any(item['user'] == user_mention for item in data['items']):
+            return await interaction.followup.send("❌ You've already submitted an item!", ephemeral=True)
+    
+    # 2. Upload Logic
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
     try:
         attachment_file = await image.to_file()
@@ -685,11 +702,10 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
         image_url = storage_msg.attachments[0].url
     except Exception as e:
         print(f"Upload error: {e}")
-        return await interaction.followup.send("❌ Image upload failed. Please try a different image.", ephemeral=True)
+        return await interaction.followup.send("❌ Image upload failed. Please try again.", ephemeral=True)
 
-    # 75 CHARACTER LIMIT ENFORCED
+    # 3. Save Data
     short_name = name[:75]
-
     data['items'].append({
         "name": short_name, 
         "desc": description, 
@@ -699,7 +715,9 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     
     save_data(data, sha)
     current_count = len(data['items'])
-    await interaction.followup.send(f"✅  **{short_name}** added! ({current_count}/32 entries total)", ephemeral=False)
+    
+    # 4. Final Public Response
+    await interaction.followup.send(f"✅ **{short_name}** added! ({current_count}/32 entries total)")
 
 
 
