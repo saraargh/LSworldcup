@@ -391,7 +391,7 @@ class WC_Bot(discord.Client):
         self.add_view(ItemGallery())
 
     # MOVED OUTSIDE setup_hook
-    async def resolve_match(self, data, sha):
+        async def resolve_match(self, data, sha):
         match = data['current_match']
         if not match:
             return
@@ -427,25 +427,30 @@ class WC_Bot(discord.Client):
         result_embed.set_image(url=winner['image'])
         await channel.send(embed=result_embed)
         
+        # --- FIXED LOGIC SECTION ---
         if not data['bracket']:
             if len(data['winners_pool']) > 1:
+                # Round finished, reset winners into bracket for next round
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 next_round = get_round_name(len(data['bracket']))
                 await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
-                save_data(data, sha)
-                await self.post_next(channel)
             elif len(data['winners_pool']) == 1:
+                # Tournament finished
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
-        else:
-            save_data(data, sha)
-            await self.post_next(channel)
+                return # Stop here!
+        
+        # Save once and post the next match once
+        save_data(data, sha)
+        await self.post_next(channel)
 
     async def post_next(self, channel):
+        # We load fresh to make sure we have the updated bracket from resolve_match
         data, sha = load_data()
+        
         if not data['bracket'] or len(data['bracket']) < 2:
             return
             
@@ -469,6 +474,7 @@ class WC_Bot(discord.Client):
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
+
 
 bot = WC_Bot()
 
@@ -560,26 +566,25 @@ async def startworldcup(interaction: discord.Interaction):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
     
-    # ADD DEFER HERE for safety
     await interaction.response.defer(ephemeral=False)
         
     data, sha = load_data()
     item_count = len(data['items'])
     
     if item_count != 32:
-        return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})", ephemeral=True)
+        return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})")
     
     random.shuffle(data['items'])
-    data['bracket'] = data['items']
+    data['bracket'] = list(data['items'])
     data['finished_matches'] = []
     data['winners_pool'] = []
     data['status'] = "MATCH_ACTIVE"
     
     save_data(data, sha)
     
-    # FIXED: Change followup.send_message to followup.send
     await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     await bot.post_next(interaction.channel)
+
 
 @bot.tree.command(name="nextmatch", description="Admin: Close current match and post next pair")
 async def nextmatch(interaction: discord.Interaction):
