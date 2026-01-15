@@ -599,30 +599,6 @@ async def nextmatch(interaction: discord.Interaction):
     await interaction.followup.send("⌛ Ending match and calculating results...", ephemeral=True)
     await bot.resolve_match(data, sha)
 
-@bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
-async def endcup(interaction: discord.Interaction):
-    if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
-        
-    await interaction.response.defer(ephemeral=True)
-    data, sha = load_data()
-    winner = data.get("final_winner")
-    
-    if not winner:
-        # Check if matches are still in the bracket
-        remaining = len(data.get('bracket', [])) + (1 if data.get('current_match') else 0)
-        return await interaction.followup.send(
-            f"⚠️ **The tournament has not finished yet!**\nThere are still matches remaining. Finish the bracket before crowning a champion.", 
-            ephemeral=True
-        )
-    
-    # If there IS a winner, ask for confirmation before wiping data
-    view = EndConfirmView(data, sha)
-    await interaction.followup.send(
-        content=f"🏆 **Winner Detected:** {winner['name']}\nWould you like to end the tournament and archive this result? **This will wipe current match data!**",
-        view=view,
-        ephemeral=True
-    )
 
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
 async def resetcup(interaction: discord.Interaction):
