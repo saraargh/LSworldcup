@@ -344,7 +344,7 @@ class EndConfirmView(ui.View):
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
         winner = self.data.get("final_winner")
         
-        # 1. Announce Winner (or lack thereof if ended early)
+        # 1. Announce Winner
         if winner:
             embed = discord.Embed(
                 title="🎊 CHAMPION CROWNED 🎊", 
@@ -352,8 +352,6 @@ class EndConfirmView(ui.View):
                 color=0xf1c40f
             )
             embed.set_image(url=winner['image'])
-            
-            # Archive to Leaderboard
             self.data.setdefault('leaderboard', []).append({
                 "item": winner['name'], 
                 "cat": self.data['current_cat'], 
@@ -361,19 +359,26 @@ class EndConfirmView(ui.View):
             })
             await interaction.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
         else:
-            await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY:** No champion was crowned as the cup was closed early.")
+            await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
-        # 2. Wipe current data and reset
-        self.data["status"] = "IDLE"
-        self.data["items"], self.data["suggestions"] = [], []
-        self.data["bracket"], self.data["winners_pool"] = [], []
-        self.data["finished_matches"] = []
-        self.data["current_match"], self.data["current_cat"] = None, None
-        self.data["final_winner"] = None
+        # 2. Sweep/Unpin all bot messages in the channel
+        try:
+            pins = await interaction.channel.pins()
+            for pin in pins:
+                if pin.author.id == interaction.client.user.id:
+                    await pin.unpin()
+        except:
+            pass
+
+        # 3. Reset Data
+        self.data.update({
+            "status": "IDLE", "items": [], "suggestions": [], 
+            "bracket": [], "winners_pool": [], "finished_matches": [],
+            "current_match": None, "current_cat": None, "final_winner": None
+        })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="✅ **Tournament wiped and bot reset.**", view=None)
-
+        await interaction.response.edit_message(content="✅ **Tournament wiped, pins cleared, and bot reset.**", view=None)
 
 
 # =========================================================
@@ -396,9 +401,20 @@ class WC_Bot(discord.Client):
         if not match:
             return
             
-        channel = self.get_channel(match['channel_id'])
-        vote_list = list(match.get("votes", {}).values())
+        channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
         
+        # 1. Unpin the old match and delete the "pinned a message" system alert
+        try:
+            old_msg = await channel.fetch_message(match['message_id'])
+            await old_msg.unpin()
+            # Clean up the system notification "Bot pinned a message"
+            async for message in channel.history(limit=5):
+                if message.type == discord.MessageType.pins_add and message.reference.message_id == old_msg.id:
+                    await message.delete()
+        except:
+            pass 
+
+        vote_list = list(match.get("votes", {}).values())
         count_a = vote_list.count("A")
         count_b = vote_list.count("B")
         
@@ -450,15 +466,19 @@ class WC_Bot(discord.Client):
             
         competitor_a = data['bracket'].pop(0)
         competitor_b = data['bracket'].pop(0)
-        
         round_name = get_round_name(len(data['bracket']) + 2)
         match_number = len(data['finished_matches']) + 1
         
         view = MatchView(competitor_a, competitor_b, round_name, match_number)
-        
         await channel.send(f"@everyone ⚔️ **{round_name} - Match {match_number}** is now LIVE!")
         msg = await channel.send(embed=view.create_embed(0), view=view)
         
+        # 2. Pin the new match
+        try:
+            await msg.pin()
+        except:
+            pass
+
         data['current_match'] = {
             "item_a": competitor_a, 
             "item_b": competitor_b, 
@@ -468,6 +488,9 @@ class WC_Bot(discord.Client):
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
+
+
+    
 
 # --- CLASS ENDS HERE ---
 bot = WC_Bot()
