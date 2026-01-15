@@ -334,32 +334,36 @@ class MatchView(ui.View):
         await interaction.response.send_message(f"✅ Voted for **{match['item_b']['name']}**.", ephemeral=True)
 
 class EndConfirmView(ui.View):
-    def __init__(self, data, sha):
+    def __init__(self, data, sha, is_early=False):
         super().__init__(timeout=60)
         self.data = data
         self.sha = sha
+        self.is_early = is_early
 
-    @ui.button(label="Confirm End & Archive", style=discord.ButtonStyle.danger)
+    @ui.button(label="⚠️ CONFIRM: END TOURNAMENT NOW", style=discord.ButtonStyle.danger)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
         winner = self.data.get("final_winner")
         
-        # 1. Announce Winner Publicly
-        embed = discord.Embed(
-            title="🎊 CHAMPION CROWNED 🎊", 
-            description=f"# 👑 {winner['name'].upper()} 👑\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
-            color=0xf1c40f
-        )
-        embed.set_image(url=winner['image'])
-        await interaction.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
+        # 1. Announce Winner (or lack thereof if ended early)
+        if winner:
+            embed = discord.Embed(
+                title="🎊 CHAMPION CROWNED 🎊", 
+                description=f"# 👑 {winner['name'].upper()} 👑\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
+                color=0xf1c40f
+            )
+            embed.set_image(url=winner['image'])
+            
+            # Archive to Leaderboard
+            self.data.setdefault('leaderboard', []).append({
+                "item": winner['name'], 
+                "cat": self.data['current_cat'], 
+                "user": winner['user']
+            })
+            await interaction.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
+        else:
+            await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY:** No champion was crowned as the cup was closed early.")
         
-        # 2. Archive to Leaderboard
-        self.data.setdefault('leaderboard', []).append({
-            "item": winner['name'], 
-            "cat": self.data['current_cat'], 
-            "user": winner['user']
-        })
-        
-        # 3. Wipe current data
+        # 2. Wipe current data and reset
         self.data["status"] = "IDLE"
         self.data["items"], self.data["suggestions"] = [], []
         self.data["bracket"], self.data["winners_pool"] = [], []
@@ -368,7 +372,27 @@ class EndConfirmView(ui.View):
         self.data["final_winner"] = None
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="✅ **Tournament archived and bot reset for the next run.**", view=None)
+        await interaction.response.edit_message(content="✅ **Tournament wiped and bot reset.**", view=None)
+
+@bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
+async def endcup(interaction: discord.Interaction):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
+        
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    winner = data.get("final_winner")
+    
+    # If the cup isn't finished, we set a warning flag
+    is_early = winner is None
+    
+    if is_early:
+        msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
+    else:
+        msg = f"🏆 **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
+    
+    view = EndConfirmView(data, sha, is_early=is_early)
+    await interaction.followup.send(content=msg, view=view, ephemeral=True)
 
 
 # =========================================================
