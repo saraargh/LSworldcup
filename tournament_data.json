@@ -1,26 +1,9 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "Movies",
     "title": [],
     "items": [],
-    "suggestions": [
-        {
-            "name": "Nails",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Tv Shows",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Movies",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Animals",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
