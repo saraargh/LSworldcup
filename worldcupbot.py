@@ -962,9 +962,11 @@ async def currentvotes(interaction: discord.Interaction):
     
     await interaction.followup.send(embed=embed)
 
-@bot.tree.command(name="status", description="Check progress and see time remaining")
+@bot.tree.command(name="status", description="Check tournament progress and time remaining")
 async def status(interaction: discord.Interaction):
+    # 1. Defer first to avoid timeout errors
     await interaction.response.defer()
+    
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
     embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
@@ -974,16 +976,21 @@ async def status(interaction: discord.Interaction):
         
     elif status_mode == "SUGGESTIONS_OPEN":
         count = len(data.get('suggestions', []))
-        embed.description = f"💡 **Suggestions**\nWe are currently collecting themes! Use `/suggestcategory` to join in.\n\n**Total Suggestions:** {count}"
+        embed.description = (
+            "💡 **Theme Suggestions**\n"
+            "We are currently collecting themes! Use `/suggestcategory` to join in.\n\n"
+            f"**Total Suggestions:** {count}"
+        )
         
     elif status_mode == "ADDING_ITEMS":
         count = len(data.get('items', []))
+        # Progress bar for item submissions (0 to 32)
         filled = int((count / 32) * 10)
         bar = "🟩" * filled + "⬜" * (10 - filled)
         embed.description = (
             f"📦 **Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
             f"Submit entries with `/additem`!\n\n"
-            f"**Progress:** {count}/32\n`{bar}`"
+            f"**Entries:** {count}/32\n`{bar}`"
         )
         
     elif status_mode == "MATCH_ACTIVE":
@@ -991,8 +998,14 @@ async def status(interaction: discord.Interaction):
         if match:
             vote_count = len(match.get('votes', {}))
             round_name = get_round_name(len(data.get('bracket', [])) + 2)
-            # Calculate match number
-            match_num = len(data.get('finished_matches', [])) + 1
+            
+            # Match Progress Logic (31 total matches for 32 items)
+            current_num = len(data.get('finished_matches', [])) + 1
+            total_matches = 31 
+            
+            # Progress bar for the tournament (0 to 31)
+            pct = int((current_num / total_matches) * 10)
+            bar = "🟩" * pct + "⬜" * (10 - pct)
             
             # Time Calculation
             time_info = ""
@@ -1013,8 +1026,9 @@ async def status(interaction: discord.Interaction):
                 f"⚔️ **Matches Live**\n"
                 f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
-                f"**Match Number:** {match_num}\n"
-                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n\n"
+                f"**Match Progress:** {current_num} of {total_matches}\n"
+                f"`{bar}`\n\n"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
                 f"📊 **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
@@ -1033,6 +1047,7 @@ async def status(interaction: discord.Interaction):
 
     embed.set_footer(text="The Landing Strip World Cup System")
     await interaction.followup.send(embed=embed)
+
 
 
 # =========================================================
