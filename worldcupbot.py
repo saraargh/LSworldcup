@@ -217,7 +217,12 @@ class ItemGallery(ui.View):
                 color=0x3498db
             )
             embed.set_image(url=item['image'])
-            embed.set_footer(text=f"Submitter: {item.get('user', 'Unknown')}")
+            # Remove the mention from the footer
+            embed.set_footer(text=f"Entry {self.index + 1} of {len(self.items)}")
+
+            # Add the mention to the bottom of the description instead
+            embed.description += f"\n\n**Submitter:** {item.get('user', 'Unknown')}"
+
             return embed
         
         # List View mode
@@ -269,16 +274,25 @@ class MatchView(ui.View):
             self.vote_a.label = f"Vote: {item_a['name']}"
             self.vote_b.label = f"Vote: {item_b['name']}"
 
-    def create_embed(self, page=0):
+        def create_embed(self, page=0):
         target_item = self.item_a if page == 0 else self.item_b
+        
+        # 1. Prepare the description with the clickable @mention
+        item_desc = target_item.get('desc', 'No description.')
+        submitter = target_item.get('user', 'Unknown')
+        full_description = f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n**Viewing:** {target_item['name']}\n{item_desc}\n\n**Submitter:** {submitter}"
+        
+        # 2. Build the embed
         embed = discord.Embed(
             title=f"Match {self.match_num}: {self.round_name}", 
-            description=f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n**Viewing:** {target_item['name']}\n{target_item.get('desc', '')}", 
+            description=full_description, 
             color=0x3498db
         )
         embed.set_image(url=target_item['image'])
         embed.set_footer(text=f"Flip between A and B before voting! (Page {page+1}/2)")
+        
         return embed
+
 
     @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="view_a_match")
     async def prev_page(self, interaction: discord.Interaction, button: ui.Button):
