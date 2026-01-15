@@ -2,7 +2,14 @@
     "status": "ADDING_ITEMS",
     "current_cat": "Movies",
     "title": [],
-    "items": [],
+    "items": [
+        {
+            "name": "Mean Girls",
+            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461372872634269797/IMG_9303.jpg?ex=696a510b&is=6968ff8b&hm=560c0d9d625779b1a8b99050e9a75fc65dfd9552befe15e0c71d7eeacf5e8008&",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
