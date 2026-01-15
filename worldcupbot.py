@@ -723,20 +723,20 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
 
 @bot.tree.command(name="matchups", description="View the current bracket and upcoming matches")
 async def matchups(interaction: discord.Interaction):
+    # Defer first!
+    await interaction.response.defer()
+    
     data, _ = load_data()
     
     if data['status'] not in ["MATCH_ACTIVE", "FINISHED"]:
-        return await interaction.response.send_message("❌ No active bracket to display.", ephemeral=True)
+        return await interaction.followup.send("❌ No active bracket to display.", ephemeral=True)
     
     bracket_text = ""
-    
-    # Current Match Highlight
     current = data.get('current_match')
     if current:
         bracket_text += "🔴 **CURRENT MATCH:**\n"
         bracket_text += f"{current['item_a']['name']} vs {current['item_b']['name']}\n\n"
     
-    # List upcoming pairs
     if data.get('bracket'):
         bracket_text += "🕒 **UPCOMING MATCHES:**\n"
         temp_list = list(data['bracket'])
@@ -745,44 +745,55 @@ async def matchups(interaction: discord.Interaction):
             b = temp_list.pop(0)
             bracket_text += f"• {a['name']} vs {b['name']}\n"
     
-    # List items waiting for the next round
     if data.get('winners_pool'):
         bracket_text += "\n🛡️ **WAITING FOR NEXT ROUND:**\n"
-        names = []
-        for winner in data['winners_pool']:
-            names.append(winner['name'])
+        names = [w['name'] for w in data['winners_pool']]
         bracket_text += ", ".join(names)
         
     embed = discord.Embed(
-        title=f"⚔️ {data['current_cat'].upper()} Live Bracket", 
+        title=f"⚔️ {data.get('current_cat', 'Tournament').upper()} Live Bracket", 
         description=bracket_text or "Tournament in transition...", 
         color=0x3498db
     )
-    await interaction.response.send_message(embed=embed)
+    # Use followup since we deferred
+    await interaction.followup.send(embed=embed)
+
 
 @bot.tree.command(name="listitems", description="Gallery of all entries")
 async def listitems(interaction: discord.Interaction):
+    # 1. Defer immediately because load_data() can be slow
+    await interaction.response.defer()
+    
+    # 2. Fetch the data
     data, _ = load_data()
+    
+    # 3. Setup the view
     gallery_view = ItemGallery(data['items'])
-    await interaction.response.send_message(embed=gallery_view.create_content(), view=gallery_view)
+    
+    # 4. Use followup since we deferred
+    await interaction.followup.send(embed=gallery_view.create_content(), view=gallery_view)
+
 
 @bot.tree.command(name="scoreboard", description="Match history of the current Cup")
 async def scoreboard(interaction: discord.Interaction):
+    await interaction.response.defer()
+    
     data, _ = load_data()
     
-    if not data['finished_matches']:
-        return await interaction.response.send_message("No matches finished yet.", ephemeral=True)
+    if not data.get('finished_matches'):
+        return await interaction.followup.send("No matches finished yet.", ephemeral=True)
     
     score_text = ""
     for match in data['finished_matches']:
         score_text += f"🔹 {match['name']}: **{match['winner']}** ({match['score']})\n"
         
     embed = discord.Embed(
-        title=f"📊 {data['current_cat'].upper()} Scoreboard", 
+        title=f"📊 {data.get('current_cat', 'Tournament').upper()} Scoreboard", 
         description=score_text, 
         color=0x3498db
     )
-    await interaction.response.send_message(embed=embed)
+    await interaction.followup.send(embed=embed)
+
 
 @bot.tree.command(name="cuphistory", description="Hall of Fame")
 async def cuphistory(interaction: discord.Interaction):
@@ -798,16 +809,18 @@ async def cuphistory(interaction: discord.Interaction):
 
 @bot.tree.command(name="listcategories", description="See all suggested themes so far")
 async def listcategories(interaction: discord.Interaction):
+    await interaction.response.defer()
+    
     data, _ = load_data()
-    if not data['suggestions']:
-        return await interaction.response.send_message("No suggestions yet! Use `/suggestcategory` to add one.", ephemeral=True)
+    if not data.get('suggestions'):
+        return await interaction.followup.send("No suggestions yet! Use `/suggestcategory` to add one.", ephemeral=True)
     
     txt = ""
     for idx, s in enumerate(data['suggestions']):
         txt += f"{idx+1}. **{s['name']}** (Suggested by {s['user']})\n"
         
     embed = discord.Embed(title="💡 Theme Suggestions", description=txt, color=0x3498db)
-    await interaction.response.send_message(embed=embed)
+    await interaction.followup.send(embed=embed)
 
 # =========================================================
 # ON READY
