@@ -606,7 +606,7 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
         "user": user_mention
     })
     save_data(data, sha)
-    await interaction.response.send_message(f"💡 Logged suggestion: **{name}**", ephemeral=True)
+    await interaction.response.send_message(f"💡{user_mention} suggested: **{name}**", ephemeral=False)
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
