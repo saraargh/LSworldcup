@@ -276,101 +276,67 @@ class ItemGallery(ui.View):
         await interaction.response.edit_message(embed=self.create_content())
 
 class MatchView(ui.View):
-    def __init__(self, item_a=None, item_b=None, round_name=None, match_num=None):
+    def __init__(self, item_a, item_b):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        self.round_name = round_name
-        self.match_num = match_num
-        
-        if item_a and item_b:
-            self.vote_a.label = f"Vote: {item_a['name']}"
-            self.vote_b.label = f"Vote: {item_b['name']}"
+        self.current_page = 0 # 0 for A, 1 for B
 
-    def create_embed(self, page=0):
-        # Determine which item to show based on the "page"
-        target_item = self.item_a if page == 0 else self.item_b
-        
-        item_desc = target_item.get('desc', 'No description.')
-        submitter = target_item.get('user', 'Unknown')
-        
-        full_description = (
-            f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n"
-            f"**Viewing:** {target_item['name']}\n"
-            f"{item_desc}\n\n"
-            f"**Submitter:** {submitter}"
-        )
+    def create_embed(self, page):
+        item = self.item_a if page == 0 else self.item_b
+        color = 0xff4757 if page == 0 else 0x2e86de # Red for A, Blue for B
         
         embed = discord.Embed(
-            title=f"Match {self.match_num}: {self.round_name}", 
-            description=full_description, 
-            color=0x3498db
+            title=f"⚔️ Match: {self.item_a['name']} vs {self.item_b['name']}",
+            description=f"Viewing: **{item['name']}**\n*Cast your vote using the buttons below!*",
+            color=color
         )
-        embed.set_image(url=target_item['image'])
-        embed.set_footer(text=f"Flip between A and B before voting! (Page {page+1}/2)")
-        
+        embed.set_image(url=item['image'])
+        embed.set_footer(text=f"Submitter: {item.get('user', 'Unknown')} | Match Progress: 1 of 31")
         return embed
 
-    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="view_a_match")
-    async def prev_page(self, interaction: discord.Interaction, button: ui.Button):
-        # Always defer first to prevent 404
-        await interaction.response.defer() 
-        data, _ = load_data()
-        m = data['current_match']
-        self.item_a, self.item_b = m['item_a'], m['item_b']
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(0))
+    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="v_a_match")
+    async def view_a(self, interaction: discord.Interaction, button: ui.Button):
+        # We edit the message directly. No defer needed, no 404 error.
+        await interaction.response.edit_message(embed=self.create_embed(0))
 
-    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="view_b_match")
-    async def next_page(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer()
-        data, _ = load_data()
-        m = data['current_match']
-        self.item_a, self.item_b = m['item_a'], m['item_b']
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(1))
+    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="v_b_match")
+    async def view_b(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.edit_message(embed=self.create_embed(1))
 
-    @ui.button(style=discord.ButtonStyle.danger, custom_id="v_a_master_final", row=1)
+    @ui.button(label="Vote A", style=discord.ButtonStyle.danger, custom_id="vote_a_btn", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
-        # 1. TELL DISCORD TO WAIT IMMEDIATELY
-        await interaction.response.defer(ephemeral=True)
+        await interaction.response.defer(ephemeral=True) # Tell Discord we're working
         
-        # 2. NOW DO THE SLOW GITHUB WORK
         data, sha = load_data()
         match = data.get("current_match")
+        user_id = str(interaction.user.id)
         
         if not match:
-            return await interaction.followup.send("❌ No match is currently active!", ephemeral=True)
+            return await interaction.followup.send("❌ Match over.", ephemeral=True)
             
-        if str(interaction.user.id) in match.get("votes", {}):
-            return await interaction.followup.send("❌ You have already voted in this match!", ephemeral=True)
-            
-        # 3. SAVE VOTE
-        match["votes"][str(interaction.user.id)] = "A"
+        # Record/Update Vote
+        match.setdefault("votes", {})[user_id] = "A"
         save_data(data, sha)
         
-        # 4. USE FOLLOWUP FOR THE CONFIRMATION
-        await interaction.followup.send(f"✅ Voted for **{match['item_a']['name']}**.", ephemeral=True)
+        await interaction.followup.send(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
 
-    @ui.button(style=discord.ButtonStyle.primary, custom_id="v_b_master_final", row=1)
+    @ui.button(label="Vote B", style=discord.ButtonStyle.primary, custom_id="vote_b_btn", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
-        # 1. TELL DISCORD TO WAIT IMMEDIATELY
         await interaction.response.defer(ephemeral=True)
         
-        # 2. NOW DO THE SLOW GITHUB WORK
         data, sha = load_data()
         match = data.get("current_match")
+        user_id = str(interaction.user.id)
         
         if not match:
-            return await interaction.followup.send("❌ No match is currently active!", ephemeral=True)
+            return await interaction.followup.send("❌ Match over.", ephemeral=True)
             
-        if str(interaction.user.id) in match.get("votes", {}):
-            return await interaction.followup.send("❌ You have already voted in this match!", ephemeral=True)
-            
-        # 3. SAVE VOTE
-        match["votes"][str(interaction.user.id)] = "B"
+        match.setdefault("votes", {})[user_id] = "B"
         save_data(data, sha)
         
-        # 4. USE FOLLOWUP FOR THE CONFIRMATION
-        await interaction.followup.send(f"✅ Voted for **{match['item_b']['name']}**.", ephemeral=True)
+        await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
