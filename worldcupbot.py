@@ -486,10 +486,12 @@ class WC_Bot(discord.Client):
             "item_b": competitor_b, 
             "message_id": msg.id, 
             "channel_id": channel.id, 
-            "votes": {}
+            "votes": {},
+            "start_time": datetime.datetime.now().isoformat() # <--- Record start time
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
+
 
 
 # --- CLASS ENDS HERE ---
@@ -606,23 +608,41 @@ async def startworldcup(interaction: discord.Interaction):
     await bot.post_next(interaction.channel)
 
 
-@bot.tree.command(name="nextmatch", description="Admin: Close current match and post next pair")
-async def nextmatch(interaction: discord.Interaction):
+@bot.tree.command(name="nextmatch", description="Close current match. Default wait is 24h, or specify minutes for testing.")
+async def nextmatch(interaction: discord.Interaction, minutes: int = 1440):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
         
-    # Safety Defer to give GitHub/Discord more time
-    try:
-        await interaction.response.defer(ephemeral=True)
-    except:
-        pass
+    # 1. Lock check (Same as before)
+    if bot.processing_lock.locked():
+        return await interaction.response.send_message("⏳ processing... wait a few seconds.", ephemeral=True)
 
+    await interaction.response.defer(ephemeral=True)
     data, sha = load_data()
-    if not data.get("current_match"):
-        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
     
-    await interaction.followup.send("⌛ Ending match and calculating results...", ephemeral=True)
+    match = data.get("current_match")
+    if not match:
+        return await interaction.followup.send("❌ No match is active.", ephemeral=True)
+
+    # 2. Timing Logic
+    # We check if 'start_time' exists in the match data
+    start_time_str = match.get("start_time")
+    if start_time_str:
+        start_time = datetime.datetime.fromisoformat(start_time_str)
+        elapsed = datetime.datetime.now() - start_time
+        remaining = (minutes * 60) - elapsed.total_seconds()
+        
+        # If time hasn't passed, block the command
+        if remaining > 0:
+            m, s = divmod(int(remaining), 60)
+            h, m = divmod(m, 60)
+            time_left = f"{h}h {m}m {s}s" if h > 0 else f"{m}m {s}s"
+            return await interaction.followup.send(f"⏳ **Match is still ongoing!**\nYou must wait **{time_left}** before closing this match.", ephemeral=True)
+
+    # 3. Resolve
+    await interaction.followup.send(f"⌛ Closing match (Timer set to {minutes}m)...", ephemeral=True)
     await bot.resolve_match(data, sha)
+
 
 
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
@@ -913,45 +933,41 @@ async def currentvotes(interaction: discord.Interaction):
     
     await interaction.followup.send(embed=embed)
 
-@bot.tree.command(name="status", description="Check the current progress of the World Cup")
+@bot.tree.command(name="status", description="Check progress and see time remaining")
 async def status(interaction: discord.Interaction):
     await interaction.response.defer()
     data, _ = load_data()
-    
     status_mode = data.get('status', 'IDLE')
     embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
     
-    if status_mode == "IDLE":
-        embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
-        
-    elif status_mode == "SUGGESTIONS_OPEN":
-        count = len(data.get('suggestions', []))
-        embed.description = f"💡 **Phase 1: Suggestions**\nWe are currently collecting themes! Use `/suggestcategory` to join in.\n\n**Total Suggestions:** {count}"
-        
-    elif status_mode == "ADDING_ITEMS":
-        count = len(data.get('items', []))
-        # Create a simple progress bar
-        filled = int((count / 32) * 10)
-        bar = "🟩" * filled + "⬜" * (10 - filled)
-        embed.description = (
-            f"📦 **Phase 2: Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
-            f"Submit entries with `/additem`!\n\n"
-            f"**Progress:** {count}/32\n`{bar}`"
-        )
-        
-    elif status_mode == "MATCH_ACTIVE":
+    if status_mode == "MATCH_ACTIVE":
         match = data.get('current_match')
-        round_name = "Tournament"
         if match:
-            # Calculate total votes currently cast
             vote_count = len(match.get('votes', {}))
-            # Figure out the round name based on bracket size
             round_name = get_round_name(len(data.get('bracket', [])) + 2)
+            
+            # --- Time Calculation ---
+            time_info = ""
+            start_str = match.get("start_time")
+            if start_str:
+                start_time = datetime.datetime.fromisoformat(start_str)
+                # Default duration is 24h (86400 seconds)
+                end_time = start_time + datetime.timedelta(hours=24)
+                remaining = end_time - datetime.datetime.now()
+                
+                if remaining.total_seconds() > 0:
+                    hours, remainder = divmod(int(remaining.total_seconds()), 3600)
+                    minutes, _ = divmod(remainder, 60)
+                    time_info = f"\n⏳ **Time Remaining:** {hours}h {minutes}m"
+                else:
+                    time_info = "\n✅ **Match time complete!** Admins can close this now."
+
             embed.description = (
                 f"⚔️ **Phase 3: Matches Live**\nTheme: **{data['current_cat']}**\n"
                 f"**Current Round:** {round_name}\n"
-                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n\n"
-                f"📊 **Total Votes cast so far:** {vote_count}"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
+                f"📊 **Total Votes:** {vote_count}"
+                f"{time_info}"
             )
         else:
             embed.description = "🔄 **Processing...** Moving to the next match."
