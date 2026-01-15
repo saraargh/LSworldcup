@@ -406,50 +406,91 @@ class EndConfirmView(ui.View):
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament wiped, pins cleared, and bot reset.**", view=None)
 
-class ScoreboardView(ui.ui.View):
+class ScoreboardView(ui.View):
     def __init__(self, matches=None):
         super().__init__(timeout=None)
         self.matches = list(reversed(matches or []))
         self.page = 0
+        self.view_mode = "HISTORY" 
 
-    def create_embed(self):
-        start = self.page * 5
-        chunk = self.matches[start:start+5]
+    def create_embed(self, data):
+        embed = discord.Embed(color=0x3498db)
         
-        embed = discord.Embed(title="📊 Tournament Results", color=0x3498db)
-        
-        if not chunk:
-            embed.description = "No matches to display."
-            return embed
-
-        description_text = ""
-        for m in chunk:
-            winner_user = m.get('winner_user', 'Unknown')
-            loser_name = m.get('loser_name', 'Entry B')
+        if self.view_mode == "HISTORY":
+            start = self.page * 5
+            chunk = self.matches[start:start+5]
+            embed.title = "📊 Match History"
             
-            # Formatting with bolding and sub-lines for clarity
-            description_text += f"🔹 **{m['name']}**\n"
-            description_text += f"🏆 **{m['winner']}** (Score: {m['score']})\n"
-            description_text += f"┕ *Submitted by:* {winner_user}\n"
-            description_text += f"┕ *Defeated:* {loser_name}\n\n"
-        
-        embed.description = description_text
-        total_pages = (len(self.matches) - 1) // 5 + 1
-        embed.set_footer(text=f"Page {self.page + 1} of {total_pages} • Recent matches first")
+            description_text = "*Newest results at the top*\n\n"
+            for m in chunk:
+                description_text += (
+                    f"🔹 **{m['name']}**\n"
+                    f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
+                    f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
+                    f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
+                )
+            embed.description = description_text
+            total_pages = (len(self.matches) - 1) // 5 + 1
+            embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
+
+        else:
+            # --- SURVIVOR MODE ---
+            embed.title = " supervivencia: Remaining Survivors"
+            
+            # 1. Get everyone currently in the bracket or winners_pool
+            survivors = []
+            # Check the active match
+            curr = data.get('current_match')
+            if curr:
+                survivors.append(f"{curr['item_a']['name']} ({curr['item_a']['user']})")
+                survivors.append(f"{curr['item_b']['name']} ({curr['item_b']['user']})")
+            
+            # Check the upcoming bracket
+            for item in data.get('bracket', []):
+                survivors.append(f"{item['name']} ({item['user']})")
+                
+            # Check winners waiting for next round
+            for item in data.get('winners_pool', []):
+                survivors.append(f"{item['name']} ({item['user']})")
+
+            if not survivors:
+                embed.description = "Tournament complete! No survivors left."
+            else:
+                # Format the list with a "living" emoji
+                survivor_text = f"**{len(survivors)} entries still in the running:**\n\n"
+                for entry in survivors:
+                    survivor_text += f"🟢 {entry}\n"
+                embed.description = survivor_text
+            
+            embed.set_footer(text="The path to the Grand Final")
+
         return embed
 
-    @ui.button(label="⬅️ Newer", style=discord.ButtonStyle.gray, custom_id="score_prev")
+    @ui.button(label="⬅️ Newer", style=discord.ButtonStyle.gray)
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.defer()
+        data, _ = load_data()
+        self.view_mode = "HISTORY"
         self.page = max(0, self.page - 1)
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed())
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data))
 
-    @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray, custom_id="score_next")
+    @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray)
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.defer()
+        data, _ = load_data()
+        self.view_mode = "HISTORY"
         if (self.page + 1) * 5 < len(self.matches):
             self.page += 1
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed())
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data))
+
+    @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success)
+    async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer()
+        data, _ = load_data()
+        self.view_mode = "SURVIVORS" if self.view_mode == "HISTORY" else "HISTORY"
+        button.label = "📜 View History" if self.view_mode == "SURVIVORS" else "🟢 Survivors"
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data), view=self)
+
 
 
 
