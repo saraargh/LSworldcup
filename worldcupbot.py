@@ -327,8 +327,6 @@ class MatchView(ui.View):
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
 
-
-
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
         super().__init__(timeout=60)
@@ -366,15 +364,22 @@ class EndConfirmView(ui.View):
         except:
             pass
 
-        # 3. Reset Data
+        # 3. Reset Data (FIXED: REMOVED "items": [] FROM WIPE)
         self.data.update({
-            "status": "IDLE", "items": [], "suggestions": [], 
-            "bracket": [], "winners_pool": [], "finished_matches": [],
-            "current_match": None, "current_cat": None, "final_winner": None
+            "status": "IDLE", 
+            "suggestions": [], 
+            "bracket": [], 
+            "winners_pool": [], 
+            "finished_matches": [],
+            "current_match": None, 
+            "current_cat": None, 
+            "final_winner": None
         })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="✅ **Tournament wiped, pins cleared, and bot reset.**", view=None)
+        await interaction.response.edit_message(content="✅ **Tournament state cleared and pins removed. Items have been preserved.**", view=None)
+
+
 
 class ScoreboardView(ui.View):
     def __init__(self, matches=None):
