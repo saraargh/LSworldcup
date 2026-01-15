@@ -281,23 +281,24 @@ class MatchView(ui.View):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        # Update button labels to the actual item names
+        # Set button labels to item names
         self.vote_a.label = f"Vote for {item_a['name']}"
         self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
         item = self.item_a if page == 0 else self.item_b
-        color = 0xff4757 if page == 0 else 0x2e86de # Red vs Blue
+        color = 0xff4757 if page == 0 else 0x2e86de
+        
+        # We look for 'desc' specifically here
+        item_desc = item.get('desc', 'No description provided.')
         
         embed = discord.Embed(
             title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}",
-            # Description restored:
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item.get('description', 'No description provided.')}\n**Submitted by:** {item.get('user', 'Unknown')}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
         embed.set_image(url=item['image'])
-        # Simplified footer to keep it clean
-        embed.set_footer(text="Use the buttons below to switch views and cast your vote!")
+        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
     @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
@@ -308,7 +309,6 @@ class MatchView(ui.View):
     async def view_b(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(1))
 
-    # Buttons now dynamically labeled in __init__
     @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a_match", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.defer(ephemeral=True)
