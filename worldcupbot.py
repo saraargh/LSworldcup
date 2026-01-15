@@ -528,7 +528,7 @@ async def startworldcup(interaction: discord.Interaction):
     
     save_data(data, sha)
     
-    await interaction.response.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    await interaction.followup.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     await bot.post_next(interaction.channel)
 
 @bot.tree.command(name="nextmatch", description="Admin: Close current match and post next pair")
