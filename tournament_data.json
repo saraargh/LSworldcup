@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Pretty Woman",
-            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "How to lose a guy in 10 days",
-            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Love Actually",
             "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
@@ -399,6 +387,23 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Pretty Woman",
+            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "How to lose a guy in 10 days",
+            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
+            "user": "<@1238834298338152498>"
+        },
+        "message_id": 1461439759397425225,
+        "channel_id": 1438277790179921971,
+        "votes": {},
+        "start_time": "2026-01-15T19:19:51.328933"
+    },
     "final_winner": null
 }
