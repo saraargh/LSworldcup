@@ -661,7 +661,7 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
             if item['user'] == user_mention:
                 return await interaction.response.send_message("❌ You've already submitted an item!", ephemeral=True)
     
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=False)
     
     # Secure storage of the image
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
@@ -688,7 +688,9 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     
     save_data(data, sha)
     current_count = len(data['items'])
-    await interaction.followup.send(f"✅ **{short_name}** added! ({current_count}/32 entries total)")
+    await interaction.followup.send(f"✅  **{short_name}** added! ({current_count}/32 entries total)", ephemeral=False)
+
+
 
 @bot.tree.command(name="matchups", description="View the current bracket and upcoming matches")
 async def matchups(interaction: discord.Interaction):
