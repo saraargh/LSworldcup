@@ -468,29 +468,32 @@ class ScoreboardView(ui.View):
 
     @ui.button(label="⬅️ Newer", style=discord.ButtonStyle.gray)
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer()
+        # We use response.edit_message because it's instantaneous and doesn't need IDs
         data, _ = load_data()
         self.view_mode = "HISTORY"
         self.page = max(0, self.page - 1)
-        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
     @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray)
     async def next(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer()
         data, _ = load_data()
         self.view_mode = "HISTORY"
         if (self.page + 1) * 5 < len(self.matches):
             self.page += 1
-        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
     @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success)
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer()
         data, _ = load_data()
-        self.view_mode = "SURVIVORS" if self.view_mode == "HISTORY" else "HISTORY"
-        button.label = "📜 View History" if self.view_mode == "SURVIVORS" else "🟢 Survivors"
-        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
-
+        # Toggle logic
+        if self.view_mode == "HISTORY":
+            self.view_mode = "SURVIVORS"
+            button.label = "📜 View History"
+        else:
+            self.view_mode = "HISTORY"
+            button.label = "🟢 Survivors"
+            
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
 # =========================================================
 # BOT CORE CLASS
