@@ -278,7 +278,6 @@ class MatchView(ui.View):
         # Determine which item to show based on the "page"
         target_item = self.item_a if page == 0 else self.item_b
         
-        # Prepare description with clickable submitter mention
         item_desc = target_item.get('desc', 'No description.')
         submitter = target_item.get('user', 'Unknown')
         
@@ -301,37 +300,64 @@ class MatchView(ui.View):
 
     @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="view_a_match")
     async def prev_page(self, interaction: discord.Interaction, button: ui.Button):
+        # Always defer first to prevent 404
+        await interaction.response.defer() 
         data, _ = load_data()
         m = data['current_match']
         self.item_a, self.item_b = m['item_a'], m['item_b']
-        await interaction.response.edit_message(embed=self.create_embed(0))
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(0))
 
     @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="view_b_match")
     async def next_page(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer()
         data, _ = load_data()
         m = data['current_match']
         self.item_a, self.item_b = m['item_a'], m['item_b']
-        await interaction.response.edit_message(embed=self.create_embed(1))
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(1))
 
     @ui.button(style=discord.ButtonStyle.danger, custom_id="v_a_master_final", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
+        # 1. TELL DISCORD TO WAIT IMMEDIATELY
+        await interaction.response.defer(ephemeral=True)
+        
+        # 2. NOW DO THE SLOW GITHUB WORK
         data, sha = load_data()
         match = data.get("current_match")
-        if not match or str(interaction.user.id) in match.get("votes", {}):
-            return await interaction.response.send_message("❌ Already voted or no match active!", ephemeral=True)
+        
+        if not match:
+            return await interaction.followup.send("❌ No match is currently active!", ephemeral=True)
+            
+        if str(interaction.user.id) in match.get("votes", {}):
+            return await interaction.followup.send("❌ You have already voted in this match!", ephemeral=True)
+            
+        # 3. SAVE VOTE
         match["votes"][str(interaction.user.id)] = "A"
         save_data(data, sha)
-        await interaction.response.send_message(f"✅ Voted for **{match['item_a']['name']}**.", ephemeral=True)
+        
+        # 4. USE FOLLOWUP FOR THE CONFIRMATION
+        await interaction.followup.send(f"✅ Voted for **{match['item_a']['name']}**.", ephemeral=True)
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="v_b_master_final", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
+        # 1. TELL DISCORD TO WAIT IMMEDIATELY
+        await interaction.response.defer(ephemeral=True)
+        
+        # 2. NOW DO THE SLOW GITHUB WORK
         data, sha = load_data()
         match = data.get("current_match")
-        if not match or str(interaction.user.id) in match.get("votes", {}):
-            return await interaction.response.send_message("❌ Already voted or no match active!", ephemeral=True)
+        
+        if not match:
+            return await interaction.followup.send("❌ No match is currently active!", ephemeral=True)
+            
+        if str(interaction.user.id) in match.get("votes", {}):
+            return await interaction.followup.send("❌ You have already voted in this match!", ephemeral=True)
+            
+        # 3. SAVE VOTE
         match["votes"][str(interaction.user.id)] = "B"
         save_data(data, sha)
-        await interaction.response.send_message(f"✅ Voted for **{match['item_b']['name']}**.", ephemeral=True)
+        
+        # 4. USE FOLLOWUP FOR THE CONFIRMATION
+        await interaction.followup.send(f"✅ Voted for **{match['item_b']['name']}**.", ephemeral=True)
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
@@ -608,40 +634,43 @@ async def startworldcup(interaction: discord.Interaction):
     await bot.post_next(interaction.channel)
 
 
-@bot.tree.command(name="nextmatch", description="Close current match. Default wait is 24h, or specify minutes for testing.")
+@bot.tree.command(name="nextmatch", description="Admin: Close current match. Use minutes: 1 for testing.")
 async def nextmatch(interaction: discord.Interaction, minutes: int = 1440):
+    # 1. Check Admin Role immediately (No GitHub call needed)
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
+        return await interaction.response.send_message("❌ Admin only command.", ephemeral=True)
         
-    # 1. Lock check (Same as before)
-    if bot.processing_lock.locked():
-        return await interaction.response.send_message("⏳ processing... wait a few seconds.", ephemeral=True)
-
+    # 2. ACKNOWLEDGE DISCORD IMMEDIATELY (Stops the 404 timeout)
     await interaction.response.defer(ephemeral=True)
-    data, sha = load_data()
-    
-    match = data.get("current_match")
-    if not match:
-        return await interaction.followup.send("❌ No match is active.", ephemeral=True)
 
-    # 2. Timing Logic
-    # We check if 'start_time' exists in the match data
+    # 3. Check the Processing Lock
+    if bot.processing_lock.locked():
+        return await interaction.followup.send("⏳ **Slow down!** I'm still processing the last match. Try again in a few seconds.", ephemeral=True)
+
+    # 4. NOW do the slow work (GitHub load)
+    data, sha = load_data()
+    match = data.get("current_match")
+    
+    if not match:
+        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
+
+    # 5. Timing Logic check
     start_time_str = match.get("start_time")
     if start_time_str:
         start_time = datetime.datetime.fromisoformat(start_time_str)
         elapsed = datetime.datetime.now() - start_time
         remaining = (minutes * 60) - elapsed.total_seconds()
         
-        # If time hasn't passed, block the command
         if remaining > 0:
             m, s = divmod(int(remaining), 60)
             h, m = divmod(m, 60)
             time_left = f"{h}h {m}m {s}s" if h > 0 else f"{m}m {s}s"
-            return await interaction.followup.send(f"⏳ **Match is still ongoing!**\nYou must wait **{time_left}** before closing this match.", ephemeral=True)
+            return await interaction.followup.send(f"⏳ **Match is still ongoing!** You must wait **{time_left}** before closing this.", ephemeral=True)
 
-    # 3. Resolve
-    await interaction.followup.send(f"⌛ Closing match (Timer set to {minutes}m)...", ephemeral=True)
+    # 6. Success! Trigger the resolution
+    await interaction.followup.send(f"⌛ Closing match and calculating results...", ephemeral=True)
     await bot.resolve_match(data, sha)
+
 
 
 
