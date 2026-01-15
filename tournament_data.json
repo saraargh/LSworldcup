@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Cruel Intentions",
-            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Bend it like beckham",
-            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "White Chicks",
             "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
@@ -403,6 +391,22 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Cruel Intentions",
+            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Bend it like beckham",
+            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
+            "user": "<@1238834298338152498>"
+        },
+        "message_id": 1461416330564472873,
+        "channel_id": 1438277790179921971,
+        "votes": {}
+    },
     "final_winner": null
 }
