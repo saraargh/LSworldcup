@@ -388,76 +388,79 @@ class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
+        self.processing_lock = asyncio.Lock() # Prevents double-processing matches
 
     async def setup_hook(self):
-        # Register persistent views so buttons work after reboot
         self.add_view(MatchView())
         self.add_view(HistoryView())
         self.add_view(ItemGallery())
 
-    # --- MAKE SURE THESE ARE INDENTED INSIDE THE CLASS ---
     async def resolve_match(self, data, sha):
-        match = data['current_match']
-        if not match:
-            return
+        # The lock ensures only ONE instance of this runs at a time
+        async with self.processing_lock:
+            match = data.get('current_match')
+            if not match:
+                return
+                
+            channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
             
-        channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
-        
-        # 1. Unpin the old match and delete the "pinned a message" system alert
-        try:
-            old_msg = await channel.fetch_message(match['message_id'])
-            await old_msg.unpin()
-            # Clean up the system notification "Bot pinned a message"
-            async for message in channel.history(limit=5):
-                if message.type == discord.MessageType.pins_add and message.reference.message_id == old_msg.id:
-                    await message.delete()
-        except:
-            pass 
+            # Unpin and clean system message
+            try:
+                old_msg = await channel.fetch_message(match['message_id'])
+                await old_msg.unpin()
+                async for msg in channel.history(limit=5):
+                    if msg.type == discord.MessageType.pins_add and msg.reference and msg.reference.message_id == old_msg.id:
+                        await msg.delete()
+                        break
+            except:
+                pass 
 
-        vote_list = list(match.get("votes", {}).values())
-        count_a = vote_list.count("A")
-        count_b = vote_list.count("B")
-        
-        if count_a > count_b:
-            winner = match['item_a']
-        elif count_b > count_a:
-            winner = match['item_b']
-        else:
-            winner = random.choice([match['item_a'], match['item_b']])
-            await channel.send("⚖️ **The match was a tie!** A random winner has been chosen.")
+            vote_list = list(match.get("votes", {}).values())
+            count_a = vote_list.count("A")
+            count_b = vote_list.count("B")
+            
+            if count_a > count_b:
+                winner = match['item_a']
+            elif count_b > count_a:
+                winner = match['item_b']
+            else:
+                winner = random.choice([match['item_a'], match['item_b']])
+                await channel.send("⚖️ **The match was a tie!** A random winner has been chosen.")
 
-        data.setdefault('finished_matches', []).append({
-            "name": f"{match['item_a']['name']} vs {match['item_b']['name']}", 
-            "winner": winner['name'], 
-            "score": f"{count_a}-{count_b}"
-        })
-        
-        data.setdefault('winners_pool', []).append(winner)
-        data['current_match'] = None
-        
-        result_embed = discord.Embed(
-            title="Match Results", 
-            description=f"🏆 **{winner['name']}** advances!\nScore: {count_a} to {count_b}", 
-            color=0x2ecc71
-        )
-        result_embed.set_image(url=winner['image'])
-        await channel.send(embed=result_embed)
-        
-        if not data['bracket']:
-            if len(data['winners_pool']) > 1:
-                data['bracket'] = list(data['winners_pool'])
-                data['winners_pool'] = []
-                next_round = get_round_name(len(data['bracket']))
-                await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
-            elif len(data['winners_pool']) == 1:
-                data['final_winner'] = data['winners_pool'][0]
-                data['status'] = "FINISHED"
-                save_data(data, sha)
-                await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
-                return 
-        
-        save_data(data, sha)
-        await self.post_next(channel)
+            data.setdefault('finished_matches', []).append({
+                "name": f"{match['item_a']['name']} vs {match['item_b']['name']}", 
+                "winner": winner['name'], 
+                "score": f"{count_a}-{count_b}"
+            })
+            
+            data.setdefault('winners_pool', []).append(winner)
+            data['current_match'] = None
+            
+            result_embed = discord.Embed(
+                title="Match Results", 
+                description=f"🏆 **{winner['name']}** advances!\nScore: {count_a} to {count_b}", 
+                color=0x2ecc71
+            )
+            result_embed.set_image(url=winner['image'])
+            await channel.send(embed=result_embed)
+            
+            # Check if we need to advance the round
+            if not data['bracket']:
+                if len(data['winners_pool']) > 1:
+                    data['bracket'] = list(data['winners_pool'])
+                    data['winners_pool'] = []
+                    next_round = get_round_name(len(data['bracket']))
+                    await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
+                elif len(data['winners_pool']) == 1:
+                    data['final_winner'] = data['winners_pool'][0]
+                    data['status'] = "FINISHED"
+                    save_data(data, sha)
+                    await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
+                    return 
+            
+            save_data(data, sha)
+            await asyncio.sleep(1) # Tiny delay for GitHub sync safety
+            await self.post_next(channel)
 
     async def post_next(self, channel):
         data, sha = load_data()
@@ -473,7 +476,6 @@ class WC_Bot(discord.Client):
         await channel.send(f"@everyone ⚔️ **{round_name} - Match {match_number}** is now LIVE!")
         msg = await channel.send(embed=view.create_embed(0), view=view)
         
-        # 2. Pin the new match
         try:
             await msg.pin()
         except:
@@ -489,8 +491,6 @@ class WC_Bot(discord.Client):
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
 
-
-    
 
 # --- CLASS ENDS HERE ---
 bot = WC_Bot()
@@ -596,10 +596,13 @@ async def startworldcup(interaction: discord.Interaction):
     data['finished_matches'] = []
     data['winners_pool'] = []
     data['status'] = "MATCH_ACTIVE"
+    data['current_match'] = None # Ensure clean start
     
     save_data(data, sha)
     
     await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    
+    # We call post_next from the bot instance
     await bot.post_next(interaction.channel)
 
 
