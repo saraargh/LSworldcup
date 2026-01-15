@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind",
-            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Cruel Intentions",
             "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
@@ -404,6 +392,22 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Eternal Sunshine of The Spotless Mind",
+            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
+            "user": "<@1238834298338152498>"
+        },
+        "message_id": 1461415357897244810,
+        "channel_id": 1438277790179921971,
+        "votes": {}
+    },
     "final_winner": null
 }
