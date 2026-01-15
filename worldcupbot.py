@@ -374,25 +374,6 @@ class EndConfirmView(ui.View):
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament wiped and bot reset.**", view=None)
 
-@bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
-async def endcup(interaction: discord.Interaction):
-    if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
-        
-    await interaction.response.defer(ephemeral=True)
-    data, sha = load_data()
-    winner = data.get("final_winner")
-    
-    # If the cup isn't finished, we set a warning flag
-    is_early = winner is None
-    
-    if is_early:
-        msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
-    else:
-        msg = f"🏆 **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
-    
-    view = EndConfirmView(data, sha, is_early=is_early)
-    await interaction.followup.send(content=msg, view=view, ephemeral=True)
 
 
 # =========================================================
@@ -651,6 +632,25 @@ async def resetcup(interaction: discord.Interaction):
     confirm_view = ResetConfirmView()
     await interaction.response.send_message("⚠️ **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
 
+@bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
+async def endcup(interaction: discord.Interaction):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
+        
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    winner = data.get("final_winner")
+    
+    # If the cup isn't finished, we set a warning flag
+    is_early = winner is None
+    
+    if is_early:
+        msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
+    else:
+        msg = f"🏆 **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
+    
+    view = EndConfirmView(data, sha, is_early=is_early)
+    await interaction.followup.send(content=msg, view=view, ephemeral=True)
 
 
 @bot.tree.command(name="help", description="Guide on how to use the World Cup bot")
