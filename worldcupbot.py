@@ -572,22 +572,55 @@ class WC_Bot(discord.Client):
 
     async def post_next(self, channel):
         data, sha = load_data()
-        if not data['bracket'] or len(data['bracket']) < 2:
-            return
-            
+        
+        # 1. Check if we need to pull from the winners pool for the next round
+        if not data.get('bracket') or len(data['bracket']) < 2:
+            if len(data.get('winners_pool', [])) >= 2:
+                data['bracket'] = list(data['winners_pool'])
+                data['winners_pool'] = []
+                await channel.send(f"🛡️ **Round Complete!** Moving to the next stage.")
+            else:
+                return # No more matches possible
+
+        # 2. Setup match details
         competitor_a = data['bracket'].pop(0)
         competitor_b = data['bracket'].pop(0)
-        round_name = get_round_name(data)
-        match_number = len(data['finished_matches']) + 1
+        round_name = get_round_name(data) # Using the smarter function
+        match_number = len(data.get('finished_matches', [])) + 1
         
-        view = MatchView(competitor_a, competitor_b, round_name, match_number)
+        # 3. Create match object early so message_id can be added
+        data['current_match'] = {
+            "item_a": competitor_a, 
+            "item_b": competitor_b, 
+            "message_id": None, 
+            "channel_id": channel.id, 
+            "votes": {},
+            "start_time": datetime.datetime.now().isoformat()
+        }
+        data['status'] = "MATCH_ACTIVE"
+
+        # 4. Initialize View with just the competitors
+        view = MatchView(competitor_a, competitor_b)
+        
+        # 5. Send Announcement and Match
         await channel.send(f"@everyone ⚔️ **{round_name} - Match {match_number}** is now LIVE!")
         msg = await channel.send(embed=view.create_embed(0), view=view)
         
+
+        # 6. Save the ID and Pin
+        data['current_match']['message_id'] = msg.id
+        save_data(data, sha)
+        
         try:
+            # This pins the message and Discord will post the 
+            # "Bot pinned a message" alert automatically.
             await msg.pin()
+        except Exception as e:
+            print(f"Pinning failed: {e}")
+
         except:
             pass
+
 
         data['current_match'] = {
             "item_a": competitor_a, 
