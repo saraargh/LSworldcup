@@ -651,6 +651,10 @@ async def endcup(interaction: discord.Interaction):
     await interaction.followup.send(content=msg, view=view, ephemeral=True)
 
 
+# =========================================================
+# SLASH COMMANDS - USERS
+# =========================================================
+
 @bot.tree.command(name="help", description="Guide on how to use the World Cup bot")
 async def help(interaction: discord.Interaction):
     is_admin_user = is_admin(interaction.user)
@@ -677,12 +681,6 @@ async def help(interaction: discord.Interaction):
 
     embed = discord.Embed(title="🏆 World Cup Bot Help", description=desc, color=0x3498db)
     await interaction.response.send_message(embed=embed, ephemeral=True)
-
-
-
-# =========================================================
-# SLASH COMMANDS - USERS
-# =========================================================
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
@@ -912,6 +910,61 @@ async def currentvotes(interaction: discord.Interaction):
     
     await interaction.followup.send(embed=embed)
 
+@bot.tree.command(name="status", description="Check the current progress of the World Cup")
+async def status(interaction: discord.Interaction):
+    await interaction.response.defer()
+    data, _ = load_data()
+    
+    status_mode = data.get('status', 'IDLE')
+    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
+    
+    if status_mode == "IDLE":
+        embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
+        
+    elif status_mode == "SUGGESTIONS_OPEN":
+        count = len(data.get('suggestions', []))
+        embed.description = f"💡 **Phase 1: Suggestions**\nWe are currently collecting themes! Use `/suggestcategory` to join in.\n\n**Total Suggestions:** {count}"
+        
+    elif status_mode == "ADDING_ITEMS":
+        count = len(data.get('items', []))
+        # Create a simple progress bar
+        filled = int((count / 32) * 10)
+        bar = "🟩" * filled + "⬜" * (10 - filled)
+        embed.description = (
+            f"📦 **Phase 2: Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
+            f"Submit entries with `/additem`!\n\n"
+            f"**Progress:** {count}/32\n`{bar}`"
+        )
+        
+    elif status_mode == "MATCH_ACTIVE":
+        match = data.get('current_match')
+        round_name = "Tournament"
+        if match:
+            # Calculate total votes currently cast
+            vote_count = len(match.get('votes', {}))
+            # Figure out the round name based on bracket size
+            round_name = get_round_name(len(data.get('bracket', [])) + 2)
+            embed.description = (
+                f"⚔️ **Phase 3: Matches Live**\nTheme: **{data['current_cat']}**\n"
+                f"**Current Round:** {round_name}\n"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n\n"
+                f"📊 **Total Votes cast so far:** {vote_count}"
+            )
+        else:
+            embed.description = "🔄 **Processing...** Moving to the next match."
+
+    elif status_mode == "FINISHED":
+        winner = data.get('final_winner')
+        embed.description = (
+            f"🏁 **Phase 4: Tournament Complete**\n"
+            f"The champion of **{data['current_cat']}** is **{winner['name']}**!\n\n"
+            "Waiting for admins to archive and reset."
+        )
+        if winner:
+            embed.set_thumbnail(url=winner['image'])
+
+    embed.set_footer(text="The Landing Strip World Cup System")
+    await interaction.followup.send(embed=embed)
 
 # =========================================================
 # ON READY
