@@ -638,45 +638,42 @@ async def help(interaction: discord.Interaction):
 async def suggestcategory(interaction: discord.Interaction, name: str):
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
+    clean_name = name.strip().lower() # Standardize for comparison
     
     if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.response.send_message("❌ We aren't taking suggestions right now.", ephemeral=True)
+        return await interaction.response.send_message("❌ Suggestions are closed.", ephemeral=True)
     
-    # Check for existing suggestion from this user (admins bypass)
-    if not is_admin(interaction.user):
-        already_submitted = False
-        for s in data['suggestions']:
-            if s['user'] == user_mention:
-                already_submitted = True
-                break
-        if already_submitted:
-            return await interaction.response.send_message("❌ You have already submitted a theme!", ephemeral=True)
+    # NEW: Check if the theme already exists
+    for s in data['suggestions']:
+        if s['name'].lower() == clean_name:
+            return await interaction.response.send_message(f"❌ '{name}' has already been suggested!", ephemeral=True)
     
-    data.setdefault('suggestions', []).append({
-        "name": name[:100], 
-        "user": user_mention
-    })
+    if not is_admin(interaction.user) and any(s['user'] == user_mention for s in data['suggestions']):
+        return await interaction.response.send_message("❌ You've already submitted a theme!", ephemeral=True)
+    
+    data['suggestions'].append({"name": name[:100], "user": user_mention})
     save_data(data, sha)
-    await interaction.response.send_message(f"💡{user_mention} suggested: **{name}**", ephemeral=False)
+    await interaction.response.send_message(f"💡 Logged: **{name}**", ephemeral=False)
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
-    
+    clean_name = name.strip().lower()
+
     if data['status'] != "ADDING_ITEMS":
-        return await interaction.response.send_message("❌ Submissions are not open yet.", ephemeral=True)
+        return await interaction.response.send_message("❌ Submissions closed.", ephemeral=True)
     
+    # NEW: Check if item name is already in the list
+    for item in data['items']:
+        if item['name'].lower() == clean_name:
+            return await interaction.response.send_message(f"❌ '{name}' is already in the tournament!", ephemeral=True)
+
     if len(data['items']) >= 32:
-        return await interaction.response.send_message("❌ The bracket is full! (32/32)", ephemeral=True)
+        return await interaction.response.send_message("❌ Bracket full!", ephemeral=True)
     
-    if not is_admin(interaction.user):
-        for item in data['items']:
-            if item['user'] == user_mention:
-                return await interaction.response.send_message("❌ You've already submitted an item!", ephemeral=True)
-    
-    await interaction.response.defer(ephemeral=False)
-    
+    # (Rest of your image upload and save logic stays the same...)
+
     # Secure storage of the image
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
     try:
