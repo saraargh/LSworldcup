@@ -385,7 +385,7 @@ class WC_Bot(discord.Client):
         self.add_view(HistoryView())
         self.add_view(ItemGallery())
 
-    async def resolve_match(self, data, sha):
+        async def resolve_match(self, data, sha):
         match = data['current_match']
         if not match:
             return
@@ -404,58 +404,63 @@ class WC_Bot(discord.Client):
             winner = random.choice([match['item_a'], match['item_b']])
             await channel.send("⚖️ **The match was a tie!** A random winner has been chosen.")
 
-        # Record match history
         data.setdefault('finished_matches', []).append({
             "name": f"{match['item_a']['name']} vs {match['item_b']['name']}", 
             "winner": winner['name'], 
             "score": f"{count_a}-{count_b}"
         })
         
-        # Move winner to the winners pool
         data.setdefault('winners_pool', []).append(winner)
         data['current_match'] = None
         
         result_embed = discord.Embed(
             title="Match Results", 
-            description=f"🏆 **{winner['name']}** advances to the next round!\nScore: {count_a} to {count_b}", 
+            description=f"🏆 **{winner['name']}** advances!\nScore: {count_a} to {count_b}", 
             color=0x2ecc71
         )
         result_embed.set_image(url=winner['image'])
         await channel.send(embed=result_embed)
         
-        # Check if the current round is finished
-        if not data['bracket'] and len(data['winners_pool']) > 1:
-            data['bracket'] = data['winners_pool']
-            data['winners_pool'] = []
-            next_round = get_round_name(len(data['bracket']))
-            await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
-            
-        elif not data['bracket'] and len(data['winners_pool']) == 1:
-            data['final_winner'] = winner
-            data['status'] = "FINISHED"
+        # 1. Check if the bracket is empty
+        if not data['bracket']:
+            # If we have multiple winners, move them to the next bracket (e.g., Round of 32 -> Round of 16)
+            if len(data['winners_pool']) > 1:
+                data['bracket'] = list(data['winners_pool'])
+                data['winners_pool'] = []
+                next_round = get_round_name(len(data['bracket']))
+                await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
+                save_data(data, sha)
+                await self.post_next(channel)
+            # If only ONE winner left total, it's the Grand Final winner
+            elif len(data['winners_pool']) == 1:
+                data['final_winner'] = data['winners_pool'][0]
+                data['status'] = "FINISHED"
+                save_data(data, sha)
+                await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
+        else:
+            # Bracket still has items, move to next match in the current round
             save_data(data, sha)
-            await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
-            return
-
-        save_data(data, sha)
-        await self.post_next(channel)
+            await self.post_next(channel)
 
     async def post_next(self, channel):
         data, sha = load_data()
-        if not data['bracket']:
+        
+        # SAFETY: If bracket is empty, we shouldn't be here
+        if not data['bracket'] or len(data['bracket']) < 2:
             return
             
-        # Get next pair from bracket
         competitor_a = data['bracket'].pop(0)
         competitor_b = data['bracket'].pop(0)
         
+        # Calculate round name based on items left + the 2 we just took
         round_name = get_round_name(len(data['bracket']) + 2)
         match_number = len(data['finished_matches']) + 1
         
         view = MatchView(competitor_a, competitor_b, round_name, match_number)
         
         await channel.send(f"@everyone ⚔️ **{round_name} - Match {match_number}** is now LIVE!")
-        msg = await channel.send(embed=view.create_embed(0), view=view)
+        embed = view.create_embed(0) # Uses the new clickable @mention logic
+        msg = await channel.send(embed=embed, view=view)
         
         data['current_match'] = {
             "item_a": competitor_a, 
@@ -466,6 +471,7 @@ class WC_Bot(discord.Client):
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
+
 
 bot = WC_Bot()
 
