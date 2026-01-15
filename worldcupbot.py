@@ -870,6 +870,51 @@ async def listcategories(interaction: discord.Interaction):
     embed = discord.Embed(title="💡 Theme Suggestions", description=txt, color=0x3498db)
     await interaction.followup.send(embed=embed)
 
+@bot.tree.command(name="currentvotes", description="See who has voted in the active match")
+async def currentvotes(interaction: discord.Interaction):
+    # Defer since we are pulling from GitHub and processing mentions
+    await interaction.response.defer(ephemeral=False)
+    
+    data, _ = load_data()
+    match = data.get("current_match")
+    
+    if not match:
+        return await interaction.followup.send("❌ There is no active match right now.")
+    
+    votes = match.get("votes", {})
+    
+    if not votes:
+        return await interaction.followup.send(f"🗳️ **{match['item_a']['name']} vs {match['item_b']['name']}**\nNo votes have been cast yet!")
+
+    # Separate voters into two lists
+    list_a = []
+    list_b = []
+    
+    for user_id, choice in votes.items():
+        mention = f"<@{user_id}>"
+        if choice == "A":
+            list_a.append(mention)
+        else:
+            list_b.append(mention)
+
+    # Format the lists for the embed
+    str_a = "\n".join(list_a) if list_a else "_No votes_"
+    str_b = "\n".join(list_b) if list_b else "_No votes_"
+    
+    embed = discord.Embed(
+        title="🗳️ Current Vote Breakdown",
+        description=f"**{match['item_a']['name']}** vs **{match['item_b']['name']}**",
+        color=0x3498db
+    )
+    
+    embed.add_field(name=f"🔵 {match['item_a']['name']} ({len(list_a)})", value=str_a, inline=True)
+    embed.add_field(name=f"🔴 {match['item_b']['name']} ({len(list_b)})", value=str_b, inline=True)
+    
+    embed.set_footer(text=f"Total Votes: {len(votes)}")
+    
+    await interaction.followup.send(embed=embed)
+
+
 # =========================================================
 # ON READY
 # =========================================================
