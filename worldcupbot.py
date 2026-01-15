@@ -579,6 +579,37 @@ async def resetcup(interaction: discord.Interaction):
     confirm_view = ResetConfirmView()
     await interaction.response.send_message("⚠️ **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
 
+
+
+@bot.tree.command(name="help", description="Guide on how to use the World Cup bot")
+async def help(interaction: discord.Interaction):
+    is_admin_user = is_admin(interaction.user)
+    
+    desc = "**User Commands:**\n"
+    desc += "• `/suggestcategory`: Suggest a theme for the next cup.\n"
+    desc += "• `/listcategories`: See all current theme suggestions.\n"
+    desc += "• `/additem`: Submit your entry (Name, Desc, Image).\n"
+    desc += "• `/matchups`: View the live bracket and upcoming pairs.\n"
+    desc += "• `/scoreboard`: See results of finished matches.\n"
+    desc += "• `/listitems`: View all entries in the current cup.\n"
+    desc += "• `/cuphistory`: View the Hall of Fame archive.\n"
+    
+    if is_admin_user:
+        desc += "\n**Admin Commands:**\n"
+        desc += "• `/opensuggestions`: Allow theme suggestions.\n"
+        desc += "• `/choosecategory`: Randomly pick the cup theme.\n"
+        desc += "• `/startworldcup`: Start the bracket (Requires 32 items).\n"
+        desc += "• `/nextmatch`: End the current poll and post the next.\n"
+        desc += "• `/edititem`: Fix an entry's name/description.\n"
+        desc += "• `/removeitem`: Delete an entry from the list.\n"
+        desc += "• `/endcup`: Finish the cup and save winner to history.\n"
+        desc += "• `/resetcup`: Emergency wipe of the current cup."
+
+    embed = discord.Embed(title="🏆 World Cup Bot Help", description=desc, color=0x3498db)
+    await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+
 # =========================================================
 # SLASH COMMANDS - USERS
 # =========================================================
@@ -727,6 +758,19 @@ async def cuphistory(interaction: discord.Interaction):
     
     history_view = HistoryView(leaderboard)
     await interaction.followup.send(embed=history_view.create_embed(), view=history_view)
+
+@bot.tree.command(name="listcategories", description="See all suggested themes so far")
+async def listcategories(interaction: discord.Interaction):
+    data, _ = load_data()
+    if not data['suggestions']:
+        return await interaction.response.send_message("No suggestions yet! Use `/suggestcategory` to add one.", ephemeral=True)
+    
+    txt = ""
+    for idx, s in enumerate(data['suggestions']):
+        txt += f"{idx+1}. **{s['name']}** (Suggested by {s['user']})\n"
+        
+    embed = discord.Embed(title="💡 Theme Suggestions", description=txt, color=0x3498db)
+    await interaction.response.send_message(embed=embed)
 
 # =========================================================
 # ON READY
