@@ -485,42 +485,58 @@ class WC_Bot(discord.Client):
 
     # --- THE ENGINE: POST NEXT MATCH ---
     async def post_next(self, channel):
-        data, sha = load_data()
-        
-        # Pull from winners pool if bracket is empty
-        if not data.get('bracket') or len(data['bracket']) < 2:
-            if len(data.get('winners_pool', [])) >= 2:
-                data['bracket'] = list(data['winners_pool'])
-                data['winners_pool'] = []
-                await channel.send("🛡️ **Round Complete!** Advancing surviving entries...")
-            else:
-                data['status'] = "FINISHED"
-                save_data(data, sha)
-                return await channel.send("🎊 **Tournament Complete!**")
+        async with self.processing_lock:
+            data, sha = load_data()
+            
+            # 1. Check if a match is already running to prevent double-posting
+            if data.get('current_match') is not None:
+                return
 
-        comp_a = data['bracket'].pop(0)
-        comp_b = data['bracket'].pop(0)
-        
-        round_name = get_round_name(data)
-        
-        # Initialize the View WITH the competitors
-        # This is where MatchView is actually "born"
-        view = MatchView(comp_a, comp_b) 
-        
-        msg = await channel.send(
-            content=f"⚔️ **{round_name}** is now LIVE!", 
-            embed=view.create_embed(0), 
-            view=view
-        )
-        
-        # Save Match Data
-        data['current_match'] = {
-            "item_a": comp_a, "item_b": comp_b, 
-            "votes": {}, "message_id": msg.id, "channel_id": channel.id
-        }
-        data['status'] = "MATCH_ACTIVE"
-        save_data(data, sha)
-        await msg.pin()
+            # 2. Refill bracket from winners_pool if current round is finished
+            if not data.get('bracket') or len(data['bracket']) < 2:
+                if len(data.get('winners_pool', [])) >= 2:
+                    data['bracket'] = list(data['winners_pool'])
+                    data['winners_pool'] = []
+                    await channel.send("🛡️ **Round Complete!** Advancing surviving entries to the next stage...")
+                elif len(data.get('winners_pool', [])) == 1 and not data.get('bracket'):
+                    # TOURNAMENT OVER: Set the final winner
+                    data['final_winner'] = data['winners_pool'][0]
+                    data['status'] = "FINISHED"
+                    save_data(data, sha)
+                    return await channel.send("🎊 **The Grand Final is over!** Use `/status` or `/nextmatch` to see the result.")
+                else:
+                    return # Nothing to post
+
+            # 3. Setup the next pair
+            comp_a = data['bracket'].pop(0)
+            comp_b = data['bracket'].pop(0)
+            round_name = get_round_name(data)
+            
+            # 4. Create View and Send
+            view = MatchView(comp_a, comp_b) 
+            msg = await channel.send(
+                content=f"⚔️ **{round_name}** is now LIVE!", 
+                embed=view.create_embed(0), 
+                view=view
+            )
+            
+            # 5. Save everything including START_TIME for the 24h timer
+            data['current_match'] = {
+                "item_a": comp_a,
+                "item_b": comp_b,
+                "votes": {},
+                "message_id": msg.id,
+                "channel_id": channel.id,
+                "start_time": datetime.datetime.now().isoformat()
+            }
+            data['status'] = "MATCH_ACTIVE"
+            save_data(data, sha)
+            
+            try:
+                await msg.pin()
+            except:
+                pass
+
 
     # --- THE ENGINE: RESOLVE MATCH ---
     async def resolve_match(self, data, sha):
@@ -710,22 +726,23 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    # 1. DO THIS FIRST. No code, no loading, nothing should be above this.
-    try:
-        await interaction.response.defer(ephemeral=True)
-    except:
-        pass # If it already deferred, ignore
-
-    # 2. NOW do the slow work
+    await interaction.response.defer(ephemeral=True)
     data, sha = load_data()
     
-    if not data.get('current_match'):
-        return await interaction.followup.send("❌ No match is currently active.")
+    # NEW: Check if the tournament is already won
+    if data.get("final_winner"):
+        return await interaction.followup.send(
+            "🏁 **The tournament is complete!** There are no matches left. "
+            "Please use `/endcup` to announce the champion and reset.", 
+            ephemeral=True
+        )
 
-    # 3. Resolve and move on
-    # Using followup.send because we already deferred
-    await interaction.followup.send("🔄 Closing votes and starting next match...")
+    if not data.get('current_match'):
+        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
+
+    await interaction.followup.send("🔄 Closing votes and starting next match...", ephemeral=True)
     await bot.resolve_match(data, sha)
+
 
 
 
@@ -1008,9 +1025,7 @@ async def currentvotes(interaction: discord.Interaction):
 
 @bot.tree.command(name="status", description="Check tournament progress and time remaining")
 async def status(interaction: discord.Interaction):
-    # 1. Defer first to avoid timeout errors
     await interaction.response.defer()
-    
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
     embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
@@ -1020,74 +1035,52 @@ async def status(interaction: discord.Interaction):
         
     elif status_mode == "SUGGESTIONS_OPEN":
         count = len(data.get('suggestions', []))
-        embed.description = (
-            "💡 **Theme Suggestions**\n"
-            "We are currently collecting themes! Use `/suggestcategory` to join in.\n\n"
-            f"**Total Suggestions:** {count}"
-        )
+        embed.description = f"💡 **Theme Suggestions Open**\nTotal Suggestions: **{count}**\nUse `/suggestcategory`!"
         
     elif status_mode == "ADDING_ITEMS":
         count = len(data.get('items', []))
-        # Progress bar for item submissions (0 to 32)
         filled = int((count / 32) * 10)
         bar = "🟩" * filled + "⬜" * (10 - filled)
         embed.description = (
-            f"📦 **Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
-            f"Submit entries with `/additem`!\n\n"
-            f"**Entries:** {count}/32\n`{bar}`"
+            f"📦 **Submissions: {data.get('current_cat', 'Tournament').upper()}**\n"
+            f"Entries: {count}/32\n`{bar}`"
         )
         
     elif status_mode == "MATCH_ACTIVE":
         match = data.get('current_match')
         if match:
-            vote_count = len(match.get('votes', {}))
             round_name = get_round_name(data)
-            
-            # Match Progress Logic (31 total matches for 32 items)
             current_num = len(data.get('finished_matches', [])) + 1
-            total_matches = 31 
             
-            # Progress bar for the tournament (0 to 31)
-            pct = int((current_num / total_matches) * 10)
-            bar = "🟩" * pct + "⬜" * (10 - pct)
-            
-            # Time Calculation
+            # 24-Hour Timer Logic
             time_info = ""
             start_str = match.get("start_time")
             if start_str:
-                start_time = datetime.datetime.fromisoformat(start_str)
-                end_time = start_time + datetime.timedelta(hours=24)
-                remaining = end_time - datetime.datetime.now()
-                
-                if remaining.total_seconds() > 0:
-                    hours, remainder = divmod(int(remaining.total_seconds()), 3600)
-                    minutes, _ = divmod(remainder, 60)
-                    time_info = f"\n⏳ **Time Remaining:** {hours}h {minutes}m"
-                else:
-                    time_info = "\n✅ **Match time complete!** Admins can close this now."
+                start_dt = datetime.datetime.fromisoformat(start_str)
+                end_dt = start_dt + datetime.timedelta(hours=24)
+                unix_end = int(end_dt.timestamp())
+                time_info = f"\n⏳ **Match ends:** <t:{unix_end}:R>" # Dynamic Countdown
 
             embed.description = (
-                f"⚔️ **Matches Live**\n"
-                f"Theme: **{data['current_cat'].upper()}**\n\n"
-                f"**Current Round:** {round_name}\n"
-                f"**Match Progress:** {current_num} of {total_matches}\n"
-                f"`{bar}`\n\n"
-                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"📊 **Total Votes cast so far:** {vote_count}"
+                f"⚔️ **Current Stage:** {round_name}\n"
+                f"**Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
+                f"📊 **Votes cast:** {len(match.get('votes', {}))}"
                 f"{time_info}"
             )
         else:
-            embed.description = "🔄 **Processing...** Moving to the next match."
+            embed.description = "🔄 **Processing...** Next match loading."
 
     elif status_mode == "FINISHED":
         winner = data.get('final_winner')
-        embed.description = (
-            f"🏁 **Tournament Complete**\n"
-            f"The champion of **{data['current_cat']}** is **{winner['name']}**!\n\n"
-            "Waiting for admins to archive and reset."
-        )
         if winner:
+            embed.description = (
+                f"🏁 **Tournament Complete!**\n"
+                f"The champion is **{winner['name']}**!\n\n"
+                "⚠️ **Admin:** Use `/endcup` to crown the winner and reset."
+            )
             embed.set_thumbnail(url=winner['image'])
+        else:
+            embed.description = "Tournament finished, but no winner was recorded."
 
     embed.set_footer(text="The Landing Strip World Cup System")
     await interaction.followup.send(embed=embed)
