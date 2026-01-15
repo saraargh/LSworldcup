@@ -449,12 +449,10 @@ class ScoreboardView(ui.View):
                 survivors.append(f"{item['name']} ({item['user']})")
 
             # 2. Collect Recently Eliminated (Last 5 losers)
-            # We get these from the finished_matches list
             graveyard = []
-            for m in self.matches[:5]: # Take last 5 finished matches
+            for m in self.matches[:5]:
                 graveyard.append(m.get('loser_name', 'Unknown'))
 
-            # Build Description
             survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
             graveyard_list = "\n".join([f"💀 {g}" for g in graveyard]) if graveyard else "No one eliminated yet."
 
@@ -464,7 +462,6 @@ class ScoreboardView(ui.View):
                 f"**Recently Eliminated:**\n"
                 f"{graveyard_list}"
             )
-            
             embed.set_footer(text="The path to the Grand Final")
 
         return embed
@@ -475,7 +472,7 @@ class ScoreboardView(ui.View):
         data, _ = load_data()
         self.view_mode = "HISTORY"
         self.page = max(0, self.page - 1)
-        await interaction.followup.edit_message(embed=self.create_embed(data))
+        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
 
     @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray)
     async def next(self, interaction: discord.Interaction, button: ui.Button):
@@ -484,7 +481,7 @@ class ScoreboardView(ui.View):
         self.view_mode = "HISTORY"
         if (self.page + 1) * 5 < len(self.matches):
             self.page += 1
-        await interaction.followup.edit_message(embed=self.create_embed(data))
+        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
 
     @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success)
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
@@ -492,8 +489,7 @@ class ScoreboardView(ui.View):
         data, _ = load_data()
         self.view_mode = "SURVIVORS" if self.view_mode == "HISTORY" else "HISTORY"
         button.label = "📜 View History" if self.view_mode == "SURVIVORS" else "🟢 Survivors"
-        # We pass the view=self here to update the button label too
-        await interaction.followup.edit_message(embed=self.create_embed(data), view=self)
+        await interaction.edit_original_response(embed=self.create_embed(data), view=self)
 
 
 # =========================================================
@@ -976,16 +972,12 @@ async def listitems(interaction: discord.Interaction):
 @bot.tree.command(name="scoreboard", description="View match history and tournament survivors")
 async def scoreboard(interaction: discord.Interaction):
     await interaction.response.defer()
-    
     data, _ = load_data()
     finished = data.get('finished_matches', [])
     
-    if not finished and data.get('status') != "MATCH_ACTIVE":
-        return await interaction.followup.send("The tournament hasn't started yet!", ephemeral=True)
-    
     view = ScoreboardView(finished)
-    # We pass 'data' here to fix the TypeError you saw
     await interaction.followup.send(embed=view.create_embed(data), view=view)
+
 
 
 @bot.tree.command(name="cuphistory", description="Hall of Fame")
