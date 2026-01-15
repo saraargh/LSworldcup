@@ -406,6 +406,52 @@ class EndConfirmView(ui.View):
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament wiped, pins cleared, and bot reset.**", view=None)
 
+class ScoreboardView(ui.ui.View):
+    def __init__(self, matches=None):
+        super().__init__(timeout=None)
+        self.matches = list(reversed(matches or []))
+        self.page = 0
+
+    def create_embed(self):
+        start = self.page * 5
+        chunk = self.matches[start:start+5]
+        
+        embed = discord.Embed(title="📊 Tournament Results", color=0x3498db)
+        
+        if not chunk:
+            embed.description = "No matches to display."
+            return embed
+
+        description_text = ""
+        for m in chunk:
+            winner_user = m.get('winner_user', 'Unknown')
+            loser_name = m.get('loser_name', 'Entry B')
+            
+            # Formatting with bolding and sub-lines for clarity
+            description_text += f"🔹 **{m['name']}**\n"
+            description_text += f"🏆 **{m['winner']}** (Score: {m['score']})\n"
+            description_text += f"┕ *Submitted by:* {winner_user}\n"
+            description_text += f"┕ *Defeated:* {loser_name}\n\n"
+        
+        embed.description = description_text
+        total_pages = (len(self.matches) - 1) // 5 + 1
+        embed.set_footer(text=f"Page {self.page + 1} of {total_pages} • Recent matches first")
+        return embed
+
+    @ui.button(label="⬅️ Newer", style=discord.ButtonStyle.gray, custom_id="score_prev")
+    async def prev(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer()
+        self.page = max(0, self.page - 1)
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed())
+
+    @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray, custom_id="score_next")
+    async def next(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer()
+        if (self.page + 1) * 5 < len(self.matches):
+            self.page += 1
+        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed())
+
+
 
 # =========================================================
 # BOT CORE CLASS
@@ -422,7 +468,7 @@ class WC_Bot(discord.Client):
         self.add_view(ItemGallery())
 
     async def resolve_match(self, data, sha):
-        # The lock ensures only ONE instance of this runs at a time
+        # 1. Enter the lock to prevent double-processing
         async with self.processing_lock:
             match = data.get('current_match')
             if not match:
@@ -430,7 +476,7 @@ class WC_Bot(discord.Client):
                 
             channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
             
-            # Unpin and clean system message
+            # 2. Cleanup: Unpin the match and remove the "Bot pinned a message" notification
             try:
                 old_msg = await channel.fetch_message(match['message_id'])
                 await old_msg.unpin()
@@ -441,36 +487,48 @@ class WC_Bot(discord.Client):
             except:
                 pass 
 
+            # 3. Calculate Votes
             vote_list = list(match.get("votes", {}).values())
             count_a = vote_list.count("A")
             count_b = vote_list.count("B")
             
             if count_a > count_b:
                 winner = match['item_a']
+                loser = match['item_b']
             elif count_b > count_a:
                 winner = match['item_b']
+                loser = match['item_a']
             else:
+                # Tie-breaker logic
                 winner = random.choice([match['item_a'], match['item_b']])
+                loser = match['item_b'] if winner == match['item_a'] else match['item_a']
                 await channel.send("⚖️ **The match was a tie!** A random winner has been chosen.")
 
+            # 4. Archive for the Paginated Scoreboard
+            # We save the name, score, and the user who submitted it
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}", 
-                "winner": winner['name'], 
+                "winner": winner['name'],
+                "winner_user": winner.get('user', 'Unknown'),
+                "loser_name": loser['name'],
                 "score": f"{count_a}-{count_b}"
             })
             
+            # 5. Move winner to the next round pool
             data.setdefault('winners_pool', []).append(winner)
-            data['current_match'] = None
+            data['current_match'] = None # Clear active match status
             
+            # 6. Announce Result
             result_embed = discord.Embed(
                 title="Match Results", 
-                description=f"🏆 **{winner['name']}** advances!\nScore: {count_a} to {count_b}", 
+                description=f"🏆 **{winner['name']}** advances!\nScore: {count_a} to {count_b}\n\n*Submitted by: {winner.get('user', 'Unknown')}*", 
                 color=0x2ecc71
             )
             result_embed.set_image(url=winner['image'])
             await channel.send(embed=result_embed)
             
-            # Check if we need to advance the round
+            # 7. Bracket Management
+            # If the current bracket list is empty, we check if we have enough winners to start a new round
             if not data['bracket']:
                 if len(data['winners_pool']) > 1:
                     data['bracket'] = list(data['winners_pool'])
@@ -478,15 +536,18 @@ class WC_Bot(discord.Client):
                     next_round = get_round_name(len(data['bracket']))
                     await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
                 elif len(data['winners_pool']) == 1:
+                    # If only 1 winner left in the pool, they are the Grand Champion
                     data['final_winner'] = data['winners_pool'][0]
                     data['status'] = "FINISHED"
                     save_data(data, sha)
                     await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
                     return 
             
+            # 8. Final Save and Trigger Next Match
             save_data(data, sha)
-            await asyncio.sleep(1) # Tiny delay for GitHub sync safety
+            await asyncio.sleep(1.5) # Breath for GitHub sync
             await self.post_next(channel)
+
 
     async def post_next(self, channel):
         data, sha = load_data()
@@ -870,25 +931,19 @@ async def listitems(interaction: discord.Interaction):
     await interaction.followup.send(embed=gallery_view.create_content(), view=gallery_view)
 
 
-@bot.tree.command(name="scoreboard", description="Match history of the current Cup")
+@bot.tree.command(name="scoreboard", description="View all match results with pagination")
 async def scoreboard(interaction: discord.Interaction):
+    # Defer first to avoid timeout
     await interaction.response.defer()
     
     data, _ = load_data()
+    finished = data.get('finished_matches', [])
     
-    if not data.get('finished_matches'):
+    if not finished:
         return await interaction.followup.send("No matches finished yet.", ephemeral=True)
     
-    score_text = ""
-    for match in data['finished_matches']:
-        score_text += f"🔹 {match['name']}: **{match['winner']}** ({match['score']})\n"
-        
-    embed = discord.Embed(
-        title=f"📊 {data.get('current_cat', 'Tournament').upper()} Scoreboard", 
-        description=score_text, 
-        color=0x3498db
-    )
-    await interaction.followup.send(embed=embed)
+    view = ScoreboardView(finished)
+    await interaction.followup.send(embed=view.create_embed(), view=view)
 
 
 @bot.tree.command(name="cuphistory", description="Hall of Fame")
