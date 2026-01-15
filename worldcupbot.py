@@ -488,12 +488,18 @@ async def choosecategory(interaction: discord.Interaction):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
         
+    # Safety Defer
+    try:
+        await interaction.response.defer(ephemeral=False)
+    except:
+        pass
+
     data, sha = load_data()
-    if not data['suggestions']: 
-        return await interaction.response.send_message("❌ No suggestions were found in the database.", ephemeral=True)
+    if not data.get('suggestions'): 
+        return await interaction.followup.send("❌ No suggestions were found in the database.", ephemeral=True)
     
-    await interaction.response.send_message("🎰 **Selecting a random category...**")
-    await asyncio.sleep(2)
+    # We use followup because we deferred
+    await interaction.followup.send("🎰 **Selecting a random category...**")
     
     selected = random.choice(data['suggestions'])
     data['current_cat'] = selected['name']
@@ -502,9 +508,11 @@ async def choosecategory(interaction: discord.Interaction):
     
     save_data(data, sha)
     
-    announcement = f"@everyone 🎉 The theme for this tournament is: **{selected['name'].upper()}**!\n"
-    announcement += f"(Theme suggested by {selected['user']})\n\n"
-    announcement += "Submit your entries now using `/additem`!"
+    announcement = (
+        f"@everyone 🎉 The theme for this tournament is: **{selected['name'].upper()}**!\n"
+        f"(Theme suggested by {selected['user']})\n\n"
+        "Submit your entries now using `/additem`!"
+    )
     await interaction.channel.send(announcement)
 
 @bot.tree.command(name="removeitem", description="Admin: Remove an item by its list number")
@@ -573,13 +581,18 @@ async def nextmatch(interaction: discord.Interaction):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
         
+    # Safety Defer to give GitHub/Discord more time
+    try:
+        await interaction.response.defer(ephemeral=True)
+    except:
+        pass
+
     data, sha = load_data()
     if not data.get("current_match"):
-        return await interaction.response.send_message("❌ No match is currently active.", ephemeral=True)
+        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
     
-    await interaction.response.send_message("⌛ Ending match and calculating results...", ephemeral=True)
+    await interaction.followup.send("⌛ Ending match and calculating results...", ephemeral=True)
     await bot.resolve_match(data, sha)
-
 
 @bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
 async def endcup(interaction: discord.Interaction):
