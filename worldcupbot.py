@@ -385,7 +385,8 @@ class WC_Bot(discord.Client):
         self.add_view(HistoryView())
         self.add_view(ItemGallery())
 
-        async def resolve_match(self, data, sha):
+    # MOVED OUTSIDE setup_hook
+    async def resolve_match(self, data, sha):
         match = data['current_match']
         if not match:
             return
@@ -421,9 +422,7 @@ class WC_Bot(discord.Client):
         result_embed.set_image(url=winner['image'])
         await channel.send(embed=result_embed)
         
-        # 1. Check if the bracket is empty
         if not data['bracket']:
-            # If we have multiple winners, move them to the next bracket (e.g., Round of 32 -> Round of 16)
             if len(data['winners_pool']) > 1:
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
@@ -431,36 +430,30 @@ class WC_Bot(discord.Client):
                 await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
                 save_data(data, sha)
                 await self.post_next(channel)
-            # If only ONE winner left total, it's the Grand Final winner
             elif len(data['winners_pool']) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 await channel.send("🏁 **The Grand Final is over!** Admins, use `/endcup` to crown the winner!")
         else:
-            # Bracket still has items, move to next match in the current round
             save_data(data, sha)
             await self.post_next(channel)
 
     async def post_next(self, channel):
         data, sha = load_data()
-        
-        # SAFETY: If bracket is empty, we shouldn't be here
         if not data['bracket'] or len(data['bracket']) < 2:
             return
             
         competitor_a = data['bracket'].pop(0)
         competitor_b = data['bracket'].pop(0)
         
-        # Calculate round name based on items left + the 2 we just took
         round_name = get_round_name(len(data['bracket']) + 2)
         match_number = len(data['finished_matches']) + 1
         
         view = MatchView(competitor_a, competitor_b, round_name, match_number)
         
         await channel.send(f"@everyone ⚔️ **{round_name} - Match {match_number}** is now LIVE!")
-        embed = view.create_embed(0) # Uses the new clickable @mention logic
-        msg = await channel.send(embed=embed, view=view)
+        msg = await channel.send(embed=view.create_embed(0), view=view)
         
         data['current_match'] = {
             "item_a": competitor_a, 
@@ -471,7 +464,6 @@ class WC_Bot(discord.Client):
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
-
 
 bot = WC_Bot()
 
@@ -562,16 +554,17 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
 async def startworldcup(interaction: discord.Interaction):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
+    
+    # ADD DEFER HERE for safety
+    await interaction.response.defer(ephemeral=False)
         
     data, sha = load_data()
     item_count = len(data['items'])
     
     if item_count != 32:
-        return await interaction.response.send_message(f"❌ You need exactly 32 items to start. (Current: {item_count})", ephemeral=True)
+        return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})", ephemeral=True)
     
-    # Shuffle the list for a random bracket
     random.shuffle(data['items'])
-    
     data['bracket'] = data['items']
     data['finished_matches'] = []
     data['winners_pool'] = []
@@ -579,7 +572,8 @@ async def startworldcup(interaction: discord.Interaction):
     
     save_data(data, sha)
     
-    await interaction.followup.send_message(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    # FIXED: Change followup.send_message to followup.send
+    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     await bot.post_next(interaction.channel)
 
 @bot.tree.command(name="nextmatch", description="Admin: Close current match and post next pair")
