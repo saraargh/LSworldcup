@@ -477,18 +477,24 @@ async def removeitem(interaction: discord.Interaction, index: int):
     else:
         await interaction.response.send_message("❌ Invalid index number.", ephemeral=True)
 
-@bot.tree.command(name="edititem", description="Admin: Edit the name or description of an entry")
-async def edititem(interaction: discord.Interaction, index: int, new_name: str = None, new_desc: str = None):
+@bot.tree.command(name="edititem", description="Admin: Edit the name, description, or image of an entry")
+async def edititem(interaction: discord.Interaction, index: int, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
         
     data, sha = load_data()
     if 1 <= index <= len(data['items']):
         target = data['items'][index - 1]
+        
         if new_name:
-            target['name'] = new_name[:75] # Maintain 75 char limit
+            target['name'] = new_name[:75]
         if new_desc:
             target['desc'] = new_desc
+        if new_image:
+            # Re-upload the new image to the storage channel
+            storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
+            stored_msg = await storage_channel.send(file=await new_image.to_file())
+            target['image'] = stored_msg.attachments[0].url
             
         save_data(data, sha)
         await interaction.response.send_message(f"📝 Entry #{index} has been updated.")
