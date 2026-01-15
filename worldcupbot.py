@@ -554,7 +554,7 @@ class WC_Bot(discord.Client):
                 if len(data['winners_pool']) > 1:
                     data['bracket'] = list(data['winners_pool'])
                     data['winners_pool'] = []
-                    next_round = get_round_name(len(data['bracket']))
+                    next_round = get_round_name(data)
                     await channel.send(f"🛡️ **Round Complete!** Moving to the **{next_round}**.")
                 elif len(data['winners_pool']) == 1:
                     # If only 1 winner left in the pool, they are the Grand Champion
