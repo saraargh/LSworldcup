@@ -434,33 +434,36 @@ class ScoreboardView(ui.View):
             embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
 
         else:
-            # --- SURVIVOR MODE ---
-            embed.title = " supervivencia: Remaining Survivors"
+            # --- SURVIVOR & GRAVEYARD MODE ---
+            embed.title = "🟢 Remaining Survivors & 💀 Graveyard"
             
-            # 1. Get everyone currently in the bracket or winners_pool
+            # 1. Collect Survivors
             survivors = []
-            # Check the active match
             curr = data.get('current_match')
             if curr:
                 survivors.append(f"{curr['item_a']['name']} ({curr['item_a']['user']})")
                 survivors.append(f"{curr['item_b']['name']} ({curr['item_b']['user']})")
-            
-            # Check the upcoming bracket
             for item in data.get('bracket', []):
                 survivors.append(f"{item['name']} ({item['user']})")
-                
-            # Check winners waiting for next round
             for item in data.get('winners_pool', []):
                 survivors.append(f"{item['name']} ({item['user']})")
 
-            if not survivors:
-                embed.description = "Tournament complete! No survivors left."
-            else:
-                # Format the list with a "living" emoji
-                survivor_text = f"**{len(survivors)} entries still in the running:**\n\n"
-                for entry in survivors:
-                    survivor_text += f"🟢 {entry}\n"
-                embed.description = survivor_text
+            # 2. Collect Recently Eliminated (Last 5 losers)
+            # We get these from the finished_matches list
+            graveyard = []
+            for m in self.matches[:5]: # Take last 5 finished matches
+                graveyard.append(m.get('loser_name', 'Unknown'))
+
+            # Build Description
+            survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
+            graveyard_list = "\n".join([f"💀 {g}" for g in graveyard]) if graveyard else "No one eliminated yet."
+
+            embed.description = (
+                f"**{len(survivors)} entries still in the running:**\n"
+                f"{survivor_list}\n\n"
+                f"**Recently Eliminated:**\n"
+                f"{graveyard_list}"
+            )
             
             embed.set_footer(text="The path to the Grand Final")
 
@@ -472,7 +475,7 @@ class ScoreboardView(ui.View):
         data, _ = load_data()
         self.view_mode = "HISTORY"
         self.page = max(0, self.page - 1)
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data))
+        await interaction.followup.edit_message(embed=self.create_embed(data))
 
     @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray)
     async def next(self, interaction: discord.Interaction, button: ui.Button):
@@ -481,7 +484,7 @@ class ScoreboardView(ui.View):
         self.view_mode = "HISTORY"
         if (self.page + 1) * 5 < len(self.matches):
             self.page += 1
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data))
+        await interaction.followup.edit_message(embed=self.create_embed(data))
 
     @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success)
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
@@ -489,9 +492,8 @@ class ScoreboardView(ui.View):
         data, _ = load_data()
         self.view_mode = "SURVIVORS" if self.view_mode == "HISTORY" else "HISTORY"
         button.label = "📜 View History" if self.view_mode == "SURVIVORS" else "🟢 Survivors"
-        await interaction.followup.edit_message(message_id=interaction.message.id, embed=self.create_embed(data), view=self)
-
-
+        # We pass the view=self here to update the button label too
+        await interaction.followup.edit_message(embed=self.create_embed(data), view=self)
 
 
 # =========================================================
@@ -971,20 +973,19 @@ async def listitems(interaction: discord.Interaction):
     # 4. Use followup since we deferred
     await interaction.followup.send(embed=gallery_view.create_content(), view=gallery_view)
 
-
-@bot.tree.command(name="scoreboard", description="View all match results with pagination")
+@bot.tree.command(name="scoreboard", description="View match history and tournament survivors")
 async def scoreboard(interaction: discord.Interaction):
-    # Defer first to avoid timeout
     await interaction.response.defer()
     
     data, _ = load_data()
     finished = data.get('finished_matches', [])
     
-    if not finished:
-        return await interaction.followup.send("No matches finished yet.", ephemeral=True)
+    if not finished and data.get('status') != "MATCH_ACTIVE":
+        return await interaction.followup.send("The tournament hasn't started yet!", ephemeral=True)
     
     view = ScoreboardView(finished)
-    await interaction.followup.send(embed=view.create_embed(), view=view)
+    # We pass 'data' here to fix the TypeError you saw
+    await interaction.followup.send(embed=view.create_embed(data), view=view)
 
 
 @bot.tree.command(name="cuphistory", description="Hall of Fame")
