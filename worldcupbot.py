@@ -671,43 +671,25 @@ async def startworldcup(interaction: discord.Interaction):
     await bot.post_next(interaction.channel)
 
 
-@bot.tree.command(name="nextmatch", description="Admin: Close current match. Use minutes: 1 for testing.")
-async def nextmatch(interaction: discord.Interaction, minutes: int = 1440):
-    # 1. Check Admin Role immediately (No GitHub call needed)
-    if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only command.", ephemeral=True)
-        
-    # 2. ACKNOWLEDGE DISCORD IMMEDIATELY (Stops the 404 timeout)
-    await interaction.response.defer(ephemeral=True)
+@bot.tree.command(name="nextmatch", description="Force the next match to start")
+@app_commands.checks.has_permissions(administrator=True)
+async def nextmatch(interaction: discord.Interaction):
+    # 1. DO THIS FIRST. No code, no loading, nothing should be above this.
+    try:
+        await interaction.response.defer(ephemeral=True)
+    except:
+        pass # If it already deferred, ignore
 
-    # 3. Check the Processing Lock
-    if bot.processing_lock.locked():
-        return await interaction.followup.send("⏳ **Slow down!** I'm still processing the last match. Try again in a few seconds.", ephemeral=True)
-
-    # 4. NOW do the slow work (GitHub load)
+    # 2. NOW do the slow work
     data, sha = load_data()
-    match = data.get("current_match")
     
-    if not match:
-        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
+    if not data.get('current_match'):
+        return await interaction.followup.send("❌ No match is currently active.")
 
-    # 5. Timing Logic check
-    start_time_str = match.get("start_time")
-    if start_time_str:
-        start_time = datetime.datetime.fromisoformat(start_time_str)
-        elapsed = datetime.datetime.now() - start_time
-        remaining = (minutes * 60) - elapsed.total_seconds()
-        
-        if remaining > 0:
-            m, s = divmod(int(remaining), 60)
-            h, m = divmod(m, 60)
-            time_left = f"{h}h {m}m {s}s" if h > 0 else f"{m}m {s}s"
-            return await interaction.followup.send(f"⏳ **Match is still ongoing!** You must wait **{time_left}** before closing this.", ephemeral=True)
-
-    # 6. Success! Trigger the resolution
-    await interaction.followup.send(f"⌛ Closing match and calculating results...", ephemeral=True)
+    # 3. Resolve and move on
+    # Using followup.send because we already deferred
+    await interaction.followup.send("🔄 Closing votes and starting next match...")
     await bot.resolve_match(data, sha)
-
 
 
 
