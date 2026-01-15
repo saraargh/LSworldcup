@@ -331,6 +331,12 @@
             "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Bridget Jones Diary",
+            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -373,6 +379,11 @@
             "name": "Angus, Thongs & Perfect Snogging vs legally blonde",
             "winner": "Angus, Thongs & Perfect Snogging",
             "score": "1-0"
+        },
+        {
+            "name": "Bridget Jones Diary vs Miss Congeliality",
+            "winner": "Bridget Jones Diary",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -387,25 +398,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Bridget Jones Diary",
-            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Miss Congeliality",
-            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
-            "user": "<@1238834298338152498>"
-        },
-        "message_id": 1461426916090187972,
-        "channel_id": 1438277790179921971,
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "start_time": "2026-01-15T18:28:49.302002"
-    },
+    "current_match": null,
     "final_winner": null
 }
