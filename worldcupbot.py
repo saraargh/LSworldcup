@@ -668,43 +668,37 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
-    # 1. Immediate Defer (Gives the bot 15 minutes to think instead of 3 seconds)
-    # We set ephemeral=False here because you wanted the final message to be public
-    await interaction.response.defer(ephemeral=False)
+    # Try to defer, but catch the error if Discord is being slow
+    try:
+        await interaction.response.defer(ephemeral=False)
+    except discord.errors.NotFound:
+        print("Interaction timed out before defer could finish. Attempting to proceed...")
     
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
 
     if data['status'] != "ADDING_ITEMS":
-        return await interaction.followup.send("❌ Submissions are not open yet.", ephemeral=True)
+        return await interaction.followup.send("❌ Submissions are closed.", ephemeral=True)
     
     # Duplicate check
     for item in data['items']:
         if item['name'].lower() == clean_name:
-            return await interaction.followup.send(f"❌ '{name}' is already in the tournament!", ephemeral=True)
+            return await interaction.followup.send(f"❌ '{name}' is already in!", ephemeral=True)
 
     if len(data['items']) >= 32:
-        return await interaction.followup.send("❌ The bracket is full! (32/32)", ephemeral=True)
+        return await interaction.followup.send("❌ Bracket full!", ephemeral=True)
     
-    if not is_admin(interaction.user):
-        if any(item['user'] == user_mention for item in data['items']):
-            return await interaction.followup.send("❌ You've already submitted an item!", ephemeral=True)
-    
-    # 2. Upload Logic
+    # Upload Logic
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
     try:
         attachment_file = await image.to_file()
-        storage_msg = await storage_channel.send(
-            content=f"Tournament: {name} (by {user_mention})", 
-            file=attachment_file
-        )
+        storage_msg = await storage_channel.send(file=attachment_file)
         image_url = storage_msg.attachments[0].url
     except Exception as e:
-        print(f"Upload error: {e}")
-        return await interaction.followup.send("❌ Image upload failed. Please try again.", ephemeral=True)
+        return await interaction.followup.send("❌ Image upload failed.", ephemeral=True)
 
-    # 3. Save Data
+    # Save Data
     short_name = name[:75]
     data['items'].append({
         "name": short_name, 
@@ -714,10 +708,12 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     })
     
     save_data(data, sha)
-    current_count = len(data['items'])
     
-    # 4. Final Public Response
-    await interaction.followup.send(f"✅ **{short_name}** added! ({current_count}/32 entries total)")
+    # Final check: If the interaction is truly dead, this will log but at least data is saved
+    try:
+        await interaction.followup.send(f"✅ **{short_name}** added! ({len(data['items'])}/32)")
+    except Exception as e:
+        print(f"Could not send confirmation message: {e}")
 
 
 
