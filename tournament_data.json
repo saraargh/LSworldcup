@@ -343,6 +343,12 @@
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Confessions of a Shopaholic",
+            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -375,6 +381,11 @@
             "name": "White Chicks vs 500 days of summer",
             "winner": "500 days of summer",
             "score": "0-1"
+        },
+        {
+            "name": "Confessions of a Shopaholic vs When harry met sally",
+            "winner": "Confessions of a Shopaholic",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -389,25 +400,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "When harry met sally",
-            "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
-            "user": "<@1238834298338152498>"
-        },
-        "message_id": 1461426029363990548,
-        "channel_id": 1438277790179921971,
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "start_time": "2026-01-15T18:25:17.968162"
-    },
+    "current_match": null,
     "final_winner": null
 }
