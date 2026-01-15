@@ -274,73 +274,65 @@ class MatchView(ui.View):
             self.vote_a.label = f"Vote: {item_a['name']}"
             self.vote_b.label = f"Vote: {item_b['name']}"
 
-        def create_embed(self, page=0):
-            target_item = self.item_a if page == 0 else self.item_b
-            
-            # 1. Prepare the description with the clickable @mention
-            item_desc = target_item.get('desc', 'No description.')
-            submitter = target_item.get('user', 'Unknown')
-            full_description = f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n**Viewing:** {target_item['name']}\n{item_desc}\n\n**Submitter:** {submitter}"
-            
-            # 2. Build the embed
-            embed = discord.Embed(
-                title=f"Match {self.match_num}: {self.round_name}", 
-                description=full_description, 
-                color=0x3498db
-            )
-            embed.set_image(url=target_item['image'])
-            embed.set_footer(text=f"Flip between A and B before voting! (Page {page+1}/2)")
-            
-            return embed
-
+    def create_embed(self, page=0):
+        # Determine which item to show based on the "page"
+        target_item = self.item_a if page == 0 else self.item_b
+        
+        # Prepare description with clickable submitter mention
+        item_desc = target_item.get('desc', 'No description.')
+        submitter = target_item.get('user', 'Unknown')
+        
+        full_description = (
+            f"**{self.item_a['name']}** vs **{self.item_b['name']}**\n\n"
+            f"**Viewing:** {target_item['name']}\n"
+            f"{item_desc}\n\n"
+            f"**Submitter:** {submitter}"
+        )
+        
+        embed = discord.Embed(
+            title=f"Match {self.match_num}: {self.round_name}", 
+            description=full_description, 
+            color=0x3498db
+        )
+        embed.set_image(url=target_item['image'])
+        embed.set_footer(text=f"Flip between A and B before voting! (Page {page+1}/2)")
+        
+        return embed
 
     @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="view_a_match")
     async def prev_page(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
-        match_data = data['current_match']
-        self.item_a = match_data['item_a']
-        self.item_b = match_data['item_b']
+        m = data['current_match']
+        self.item_a, self.item_b = m['item_a'], m['item_b']
         await interaction.response.edit_message(embed=self.create_embed(0))
 
     @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="view_b_match")
     async def next_page(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
-        match_data = data['current_match']
-        self.item_a = match_data['item_a']
-        self.item_b = match_data['item_b']
+        m = data['current_match']
+        self.item_a, self.item_b = m['item_a'], m['item_b']
         await interaction.response.edit_message(embed=self.create_embed(1))
 
     @ui.button(style=discord.ButtonStyle.danger, custom_id="v_a_master_final", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        user_id_str = str(interaction.user.id)
-        
-        if not match:
-            return await interaction.response.send_message("❌ No active match found.", ephemeral=True)
-            
-        if user_id_str in match.get("votes", {}):
-            return await interaction.response.send_message("❌ You have already voted!", ephemeral=True)
-        
-        match["votes"][user_id_str] = "A"
+        if not match or str(interaction.user.id) in match.get("votes", {}):
+            return await interaction.response.send_message("❌ Already voted or no match active!", ephemeral=True)
+        match["votes"][str(interaction.user.id)] = "A"
         save_data(data, sha)
-        await interaction.response.send_message(f"✅ Vote recorded for **{match['item_a']['name']}**.", ephemeral=True)
+        await interaction.response.send_message(f"✅ Voted for **{match['item_a']['name']}**.", ephemeral=True)
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="v_b_master_final", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        user_id_str = str(interaction.user.id)
-        
-        if not match:
-            return await interaction.response.send_message("❌ No active match found.", ephemeral=True)
-
-        if user_id_str in match.get("votes", {}):
-            return await interaction.response.send_message("❌ You have already voted!", ephemeral=True)
-            
-        match["votes"][user_id_str] = "B"
+        if not match or str(interaction.user.id) in match.get("votes", {}):
+            return await interaction.response.send_message("❌ Already voted or no match active!", ephemeral=True)
+        match["votes"][str(interaction.user.id)] = "B"
         save_data(data, sha)
-        await interaction.response.send_message(f"✅ Vote recorded for **{match['item_b']['name']}**.", ephemeral=True)
+        await interaction.response.send_message(f"✅ Voted for **{match['item_b']['name']}**.", ephemeral=True)
+
 
 # =========================================================
 # BOT CORE CLASS
