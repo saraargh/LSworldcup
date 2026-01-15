@@ -118,16 +118,29 @@ def is_admin(user):
             return True
     return False
 
-def get_round_name(count):
-    if count > 16:
+def get_round_name(data):
+    # We now pass 'data' so we can count EVERYONE still in the tournament
+    bracket_count = len(data.get('bracket', []))
+    pool_count = len(data.get('winners_pool', []))
+    
+    # Check if a match is currently happening (adds 2 more people)
+    current_match_count = 2 if data.get('current_match') else 0
+    
+    total_alive = bracket_count + pool_count + current_match_count
+
+    if total_alive > 16:
         return "Round of 32"
-    if count > 8:
+    elif total_alive > 8:
         return "Round of 16"
-    if count > 4:
+    elif total_alive > 4:
         return "Quarter-Finals"
-    if count > 2:
+    elif total_alive > 2:
         return "Semi-Finals"
-    return "Grand Final"
+    elif total_alive == 2:
+        return "Grand Final"
+    else:
+        return "Tournament Complete"
+
 
 # =========================================================
 # UI SYSTEM (PERSISTENT BUTTON LOGIC)
@@ -598,7 +611,7 @@ class WC_Bot(discord.Client):
             
         competitor_a = data['bracket'].pop(0)
         competitor_b = data['bracket'].pop(0)
-        round_name = get_round_name(len(data['bracket']) + 2)
+        round_name = get_round_name(data)
         match_number = len(data['finished_matches']) + 1
         
         view = MatchView(competitor_a, competitor_b, round_name, match_number)
@@ -1089,7 +1102,7 @@ async def status(interaction: discord.Interaction):
         match = data.get('current_match')
         if match:
             vote_count = len(match.get('votes', {}))
-            round_name = get_round_name(len(data.get('bracket', [])) + 2)
+            round_name = get_round_name(data)
             
             # Match Progress Logic (31 total matches for 32 items)
             current_num = len(data.get('finished_matches', [])) + 1
