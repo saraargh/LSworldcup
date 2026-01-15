@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "just like heaven",
-            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "13 Going on 30",
-            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Pitch Perfect",
             "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
@@ -397,6 +385,23 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "just like heaven",
+            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "13 Going on 30",
+            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
+            "user": "<@1238834298338152498>"
+        },
+        "message_id": 1461430919293567008,
+        "channel_id": 1438277790179921971,
+        "votes": {},
+        "start_time": "2026-01-15T18:44:43.701274"
+    },
     "final_winner": null
 }
