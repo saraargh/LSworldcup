@@ -940,18 +940,36 @@ async def status(interaction: discord.Interaction):
     status_mode = data.get('status', 'IDLE')
     embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
     
-    if status_mode == "MATCH_ACTIVE":
+    if status_mode == "IDLE":
+        embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
+        
+    elif status_mode == "SUGGESTIONS_OPEN":
+        count = len(data.get('suggestions', []))
+        embed.description = f"💡 **Suggestions**\nWe are currently collecting themes! Use `/suggestcategory` to join in.\n\n**Total Suggestions:** {count}"
+        
+    elif status_mode == "ADDING_ITEMS":
+        count = len(data.get('items', []))
+        filled = int((count / 32) * 10)
+        bar = "🟩" * filled + "⬜" * (10 - filled)
+        embed.description = (
+            f"📦 **Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
+            f"Submit entries with `/additem`!\n\n"
+            f"**Progress:** {count}/32\n`{bar}`"
+        )
+        
+    elif status_mode == "MATCH_ACTIVE":
         match = data.get('current_match')
         if match:
             vote_count = len(match.get('votes', {}))
             round_name = get_round_name(len(data.get('bracket', [])) + 2)
+            # Calculate match number
+            match_num = len(data.get('finished_matches', [])) + 1
             
-            # --- Time Calculation ---
+            # Time Calculation
             time_info = ""
             start_str = match.get("start_time")
             if start_str:
                 start_time = datetime.datetime.fromisoformat(start_str)
-                # Default duration is 24h (86400 seconds)
                 end_time = start_time + datetime.timedelta(hours=24)
                 remaining = end_time - datetime.datetime.now()
                 
@@ -963,10 +981,12 @@ async def status(interaction: discord.Interaction):
                     time_info = "\n✅ **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"⚔️ **Phase 3: Matches Live**\nTheme: **{data['current_cat']}**\n"
+                f"⚔️ **Matches Live**\n"
+                f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
-                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"📊 **Total Votes:** {vote_count}"
+                f"**Match Number:** {match_num}\n"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n\n"
+                f"📊 **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
         else:
@@ -975,7 +995,7 @@ async def status(interaction: discord.Interaction):
     elif status_mode == "FINISHED":
         winner = data.get('final_winner')
         embed.description = (
-            f"🏁 **Phase 4: Tournament Complete**\n"
+            f"🏁 **Tournament Complete**\n"
             f"The champion of **{data['current_cat']}** is **{winner['name']}**!\n\n"
             "Waiting for admins to archive and reset."
         )
@@ -984,6 +1004,7 @@ async def status(interaction: discord.Interaction):
 
     embed.set_footer(text="The Landing Strip World Cup System")
     await interaction.followup.send(embed=embed)
+
 
 # =========================================================
 # ON READY
