@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "legally blonde",
-            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Cruel Intentions",
             "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
@@ -409,6 +397,23 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "legally blonde",
+            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "He\u2019s just not that into you",
+            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462091351377187007,
+        "channel_id": 1438277790179921971,
+        "start_time": "2026-01-17T14:29:02.708001"
+    },
     "final_winner": null
 }
