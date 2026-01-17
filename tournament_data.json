@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "White Chicks",
-            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "When harry met sally",
             "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
@@ -410,6 +398,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "White Chicks",
+            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "A cinderella story",
+            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462180052719505472
+    },
     "final_winner": null
 }
