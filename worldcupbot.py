@@ -733,25 +733,22 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    # Always ephemeral so only the admin sees the status
     await interaction.response.defer(ephemeral=True)
-    
     data, sha = load_data()
     
-    # Check if a winner was already decided in the background
+    # 1. Final End Check (Keep this so the bot doesn't crash at the end)
     if data.get('status') == "FINISHED" or data.get('final_winner'):
-        return await interaction.followup.send(
-            "🏁 **Tournament Complete.** No more matches to play.\n"
-            "Use `/endcup` whenever you are ready to announce the champion and reset.", 
-            ephemeral=True
-        )
+        return await interaction.followup.send("🏁 Tournament is over! Use `/endcup`.", ephemeral=True)
 
-    if not data.get('current_match'):
-        return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
-
-    await interaction.followup.send("🔄 Processing match results...", ephemeral=True)
-    await bot.resolve_match(data, sha)
-
+    # 2. If a match is currently running, finish it first
+    if data.get('current_match'):
+        await bot.resolve_match(data, sha)
+        await interaction.followup.send("✅ Current match resolved. Moving to next...", ephemeral=True)
+    
+    # 3. If no match is running, just force the next one to post
+    else:
+        await bot.post_next(interaction.channel)
+        await interaction.followup.send("🚀 Starting the next match...", ephemeral=True)
 
 
 
