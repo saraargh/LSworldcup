@@ -389,7 +389,7 @@ class EndConfirmView(ui.View):
                 "cat": self.data['current_cat'], 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
+            await interaction.channel.send("@everyone 🏆 **THE WORLD CUP IS COMPLETE!**", embed=embed)
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
@@ -624,7 +624,7 @@ class WC_Bot(discord.Client):
         view = MatchView(comp_a, comp_b, current_item="A") 
         embed = view.create_embed(data)
         
-        msg = await channel.send(content="⚔️ **NEW MATCH IS LIVE!**", embed=embed, view=view)
+        msg = await channel.send(content="⚔️ **@ everyone THE NEXT WORLD CUP MATCH IS LIVE - CAST YOUR VOTES BELOW!!**", embed=embed, view=view)
         
         data['current_match']['message_id'] = msg.id
         save_data(data, sha)
@@ -676,7 +676,7 @@ async def choosecategory(interaction: discord.Interaction):
     save_data(data, sha)
     
     announcement = (
-        f"@everyone 🎉 The theme for this tournament is: **{selected['name'].upper()}**!\n"
+        f"@everyone 🎉 The theme for the next World Cup is: **{selected['name'].upper()}**!\n"
         f"(Theme suggested by {selected['user']})\n\n"
         "Submit your entries now using `/additem`!"
     )
