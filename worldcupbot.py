@@ -546,7 +546,6 @@ class WC_Bot(discord.Client):
     # --- THE ENGINE: RESOLVE MATCH ---
     async def resolve_match(self, data, sha):
         async with self.processing_lock:
-            # 1. RE-FETCH DATA (Avoid race conditions)
             fresh_data, fresh_sha = load_data()
             match = fresh_data.get('current_match')
             
@@ -557,14 +556,14 @@ class WC_Bot(discord.Client):
             if not channel:
                 channel = await self.fetch_channel(match['channel_id'])
 
-            # 2. Count Votes
+            # Count Votes
             votes = list(match.get('votes', {}).values())
             cA, cB = votes.count("A"), votes.count("B")
             
             winner, loser = (match['item_a'], match['item_b']) if cA >= cB else (match['item_b'], match['item_a'])
             win_score, lose_score = (cA, cB) if cA >= cB else (cB, cA)
 
-            # 3. Save Results
+            # Archive Results
             fresh_data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'],
@@ -578,38 +577,42 @@ class WC_Bot(discord.Client):
             fresh_data['current_match'] = None 
             save_data(fresh_data, fresh_sha)
 
-            # 4. Clean up Discord
+            # Clean up Discord (Unpin old match)
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
             except: pass
 
-            # 5. Result Announcement
+            # CHECK: Is this the absolute final winner?
+            is_tournament_over = not fresh_data.get('bracket') and len(fresh_data.get('winners_pool', [])) == 1
+
+            if is_tournament_over:
+                # SILENT MODE: Just set the data and stop. 
+                # No embed, no message.
+                fresh_data['final_winner'] = winner
+                fresh_data['status'] = "FINISHED"
+                save_data(fresh_data, fresh_sha)
+                return 
+
+            # REGULAR ROUND: Show the detailed hype embed
             win_embed = discord.Embed(
                 title="🏆 MATCH CONCLUDED",
                 description=f"### {winner['name']} has DEFEATED {loser['name']}!",
                 color=0x2ecc71 
             )
-            win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
-            win_embed.set_thumbnail(url=winner['image'])
+            win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** —  ❌ **{lose_score}**", inline=False)
+            win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
+            win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=True)
+            
+            if winner.get('image'):
+                win_embed.set_thumbnail(url=winner['image'])
+            
             await channel.send(embed=win_embed)
-
-            # 6. THE CHECK: Is the Tournament over?
-            # If bracket is empty and only 1 winner remains in the pool
-            if not fresh_data.get('bracket') and len(fresh_data.get('winners_pool', [])) == 1:
-                fresh_data['final_winner'] = winner
-                fresh_data['status'] = "FINISHED"
-                save_data(fresh_data, fresh_sha)
-                
-                await channel.send(
-                    "🏁 **THE TOURNAMENT IS COMPLETE!**\n"
-                    "The champion has been decided. Admin, please use `/endcup` to crown the winner and archive the results."
-                )
-                return # STOP HERE. Do not call post_next.
-
-            # 7. If not over, wait and post next
+            
+            # Wait, then post next match
             await asyncio.sleep(4) 
             await self.post_next(channel)
+
 
 
 
@@ -730,22 +733,25 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
+    # Always ephemeral so only the admin sees the status
     await interaction.response.defer(ephemeral=True)
+    
     data, sha = load_data()
     
-    # Check if the tournament is already in the FINISHED state
+    # Check if a winner was already decided in the background
     if data.get('status') == "FINISHED" or data.get('final_winner'):
         return await interaction.followup.send(
-            "🛑 **The World Cup has finished!**\n"
-            "There are no more matches to play. Use `/endcup` to post the final winner embed and reset the tournament state.", 
+            "🏁 **Tournament Complete.** No more matches to play.\n"
+            "Use `/endcup` whenever you are ready to announce the champion and reset.", 
             ephemeral=True
         )
 
     if not data.get('current_match'):
         return await interaction.followup.send("❌ No match is currently active.", ephemeral=True)
 
-    await interaction.followup.send("🔄 Resolving match...", ephemeral=True)
+    await interaction.followup.send("🔄 Processing match results...", ephemeral=True)
     await bot.resolve_match(data, sha)
+
 
 
 
