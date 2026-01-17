@@ -282,14 +282,14 @@ class MatchView(discord.ui.View):
         self.item_b = item_b
         self.current_item = current_item
 
-        # 2. Buttons show "Vote for item name"
+        # Set persistent button labels
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, data):
-        # Reboot Recovery: Pull items if missing
+        # Reboot Recovery
         if (self.item_a is None or self.item_b is None) and data.get('current_match'):
             match = data['current_match']
             self.item_a, self.item_b = match['item_a'], match['item_b']
@@ -300,14 +300,21 @@ class MatchView(discord.ui.View):
         cA, cB = votes.count("A"), votes.count("B")
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
+        # Initialize Embed
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # Currently Viewing is now ABOVE description
+        # 1. FORCE "Currently Viewing" TO THE TOP AS A FIELD
         embed.add_field(name="Currently Viewing", value=f"👉 **{viewing['name']}**", inline=False)
 
+        # 2. Description & Submitter (renders after fields in this order)
         desc_text = viewing.get('desc', 'No description provided.')
-        embed.description = f"**Description:** {desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
+        embed.add_field(
+            name="Description", 
+            value=f"{desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}", 
+            inline=False
+        )
         
+        # 3. Standings at the bottom
         embed.add_field(
             name="📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {cA} votes\n**{self.item_b['name']}:** {cB} votes", 
@@ -355,7 +362,6 @@ class MatchView(discord.ui.View):
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
         await interaction.message.edit(embed=self.create_embed(data))
-
 
 
 
