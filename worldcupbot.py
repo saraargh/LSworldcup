@@ -276,56 +276,64 @@ class ItemGallery(ui.View):
         await interaction.response.edit_message(embed=self.create_content())
 
 
-class MatchView(ui.View):
-    def __init__(self, item_a, item_b):
+class MatchView(discord.ui.View):
+    def __init__(self, item_a=None, item_b=None):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        # Set button labels to item names
-        self.vote_a.label = f"Vote for {item_a['name']}"
-        self.vote_b.label = f"Vote for {item_b['name']}"
 
-    def create_embed(self, page):
-        item = self.item_a if page == 0 else self.item_b
-        color = 0xff4757 if page == 0 else 0x2e86de
+        # Dynamically set labels to the item names
+        if item_a:
+            self.vote_a_button.label = f"Vote for {item_a['name']}"
+        if item_b:
+            self.vote_b_button.label = f"Vote for {item_b['name']}"
+
+    def create_embed(self, count_a=0, count_b=0):
+        embed = discord.Embed(title="⚔️ TOURNAMENT MATCH", color=0x3498db)
+        name_a = self.item_a['name'] if self.item_a else "Option A"
+        name_b = self.item_b['name'] if self.item_b else "Option B"
         
-        # We look for 'desc' specifically here
-        item_desc = item.get('desc', 'No description provided.')
+        embed.add_field(name=f"🅰️ {name_a}", value=f"Votes: **{count_a}**", inline=True)
+        embed.add_field(name=f"🅱️ {name_b}", value=f"Votes: **{count_b}**", inline=True)
         
-        embed = discord.Embed(
-            title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
-            color=color
-        )
-        embed.set_image(url=item['image'])
-        embed.set_footer(text="Switch views to see both entries before voting!")
+        if self.item_a and self.item_a.get('image'):
+            embed.set_thumbnail(url=self.item_a['image'])
         return embed
 
-    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
-    async def view_a(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.edit_message(embed=self.create_embed(0))
+    @discord.ui.button(label="Vote A", style=discord.ButtonStyle.primary, custom_id="persistent_v_a")
+    async def vote_a_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await self.process_vote(interaction, "A")
 
-    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="v_b_nav")
-    async def view_b(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.edit_message(embed=self.create_embed(1))
+    @discord.ui.button(label="Vote B", style=discord.ButtonStyle.primary, custom_id="persistent_v_b")
+    async def vote_b_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await self.process_vote(interaction, "B")
 
-    @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a_match", row=1)
-    async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer(ephemeral=True)
+    async def process_vote(self, interaction, choice):
         data, sha = load_data()
-        match = data.get("current_match")
-        match.setdefault("votes", {})[str(interaction.user.id)] = "A"
-        save_data(data, sha)
-        await interaction.followup.send(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
+        match = data.get('current_match')
+        
+        if not match:
+            return await interaction.response.send_message("❌ No active match.", ephemeral=True)
 
-    @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
-    async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer(ephemeral=True)
-        data, sha = load_data()
-        match = data.get("current_match")
-        match.setdefault("votes", {})[str(interaction.user.id)] = "B"
+        user_id = str(interaction.user.id)
+        match.setdefault('votes', {})
+        
+        if match['votes'].get(user_id) == choice:
+            return await interaction.response.send_message("⚠️ You've already voted for this!", ephemeral=True)
+
+        match['votes'][user_id] = choice
         save_data(data, sha)
-        await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+        
+        votes = list(match['votes'].values())
+        cA, cB = votes.count("A"), votes.count("B")
+
+        # 1. Provide the requested confirmation
+        winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
+        await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
+        
+        # 2. Update the main message embed
+        await interaction.message.edit(embed=self.create_embed(cA, cB))
+
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
@@ -473,152 +481,136 @@ class ScoreboardView(ui.View):
 # =========================================================
 # BOT CORE CLASS
 # =========================================================
+
 class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
-        self.processing_lock = asyncio.Lock()
 
     async def setup_hook(self):
-        # FIX: Remove self.add_view(MatchView()) from here!
-        # MatchView is created dynamically in post_next() instead.
+        # Registering MatchView with None allows the bot to listen for 
+        # button clicks (custom_ids) even after a restart.
+        self.add_view(MatchView(None, None))
         await self.tree.sync()
-        print(f"Synced slash commands for {self.user}")
+        print(f"✅ Synced slash commands for {self.user}")
 
     async def on_ready(self):
-        print(f"Logged in as {self.user}")
+        print(f"🚀 Logged in as {self.user}")
 
-    # --- THE ENGINE: POST NEXT MATCH ---
-    async def post_next(self, channel):
-        async with self.processing_lock:
-            data, sha = load_data()
-            
-            # 1. Check if a match is already running to prevent double-posting
-            if data.get('current_match') is not None:
-                return
+    # === TOURNAMENT LOGIC ===
 
-            # 2. Refill bracket from winners_pool if current round is finished
-            if not data.get('bracket') or len(data['bracket']) < 2:
-                if len(data.get('winners_pool', [])) >= 2:
-                    data['bracket'] = list(data['winners_pool'])
-                    data['winners_pool'] = []
-                    await channel.send("🛡️ **Round Complete!** Advancing surviving entries to the next stage...")
-                elif len(data.get('winners_pool', [])) == 1 and not data.get('bracket'):
-                    # TOURNAMENT OVER: Set the final winner
-                    data['final_winner'] = data['winners_pool'][0]
-                    data['status'] = "FINISHED"
-                    save_data(data, sha)
-                    return await channel.send("🎊 **The Grand Final is over!** Use `/status` or `/nextmatch` to see the result.")
-                else:
-                    return # Nothing to post
-
-            # 3. Setup the next pair
-            comp_a = data['bracket'].pop(0)
-            comp_b = data['bracket'].pop(0)
-            round_name = get_round_name(data)
-            
-            # 4. Create View and Send
-            view = MatchView(comp_a, comp_b) 
-            msg = await channel.send(
-                content=f"⚔️ **{round_name}** is now LIVE!", 
-                embed=view.create_embed(0), 
-                view=view
-            )
-            
-            # 5. Save everything including START_TIME for the 24h timer
-            data['current_match'] = {
-                "item_a": comp_a,
-                "item_b": comp_b,
-                "votes": {},
-                "message_id": msg.id,
-                "channel_id": channel.id,
-                "start_time": datetime.datetime.now().isoformat()
-            }
-            data['status'] = "MATCH_ACTIVE"
-            save_data(data, sha)
-            
-            try:
-                await msg.pin()
-            except:
-                pass
-
-
-    # --- THE ENGINE: RESOLVE MATCH ---
     async def resolve_match(self, data, sha):
-        async with self.processing_lock:
-            fresh_data, fresh_sha = load_data()
-            match = fresh_data.get('current_match')
-            
-            if not match:
-                return
+        """Processes the current match and moves to the next."""
+        match = data.get('current_match')
+        if not match:
+            return
 
-            channel = self.get_channel(match['channel_id'])
-            if not channel:
-                channel = await self.fetch_channel(match['channel_id'])
+        # Fetch channel
+        channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
 
-            # Count Votes
-            votes = list(match.get('votes', {}).values())
-            cA, cB = votes.count("A"), votes.count("B")
-            
-            winner, loser = (match['item_a'], match['item_b']) if cA >= cB else (match['item_b'], match['item_a'])
-            win_score, lose_score = (cA, cB) if cA >= cB else (cB, cA)
+        # 1. Count Votes
+        votes = list(match.get('votes', {}).values())
+        cA, cB = votes.count("A"), votes.count("B")
+        
+        winner, loser = (match['item_a'], match['item_b']) if cA >= cB else (match['item_b'], match['item_a'])
+        win_score, lose_score = (cA, cB) if cA >= cB else (cB, cA)
 
-            # Archive Results
-            fresh_data.setdefault('finished_matches', []).append({
-                "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
-                "winner": winner['name'],
-                "winner_user": winner.get('user', 'Unknown'),
-                "loser_name": loser['name'],
-                "score": f"{cA}-{cB}"
-            })
-            fresh_data.setdefault('winners_pool', []).append(winner)
-            
-            old_msg_id = match['message_id']
-            fresh_data['current_match'] = None 
-            save_data(fresh_data, fresh_sha)
+        # 2. Update Data
+        data.setdefault('finished_matches', []).append({
+            "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
+            "winner": winner['name'],
+            "winner_user": winner.get('user', 'Unknown'),
+            "score": f"{cA}-{cB}"
+        })
+        data.setdefault('winners_pool', []).append(winner)
+        
+        # Cleanup current match
+        old_msg_id = match['message_id']
+        data['current_match'] = None 
+        save_data(data, sha)
 
-            # Clean up Discord (Unpin old match)
-            try:
-                old_msg = await channel.fetch_message(old_msg_id)
-                await old_msg.unpin()
-            except: pass
+        # 3. Unpin old match message
+        try:
+            old_msg = await channel.fetch_message(old_msg_id)
+            await old_msg.unpin()
+        except:
+            pass
 
-            # CHECK: Is this the absolute final winner?
-            is_tournament_over = not fresh_data.get('bracket') and len(fresh_data.get('winners_pool', [])) == 1
+        # 4. SILENT FINISH CHECK
+        # Tournament ends if bracket is empty and only 1 winner is left in the pool
+        is_tournament_over = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
 
-            if is_tournament_over:
-                # SILENT MODE: Just set the data and stop. 
-                # No embed, no message.
-                fresh_data['final_winner'] = winner
-                fresh_data['status'] = "FINISHED"
-                save_data(fresh_data, fresh_sha)
-                return 
+        if is_tournament_over:
+            data['final_winner'] = winner
+            data['status'] = "FINISHED"
+            # Get fresh SHA for the final status update
+            _, latest_sha = load_data() 
+            save_data(data, latest_sha)
+            # RETURNS SILENTLY - No winner embed, no announcement.
+            return 
 
-            # REGULAR ROUND: Show the detailed hype embed
-            win_embed = discord.Embed(
-                title="🏆 MATCH CONCLUDED",
-                description=f"### {winner['name']} has DEFEATED {loser['name']}!",
-                color=0x2ecc71 
-            )
-            win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** —  ❌ **{lose_score}**", inline=False)
-            win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
-            win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=True)
-            
-            if winner.get('image'):
-                win_embed.set_thumbnail(url=winner['image'])
-            
-            await channel.send(embed=win_embed)
-            
-            # Wait, then post next match
-            await asyncio.sleep(4) 
-            await self.post_next(channel)
+        # 5. POST DETAILED WINNER EMBED (For regular rounds)
+        win_embed = discord.Embed(title="🏆 MATCH CONCLUDED", color=0x2ecc71)
+        win_embed.description = f"### {winner['name']} has DEFEATED {loser['name']}!"
+        win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
+        win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
+        win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=True)
+        
+        if winner.get('image'):
+            win_embed.set_thumbnail(url=winner['image'])
+        
+        await channel.send(embed=win_embed)
+
+        # 6. Wait and trigger next match
+        await asyncio.sleep(2)
+        await self.post_next(channel)
+
+    async def post_next(self, channel):
+        """Pulls from bracket and posts a new match."""
+        data, sha = load_data()
+
+        # If bracket is empty, move winners_pool back into bracket for next round
+        if not data.get('bracket') or len(data['bracket']) < 2:
+            if len(data.get('winners_pool', [])) >= 2:
+                data['bracket'] = list(data.get('winners_pool', []))
+                data['winners_pool'] = []
+                save_data(data, sha)
+                await channel.send("🛡️ **Round Complete!** Advancing winners to the next stage...")
+                # Re-load data to get updated bracket and new SHA
+                data, sha = load_data()
+            else:
+                return # Not enough items for a match
+
+        # Get top 2 items from the bracket
+        comp_a = data['bracket'].pop(0)
+        comp_b = data['bracket'].pop(0)
+
+        # Create Match Message
+        view = MatchView(comp_a, comp_b) 
+        msg = await channel.send(content="⚔️ **NEW MATCH IS LIVE!**", embed=view.create_embed(0), view=view)
+        
+        data['current_match'] = {
+            "item_a": comp_a,
+            "item_b": comp_b,
+            "votes": {},
+            "message_id": msg.id,
+            "channel_id": channel.id
+        }
+        data['status'] = "MATCH_ACTIVE"
+        
+        save_data(data, sha)
+        try:
+            await msg.pin()
+        except:
+            pass
+
+
 
 
 
 
 # --- CLASS ENDS HERE ---
 bot = WC_Bot()
-
 # =========================================================
 # SLASH COMMANDS - ADMINS
 # =========================================================
