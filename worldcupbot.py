@@ -277,30 +277,48 @@ class ItemGallery(ui.View):
 
 
 class MatchView(discord.ui.View):
-    def __init__(self, item_a=None, item_b=None):
+    def __init__(self, item_a=None, item_b=None, current_item="A"):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
+        self.current_item = current_item # Tracks which entry description to show
 
-        # Dynamically set labels to the item names
+        # Keep your specific button labels
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
-    def create_embed(self, count_a=0, count_b=0):
-        embed = discord.Embed(title="⚔️ TOURNAMENT MATCH", color=0x3498db)
-        name_a = self.item_a['name'] if self.item_a else "Option A"
-        name_b = self.item_b['name'] if self.item_b else "Option B"
+    def create_embed(self):
+        # 1. Determine which item we are currently viewing
+        viewing = self.item_a if self.current_item == "A" else self.item_b
         
-        embed.add_field(name=f"🅰️ {name_a}", value=f"Votes: **{count_a}**", inline=True)
-        embed.add_field(name=f"🅱️ {name_b}", value=f"Votes: **{count_b}**", inline=True)
+        # 2. Rebuild the high-detail layout from your second screenshot
+        embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
+        embed.add_field(name="Currently Viewing", value=viewing['name'], inline=False)
         
-        if self.item_a and self.item_a.get('image'):
-            embed.set_thumbnail(url=self.item_a['image'])
+        desc = viewing.get('description', 'No description provided.')
+        embed.description = f"**Description:** {desc}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
+        
+        if viewing.get('image'):
+            embed.set_image(url=viewing['image'])
+            
+        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
-    @discord.ui.button(label="Vote A", style=discord.ButtonStyle.primary, custom_id="persistent_v_a")
+    # --- VIEW SWITCHER BUTTONS ---
+    @discord.ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.current_item = "A"
+        await interaction.response.edit_message(embed=self.create_embed(), view=self)
+
+    @discord.ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.current_item = "B"
+        await interaction.response.edit_message(embed=self.create_embed(), view=self)
+
+    # --- VOTING BUTTONS ---
+    @discord.ui.button(label="Vote A", style=discord.ButtonStyle.danger, custom_id="persistent_v_a")
     async def vote_a_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.process_vote(interaction, "A")
 
@@ -324,15 +342,9 @@ class MatchView(discord.ui.View):
         match['votes'][user_id] = choice
         save_data(data, sha)
         
-        votes = list(match['votes'].values())
-        cA, cB = votes.count("A"), votes.count("B")
-
-        # 1. Provide the requested confirmation
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
-        
-        # 2. Update the main message embed
-        await interaction.message.edit(embed=self.create_embed(cA, cB))
+
 
 
 class EndConfirmView(ui.View):
