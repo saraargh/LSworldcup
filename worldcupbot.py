@@ -277,12 +277,11 @@ class ItemGallery(ui.View):
 
 class MatchView(discord.ui.View):
     def __init__(self, item_a=None, item_b=None, current_item="A"):
-        super().__init__(timeout=None) # Persistent
+        super().__init__(timeout=None) # NO TIMEOUT - Buttons stay active forever
         self.item_a = item_a
         self.item_b = item_b
         self.current_item = current_item
 
-        # Persistent buttons: "Vote for [item name]"
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
@@ -302,26 +301,26 @@ class MatchView(discord.ui.View):
         
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 1. Currently Viewing (NO EMOJI)
+        # 1. Currently Viewing
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # 2. Description (Space above this section)
+        # 2. Description Section (Space above)
         desc_text = viewing.get('desc', 'No description provided.')
         embed.add_field(
             name="\u200b", 
-            value=f"Description: {desc_text}", 
+            value=f"**Description:** {desc_text}", 
             inline=False
         )
         
-        # 3. Submitter (Clean style from first screenshot)
+        # 3. Submitter Section (Matches first screenshot style exactly)
         submitter = viewing.get('user', 'Unknown')
         embed.add_field(
             name="\u200b",
-            value=f"Submitted by\n👤 @{submitter}",
+            value=f"**submitted by: {submitter}**",
             inline=False
         )
         
-        # 4. Standings (Space above this section)
+        # 4. Standings Section (Space above)
         embed.add_field(
             name="\u200b", 
             value=f"**🗳️ Current Standings:**\n{self.item_a['name']} - {cA} votes\n{self.item_b['name']} - {cB} votes", 
@@ -331,7 +330,7 @@ class MatchView(discord.ui.View):
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
             
-        embed.set_footer(text="Switch views to see both entries before voting!")
+        embed.set_footer(text="The Landing Strip World Cup System")
         return embed
 
     @discord.ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.secondary, custom_id="view_a")
