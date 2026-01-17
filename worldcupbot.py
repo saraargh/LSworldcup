@@ -309,7 +309,7 @@ class MatchView(discord.ui.View):
 
         embed.add_field(name="Currently Viewing", value=viewing['name'], inline=False)
         
-        desc = viewing.get('description', 'No description provided.')
+        desc = viewing.get('desc', 'No description provided.')
         embed.description = f"**Description:** {desc}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
         
         if viewing.get('image'):
