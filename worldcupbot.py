@@ -624,7 +624,7 @@ class WC_Bot(discord.Client):
         view = MatchView(comp_a, comp_b, current_item="A") 
         embed = view.create_embed(data)
         
-        msg = await channel.send(content="⚔️ **@ everyone THE NEXT WORLD CUP MATCH IS LIVE - CAST YOUR VOTES BELOW!!**", embed=embed, view=view)
+        msg = await channel.send(content="⚔️ **@ everyone THE NEXT MATCH UP IS READY, CAST YOUR VOTES BELOW!!**", embed=embed, view=view)
         
         data['current_match']['message_id'] = msg.id
         save_data(data, sha)
