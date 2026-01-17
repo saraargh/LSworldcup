@@ -283,24 +283,33 @@ class MatchView(discord.ui.View):
         self.item_b = item_b
         self.current_item = current_item
 
+        # Set dynamic labels
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
-    def create_embed(self, data=None):
-        # 1. Get vote counts from data if provided
-        count_a, count_b = 0, 0
-        if data and data.get('current_match'):
-            votes = list(data['current_match'].get('votes', {}).values())
-            count_a = votes.count("A")
-            count_b = votes.count("B")
+    def create_embed(self, data):
+        # 1. Fallback: If bot rebooted and items are None, pull them from data
+        if self.item_a is None or self.item_b is None:
+            match = data.get('current_match')
+            if match:
+                self.item_a = match['item_a']
+                self.item_b = match['item_b']
+                self.vote_a_button.label = f"Vote for {self.item_a['name']}"
+                self.vote_b_button.label = f"Vote for {self.item_b['name']}"
+            else:
+                return discord.Embed(title="Error", description="Match data not found.")
 
-        # 2. Rebuild your favorite layout
+        # 2. Calculate Votes
+        votes = list(data['current_match'].get('votes', {}).values())
+        count_a = votes.count("A")
+        count_b = votes.count("B")
+
+        # 3. Build the High-Detail Layout (Second Screenshot Style)
         viewing = self.item_a if self.current_item == "A" else self.item_b
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 3. Add the Live Score field
         embed.add_field(
             name="📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
@@ -354,12 +363,12 @@ class MatchView(discord.ui.View):
         match['votes'][user_id] = choice
         save_data(data, sha)
         
+        # Confirmation
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
         
-        # Update the main embed with new vote counts
+        # Update embed
         await interaction.message.edit(embed=self.create_embed(data))
-
 
 
 
