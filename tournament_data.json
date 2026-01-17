@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Chloe",
-            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Bridget Jones Diary",
             "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
@@ -434,6 +422,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Chloe",
+            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "He\u2019s just not that into you",
+            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462214223328313469
+    },
     "final_winner": null
 }
