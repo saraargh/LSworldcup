@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Wild Child",
             "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
@@ -410,6 +398,22 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Camp Rock",
+            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462164323659939956
+    },
     "final_winner": null
 }
