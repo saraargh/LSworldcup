@@ -282,14 +282,14 @@ class MatchView(discord.ui.View):
         self.item_b = item_b
         self.current_item = current_item
 
-        # Persistent button labels: "Vote for item name"
+        # Persistent buttons: "Vote for [item name]"
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, data):
-        # Reboot Recovery
+        # Reboot Recovery logic
         if (self.item_a is None or self.item_b is None) and data.get('current_match'):
             match = data['current_match']
             self.item_a, self.item_b = match['item_a'], match['item_b']
@@ -302,19 +302,26 @@ class MatchView(discord.ui.View):
         
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # Section 1: Currently Viewing
+        # 1. Currently Viewing (NO EMOJI)
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # Section 2: Description & Submitter (With spacing)
+        # 2. Description (Space above this section)
         desc_text = viewing.get('desc', 'No description provided.')
-        submitter = viewing.get('user', 'Unknown')
         embed.add_field(
             name="\u200b", 
-            value=f"**Description:**\n{desc_text}\n\nsubmitted by: @{submitter}", 
+            value=f"Description: {desc_text}", 
             inline=False
         )
         
-        # Section 3: Standings (With spacing)
+        # 3. Submitter (Clean style from first screenshot)
+        submitter = viewing.get('user', 'Unknown')
+        embed.add_field(
+            name="\u200b",
+            value=f"Submitted by\n👤 @{submitter}",
+            inline=False
+        )
+        
+        # 4. Standings (Space above this section)
         embed.add_field(
             name="\u200b", 
             value=f"**🗳️ Current Standings:**\n{self.item_a['name']} - {cA} votes\n{self.item_b['name']} - {cB} votes", 
@@ -327,13 +334,13 @@ class MatchView(discord.ui.View):
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
-    @discord.ui.button(label="⬅️", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    @discord.ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "A"
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    @discord.ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
     async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "B"
@@ -362,8 +369,6 @@ class MatchView(discord.ui.View):
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
         await interaction.message.edit(embed=self.create_embed(data))
-
-
 
 
 class EndConfirmView(ui.View):
