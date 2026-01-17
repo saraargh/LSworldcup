@@ -197,8 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [],
-    "winners_pool": [
+    "bracket": [
         {
             "name": "Angus, Thongs & Perfect Snogging",
             "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
@@ -296,6 +295,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
+    "winners_pool": [],
     "finished_matches": [
         {
             "name": "Just my luck vs Angus, Thongs & Perfect Snogging",
