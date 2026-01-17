@@ -295,6 +295,12 @@
             "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Mamma mia!",
+            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -384,6 +390,12 @@
             "winner": "Mean Girls",
             "winner_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "When harry met sally vs Mamma mia!",
+            "winner": "Mamma mia!",
+            "winner_user": "<@1238834298338152498>",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -398,24 +410,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "When harry met sally",
-            "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Mamma mia!",
-            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462163784155136057
-    },
+    "current_match": null,
     "final_winner": null
 }
