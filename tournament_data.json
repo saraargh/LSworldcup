@@ -1,6 +1,6 @@
 {
-    "status": "FINISHED",
-    "current_cat": "Films",
+    "status": "IDLE",
+    "current_cat": null,
     "title": [],
     "items": [
         {
@@ -198,205 +198,8 @@
     ],
     "suggestions": [],
     "bracket": [],
-    "winners_pool": [
-        {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
-    "finished_matches": [
-        {
-            "name": "Just my luck vs Angus, Thongs & Perfect Snogging",
-            "winner": "Angus, Thongs & Perfect Snogging",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Just my luck",
-            "score": "0-1"
-        },
-        {
-            "name": "How to lose a guy in 10 days vs Pretty Woman",
-            "winner": "How to lose a guy in 10 days",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Pretty Woman",
-            "score": "1-0"
-        },
-        {
-            "name": "legally blonde vs He\u2019s just not that into you",
-            "winner": "legally blonde",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "He\u2019s just not that into you",
-            "score": "1-0"
-        },
-        {
-            "name": "Cruel Intentions vs 50 first dates",
-            "winner": "50 first dates",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Miss Congeliality vs 500 days of summer",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Chloe vs Camp Rock",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "The Notebook vs Wild Child",
-            "winner": "Wild Child",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "White Chicks vs A cinderella story",
-            "winner": "A cinderella story",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Clueless vs Love Actually",
-            "winner": "Love Actually",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "10 things i hate about you vs Pitch Perfect",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Bend it like beckham vs Something Borrowed",
-            "winner": "Something Borrowed",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Confessions of a Shopaholic vs Sisterhood of the travelling pants",
-            "winner": "Sisterhood of the travelling pants",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "13 Going on 30 vs Bridget Jones Diary",
-            "winner": "Bridget Jones Diary",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Mean Girls vs the devil wears prada",
-            "winner": "Mean Girls",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "When harry met sally vs Mamma mia!",
-            "winner": "Mamma mia!",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind vs just like heaven",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs How to lose a guy in 10 days",
-            "winner": "Angus, Thongs & Perfect Snogging",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "legally blonde vs 50 first dates",
-            "winner": "legally blonde",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "500 days of summer vs Camp Rock",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Wild Child vs A cinderella story",
-            "winner": "A cinderella story",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Love Actually vs 10 things i hate about you",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Something Borrowed vs Sisterhood of the travelling pants",
-            "winner": "Something Borrowed",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Bridget Jones Diary vs Mean Girls",
-            "winner": "Mean Girls",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Mamma mia! vs Eternal Sunshine of The Spotless Mind",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs legally blonde",
-            "winner": "Angus, Thongs & Perfect Snogging",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-0"
-        },
-        {
-            "name": "500 days of summer vs A cinderella story",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "10 things i hate about you vs Something Borrowed",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Mean Girls vs Eternal Sunshine of The Spotless Mind",
-            "winner": "Mean Girls",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs 500 days of summer",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "score": "0-1"
-        },
-        {
-            "name": "10 things i hate about you vs Mean Girls",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "500 days of summer vs 10 things i hate about you",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "score": "1-0"
-        }
-    ],
+    "winners_pool": [],
+    "finished_matches": [],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -407,13 +210,13 @@
             "user": "<@1248020591823425626>",
             "item": "Ghost Stories (Dub)",
             "cat": "Anime"
+        },
+        {
+            "item": "500 days of summer",
+            "cat": "Films",
+            "user": "<@1238834298338152498>"
         }
     ],
     "current_match": null,
-    "final_winner": {
-        "name": "500 days of summer",
-        "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-        "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-        "user": "<@1238834298338152498>"
-    }
+    "final_winner": null
 }
