@@ -196,7 +196,12 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "Movies",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "bracket": [
         {
             "name": "10 things i hate about you",
