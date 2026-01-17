@@ -379,8 +379,24 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "winners_pool": [],
-    "finished_matches": [],
+    "winners_pool": [
+        {
+            "name": "Sisterhood of the travelling pants",
+            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
+            "user": "<@1238834298338152498>"
+        }
+    ],
+    "finished_matches": [
+        {
+            "name": "Just my luck vs Sisterhood of the travelling pants",
+            "winner": "Sisterhood of the travelling pants",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Just my luck",
+            "loser_user": "<@1238834298338152498>",
+            "score": "1-0"
+        }
+    ],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -398,24 +414,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Just my luck",
-            "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Sisterhood of the travelling pants",
-            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462185022869213265
-    },
+    "current_match": null,
     "final_winner": null
 }
