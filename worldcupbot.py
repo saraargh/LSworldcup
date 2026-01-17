@@ -275,7 +275,6 @@ class ItemGallery(ui.View):
             self.mode = "GALLERY"
         await interaction.response.edit_message(embed=self.create_content())
 
-
 class MatchView(discord.ui.View):
     def __init__(self, item_a=None, item_b=None, current_item="A"):
         super().__init__(timeout=None)
@@ -283,30 +282,30 @@ class MatchView(discord.ui.View):
         self.item_b = item_b
         self.current_item = current_item
 
-        # Set dynamic labels
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, data):
-        # 1. Fallback: If bot rebooted and items are None, pull them from data
+        # Safety Check: If data is None or empty, return a loading embed to prevent 'NoneType' error
+        if not data or not data.get('current_match'):
+            return discord.Embed(title="⏳ Loading Match...", description="Please wait a moment.")
+
+        # Recovery logic for reboots
         if self.item_a is None or self.item_b is None:
             match = data.get('current_match')
-            if match:
-                self.item_a = match['item_a']
-                self.item_b = match['item_b']
-                self.vote_a_button.label = f"Vote for {self.item_a['name']}"
-                self.vote_b_button.label = f"Vote for {self.item_b['name']}"
-            else:
-                return discord.Embed(title="Error", description="Match data not found.")
+            self.item_a = match['item_a']
+            self.item_b = match['item_b']
+            self.vote_a_button.label = f"Vote for {self.item_a['name']}"
+            self.vote_b_button.label = f"Vote for {self.item_b['name']}"
 
-        # 2. Calculate Votes
+        # Calculate Votes
         votes = list(data['current_match'].get('votes', {}).values())
         count_a = votes.count("A")
         count_b = votes.count("B")
 
-        # 3. Build the High-Detail Layout (Second Screenshot Style)
+        # Build High-Detail Layout
         viewing = self.item_a if self.current_item == "A" else self.item_b
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
@@ -318,8 +317,9 @@ class MatchView(discord.ui.View):
 
         embed.add_field(name="Currently Viewing", value=viewing['name'], inline=False)
         
-        desc = viewing.get('desc', 'No description provided.')
-        embed.description = f"**Description:** {desc}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
+        # FIXED: Uses 'desc' from your JSON
+        desc_text = viewing.get('desc', 'No description provided.')
+        embed.description = f"**Description:** {desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
         
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
@@ -363,14 +363,14 @@ class MatchView(discord.ui.View):
         match['votes'][user_id] = choice
         save_data(data, sha)
         
-        # Confirmation
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
         
-        # Update embed
         await interaction.message.edit(embed=self.create_embed(data))
 
+        
 
+        
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
