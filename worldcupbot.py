@@ -275,28 +275,37 @@ class ItemGallery(ui.View):
             self.mode = "GALLERY"
         await interaction.response.edit_message(embed=self.create_content())
 
-
 class MatchView(discord.ui.View):
-    def __init__(self, item_a, item_b, current_item="A"):
+    def __init__(self, item_a=None, item_b=None, current_item="A"):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
         self.current_item = current_item
 
-        # Set the labels once at the start
-        self.vote_a_button.label = f"Vote for {item_a['name']}"
-        self.vote_b_button.label = f"Vote for {item_b['name']}"
+        # Set dynamic labels for voting buttons
+        if item_a:
+            self.vote_a_button.label = f"Vote for {item_a['name']}"
+        if item_b:
+            self.vote_b_button.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, data):
-        # Direct counting from the data passed in
+        # Fallback for reboot: pull items from data if they are missing in the View instance
+        if (self.item_a is None or self.item_b is None) and data.get('current_match'):
+            self.item_a = data['current_match']['item_a']
+            self.item_b = data['current_match']['item_b']
+            self.vote_a_button.label = f"Vote for {self.item_a['name']}"
+            self.vote_b_button.label = f"Vote for {self.item_b['name']}"
+
+        # Count current votes
         votes = list(data['current_match'].get('votes', {}).values())
         count_a, count_b = votes.count("A"), votes.count("B")
 
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
+        # High-detail layout (as seen in second screenshot)
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # Standings
+        # Added Standings field
         embed.add_field(
             name="📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
@@ -305,8 +314,9 @@ class MatchView(discord.ui.View):
 
         embed.add_field(name="Currently Viewing", value=viewing['name'], inline=False)
         
-        # Back to basics: Description and Large Image
-        embed.description = f"**Description:** {viewing.get('desc', 'No description.')}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
+        # Fixed: Uses 'desc' and Large Image (set_image)
+        desc_text = viewing.get('desc', 'No description provided.')
+        embed.description = f"**Description:** {desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
         
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
@@ -336,24 +346,27 @@ class MatchView(discord.ui.View):
 
     async def process_vote(self, interaction, choice):
         data, sha = load_data()
-        match = data['current_match']
-        user_id = str(interaction.user.id)
+        match = data.get('current_match')
         
+        if not match:
+            return await interaction.response.send_message("❌ No active match.", ephemeral=True)
+
+        user_id = str(interaction.user.id)
         match.setdefault('votes', {})
+        
         if match['votes'].get(user_id) == choice:
-            return await interaction.response.send_message("⚠️ You already voted for this!", ephemeral=True)
+            return await interaction.response.send_message("⚠️ You've already voted for this!", ephemeral=True)
 
         match['votes'][user_id] = choice
         save_data(data, sha)
         
+        # Confirmation message
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
+        
+        # Update original match post
         await interaction.message.edit(embed=self.create_embed(data))
 
-
-        
-
-        
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
