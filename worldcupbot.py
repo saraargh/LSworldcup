@@ -277,44 +277,42 @@ class ItemGallery(ui.View):
 
 class MatchView(discord.ui.View):
     def __init__(self, item_a=None, item_b=None, current_item="A"):
-        super().__init__(timeout=None)
+        super().__init__(timeout=None) # Persistent
         self.item_a = item_a
         self.item_b = item_b
         self.current_item = current_item
 
+        # 2. Buttons show "Vote for item name"
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
             self.vote_b_button.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, data):
-        # Reboot Recovery
+        # Reboot Recovery: Pull items if missing
         if (self.item_a is None or self.item_b is None) and data.get('current_match'):
-            self.item_a = data['current_match']['item_a']
-            self.item_b = data['current_match']['item_b']
+            match = data['current_match']
+            self.item_a, self.item_b = match['item_a'], match['item_b']
             self.vote_a_button.label = f"Vote for {self.item_a['name']}"
             self.vote_b_button.label = f"Vote for {self.item_b['name']}"
 
         votes = list(data['current_match'].get('votes', {}).values())
-        count_a, count_b = votes.count("A"), votes.count("B")
-
+        cA, cB = votes.count("A"), votes.count("B")
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 1. Currently Viewing (Moved to TOP)
+        # Currently Viewing is now ABOVE description
         embed.add_field(name="Currently Viewing", value=f"👉 **{viewing['name']}**", inline=False)
 
-        # 2. Standings
-        embed.add_field(
-            name="📊 Current Standings", 
-            value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
-            inline=False
-        )
-        
-        # 3. Description
         desc_text = viewing.get('desc', 'No description provided.')
         embed.description = f"**Description:** {desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}"
+        
+        embed.add_field(
+            name="📊 Current Standings", 
+            value=f"**{self.item_a['name']}:** {cA} votes\n**{self.item_b['name']}:** {cB} votes", 
+            inline=False
+        )
         
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
@@ -345,21 +343,17 @@ class MatchView(discord.ui.View):
     async def process_vote(self, interaction, choice):
         data, sha = load_data()
         match = data.get('current_match')
-        
-        if not match:
-            return await interaction.response.send_message("❌ No active match.", ephemeral=True)
-
         user_id = str(interaction.user.id)
         match.setdefault('votes', {})
         
         if match['votes'].get(user_id) == choice:
-            return await interaction.response.send_message("⚠️ You've already voted for this!", ephemeral=True)
+            return await interaction.response.send_message("⚠️ Already voted for this!", ephemeral=True)
 
         match['votes'][user_id] = choice
         save_data(data, sha)
         
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
-        await interaction.response.send_message(f"✅ Your vote for **{winner_name}** was successful!", ephemeral=True)
+        await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
         await interaction.message.edit(embed=self.create_embed(data))
 
 
