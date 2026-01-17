@@ -502,14 +502,13 @@ class ScoreboardView(ui.View):
 # BOT CORE CLASS
 # =========================================================
 
-
-class WC_Bot(discord.Client):
+ class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
-        # Registers the MatchView so buttons work after a restart
+        # Keeps buttons working after a restart
         self.add_view(MatchView(None, None))
         await self.tree.sync()
         print(f"✅ Synced slash commands for {self.user}")
@@ -562,9 +561,9 @@ class WC_Bot(discord.Client):
             data['status'] = "FINISHED"
             _, latest_sha = load_data() 
             save_data(data, latest_sha)
-            return # Silent end - No announcement.
+            return # Silent end
 
-        # 5. POST DETAILED WINNER EMBED (For regular rounds)
+        # 5. POST DETAILED WINNER EMBED
         win_embed = discord.Embed(title="🏆 MATCH CONCLUDED", color=0x2ecc71)
         win_embed.description = f"### {winner['name']} has DEFEATED {loser['name']}!"
         win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
@@ -576,12 +575,12 @@ class WC_Bot(discord.Client):
         
         await channel.send(embed=win_embed)
 
-        # 6. Trigger next match
+        # 6. Wait and trigger next match
         await asyncio.sleep(2)
         await self.post_next(channel)
 
     async def post_next(self, channel):
-        """Pulls from bracket and posts a new match."""
+        """Pulls from bracket and posts a new match with the high-detail view."""
         data, sha = load_data()
 
         # Refill bracket if empty
@@ -590,36 +589,38 @@ class WC_Bot(discord.Client):
                 data['bracket'] = list(data.get('winners_pool', []))
                 data['winners_pool'] = []
                 save_data(data, sha)
-                await channel.send("🛡️ **Round Complete!** Advancing winners...")
+                await channel.send("🛡️ **Round Complete!** Advancing winners to the next stage...")
                 data, sha = load_data()
             else:
                 return 
 
+        # Get competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
 
-        # Create Match Message with Standings logic
-        view = MatchView(comp_a, comp_b, current_item="A") 
-        embed = view.create_embed(data) # Passes data for the 0-0 standings
-        
-        msg = await channel.send(content="⚔️ **NEW MATCH IS LIVE!**", embed=embed, view=view)
-        
+        # CRITICAL: Define the match data BEFORE creating the view/embed
         data['current_match'] = {
             "item_a": comp_a,
             "item_b": comp_b,
             "votes": {},
-            "message_id": msg.id,
             "channel_id": channel.id
         }
         data['status'] = "MATCH_ACTIVE"
+
+        # Initialize View and Embed
+        view = MatchView(comp_a, comp_b, current_item="A") 
+        embed = view.create_embed(data)
         
+        msg = await channel.send(content="⚔️ ** @everyone NEW MATCH IS LIVE!**", embed=embed, view=view)
+        
+        # Update with message ID and save
+        data['current_match']['message_id'] = msg.id
         save_data(data, sha)
+        
         try:
             await msg.pin()
         except:
             pass
-
-
 
 
 
