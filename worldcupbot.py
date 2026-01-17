@@ -733,22 +733,30 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
+    # Use ephemeral=True so it's private
     await interaction.response.defer(ephemeral=True)
-    data, sha = load_data()
     
-    # 1. Final End Check (Keep this so the bot doesn't crash at the end)
-    if data.get('status') == "FINISHED" or data.get('final_winner'):
-        return await interaction.followup.send("🏁 Tournament is over! Use `/endcup`.", ephemeral=True)
+    try:
+        data, sha = load_data()
+        
+        # Check if tournament is finished
+        if data.get('status') == "FINISHED":
+            await interaction.followup.send("🏁 Tournament is over. Use /endcup.")
+            return
 
-    # 2. If a match is currently running, finish it first
-    if data.get('current_match'):
-        await bot.resolve_match(data, sha)
-        await interaction.followup.send("✅ Current match resolved. Moving to next...", ephemeral=True)
-    
-    # 3. If no match is running, just force the next one to post
-    else:
-        await bot.post_next(interaction.channel)
-        await interaction.followup.send("🚀 Starting the next match...", ephemeral=True)
+        if data.get('current_match'):
+            # This finishes the current match
+            await bot.resolve_match(data, sha)
+            await interaction.followup.send("✅ Match resolved. Next one is starting...")
+        else:
+            # This starts a match if none is active
+            await bot.post_next(interaction.channel)
+            await interaction.followup.send("🚀 Next match posted!")
+            
+    except Exception as e:
+        # This will tell you EXACTLY why it is failing instead of just "thinking"
+        await interaction.followup.send(f"❌ Error: {e}")
+
 
 
 
