@@ -987,14 +987,13 @@ async def listitems(interaction: discord.Interaction):
     # 4. Use followup since we deferred
     await interaction.followup.send(embed=gallery_view.create_content(), view=gallery_view)
 
-@bot.tree.command(name="scoreboard", description="View match history and tournament survivors")
+@bot.tree.command(name="scoreboard", description="View tournament history")
 async def scoreboard(interaction: discord.Interaction):
-    await interaction.response.defer()
+    await interaction.response.defer() # Gives the bot time to load data
     data, _ = load_data()
-    finished = data.get('finished_matches', [])
-    
-    view = ScoreboardView(finished)
-    await interaction.followup.send(embed=view.create_embed(data), view=view)
+    matches = data.get('finished_matches', [])
+    view = ScoreboardView(matches)
+    await interaction.followup.send(embed=view.create_embed(), view=view)
 
 
 
