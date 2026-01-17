@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Wild Child",
-            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Love Actually",
             "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
@@ -410,6 +398,22 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Wild Child",
+            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "A cinderella story",
+            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462164380048167037
+    },
     "final_winner": null
 }
