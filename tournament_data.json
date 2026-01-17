@@ -197,8 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [],
-    "winners_pool": [
+    "bracket": [
         {
             "name": "500 days of summer",
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
@@ -212,6 +211,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
+    "winners_pool": [],
     "finished_matches": [
         {
             "name": "Just my luck vs Angus, Thongs & Perfect Snogging",
