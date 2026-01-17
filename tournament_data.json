@@ -409,7 +409,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
             "user": "<@1238834298338152498>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "A"
+        },
         "message_id": 1462089602075594752,
         "channel_id": 1438277790179921971,
         "start_time": "2026-01-17T14:22:05.594456"
