@@ -502,7 +502,7 @@ class ScoreboardView(ui.View):
 # BOT CORE CLASS
 # =========================================================
 
- class WC_Bot(discord.Client):
+class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
