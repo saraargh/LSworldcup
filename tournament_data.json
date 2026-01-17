@@ -325,6 +325,12 @@
             "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "10 things i hate about you",
+            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -384,6 +390,12 @@
             "winner": "Love Actually",
             "winner_user": "<@1238834298338152498>",
             "score": "0-1"
+        },
+        {
+            "name": "10 things i hate about you vs Pitch Perfect",
+            "winner": "10 things i hate about you",
+            "winner_user": "<@1238834298338152498>",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -398,24 +410,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "10 things i hate about you",
-            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Pitch Perfect",
-            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1462141580436574296,
-        "channel_id": 1438277790179921971
-    },
+    "current_match": null,
     "final_winner": null
 }
