@@ -282,7 +282,7 @@ class MatchView(discord.ui.View):
         self.item_b = item_b
         self.current_item = current_item
 
-        # Set persistent button labels
+        # Persistent button labels: "Vote for item name"
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
@@ -300,24 +300,24 @@ class MatchView(discord.ui.View):
         cA, cB = votes.count("A"), votes.count("B")
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
-        # Initialize Embed
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 1. FORCE "Currently Viewing" TO THE TOP AS A FIELD
-        embed.add_field(name="Currently Viewing", value=f"👉 **{viewing['name']}**", inline=False)
+        # Section 1: Currently Viewing
+        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # 2. Description & Submitter (renders after fields in this order)
+        # Section 2: Description & Submitter (With spacing)
         desc_text = viewing.get('desc', 'No description provided.')
+        submitter = viewing.get('user', 'Unknown')
         embed.add_field(
-            name="Description", 
-            value=f"{desc_text}\n\n**Submitted by:** {viewing.get('user', 'Unknown')}", 
+            name="\u200b", 
+            value=f"**Description:**\n{desc_text}\n\nsubmitted by: @{submitter}", 
             inline=False
         )
         
-        # 3. Standings at the bottom
+        # Section 3: Standings (With spacing)
         embed.add_field(
-            name="📊 Current Standings", 
-            value=f"**{self.item_a['name']}:** {cA} votes\n**{self.item_b['name']}:** {cB} votes", 
+            name="\u200b", 
+            value=f"**🗳️ Current Standings:**\n{self.item_a['name']} - {cA} votes\n{self.item_b['name']} - {cB} votes", 
             inline=False
         )
         
@@ -327,13 +327,13 @@ class MatchView(discord.ui.View):
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
-    @discord.ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    @discord.ui.button(label="⬅️", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "A"
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    @discord.ui.button(label="➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
     async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "B"
@@ -362,6 +362,7 @@ class MatchView(discord.ui.View):
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
         await interaction.message.edit(embed=self.create_embed(data))
+
 
 
 
@@ -426,29 +427,38 @@ class ScoreboardView(discord.ui.View):
         self.update_buttons()
 
     def update_buttons(self):
+        # Safety check to prevent index errors
+        if not self.matches:
+            self.prev_button.disabled = True
+            self.next_button.disabled = True
+            return
+
         self.prev_button.disabled = (self.page == 0)
         max_page = (len(self.matches) - 1) // self.items_per_page
         self.next_button.disabled = (self.page >= max_page)
 
     def create_embed(self):
-        start = self.page * self.items_per_page
-        end = start + self.items_per_page
-        current_batch = self.matches[start:end]
-        
         embed = discord.Embed(title="📜 Match History", color=0xf1c40f)
         
-        if not current_batch:
-            embed.description = "No matches finished yet."
+        if not self.matches:
+            embed.description = "No matches have finished yet!"
+            return embed
+
+        start = self.page * self.items_per_page
+        end = start + self.items_per_page
+        # Get the slice of matches for this page
+        current_batch = self.matches[start:end]
         
-        for m in reversed(current_batch):
-            # Clean Format: Name vs Name -> Winner (Score)
+        # We display newest matches at the top
+        for m in current_batch:
+            # Clean display: Just Name vs Name and the Winner/Score
             embed.add_field(
-                name=f"🔹 {m['name']}",
-                value=f"🏆 **{m['winner']}** ({m['score']})",
+                name=f"🔹 {m.get('name', 'Unknown Match')}",
+                value=f"🏆 **Winner:** {m.get('winner', 'N/A')} ({m.get('score', '0-0')})",
                 inline=False
             )
             
-        embed.set_footer(text=f"Page {self.page + 1}")
+        embed.set_footer(text=f"Page {self.page + 1} of {((len(self.matches)-1)//self.items_per_page) + 1}")
         return embed
 
     @discord.ui.button(label="⬅️ Newer", style=discord.ButtonStyle.secondary)
@@ -462,7 +472,6 @@ class ScoreboardView(discord.ui.View):
         self.page += 1
         self.update_buttons()
         await interaction.response.edit_message(embed=self.create_embed(), view=self)
-
 
 
 # =========================================================
@@ -1061,82 +1070,66 @@ async def status(interaction: discord.Interaction):
     await interaction.response.defer()
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
+    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
     
-    # Base "Dashboard" look
-    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x2b2d31)
-    if bot.user.avatar:
-        embed.set_thumbnail(url=bot.user.avatar.url)
-
     if status_mode == "IDLE":
-        embed.color = 0x95a5a6 # Grey
-        embed.add_field(name="💤 System Status", value="**Idle**", inline=False)
-        embed.add_field(name="ℹ️ Next Step", value="Waiting for an admin to start a new suggestion phase.", inline=False)
+        embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
         
     elif status_mode == "SUGGESTIONS_OPEN":
-        embed.color = 0xf1c40f # Gold
         count = len(data.get('suggestions', []))
-        embed.add_field(name="💡 Phase", value="**Accepting Suggestions**", inline=True)
-        embed.add_field(name="📩 Total Received", value=f"**{count}**", inline=True)
-        embed.add_field(name="👉 Action", value="Use `/suggestcategory` to participate!", inline=False)
+        embed.description = (
+            f"💡 **Theme Suggestions Open**\n\n"
+            f"Total Suggestions: **{count}**\n"
+            f"Use `/suggestcategory`!"
+        )
         
     elif status_mode == "ADDING_ITEMS":
-        embed.color = 0x3498db # Blue
         count = len(data.get('items', []))
-        total = 32
-        
-        # Visual Progress Bar
-        filled = int((count / total) * 10)
-        bar = "🟦" * filled + "⬜" * (10 - filled)
-        percent = int((count / total) * 100)
-
-        embed.add_field(name="📦 Current Category", value=f"**{data.get('current_cat', 'Tournament').upper()}**", inline=False)
-        embed.add_field(name="📥 Submissions", value=f"**{count}/{total}** ({percent}%)", inline=False)
-        embed.add_field(name="Progress", value=f"`{bar}`", inline=False)
+        filled = int((count / 32) * 10)
+        bar = "🟩" * filled + "⬜" * (10 - filled)
+        embed.description = (
+            f"📦 **Submissions: {data.get('current_cat', 'Tournament').upper()}**\n\n"
+            f"Entries: {count}/32\n"
+            f"`{bar}`"
+        )
         
     elif status_mode == "MATCH_ACTIVE":
-        embed.color = 0xe74c3c # Red
         match = data.get('current_match')
         if match:
-            round_name = get_round_name(data) # Assumes you have this helper function
+            round_name = get_round_name(data)
             
             # Timer Logic
-            time_str = "No timer set"
+            time_info = ""
             start_str = match.get("start_time")
             if start_str:
-                try:
-                    start_dt = datetime.datetime.fromisoformat(start_str)
-                    end_dt = start_dt + datetime.timedelta(hours=24)
-                    unix_end = int(end_dt.timestamp())
-                    time_str = f"<t:{unix_end}:R>" # Dynamic Discord Timestamp
-                except: pass
+                start_dt = datetime.datetime.fromisoformat(start_str)
+                end_dt = start_dt + datetime.timedelta(hours=24)
+                unix_end = int(end_dt.timestamp())
+                time_info = f"\n⏳ **Match ends:** <t:{unix_end}:R>"
 
-            embed.add_field(name="⚔️ Current Battle", value=f"**{match['item_a']['name']}** vs **{match['item_b']['name']}**", inline=False)
-            embed.add_field(name="📍 Round", value=round_name, inline=True)
-            embed.add_field(name="📊 Votes Cast", value=str(len(match.get('votes', {}))), inline=True)
-            embed.add_field(name="⏳ Ends", value=time_str, inline=True)
-            
-            # Use Item A's image as the thumbnail for flair
-            if match['item_a'].get('image'):
-                embed.set_thumbnail(url=match['item_a']['image'])
+            embed.description = (
+                f"⚔️ **Current Stage:** {round_name}\n\n"
+                f"**Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
+                f"📊 **Votes cast:** {len(match.get('votes', {}))}"
+                f"{time_info}"
+            )
         else:
             embed.description = "🔄 **Processing...** Next match loading."
 
     elif status_mode == "FINISHED":
-        embed.color = 0x2ecc71 # Green
         winner = data.get('final_winner')
         if winner:
-            embed.title = "🎉 TOURNAMENT COMPLETE"
-            embed.add_field(name="👑 Ultimate Champion", value=f"**{winner['name']}**", inline=False)
-            
-            if winner.get('image'):
-                embed.set_image(url=winner['image'])
-            
-            embed.set_footer(text="Admin: Use /endcup to reset.")
+            embed.description = (
+                f"🏁 **Tournament Complete!**\n\n"
+                f"The champion is **{winner['name']}**!\n\n"
+                "⚠️ **Admin:** Use `/endcup` to crown the winner and reset."
+            )
+            embed.set_thumbnail(url=winner['image'])
         else:
-            embed.description = "Tournament finished."
+            embed.description = "Tournament finished, but no winner was recorded."
 
+    embed.set_footer(text="The Landing Strip World Cup System")
     await interaction.followup.send(embed=embed)
-
 
 
 # =========================================================
