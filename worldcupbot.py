@@ -301,7 +301,7 @@ class MatchView(ui.View):
         
         embed = discord.Embed(
             title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
         embed.set_image(url=item['image'])
