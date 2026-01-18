@@ -525,7 +525,7 @@ class ScoreboardView(ui.View):
             else:
                 for m in chunk:
                     description_text += (
-                        f"<:shield:1462485732793909271> **{m['name']}**\n"
+                        f"<:crossedswords:1462484325151801487> **{m['name']}**\n"
                         f"<:fireee:1462487668255359232> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
                         )
                         
@@ -572,15 +572,15 @@ class ScoreboardView(ui.View):
             self.page += 1
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success, custom_id="sb_nav_toggle")
+    @ui.button(label="Survivors", style=discord.ButtonStyle.success, custom_id="sb_nav_toggle")
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         if self.view_mode == "HISTORY":
             self.view_mode = "SURVIVORS"
-            button.label = "📜 View History"
+            button.label = "History"
         else:
             self.view_mode = "HISTORY"
-            button.label = "🟢 Survivors"
+            button.label = "Survivors"
             
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
@@ -741,7 +741,7 @@ class WC_Bot(discord.Client):
             )
             win_embed.add_field(name="Final Score", value=f"✅ **{winning_score}** —  ❌ **{losing_score}**", inline=False)
             win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
-            win_embed.add_field(name="Submitted by", value=f"<:subs:1462492738200145992> {winner.get('user', 'Unknown')}", inline=True)
+            win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
             
             # Show the winning entry's image in the announcement
             if winner.get('image'):
