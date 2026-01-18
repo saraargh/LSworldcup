@@ -332,10 +332,10 @@ class MatchView(discord.ui.View):
         embed.add_field(name="\u200b", value=standings_text, inline=False)
 
         # 6. Optional Clean Footer
-        embed.set_footer(text="The Landing Strip World Cup System", icon_url=None)
+        embed.set_footer(text="The Landing Strip World Cup System 🏁✨", icon_url=None)
         # Note: Footer text supports emojis, but the icon_url must be a link. 
         # Adding the emoji to the text string as you did:
-        embed.set_footer(text="The Landing Strip World Cup System <:worldcup:1462292819526815877>")
+        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
         
         return embed
 
@@ -1191,7 +1191,7 @@ async def status(interaction: discord.Interaction):
         else:
             embed.description = "Tournament finished, but no winner was recorded."
 
-    embed.set_footer(text="The Landing Strip World Cup System")
+    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
     await interaction.followup.send(embed=embed)
 
 
