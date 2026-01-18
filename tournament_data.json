@@ -240,6 +240,12 @@
             "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Eternal Sunshine of The Spotless Mind",
+            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -426,6 +432,14 @@
             "loser": "Love Actually",
             "loser_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "Eternal Sunshine of The Spotless Mind vs Cruel Intentions",
+            "winner": "Eternal Sunshine of The Spotless Mind",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Cruel Intentions",
+            "loser_user": "<@1238834298338152498>",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -445,24 +459,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Eternal Sunshine of The Spotless Mind",
-            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Cruel Intentions",
-            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462271062044836108
-    },
+    "current_match": null,
     "final_winner": null
 }
