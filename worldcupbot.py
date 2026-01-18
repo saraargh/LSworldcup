@@ -410,22 +410,24 @@ class ScoreboardView(ui.View):
             embed.title = "📊 Match History"
             
             description_text = "*Newest results at the top*\n\n"
-            for m in chunk:
-                description_text += (
-                    f"🔹 **{m['name']}**\n"
-                    f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
-                    f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
-                    f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
-                )
+            if not self.matches:
+                description_text += "No matches have finished yet."
+            else:
+                for m in chunk:
+                    description_text += (
+                        f"🔹 **{m['name']}**\n"
+                        f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
+                        f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
+                        f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
+                    )
             embed.description = description_text
-            total_pages = (len(self.matches) - 1) // 5 + 1
+            total_pages = (len(self.matches) - 1) // 5 + 1 if self.matches else 1
             embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
 
         else:
-            # --- SURVIVOR & GRAVEYARD MODE ---
-            embed.title = "🟢 Remaining Survivors & 💀 Graveyard"
+            # --- SURVIVOR ONLY MODE ---
+            embed.title = "🟢 Remaining Survivors"
             
-            # 1. Collect Survivors
             survivors = []
             curr = data.get('current_match')
             if curr:
@@ -436,33 +438,24 @@ class ScoreboardView(ui.View):
             for item in data.get('winners_pool', []):
                 survivors.append(f"{item['name']} ({item['user']})")
 
-            # 2. Collect Recently Eliminated (Last 5 losers)
-            graveyard = []
-            for m in self.matches[:5]:
-                graveyard.append(m.get('loser_name', 'Unknown'))
-
             survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
-            graveyard_list = "\n".join([f"💀 {g}" for g in graveyard]) if graveyard else "No one eliminated yet."
 
             embed.description = (
-                f"**{len(survivors)} entries still in the running:**\n"
-                f"{survivor_list}\n\n"
-                f"**Recently Eliminated:**\n"
-                f"{graveyard_list}"
+                f"**{len(survivors)} entries still in the running:**\n\n"
+                f"{survivor_list}"
             )
             embed.set_footer(text="The path to the Grand Final")
 
         return embed
 
-    @ui.button(label="⬅️ Newer", style=discord.ButtonStyle.gray)
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="sb_nav_newer")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
-        # We use response.edit_message because it's instantaneous and doesn't need IDs
         data, _ = load_data()
         self.view_mode = "HISTORY"
         self.page = max(0, self.page - 1)
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @ui.button(label="Older ➡️", style=discord.ButtonStyle.gray)
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="sb_nav_older")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.view_mode = "HISTORY"
@@ -470,10 +463,9 @@ class ScoreboardView(ui.View):
             self.page += 1
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success)
+    @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success, custom_id="sb_nav_toggle")
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
-        # Toggle logic
         if self.view_mode == "HISTORY":
             self.view_mode = "SURVIVORS"
             button.label = "📜 View History"
@@ -482,6 +474,7 @@ class ScoreboardView(ui.View):
             button.label = "🟢 Survivors"
             
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
+
 
 # =========================================================
 # BOT CORE CLASS
