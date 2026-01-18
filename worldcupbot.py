@@ -410,8 +410,20 @@ class EndConfirmView(ui.View):
         self.data = data
         self.sha = sha
         self.is_early = is_early
+        
+        # Check if there is a winner to determine button style
+        winner = self.data.get("final_winner")
+        
+        if winner:
+            # Tournament finished naturally
+            self.confirm_end.style = discord.ButtonStyle.success # Green
+            self.confirm_end.label = f"🏆 CROWN {winner['name'].upper()}"
+        else:
+            # Tournament is being ended manually/early
+            self.confirm_end.style = discord.ButtonStyle.danger # Red
+            self.confirm_end.label = "⚠️ CONFIRM: END TOURNAMENT EARLY"
 
-    @ui.button(label="⚠️ CONFIRM: END TOURNAMENT NOW", style=discord.ButtonStyle.danger)
+    @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
         winner = self.data.get("final_winner")
         
@@ -423,6 +435,8 @@ class EndConfirmView(ui.View):
                 color=0xf1c40f
             )
             embed.set_image(url=winner['image'])
+            
+            # Save to leaderboard
             self.data.setdefault('leaderboard', []).append({
                 "item": winner['name'], 
                 "cat": self.data['current_cat'], 
@@ -443,9 +457,14 @@ class EndConfirmView(ui.View):
 
         # 3. Reset Data
         self.data.update({
-            "status": "IDLE", "suggestions": [], 
-            "bracket": [], "winners_pool": [], "finished_matches": [],
-            "current_match": None, "current_cat": None, "final_winner": None
+            "status": "IDLE", 
+            "suggestions": [], 
+            "bracket": [], 
+            "winners_pool": [], 
+            "finished_matches": [],
+            "current_match": None, 
+            "current_cat": None, 
+            "final_winner": None
         })
         
         save_data(self.data, self.sha)
