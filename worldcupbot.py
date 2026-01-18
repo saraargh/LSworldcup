@@ -281,107 +281,59 @@ class ItemGallery(ui.View):
         await interaction.response.edit_message(embed=self.create_content())
 
 
-class MatchView(discord.ui.View):
-    def __init__(self, item_a=None, item_b=None, current_item="A"):
-        super().__init__(timeout=None) # Persistent: Buttons never timeout
+class MatchView(ui.View):
+    def __init__(self, item_a, item_b, round_name=None, match_num=None):
+        super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        self.current_item = current_item
-        self.round_name = round_name
-        self.match_num = match_num
-
-        # Persistent button labels
-        if item_a:
-            self.vote_a_button.label = f"Vote for {item_a['name']}"
-        if item_b:
-            self.vote_b_button.label = f"Vote for {item_b['name']}"
-
-    def create_embed(self, data):
-        # Reboot Recovery logic
-        if (self.item_a is None or self.item_b is None) and data.get('current_match'):
-            match = data['current_match']
-            self.item_a, self.item_b = match['item_a'], match['item_b']
-            self.vote_a_button.label = f"Vote for {self.item_a['name']}"
-            self.vote_b_button.label = f"Vote for {self.item_b['name']}"
-
-        votes = list(data['current_match'].get('votes', {}).values())
-        cA, cB = votes.count("A"), votes.count("B")
-        viewing = self.item_a if self.current_item == "A" else self.item_b
+        self.round_name = round_name or "Tournament"
+        self.match_num = match_num or 0
         
-        embed = discord.Embed(title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
-        
-        # 1. Currently Viewing
-        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
+        if item_a and item_b:
+            self.vote_a.label = f"Vote for {item_a['name']}"
+            self.vote_b.label = f"Vote for {item_b['name']}"
 
-        # 2. Description Section
-        desc_text = viewing.get('desc', 'No description provided.')
-        embed.add_field(name="\u200b", value=f"\n\n**Description:** {desc_text}\n", inline=False)
+    def create_embed(self, page):
+        item = self.item_a if page == 0 else self.item_b
+        color = 0xff4757 if page == 0 else 0x2e86de
         
-        # 3. Submitter Section
-        submitter = viewing.get('user', 'Unknown')
-        embed.add_field(name="\u200b", value=f"\n\n🗯️ **Submitted by: {submitter}**\n", inline=False)
+        item_desc = item.get('desc', 'No description provided.')
         
-        # 4. Image
-        if viewing.get('image'):
-            embed.set_image(url=viewing['image'])
-            
-        # 5. Standings (NOW ON NEW LINES BELOW THE IMAGE)
-        standings_text = (
-            f"\n\n🗳️ **Current Standings:**\n"
-            f"*{self.item_a['name']} ({cA})*\n"
-            f"*{self.item_b['name']} ({cB})*"
+        embed = discord.Embed(
+            title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
+            color=color
         )
-        embed.add_field(name="\u200b", value=standings_text, inline=False)
-
-        # 6. Optional Clean Footer
-        embed.set_footer(text="The Landing Strip World Cup System 🏁✨", icon_url=None)
-        # Note: Footer text supports emojis, but the icon_url must be a link. 
-        # Adding the emoji to the text string as you did:
-        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
-        
+        embed.set_image(url=item['image'])
+        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
-    # FIXED: Emojis moved from 'label' to 'emoji' parameter
-    @discord.ui.button(label="", emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.secondary, custom_id="view_a")
-    async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
-        data, _ = load_data()
-        self.current_item = "A"
-        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
+    async def view_a(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.edit_message(embed=self.create_embed(0))
 
-    @discord.ui.button(label="", emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.secondary, custom_id="view_b")
-    async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
-        data, _ = load_data()
-        self.current_item = "B"
-        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="v_b_nav")
+    async def view_b(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.edit_message(embed=self.create_embed(1))
 
-    @discord.ui.button(label="Vote A", style=discord.ButtonStyle.danger, custom_id="persistent_v_a")
-    async def vote_a_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await self.process_vote(interaction, "A")
-
-    @discord.ui.button(label="Vote B", style=discord.ButtonStyle.primary, custom_id="persistent_v_b")
-    async def vote_b_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await self.process_vote(interaction, "B")
-
-    async def process_vote(self, interaction, choice):
+    @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a_match", row=1)
+    async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
-        match = data.get('current_match')
-        
-        if self.item_a is None or self.item_b is None:
-            self.item_a = match['item_a']
-            self.item_b = match['item_b']
-
-        user_id = str(interaction.user.id)
-        match.setdefault('votes', {})
-        
-        if match['votes'].get(user_id) == choice:
-            return await interaction.response.send_message("⚠️ Already voted for this!", ephemeral=True)
-
-        match['votes'][user_id] = choice
+        match = data.get("current_match")
+        match.setdefault("votes", {})[str(interaction.user.id)] = "A"
         save_data(data, sha)
-        
-        winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
-        await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
-        await interaction.message.edit(embed=self.create_embed(data))
+        await interaction.followup.send(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
+
+    @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
+    async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer(ephemeral=True)
+        data, sha = load_data()
+        match = data.get("current_match")
+        match.setdefault("votes", {})[str(interaction.user.id)] = "B"
+        save_data(data, sha)
+        await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+
 
 
 
