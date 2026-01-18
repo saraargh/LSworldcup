@@ -10,8 +10,7 @@ import base64
 import requests
 import asyncio
 import os
-import discord
-from bot_utils import load_data, save_data  # Ensure these are your utility functions
+
 
 
 # =========================================================
