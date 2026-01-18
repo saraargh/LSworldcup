@@ -289,16 +289,12 @@ class MatchView(ui.View):
             self.vote_b.label = f"Vote for {self.item_b['name']}"
 
     def create_embed(self, page):
-        if self.item_a is None:
+        if not self.item_a or not self.item_b:
             return discord.Embed(title="Error", description="Match data not found.")
 
-        # Try to get live votes from data
         data, _ = load_data()
         match = data.get("current_match")
-        
-        # SAFETY FIX: If match is None (during start), use an empty dict for votes
         votes = match.get("votes", {}) if match else {}
-        
         count_a = list(votes.values()).count("A")
         count_b = list(votes.values()).count("B")
 
@@ -316,53 +312,67 @@ class MatchView(ui.View):
             inline=False
         )
         embed.set_image(url=item['image'])
+        embed.set_footer(text=f"Total Votes Cast: {len(votes)}")
         return embed
 
-
-    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(0))
 
-    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="v_b_nav")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="v_b_nav", row=0)
     async def view_b(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(1))
 
+    # MOVED BUTTON: Now row=0 to appear after the arrows
+    @ui.button(label="Show Voter List", style=discord.ButtonStyle.secondary, custom_id="view_voters", row=0)
+    async def view_voters(self, interaction: discord.Interaction, button: ui.Button):
+        data, _ = load_data()
+        match = data.get("current_match", {})
+        votes = match.get("votes", {})
+        
+        if not votes:
+            return await interaction.response.send_message("No votes have been cast yet!", ephemeral=True)
+        
+        list_a = [f"<@{uid}>" for uid, choice in votes.items() if choice == "A"]
+        list_b = [f"<@{uid}>" for uid, choice in votes.items() if choice == "B"]
+        
+        embed = discord.Embed(title="\n\n📊 Current Voter Breakdown", color=0x95a5a6)
+        embed.add_field(name=f"Votes for {self.item_a['name']}", value="\n".join(list_a) if list_a else "None", inline=True)
+        embed.add_field(name=f"Votes for {self.item_b['name']}", value="\n".join(list_b) if list_b else "None", inline=True)
+        
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
     @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a_match", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer(ephemeral=True)
+        await interaction.response.send_message(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: 
-            return await interaction.followup.send("❌ Match not active.", ephemeral=True)
-        
-        # 1. Save the vote
+        if not match: return
         match.setdefault("votes", {})[str(interaction.user.id)] = "A"
         save_data(data, sha)
         
-        # 2. EDIT THE ORIGINAL MESSAGE to show new standings
-        # We use create_embed(0) to keep the view on Item A
-        await interaction.edit_original_response(content=f"✅ Voted for **{self.item_a['name']}**!") # Ephemeral feedback
-        
-        # This updates the public match message everyone sees
-        await interaction.message.edit(embed=self.create_embed(0))
+        current_page = 0
+        if interaction.message.embeds:
+            if self.item_b['name'] in interaction.message.embeds[0].description:
+                current_page = 1
+        await interaction.message.edit(embed=self.create_embed(current_page))
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer(ephemeral=True)
+        await interaction.response.send_message(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: 
-            return await interaction.followup.send("❌ Match not active.", ephemeral=True)
-        
-        # 1. Save the vote
+        if not match: return
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         
-        # 2. EDIT THE ORIGINAL MESSAGE
-        await interaction.edit_original_response(content=f"✅ Voted for **{self.item_b['name']}**!")
-        
-        # Update the public match message to show the new vote count
-        await interaction.message.edit(embed=self.create_embed(1))
+        current_page = 1
+        if interaction.message.embeds:
+            if self.item_a['name'] in interaction.message.embeds[0].description:
+                current_page = 0
+        await interaction.message.edit(embed=self.create_embed(current_page))
+
+
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
