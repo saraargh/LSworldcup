@@ -306,7 +306,7 @@ class MatchView(discord.ui.View):
         # 1. Currently Viewing (Top)
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # 2. Description Section (With spacing)
+        # 2. Description Section (Left exactly as you have it)
         desc_text = viewing.get('desc', 'No description provided.')
         embed.add_field(
             name="\u200b", 
@@ -314,7 +314,7 @@ class MatchView(discord.ui.View):
             inline=False
         )
         
-        # 3. Submitter Section (Original style)
+        # 3. Submitter Section (Left exactly as you have it)
         submitter = viewing.get('user', 'Unknown')
         embed.add_field(
             name="\u200b",
@@ -354,6 +354,12 @@ class MatchView(discord.ui.View):
     async def process_vote(self, interaction, choice):
         data, sha = load_data()
         match = data.get('current_match')
+        
+        # FIXED: This ensures variables aren't empty after a bot reboot
+        if self.item_a is None or self.item_b is None:
+            self.item_a = match['item_a']
+            self.item_b = match['item_b']
+
         user_id = str(interaction.user.id)
         match.setdefault('votes', {})
         
@@ -487,12 +493,18 @@ class ScoreboardView(discord.ui.View):
 # BOT CORE CLASS
 # =========================================================
 
+import discord
+from discord import app_commands
+import asyncio
+from bot_utils import load_data, save_data  # Ensure these are your utility functions
+
 class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
+        # Registering the view here fixes the "Interaction Failed" after reboots
         self.add_view(MatchView(None, None))
         await self.tree.sync()
         print(f"✅ Synced slash commands for {self.user}")
@@ -502,12 +514,13 @@ class WC_Bot(discord.Client):
 
     # === TOURNAMENT LOGIC ===
     def calculate_stats(self, data, winner, runner_up):
-        # 1. 2nd Place is the current loser
+        history = data.get('finished_matches', [])
+        
+        # 1. 2nd Place
         second = runner_up['name']
         second_user = runner_up.get('user', 'Unknown')
 
-        # 2. 3rd Place (Loser of the previous match)
-        history = data.get('finished_matches', [])
+        # 2. 3rd Place (Loser of the semi-final/previous match)
         third = "Unknown"
         third_user = "Unknown"
         if len(history) >= 1:
@@ -570,6 +583,7 @@ class WC_Bot(discord.Client):
         data['current_match'] = None 
         save_data(data, sha)
 
+        # Unpin old match
         try:
             old_msg = await channel.fetch_message(old_msg_id)
             await old_msg.unpin()
@@ -582,19 +596,21 @@ class WC_Bot(discord.Client):
             stats = self.calculate_stats(data, winner, loser)
             
             final_embed = discord.Embed(title="👑 CHAMPION CROWNED 👑", color=0xf1c40f)
-            final_embed.description = f"# 🏆 {winner['name']}\n**Submitted by:** {winner.get('user', 'Unknown')}"
+            # Matches the "submitted by: @user" style
+            final_embed.description = f"# 🏆 {winner['name']}\n**Submitted by:** @{winner.get('user', 'Unknown')}"
             
             if winner.get('image'):
                 final_embed.set_image(url=winner['image'])
 
-            # Added Special Mentions
+            # Special Mentions in your preferred clean style
             mentions = (
-                f"🥈 **Second Place:** {stats['second']} ({stats['second_user']})\n"
-                f"🥉 **Third Place:** {stats['third']} ({stats['third_user']})\n\n"
-                f"🔥 **Most Voted:** {stats['most_voted']} ({stats['most_votes']} votes)\n"
-                f"❄️ **Least Voted:** {stats['least_voted']} ({stats['least_votes']} votes)"
+                f"🥈 **Second Place:** {stats['second']} (@{stats['second_user']})\n"
+                f"🥉 **Third Place:** {stats['third']} (@{stats['third_user']})\n\n"
+                f"🔥 **Most Voted Overall:** {stats['most_voted']} ({stats['most_votes']} votes)\n"
+                f"❄️ **Least Voted Overall:** {stats['least_voted']} ({stats['least_votes']} votes)"
             )
             final_embed.add_field(name="🏅 Special Mentions", value=mentions, inline=False)
+            final_embed.set_footer(text="The Landing Strip World Cup System")
             
             await channel.send(embed=final_embed)
             
@@ -608,46 +624,63 @@ class WC_Bot(discord.Client):
         win_embed = discord.Embed(title="🏆 MATCH CONCLUDED", color=0x2ecc71)
         win_embed.description = f"### {winner['name']} has DEFEATED {loser['name']}!"
         win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
-        win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
+        win_embed.add_field(name="Advancing", value=f"⭐ {winner['name']}", inline=True)
         
         if winner.get('image'):
             win_embed.set_thumbnail(url=winner['image'])
         
         await channel.send(embed=win_embed)
 
+        # Small delay before next match
         await asyncio.sleep(2)
         await self.post_next(channel)
 
     async def post_next(self, channel):
+        # Fresh data load
         data, sha = load_data()
 
+        # If bracket is empty, move winners_pool into bracket for next round
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
                 data['bracket'] = list(data.get('winners_pool', []))
                 data['winners_pool'] = []
                 save_data(data, sha)
                 await channel.send("🛡️ **Round Complete!** Advancing winners...")
+                # Re-load after saving bracket shift
                 data, sha = load_data()
-            else: return
+            else: 
+                return # Not enough items to continue yet
 
+        # Take next two from bracket
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
 
+        # Initialize current_match
         data['current_match'] = {
-            "item_a": comp_a, "item_b": comp_b, 
-            "votes": {}, "channel_id": channel.id
+            "item_a": comp_a, 
+            "item_b": comp_b, 
+            "votes": {}, 
+            "channel_id": channel.id
         }
         data['status'] = "MATCH_ACTIVE"
 
+        # Create MatchView (Persistence handled by custom_ids inside the class)
         view = MatchView(comp_a, comp_b, current_item="A") 
         embed = view.create_embed(data)
         
-        msg = await channel.send(content="⚔️ @everyone** THE NEXT MATCH UP IS READY, CAST YOUR VOTES BELOW!!**", embed=embed, view=view)
+        msg = await channel.send(
+            content="⚔️ @everyone **THE NEXT MATCH UP IS READY, CAST YOUR VOTES BELOW!!**", 
+            embed=embed, 
+            view=view
+        )
         
         data['current_match']['message_id'] = msg.id
         save_data(data, sha)
-        try: await msg.pin()
-        except: pass
+        
+        try: 
+            await msg.pin()
+        except: 
+            pass
 
 
 
