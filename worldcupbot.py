@@ -755,19 +755,48 @@ async def startworldcup(interaction: discord.Interaction):
     items_to_start = list(data['items'])
     random.shuffle(items_to_start)
     
-    # 2. Set the data so post_next can do its job
-    data['bracket'] = items_to_start  # 32 items in a flat list
+    # 2. Pop the first two items immediately for the first match
+    comp_a = items_to_start.pop(0)
+    comp_b = items_to_start.pop(0)
+    
+    # 3. Setup match details
+    round_name = "Round of 32"
+    match_num = 1
+    
+    # 4. Create the Match View
+    view = MatchView(comp_a, comp_b, round_name, match_num)
+    
+    # 5. Send the Start Announcement AND the first match
+    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    
+    msg = await interaction.channel.send(
+        content=f"⚔️ **{round_name}** is now LIVE!", 
+        embed=view.create_embed(0), 
+        view=view
+    )
+
+    # 6. Save EVERYTHING to data
+    data['bracket'] = items_to_start  # The remaining 30 items
     data['finished_matches'] = []
     data['winners_pool'] = []
     data['status'] = "MATCH_ACTIVE"
-    data['current_match'] = None # post_next will fill this in a second
+    data['current_match'] = {
+        "item_a": comp_a, 
+        "item_b": comp_b, 
+        "votes": {}, 
+        "message_id": msg.id, 
+        "channel_id": interaction.channel.id,
+        "round_name": round_name,
+        "match_num": match_num
+    }
     
     save_data(data, sha)
     
-    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
-    
-    # 3. Trigger post_next - it will pop the first 2 items from the bracket
-    await bot.post_next(interaction.channel)
+    try:
+        await msg.pin()
+    except:
+        pass
+
 
 
 
