@@ -309,15 +309,15 @@ class MatchView(discord.ui.View):
         embed = discord.Embed(title=f"⚔️ {round_name} - {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
         # 1. Currently Viewing
-        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}\n", inline=False)
+        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
         # 2. Description Section
         desc_text = viewing.get('desc', 'No description provided.')
-        embed.add_field(name="\u200b", value=f"**Description:** {desc_text}\n", inline=False)
+        embed.add_field(name="\u200b", value=f"\n\n**Description:** {desc_text}\n", inline=False)
         
         # 3. Submitter Section
         submitter = viewing.get('user', 'Unknown')
-        embed.add_field(name="\u200b", value=f"🗯️ **Submitted by: {submitter}**\n", inline=False)
+        embed.add_field(name="\u200b", value=f"\n\n🗯️ **Submitted by: {submitter}**\n", inline=False)
         
         # 4. Image
         if viewing.get('image'):
@@ -325,7 +325,7 @@ class MatchView(discord.ui.View):
             
         # 5. Standings (NOW ON NEW LINES BELOW THE IMAGE)
         standings_text = (
-            f"🗳️ **Current Standings:**\n"
+            f"\n\n🗳️ **Current Standings:**\n"
             f"*{self.item_a['name']} ({cA})*\n"
             f"*{self.item_b['name']} ({cB})*"
         )
