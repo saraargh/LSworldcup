@@ -736,7 +736,7 @@ class WC_Bot(discord.Client):
             # 7. THE WINNER EMBED (Restored Hype Version)
             win_embed = discord.Embed(
                 title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
-                description=f"### {winner['name']} has DEFEATED {loser['name']}!",
+                description=f"### {winner['name']} has DEFEATED {loser['name']}! <:beluga:1462299704107991172>",
                 color=0x2ecc71 # Victory Green
             )
             win_embed.add_field(name="Final Score", value=f"✅ **{winning_score}** —  ❌ **{losing_score}**", inline=False)
