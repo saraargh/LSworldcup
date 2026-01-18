@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Bridget Jones Diary",
-            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "13 Going on 30",
             "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
@@ -415,6 +403,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Confessions of a Shopaholic",
+            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Bridget Jones Diary",
+            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462283239539347581
+    },
     "final_winner": null
 }
