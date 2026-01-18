@@ -656,7 +656,7 @@ class WC_Bot(discord.Client):
         data['status'] = "MATCH_ACTIVE"
 
         # Create MatchView (Persistence handled by custom_ids inside the class)
-        view = MatchView(comp_a, comp_b, current_item="A") 
+        view = MatchView(comp_a, comp_b, round_name, match_num) 
         embed = view.create_embed(data)
         
         msg = await channel.send(
