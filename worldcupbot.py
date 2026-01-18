@@ -318,7 +318,7 @@ class MatchView(ui.View):
 
         # 3. Added vote tally field
         embed.add_field(
-            name="\n\n📊 Current Standings", 
+            name="📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
@@ -326,6 +326,7 @@ class MatchView(ui.View):
         embed.set_image(url=item['image'])
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
+
 
 
 
