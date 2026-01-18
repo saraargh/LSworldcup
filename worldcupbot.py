@@ -289,31 +289,47 @@ class MatchView(ui.View):
         self.round_name = round_name or "Tournament"
         self.match_num = match_num or 0
         
-        # Only set labels if items are actually provided (prevents setup_hook crash)
+        # We define these as 0 by default to prevent "not defined" errors
+        self.count_a = 0
+        self.count_b = 0
+
         if item_a and item_b:
             self.vote_a.label = f"Vote for {item_a['name']}"
             self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
+        # Stop the crash if everything is None
+        if not self.item_a:
+            return discord.Embed(title="No Active Match", description="Use /nextmatch to start.")
+
+        # Load real data
+        data, _ = load_data()
+        match = data.get("current_match", {})
+        votes = match.get("votes", {})
+        
+        # Calculate the counts right here before using them
+        self.count_a = list(votes.values()).count("A")
+        self.count_b = list(votes.values()).count("B")
+
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
-        
         item_desc = item.get('desc', 'No description provided.')
         
         embed = discord.Embed(
             title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
         
+        # Use the variables we just calculated
         embed.add_field(
-            name="\n\n📊 Current Standings", 
-            value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
+            name="📊 Current Standings", 
+            value=f"**{self.item_a['name']}:** {self.count_a} votes\n**{self.item_b['name']}:** {self.count_b} votes", 
             inline=False
         )
         
         embed.set_image(url=item['image'])
-        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
@@ -341,6 +357,7 @@ class MatchView(ui.View):
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+
 
 
 
@@ -493,30 +510,28 @@ class WC_Bot(discord.Client):
         self.processing_lock = asyncio.Lock()
 
     async def setup_hook(self):
-        # 1. Pull the actual saved data from GitHub on boot
         data, _ = load_data()
         match = data.get("current_match")
 
         if match and match.get('item_a') and match.get('item_b'):
-            # 2. Register the view with the REAL data so it's not None
+            # Load the real match so it's ready on boot
             self.add_view(MatchView(
                 match['item_a'], 
                 match['item_b'], 
                 match.get('round_name'), 
                 match.get('match_num')
             ))
-            print("✅ Restored active match from storage.")
         else:
-            # 3. Only use None if there is literally no match in the JSON
+            # Fallback for when no match is active
             self.add_view(MatchView(None, None, None, None))
             
-        # Register other views
         self.add_view(ScoreboardView())
         self.add_view(ItemGallery())
         self.add_view(HistoryView())
         
         await self.tree.sync()
-        print(f"✅ Synced slash commands for {self.user}")
+        print(f"✅ Synced and loaded current match state.")
+
 
 
     # --- THE ENGINE: POST NEXT MATCH ---
