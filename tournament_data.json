@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "13 Going on 30",
-            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "just like heaven",
-            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "He\u2019s just not that into you",
             "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
@@ -419,6 +407,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "13 Going on 30",
+            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "just like heaven",
+            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462302415335194687
+    },
     "final_winner": null
 }
