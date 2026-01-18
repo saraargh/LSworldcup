@@ -449,54 +449,64 @@ class EndConfirmView(ui.View):
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament reset and results archived.**", view=None)
 
-class ScoreboardView(discord.ui.View):
-    def __init__(self, matches, page=0):
-        super().__init__(timeout=60)
-        self.matches = matches
-        self.page = page
-        self.items_per_page = 5
-        self.update_buttons()
+class ScoreboardView(ui.View):
+    def __init__(self, matches=None):
+        super().__init__(timeout=None)
+        self.matches = list(reversed(matches or []))
+        self.page = 0
+        self.view_mode = "HISTORY" 
 
-    def update_buttons(self):
-        if not self.matches:
-            self.prev_button.disabled = True
-            self.next_button.disabled = True
-            return
-
-        self.prev_button.disabled = (self.page == 0)
-        max_page = (len(self.matches) - 1) // self.items_per_page
-        self.next_button.disabled = (self.page >= max_page)
-
-    def create_embed(self):
-        embed = discord.Embed(title="📜 Match History", color=0xf1c40f)
+    def create_embed(self, data):
+        embed = discord.Embed(color=0x3498db)
         
-        if not self.matches:
-            embed.description = "No matches have finished yet!"
-            return embed
-
-        # Calculate slice for pagination
-        start = self.page * self.items_per_page
-        end = start + self.items_per_page
-        current_batch = self.matches[start:end]
-        
-        for m in current_batch:
-            # Main match details
-            match_name = m.get('name', 'Unknown Match')
-            winner = m.get('winner', 'N/A')
-            score = m.get('score', '0-0')
+        if self.view_mode == "HISTORY":
+            start = self.page * 5
+            chunk = self.matches[start:start+5]
+            embed.title = "📊 Match History"
             
-            # Use a field for the match info
-            embed.add_field(
-                name=f"🔹 {match_name}",
-                value=f"<:worldcup:1462292819526815877> **Winner:** {winner} ({score})",
-                inline=False
+            description_text = "*Newest results at the top*\n\n"
+            for m in chunk:
+                description_text += (
+                    f"🔹 **{m['name']}**\n"
+                    f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
+                    f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
+                    f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
+                )
+            embed.description = description_text
+            total_pages = (len(self.matches) - 1) // 5 + 1
+            embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
+
+        else:
+            # --- SURVIVOR & GRAVEYARD MODE ---
+            embed.title = "🟢 Remaining Survivors & 💀 Graveyard"
+            
+            # 1. Collect Survivors
+            survivors = []
+            curr = data.get('current_match')
+            if curr:
+                survivors.append(f"{curr['item_a']['name']} ({curr['item_a']['user']})")
+                survivors.append(f"{curr['item_b']['name']} ({curr['item_b']['user']})")
+            for item in data.get('bracket', []):
+                survivors.append(f"{item['name']} ({item['user']})")
+            for item in data.get('winners_pool', []):
+                survivors.append(f"{item['name']} ({item['user']})")
+
+            # 2. Collect Recently Eliminated (Last 5 losers)
+            graveyard = []
+            for m in self.matches[:5]:
+                graveyard.append(m.get('loser_name', 'Unknown'))
+
+            survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
+            graveyard_list = "\n".join([f"💀 {g}" for g in graveyard]) if graveyard else "No one eliminated yet."
+
+            embed.description = (
+                f"**{len(survivors)} entries still in the running:**\n"
+                f"{survivor_list}\n\n"
+                f"**Recently Eliminated:**\n"
+                f"{graveyard_list}"
             )
-            
-            # Add an empty field to create a physical gap (prevents crowding)
-            embed.add_field(name="\u200b", value="───────────────────", inline=False)
-            
-        total_pages = ((len(self.matches) - 1) // self.items_per_page) + 1
-        embed.set_footer(text=f"Page {self.page + 1} of {total_pages} | The Landing Strip World Cup")
+            embed.set_footer(text="The path to the Grand Final")
+
         return embed
 
     @ui.button(label="Newer", emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="sb_newer")
@@ -514,6 +524,18 @@ class ScoreboardView(discord.ui.View):
             self.page += 1
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
+    @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success, custom_id="sb_toggle_surv")
+    async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
+        data, _ = load_data()
+        # Toggle logic
+        if self.view_mode == "HISTORY":
+            self.view_mode = "SURVIVORS"
+            button.label = "📜 View History"
+        else:
+            self.view_mode = "HISTORY"
+            button.label = "🟢 Survivors"
+            
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
 # =========================================================
 # BOT CORE CLASS
