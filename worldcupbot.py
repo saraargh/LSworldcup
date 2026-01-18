@@ -391,22 +391,50 @@ class EndConfirmView(ui.View):
         
         # 1. Announce Winner
         if winner:
+            # Post @everyone ping strictly ABOVE the embed
+            await interaction.channel.send(f"@everyone 🏆 **THE {self.data['current_cat'].upper()} WORLD CUP IS COMPLETE!**")
+            
             embed = discord.Embed(
                 title="🎊 CHAMPION CROWNED 🎊", 
                 description=f"# 👑 {winner['name'].upper()} 👑\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
                 color=0xf1c40f
             )
             embed.set_image(url=winner['image'])
+
+            # --- DATA RETRIEVAL ---
+            # Expecting dicts like: {"name": "Item", "user": "Username", "votes": 10}
+            second = self.data.get("second_place", {"name": "N/A", "user": "N/A"})
+            third = self.data.get("third_place", {"name": "N/A", "user": "N/A"})
+            
+            # Expecting dicts like: {"name": "Item", "count": 25}
+            most = self.data.get("most_voted_stats", {"name": "N/A", "count": 0})
+            least = self.data.get("least_voted_stats", {"name": "N/A", "count": 0})
+            
+            # --- SPECIAL MENTIONS & STATS ---
+            embed.add_field(
+                name="✨ SPECIAL MENTIONS ✨", 
+                value=(
+                    f"🥈 **2nd Place:** {second['name']} (Submitted by: {second['user']})\n"
+                    f"🥉 **3rd Place:** {third['name']} (Submitted by: {third['user']})\n\n"
+                    f"🔥 **Most Voted For:** {most['name']} ({most['count']} total votes)\n"
+                    f"💀 **Least Voted For:** {least['name']} ({least['count']} total votes)"
+                ),
+                inline=False
+            )
+
+            # Save to history
             self.data.setdefault('leaderboard', []).append({
                 "item": winner['name'], 
                 "cat": self.data['current_cat'], 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone 🏆 **THE WORLD CUP IS COMPLETE!**", embed=embed)
+            
+            await interaction.channel.send(embed=embed)
         else:
-            await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
+            # Early End Message (Public)
+            await interaction.channel.send("🛑 **TOURNAMENT ENDED EARLY. Match statistics have been reset.**")
         
-        # 2. Sweep/Unpin all bot messages in the channel
+        # 2. Cleanup: Unpin bot messages
         try:
             pins = await interaction.channel.pins()
             for pin in pins:
@@ -415,7 +443,7 @@ class EndConfirmView(ui.View):
         except:
             pass
 
-        # 3. Reset Data (FIXED: REMOVED "items": [] FROM WIPE)
+        # 3. Reset Data (Preserving 'items')
         self.data.update({
             "status": "IDLE", 
             "suggestions": [], 
@@ -424,11 +452,15 @@ class EndConfirmView(ui.View):
             "finished_matches": [],
             "current_match": None, 
             "current_cat": None, 
-            "final_winner": None
+            "final_winner": None,
+            "second_place": None,
+            "third_place": None,
+            "most_voted_stats": None,
+            "least_voted_stats": None
         })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="✅ **Tournament state cleared and pins removed. Items have been preserved.**", view=None)
+        await interaction.response.edit_message(content="✅ **Tournament reset and results archived with full stats.**", view=None)
 
 class ScoreboardView(discord.ui.View):
     def __init__(self, matches, page=0):
@@ -808,10 +840,14 @@ async def nextmatch(interaction: discord.Interaction):
     try:
         data, sha = load_data()
         
-        # Check if tournament is finished
-        if data.get('status') == "FINISHED":
-            await interaction.followup.send("🏁 Tournament is over. Use /endcup.")
-            return
+# Replace your current FINISHED check with this
+if data.get('winner') or data.get('status') == "FINISHED":
+    await interaction.followup.send(
+        "🏆 **Winner Detected!** You need to run `/endcup` to post the winning embed and reset the system.",
+        ephemeral=True
+    )
+    return
+
 
         if data.get('current_match'):
             # This finishes the current match
