@@ -573,27 +573,19 @@ class WC_Bot(discord.Client):
     async def post_next(self, channel):
         data, sha = load_data()
         
-        # 1. Bracket logic - Advancement Detection
+        # 1. Bracket logic (Keep this the same)
         if not data.get('bracket') or len(data['bracket']) < 2:
-            # If the bracket is empty but we have survivors in the pool
             if len(data.get('winners_pool', [])) >= 2:
                 old_round = get_round_name(data)
-                
-                # Move winners to the active bracket for the next round
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
-                
                 new_round = get_round_name(data)
                 await channel.send(f"🛡️ **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
-            
-            # If ONLY ONE person is left in the pool, they are the champion
             elif len(data.get('winners_pool', [])) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
                 data['current_match'] = None
                 save_data(data, sha)
-                
-                # Announcement of Final Finish
                 winner = data['final_winner']
                 embed = discord.Embed(
                     title="🏁 TOURNAMENT COMPLETE 🏁",
@@ -601,13 +593,12 @@ class WC_Bot(discord.Client):
                     color=0xf1c40f
                 )
                 return await channel.send(embed=embed)
-            
             else:
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 return await channel.send("🎊 **Tournament Complete!**")
 
-        # 2. Pop competitors (Requires 2 items in bracket list)
+        # 2. Pop competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
         
@@ -615,31 +606,41 @@ class WC_Bot(discord.Client):
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # 4. Create the View & Message
-        view = MatchView(comp_a, comp_b, round_name, match_num) 
-        msg = await channel.send(
-            content=f"⚔️ **{round_name}** is now LIVE!", 
-            embed=view.create_embed(0), 
-            view=view
-        )
+        # --- NEW LOGIC ORDER START ---
         
-        # 5. Save state
+        # 4. PRE-UPDATE DATA: Prepare the match data in memory first
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
             "votes": {}, 
-            "message_id": msg.id, 
+            "message_id": None, # Will update in a second
             "channel_id": channel.id,
             "round_name": round_name,
             "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
+
+        # 5. Create the View & Message
+        view = MatchView(comp_a, comp_b, round_name, match_num) 
+        
+        # WE PASS 'data' MANUALLY HERE to avoid the GitHub fetch lag
+        msg = await channel.send(
+            content=f"⚔️ **{round_name}** is now LIVE!", 
+            embed=view.create_embed(0, data_override=data), 
+            view=view
+        )
+        
+        # 6. Update message ID and save to GitHub
+        data['current_match']['message_id'] = msg.id
         save_data(data, sha)
+        
+        # --- NEW LOGIC ORDER END ---
         
         try:
             await msg.pin()
         except:
             pass
+
 
 
 
