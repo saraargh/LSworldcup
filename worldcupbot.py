@@ -306,15 +306,15 @@ class MatchView(discord.ui.View):
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
         # 1. Currently Viewing
-        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
+        embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}\n", inline=False)
 
         # 2. Description Section
         desc_text = viewing.get('desc', 'No description provided.')
-        embed.add_field(name="\u200b", value=f"Description: {desc_text}", inline=False)
+        embed.add_field(name="\u200b", value=f"**Description:** {desc_text}\n", inline=False)
         
         # 3. Submitter Section
         submitter = viewing.get('user', 'Unknown')
-        embed.add_field(name="\u200b", value=f"submitted by: {submitter}", inline=False)
+        embed.add_field(name="\u200b", value=f"🗯️**submitted by: {submitter}**\n", inline=False)
         
         # 4. Image
         if viewing.get('image'):
@@ -324,13 +324,13 @@ class MatchView(discord.ui.View):
         # Using a field here allows for the vertical list you want
         standings_text = (
             f"🗳️ **Current Standings:**\n"
-            f"{self.item_a['name']} ({cA})\n"
-            f"{self.item_b['name']} ({cB})"
+            f"*{self.item_a['name']} ({cA})*\n"
+            f"*{self.item_b['name']} ({cB})*"
         )
         embed.add_field(name="\u200b", value=standings_text, inline=False)
 
         # 6. Optional Clean Footer
-        embed.set_footer(text="The Landing Strip World Cup System")
+        embed.set_footer(text="The Landing Strip World Cup System 🏆")
         
         return embed
 
@@ -809,7 +809,7 @@ async def startworldcup(interaction: discord.Interaction):
     
     save_data(data, sha)
     
-    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    await interaction.followup.send(f"🏁🏁 @everyone **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!** - May the odds be ever in your favour")
     
     # We call post_next from the bot instance
     await bot.post_next(interaction.channel)
@@ -895,8 +895,8 @@ async def help(interaction: discord.Interaction):
         desc += "• `/nextmatch`: End the current poll and post the next.\n"
         desc += "• `/edititem`: Fix an entry's name/description.\n"
         desc += "• `/removeitem`: Delete an entry from the list.\n"
-        desc += "• `/endcup`: Finish the cup and save winner to history.\n"
-        desc += "• `/resetcup`: Emergency wipe of the current cup."
+        desc += "• `/endcup`: Finish the cup and save winner to history - Does not delete items\n"
+        desc += "• `/resetcup`: Emergency wipe of the current cup - Deletes items."
 
     embed = discord.Embed(title="🏆 World Cup Bot Help", description=desc, color=0x3498db)
     await interaction.response.send_message(embed=embed, ephemeral=True)
