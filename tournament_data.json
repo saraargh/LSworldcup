@@ -307,6 +307,12 @@
             "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "legally blonde",
+            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -393,6 +399,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "When harry met sally",
             "score": "1-0"
+        },
+        {
+            "name": "Angus, Thongs & Perfect Snogging vs legally blonde",
+            "winner": "legally blonde",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Angus, Thongs & Perfect Snogging",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -407,26 +420,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Angus, Thongs & Perfect Snogging",
-            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "legally blonde",
-            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462514440992854148,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 13
-    },
+    "current_match": null,
     "final_winner": null
 }
