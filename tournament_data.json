@@ -265,6 +265,12 @@
             "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Bend it like beckham",
+            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -400,6 +406,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "The Notebook",
             "score": "1-0"
+        },
+        {
+            "name": "Something Borrowed vs Bend it like beckham",
+            "winner": "Bend it like beckham",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Something Borrowed",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -414,26 +427,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Bend it like beckham",
-            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462523957461651696,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 16",
-        "match_num": 20
-    },
+    "current_match": null,
     "final_winner": null
 }
