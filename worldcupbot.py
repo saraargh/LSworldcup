@@ -332,24 +332,37 @@ class MatchView(ui.View):
         await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: return await interaction.followup.send("❌ Match not active.", ephemeral=True)
+        if not match: 
+            return await interaction.followup.send("❌ Match not active.", ephemeral=True)
         
+        # 1. Save the vote
         match.setdefault("votes", {})[str(interaction.user.id)] = "A"
         save_data(data, sha)
-        await interaction.followup.send(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
+        
+        # 2. EDIT THE ORIGINAL MESSAGE to show new standings
+        # We use create_embed(0) to keep the view on Item A
+        await interaction.edit_original_response(content=f"✅ Voted for **{self.item_a['name']}**!") # Ephemeral feedback
+        
+        # This updates the public match message everyone sees
+        await interaction.message.edit(embed=self.create_embed(0))
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: return await interaction.followup.send("❌ Match not active.", ephemeral=True)
+        if not match: 
+            return await interaction.followup.send("❌ Match not active.", ephemeral=True)
         
+        # 1. Save the vote
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
-        await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
-
-
+        
+        # 2. EDIT THE ORIGINAL MESSAGE
+        await interaction.edit_original_response(content=f"✅ Voted for **{self.item_b['name']}**!")
+        
+        # Update the public match message to show the new vote count
+        await interaction.message.edit(embed=self.create_embed(1))
 
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
