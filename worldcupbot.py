@@ -307,7 +307,7 @@ class MatchView(ui.View):
         color = 0xff4757 if page == 0 else 0x2e86de
         
         embed = discord.Embed(
-            title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
+            title=f"<:crossedswords:1462484325151801487> {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
             description=f"**Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
             color=color
         )
@@ -657,7 +657,7 @@ class WC_Bot(discord.Client):
         # 4. Create the View & Message (Back to original simple call)
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"⚔️ **{round_name}** is now LIVE!", 
+            content=f"<:crossedswords:1462484325151801487> **{round_name}** is now LIVE!", 
             embed=view.create_embed(0), 
             view=view
         )
@@ -887,7 +887,7 @@ async def startworldcup(interaction: discord.Interaction):
     await interaction.followup.send(f"<:cutecup:1462480543449874442> **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     
     msg = await interaction.channel.send(
-        content="⚔️ **Round of 32** is now LIVE!", 
+        content="<:crossedswords:1462484325151801487> **Round of 32** is now LIVE!", 
         embed=view.create_embed(0), 
         view=view
     )
@@ -1101,7 +1101,7 @@ async def matchups(interaction: discord.Interaction):
         bracket_text += ", ".join(names)
         
     embed = discord.Embed(
-        title=f"⚔️ {data.get('current_cat', 'Tournament').upper()} Live Bracket", 
+        title=f"<:crossedswords:1462484325151801487> {data.get('current_cat', 'Tournament').upper()} Live Bracket", 
         description=bracket_text or "Tournament in transition...", 
         color=0x3498db
     )
@@ -1266,7 +1266,7 @@ async def status(interaction: discord.Interaction):
                     time_info = "\n✅ **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"⚔️ **Matches Live**\n"
+                f"<:crossedswords:1462484325151801487> **Matches Live**\n"
                 f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
                 f"**Match Progress:** {current_num} of {total_matches}\n"
