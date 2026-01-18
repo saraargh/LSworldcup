@@ -570,10 +570,11 @@ class WC_Bot(discord.Client):
         print(f"✅ Synced and successfully loaded match from JSON.")
 
     # --- THE ENGINE: POST NEXT MATCH ---
+
     async def post_next(self, channel):
         data, sha = load_data()
         
-        # 1. Bracket logic (Keep this the same)
+        # 1. Bracket logic
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
                 old_round = get_round_name(data)
@@ -606,40 +607,32 @@ class WC_Bot(discord.Client):
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # --- NEW LOGIC ORDER START ---
+        # 4. Create the View & Message (Back to original simple call)
+        view = MatchView(comp_a, comp_b, round_name, match_num) 
+        msg = await channel.send(
+            content=f"⚔️ **{round_name}** is now LIVE!", 
+            embed=view.create_embed(0), 
+            view=view
+        )
         
-        # 4. PRE-UPDATE DATA: Prepare the match data in memory first
+        # 5. Save state
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
             "votes": {}, 
-            "message_id": None, # Will update in a second
+            "message_id": msg.id, 
             "channel_id": channel.id,
             "round_name": round_name,
             "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
-
-        # 5. Create the View & Message
-        view = MatchView(comp_a, comp_b, round_name, match_num) 
-        
-        # WE PASS 'data' MANUALLY HERE to avoid the GitHub fetch lag
-        msg = await channel.send(
-            content=f"⚔️ **{round_name}** is now LIVE!", 
-            embed=view.create_embed(0, data_override=data), 
-            view=view
-        )
-        
-        # 6. Update message ID and save to GitHub
-        data['current_match']['message_id'] = msg.id
         save_data(data, sha)
-        
-        # --- NEW LOGIC ORDER END ---
         
         try:
             await msg.pin()
         except:
             pass
+
 
 
 
