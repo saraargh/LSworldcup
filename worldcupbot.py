@@ -322,7 +322,7 @@ class MatchView(ui.View):
             inline=False
         )
         embed.set_image(url=item['image'])
-        embed.set_footer(text=f"Total Votes Cast: {len(votes)}")
+        embed.set_footer(text=f"Total Votes Cast: {len(votes)} | The Landing Strip World Cup System 🏁✨")
         return embed
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
