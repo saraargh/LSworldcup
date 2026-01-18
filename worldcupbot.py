@@ -658,7 +658,7 @@ class WC_Bot(discord.Client):
         # 4. Create the View & Message (Back to original simple call)
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}** is now LIVE - Cast your votes below!", 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: {match_num}** is now LIVE - Cast your votes below!", 
             embed=view.create_embed(0), 
             view=view
         )
@@ -799,7 +799,7 @@ async def choosecategory(interaction: discord.Interaction):
     save_data(data, sha)
     
     announcement = (
-        f"@everyone 🎉 The theme for this tournament is: **{selected['name'].upper()}**!\n"
+        f"@everyone <:worldcup:1462292819526815877> The theme for this tournament is: **{selected['name'].upper()}**!\n"
         f"(Theme suggested by {selected['user']})\n\n"
         "Submit your entries now using `/additem`!"
     )
@@ -888,7 +888,7 @@ async def startworldcup(interaction: discord.Interaction):
     await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {data['current_cat'].upper()} IS UPON US!**")
     
     msg = await interaction.channel.send(
-        content="<:exclaim:1462504669699117188> @everyone - **Round of 32** is now LIVE - Cast your votes below", 
+        content="<:exclaim:1462504669699117188> @everyone - **Round of 32: Match 1** is now LIVE - Cast your votes below", 
         embed=view.create_embed(0), 
         view=view
     )
