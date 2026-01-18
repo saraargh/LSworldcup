@@ -1213,7 +1213,7 @@ async def status(interaction: discord.Interaction):
     
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
-    embed = discord.Embed(title="<:cutecup:1462480543449874442> World Cup Dashboard", color=0x3498db)
+    embed = discord.Embed(title="<:cutecup:1462480543449874442> World Cup: Status", color=0x3498db)
     
     if status_mode == "IDLE":
         embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
