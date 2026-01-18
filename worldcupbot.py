@@ -292,9 +292,13 @@ class MatchView(ui.View):
         if self.item_a is None:
             return discord.Embed(title="Error", description="Match data not found.")
 
+        # Try to get live votes from data
         data, _ = load_data()
-        match = data.get("current_match", {})
-        votes = match.get("votes", {})
+        match = data.get("current_match")
+        
+        # SAFETY FIX: If match is None (during start), use an empty dict for votes
+        votes = match.get("votes", {}) if match else {}
+        
         count_a = list(votes.values()).count("A")
         count_b = list(votes.values()).count("B")
 
@@ -307,12 +311,13 @@ class MatchView(ui.View):
             color=color
         )
         embed.add_field(
-            name="\n\n📊 Live Standings", 
+            name="📊 Live Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
         embed.set_image(url=item['image'])
         return embed
+
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
