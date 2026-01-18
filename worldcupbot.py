@@ -638,7 +638,7 @@ class WC_Bot(discord.Client):
                 winner = data['final_winner']
                 embed = discord.Embed(
                     title="🏁 TOURNAMENT COMPLETE 🏁",
-                    description=f"The bracket has concluded! Use **/endcup** to crown **{winner['name']}** and archive the results.",
+                    description=f"The bracket has concluded! Use **/endcup** to crown the winner and archive the results.",
                     color=0xf1c40f
                 )
                 return await channel.send(embed=embed)
