@@ -321,7 +321,6 @@ class MatchView(discord.ui.View):
             embed.set_image(url=viewing['image'])
             
         # 5. Standings (NOW ON NEW LINES BELOW THE IMAGE)
-        # Using a field here allows for the vertical list you want
         standings_text = (
             f"🗳️ **Current Standings:**\n"
             f"*{self.item_a['name']} ({cA})*\n"
@@ -330,18 +329,21 @@ class MatchView(discord.ui.View):
         embed.add_field(name="\u200b", value=standings_text, inline=False)
 
         # 6. Optional Clean Footer
+        embed.set_footer(text="The Landing Strip World Cup System", icon_url=None)
+        # Note: Footer text supports emojis, but the icon_url must be a link. 
+        # Adding the emoji to the text string as you did:
         embed.set_footer(text="The Landing Strip World Cup System <:worldcup:1462292819526815877>")
         
         return embed
 
-
-    @discord.ui.button(label="<:left:1462297168382656732>", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    # FIXED: Emojis moved from 'label' to 'emoji' parameter
+    @discord.ui.button(label="", emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "A"
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="<:right:1462297211659358444>", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    @discord.ui.button(label="", emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.secondary, custom_id="view_b")
     async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "B"
@@ -359,7 +361,6 @@ class MatchView(discord.ui.View):
         data, sha = load_data()
         match = data.get('current_match')
         
-        # FIXED: This ensures variables aren't empty after a bot reboot
         if self.item_a is None or self.item_b is None:
             self.item_a = match['item_a']
             self.item_b = match['item_b']
@@ -376,6 +377,7 @@ class MatchView(discord.ui.View):
         winner_name = self.item_a['name'] if choice == "A" else self.item_b['name']
         await interaction.response.send_message(f"✅ Voted for **{winner_name}**!", ephemeral=True)
         await interaction.message.edit(embed=self.create_embed(data))
+
 
 
 class EndConfirmView(ui.View):
