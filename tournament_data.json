@@ -1,6 +1,6 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "movie",
     "title": [],
     "items": [
         {
@@ -196,12 +196,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [
-        {
-            "name": "movie",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [
         {
             "name": "Eternal Sunshine of The Spotless Mind",
