@@ -333,7 +333,7 @@ class MatchView(ui.View):
     async def view_b(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(1))
 
-    @ui.button(label="Show Voter List", style=discord.ButtonStyle.secondary, custom_id="view_voters", row=0)
+    @ui.button(label="Show Voter List", style=discord.ButtonStyle.success, custom_id="view_voters", row=0)
     async def view_voters(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         match = data.get("current_match", {})
