@@ -179,7 +179,7 @@ class HistoryView(ui.View):
         description_text = ""
         for idx, entry in enumerate(chunk):
             count = start + idx + 1
-            description_text += f"{count}. 🏆 **{entry['cat'].upper()}**\n"
+            description_text += f"{count}. <:cutecup:1462480543449874442> **{entry['cat'].upper()}**\n"
             description_text += f"┕ Winner: **{entry['item']}**\n"
             description_text += f"┕ Submitter: {entry['user']}\n\n"
         
@@ -412,7 +412,7 @@ class EndConfirmView(ui.View):
         winner = self.data.get("final_winner")
         if winner:
             self.confirm_end.style = discord.ButtonStyle.success
-            self.confirm_end.label = f"🏆 CROWN {winner['name'].upper()}"
+            self.confirm_end.label = f"<:cutecup:1462480543449874442> CROWN {winner['name'].upper()}"
         else:
             self.confirm_end.style = discord.ButtonStyle.danger
             self.confirm_end.label = "⚠️ CONFIRM: END TOURNAMENT EARLY"
@@ -479,7 +479,7 @@ class EndConfirmView(ui.View):
                 "cat": self.data['current_cat'], 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone 🏆 **TOURNAMENT COMPLETE!**", embed=embed)
+            await interaction.channel.send("@everyone <:cutecup:1462480543449874442> **TOURNAMENT COMPLETE!**", embed=embed)
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
@@ -526,10 +526,8 @@ class ScoreboardView(ui.View):
                 for m in chunk:
                     description_text += (
                         f"🔹 **{m['name']}**\n"
-                        f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
-                        f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
-                        f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
-                    )
+                        f"<:cutecup:1462480543449874442> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        
             embed.description = description_text
             total_pages = (len(self.matches) - 1) // 5 + 1 if self.matches else 1
             embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
@@ -736,7 +734,7 @@ class WC_Bot(discord.Client):
 
             # 7. THE WINNER EMBED (Restored Hype Version)
             win_embed = discord.Embed(
-                title="🏆 MATCH CONCLUDED",
+                title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
                 description=f"### {winner['name']} has DEFEATED {loser['name']}!",
                 color=0x2ecc71 # Victory Green
             )
@@ -886,7 +884,7 @@ async def startworldcup(interaction: discord.Interaction):
     # MatchView.create_embed now has the safety check we added earlier
     view = MatchView(comp_a, comp_b, "Round of 32", 1)
     
-    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    await interaction.followup.send(f"<:cutecup:1462480543449874442> **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     
     msg = await interaction.channel.send(
         content="⚔️ **Round of 32** is now LIVE!", 
@@ -953,7 +951,7 @@ async def endcup(interaction: discord.Interaction):
     if is_early:
         msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
     else:
-        msg = f"🏆 **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
+        msg = f"<:cutecup:1462480543449874442> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
     
     view = EndConfirmView(data, sha, is_early=is_early)
     await interaction.followup.send(content=msg, view=view, ephemeral=True)
@@ -987,7 +985,7 @@ async def help(interaction: discord.Interaction):
         desc += "• `/endcup`: Finish the cup and save winner to history.\n"
         desc += "• `/resetcup`: Emergency wipe of the current cup."
 
-    embed = discord.Embed(title="🏆 World Cup Bot Help", description=desc, color=0x3498db)
+    embed = discord.Embed(title="<:cutecup:1462480543449874442> World Cup Bot Help", description=desc, color=0x3498db)
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
@@ -1214,7 +1212,7 @@ async def status(interaction: discord.Interaction):
     
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
-    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
+    embed = discord.Embed(title="<:cutecup:1462480543449874442> World Cup Dashboard", color=0x3498db)
     
     if status_mode == "IDLE":
         embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
