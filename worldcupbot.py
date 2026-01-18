@@ -525,8 +525,8 @@ class ScoreboardView(ui.View):
             else:
                 for m in chunk:
                     description_text += (
-                        f"🔹 **{m['name']}**\n"
-                        f"<:cutecup:1462480543449874442> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        f"<:shield:1462485732793909271> **{m['name']}**\n"
+                        f"<:fireee:1462487668255359232> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
                         )
                         
             embed.description = description_text
@@ -535,7 +535,7 @@ class ScoreboardView(ui.View):
 
         else:
             # --- SURVIVOR ONLY MODE ---
-            embed.title = "🟢 Remaining Survivors"
+            embed.title = "<:fireee:1462487668255359232> Remaining Survivors"
             
             survivors = []
             curr = data.get('current_match')
@@ -547,7 +547,7 @@ class ScoreboardView(ui.View):
             for item in data.get('winners_pool', []):
                 survivors.append(f"{item['name']} ({item['user']})")
 
-            survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
+            survivor_list = "\n".join([f"<:cutestar:1462482027273129994> {s}" for s in survivors]) if survivors else "No survivors."
 
             embed.description = (
                 f"**{len(survivors)} entries still in the running:**\n\n"
