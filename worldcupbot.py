@@ -389,9 +389,8 @@ class EndConfirmView(ui.View):
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
         winner = self.data.get("final_winner")
         
-        # 1. Announce Winner
         if winner:
-            # Post @everyone ping strictly ABOVE the embed
+            # Post @everyone strictly ABOVE the embed
             await interaction.channel.send(f"@everyone 🏆 **THE {self.data['current_cat'].upper()} WORLD CUP IS COMPLETE!**")
             
             embed = discord.Embed(
@@ -401,16 +400,11 @@ class EndConfirmView(ui.View):
             )
             embed.set_image(url=winner['image'])
 
-            # --- DATA RETRIEVAL ---
-            # Expecting dicts like: {"name": "Item", "user": "Username", "votes": 10}
             second = self.data.get("second_place", {"name": "N/A", "user": "N/A"})
             third = self.data.get("third_place", {"name": "N/A", "user": "N/A"})
-            
-            # Expecting dicts like: {"name": "Item", "count": 25}
             most = self.data.get("most_voted_stats", {"name": "N/A", "count": 0})
             least = self.data.get("least_voted_stats", {"name": "N/A", "count": 0})
             
-            # --- SPECIAL MENTIONS & STATS ---
             embed.add_field(
                 name="✨ SPECIAL MENTIONS ✨", 
                 value=(
@@ -424,43 +418,31 @@ class EndConfirmView(ui.View):
 
             # Save to history
             self.data.setdefault('leaderboard', []).append({
-                "item": winner['name'], 
-                "cat": self.data['current_cat'], 
-                "user": winner['user']
+                "item": winner['name'], "cat": self.data['current_cat'], "user": winner['user']
             })
             
             await interaction.channel.send(embed=embed)
         else:
-            # Early End Message (Public)
             await interaction.channel.send("🛑 **TOURNAMENT ENDED EARLY. Match statistics have been reset.**")
         
-        # 2. Cleanup: Unpin bot messages
+        # Cleanup pins
         try:
             pins = await interaction.channel.pins()
             for pin in pins:
                 if pin.author.id == interaction.client.user.id:
                     await pin.unpin()
-        except:
-            pass
+        except: pass
 
-        # 3. Reset Data (Preserving 'items')
+        # Reset all except items
         self.data.update({
-            "status": "IDLE", 
-            "suggestions": [], 
-            "bracket": [], 
-            "winners_pool": [], 
-            "finished_matches": [],
-            "current_match": None, 
-            "current_cat": None, 
-            "final_winner": None,
-            "second_place": None,
-            "third_place": None,
-            "most_voted_stats": None,
-            "least_voted_stats": None
+            "status": "IDLE", "suggestions": [], "bracket": [], "winners_pool": [], 
+            "finished_matches": [], "current_match": None, "current_cat": None, 
+            "final_winner": None, "second_place": None, "third_place": None,
+            "most_voted_stats": None, "least_voted_stats": None
         })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="✅ **Tournament reset and results archived with full stats.**", view=None)
+        await interaction.response.edit_message(content="✅ **Tournament reset and results archived.**", view=None)
 
 class ScoreboardView(discord.ui.View):
     def __init__(self, matches, page=0):
@@ -626,32 +608,34 @@ class WC_Bot(discord.Client):
         is_tournament_over = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
 
         if is_tournament_over:
+            # 1. Calculate the final stats from the history
             stats = self.calculate_stats(data, winner, loser)
             
-            final_embed = discord.Embed(title="👑 CHAMPION CROWNED 👑", color=0xf1c40f)
-            # Matches the "submitted by: @user" style
-            final_embed.description = f"# 🏆 {winner['name']}\n**Submitted by:** @{winner.get('user', 'Unknown')}"
-            
-            if winner.get('image'):
-                final_embed.set_image(url=winner['image'])
-
-            # Special Mentions in your preferred clean style
-            mentions = (
-                f"🥈 **Second Place:** {stats['second']} (@{stats['second_user']})\n"
-                f"🥉 **Third Place:** {stats['third']} (@{stats['third_user']})\n\n"
-                f"🔥 **Most Voted Overall:** {stats['most_voted']} ({stats['most_votes']} votes)\n"
-                f"❄️ **Least Voted Overall:** {stats['least_voted']} ({stats['least_votes']} votes)"
-            )
-            final_embed.add_field(name="🏅 Special Mentions", value=mentions, inline=False)
-            final_embed.set_footer(text="The Landing Strip World Cup System")
-            
-            await channel.send(embed=final_embed)
-            
+            # 2. Store EVERYTHING in the data dictionary so /endcup can see it
             data['status'] = "FINISHED"
             data['final_winner'] = winner
-            _, latest_sha = load_data()
-            save_data(data, latest_sha)
+            
+            # Map the results for the Special Mentions
+            data['second_place'] = {"name": loser['name'], "user": loser.get('user', 'Unknown')}
+            
+            # Get 3rd place from the previous match loser
+            if len(data.get('finished_matches', [])) >= 2:
+                prev_match = data['finished_matches'][-2]
+                data['third_place'] = {"name": prev_match['loser'], "user": prev_match['loser_user']}
+            else:
+                data['third_place'] = {"name": "N/A", "user": "N/A"}
+
+            # Map the vote counts
+            data['most_voted_stats'] = {"name": stats['most_voted'], "count": stats['most_votes']}
+            data['least_voted_stats'] = {"name": stats['least_voted'], "count": stats['least_votes']}
+
+            # Save to GitHub
+            save_data(data, sha)
+            
+            # 3. Just send a simple text alert to the channel (NOT the winner embed)
+            await channel.send("🏁 **The Grand Final is over!** Admin, use `/endcup` to post results and reset.")
             return
+
 
         # === REGULAR ROUND WINNER ===
         win_embed = discord.Embed(title="🏆 MATCH CONCLUDED", color=0x2ecc71)
@@ -834,37 +818,27 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    # Use ephemeral=True so it's private
     await interaction.response.defer(ephemeral=True)
-    
     try:
         data, sha = load_data()
         
-# Replace your current FINISHED check with this
-if data.get('winner') or data.get('status') == "FINISHED":
-    await interaction.followup.send(
-        "🏆 **Winner Detected!** You need to run `/endcup` to post the winning embed and reset the system.",
-        ephemeral=True
-    )
-    return
-
+        # LOCKED IN: Force use of /endcup if winner exists
+        if data.get('final_winner') or data.get('status') == "FINISHED":
+            await interaction.followup.send(
+                "🏆 **Winner Detected!** You must run `/endcup` to post the winning embed and reset the system.",
+                ephemeral=True
+            )
+            return
 
         if data.get('current_match'):
-            # This finishes the current match
             await bot.resolve_match(data, sha)
-            await interaction.followup.send("✅ Match resolved. Next one is starting...")
+            await interaction.followup.send("✅ Match resolved.", ephemeral=True)
         else:
-            # This starts a match if none is active
             await bot.post_next(interaction.channel)
-            await interaction.followup.send("🚀 Next match posted!")
+            await interaction.followup.send("🚀 Next match posted!", ephemeral=True)
             
     except Exception as e:
-        # This will tell you EXACTLY why it is failing instead of just "thinking"
-        await interaction.followup.send(f"❌ Error: {e}")
-
-
-
-
+        await interaction.followup.send(f"❌ Error: {e}", ephemeral=True)
 
 
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
