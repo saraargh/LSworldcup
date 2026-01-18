@@ -627,52 +627,49 @@ class WC_Bot(discord.Client):
         await self.post_next(channel)
 
     async def post_next(self, channel):
-        # Fresh data load
         data, sha = load_data()
-
-        # If bracket is empty, move winners_pool into bracket for next round
+        
+        # 1. Check if we need to advance the round
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
-                data['bracket'] = list(data.get('winners_pool', []))
+                data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
+                await channel.send("🛡️ **Round Complete!** Advancing surviving entries...")
+            else:
+                data['status'] = "FINISHED"
                 save_data(data, sha)
-                await channel.send("🛡️ **Round Complete!** Advancing winners...")
-                # Re-load after saving bracket shift
-                data, sha = load_data()
-            else: 
-                return # Not enough items to continue yet
+                return await channel.send("🎊 **Tournament Complete!**")
 
-        # Take next two from bracket
+        # 2. Get the next two competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
-
-        # Initialize current_match
+        
+        # 3. DEFINE the variables that were missing
+        round_name = get_round_name(data)
+        match_num = len(data.get('finished_matches', [])) + 1
+        
+        # 4. Create the view using the variables defined above
+        view = MatchView(comp_a, comp_b, round_name, match_num) 
+        
+        msg = await channel.send(
+            content=f"⚔️ **{round_name}** is now LIVE!", 
+            embed=view.create_embed(0), 
+            view=view
+        )
+        
+        # 5. Save everything to GitHub
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
             "votes": {}, 
-            "channel_id": channel.id
+            "message_id": msg.id, 
+            "channel_id": channel.id,
+            "round_name": round_name, 
+            "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
-
-        # Create MatchView (Persistence handled by custom_ids inside the class)
-        view = MatchView(comp_a, comp_b, round_name, match_num) 
-        embed = view.create_embed(data)
-        
-        msg = await channel.send(
-            content="⚔️ @everyone **THE NEXT MATCH UP IS READY, CAST YOUR VOTES BELOW!!**", 
-            embed=embed, 
-            view=view
-        )
-        
-        data['current_match']['message_id'] = msg.id
         save_data(data, sha)
-        
-        try: 
-            await msg.pin()
-        except: 
-            pass
-
+        await msg.pin()
 
 
 
