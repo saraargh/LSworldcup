@@ -419,7 +419,7 @@ class EndConfirmView(ui.View):
 
     @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
-        # 1. Acknowledge the interaction immediately to prevent "Interaction Failed"
+        # 1. Immediate acknowledgment to prevent "Interaction Failed"
         await interaction.response.defer()
 
         winner = self.data.get("final_winner")
@@ -429,7 +429,6 @@ class EndConfirmView(ui.View):
             stats = {} 
 
             for m in history:
-                # Get the score (e.g., "2-1") and split it
                 score_str = m.get('score', '0-0')
                 try:
                     score_parts = [int(x) for x in score_str.split('-')]
@@ -438,25 +437,47 @@ class EndConfirmView(ui.View):
                 except:
                     v_win, v_lose = 0, 0
 
-                # Process the Winner
+                # PROCESS WINNER
                 w_name = m['winner']
-                stats.setdefault(w_name, {"votes": 0, "user": m.get('winner_user', 'Unknown')})
-                stats[w_name]["votes"] += v_win
+                if w_name not in stats:
+                    stats[w_name] = {
+                        "peak_votes": 0, 
+                        "user": m.get('winner_user', 'Unknown'), 
+                        "total_accumulated": 0
+                    }
+                
+                # Track peak single-round score
+                if v_win > stats[w_name]["peak_votes"]:
+                    stats[w_name]["peak_votes"] = v_win
+                stats[w_name]["total_accumulated"] += v_win
 
-                # Process the Loser
+                # PROCESS LOSER
                 l_name = m['loser_name']
-                stats.setdefault(l_name, {"votes": 0, "user": "Unknown"})
-                stats[l_name]["votes"] += v_lose
+                if l_name not in stats:
+                    stats[l_name] = {
+                        "peak_votes": 0, 
+                        "user": "Unknown", 
+                        "total_accumulated": 0
+                    }
+                
+                # Track peak single-round score
+                if v_lose > stats[l_name]["peak_votes"]:
+                    stats[l_name]["peak_votes"] = v_lose
+                stats[l_name]["total_accumulated"] += v_lose
 
             if stats:
-                sorted_stats = sorted(stats.items(), key=lambda x: x[1]['votes'], reverse=True)
+                # Sort 2nd/3rd by total performance across the cup
+                sorted_stats = sorted(stats.items(), key=lambda x: x[1]['total_accumulated'], reverse=True)
                 
-                max_v = max(s['votes'] for s in stats.values())
-                min_v = min(s['votes'] for s in stats.values())
+                # Highest/Lowest peak round scores
+                max_v = max(s['peak_votes'] for s in stats.values())
+                min_v = min(s['peak_votes'] for s in stats.values())
                 
-                most_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == max_v]
-                least_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == min_v]
+                # Names only for most/least lists
+                most_list = [n for n, s in stats.items() if s['peak_votes'] == max_v]
+                least_list = [n for n, s in stats.items() if s['peak_votes'] == min_v]
 
+                # Format Second and Third Place (with users)
                 second_text = "N/A"
                 if len(sorted_stats) > 1:
                     n2, d2 = sorted_stats[1]
@@ -476,7 +497,7 @@ class EndConfirmView(ui.View):
 
                 embed = discord.Embed(
                     title="🎊 CHAMPION CROWNED 🎊", 
-                    description=f"# 👑 {winner['name'].upper()} <:winner:1462297763260923946>\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
+                    description=f"#<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
                 embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
@@ -487,10 +508,11 @@ class EndConfirmView(ui.View):
                 "cat": self.data['current_cat'], 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone <:cutecup:1462480543449874442> **TOURNAMENT COMPLETE!**", embed=embed)
+            await interaction.channel.send("@everyone <:cutecup:1462480543449874442> **THE WORLD CUP IS COMPLETE!**", embed=embed)
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
+        # Clear pins
         try:
             pins = await interaction.channel.pins()
             for pin in pins:
@@ -498,16 +520,20 @@ class EndConfirmView(ui.View):
                     await pin.unpin()
         except: pass
 
+        # Reset tournament state
         self.data.update({
             "status": "IDLE", "suggestions": [], "bracket": [], "winners_pool": [], 
             "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None
         })
         
         save_data(self.data, self.sha)
-        # Use followup.edit_message because we deferred earlier
-        await interaction.followup.edit_message(message_id=interaction.message.id, content="#<:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", view=None)
-
-
+        
+        # Edit the interaction message to confirm completion
+        await interaction.followup.edit_message(
+            message_id=interaction.message.id, 
+            content="# <:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", 
+            view=None
+        )
 
 
 class ScoreboardView(ui.View):
