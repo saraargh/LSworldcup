@@ -906,7 +906,8 @@ async def help(interaction: discord.Interaction):
     desc += "• `/scoreboard`: See results of finished matches.\n"
     desc += "• `/listitems`: View all entries in the current cup.\n"
     desc += "• `/cuphistory`: View the Hall of Fame archive.\n"
-    
+    desc += "• `/status`: View the current World Cup status.\n"
+        
     if is_admin_user:
         desc += "\n**Admin Commands:**\n"
         desc += "• `/opensuggestions`: Allow theme suggestions.\n"
