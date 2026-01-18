@@ -205,7 +205,14 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "winners_pool": [],
+    "winners_pool": [
+        {
+            "name": "Eternal Sunshine of The Spotless Mind",
+            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "finished_matches": [
         {
             "name": "Mean Girls vs Wild Child",
@@ -388,6 +395,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "Camp Rock",
             "score": "1-0"
+        },
+        {
+            "name": "Eternal Sunshine of The Spotless Mind vs A cinderella story",
+            "winner": "Eternal Sunshine of The Spotless Mind",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "A cinderella story",
+            "score": "2-1"
         }
     ],
     "leaderboard": [
@@ -402,28 +416,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Eternal Sunshine of The Spotless Mind",
-            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A",
-            "1450514816958599220": "A",
-            "1258358477903102024": "B"
-        },
-        "message_id": 1462524634078380115,
-        "channel_id": 1438277790179921971,
-        "round_name": "Tournament Complete",
-        "match_num": 27
-    },
+    "current_match": null,
     "final_winner": null
 }
