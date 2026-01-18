@@ -277,6 +277,12 @@
             "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "10 things i hate about you",
+            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -415,6 +421,14 @@
             "loser": "Bridget Jones Diary",
             "loser_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "Sisterhood of the travelling pants vs 10 things i hate about you",
+            "winner": "10 things i hate about you",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Sisterhood of the travelling pants",
+            "loser_user": "<@1238834298338152498>",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -439,24 +453,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Sisterhood of the travelling pants",
-            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "10 things i hate about you",
-            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462317247182803155
-    },
+    "current_match": null,
     "final_winner": null
 }
