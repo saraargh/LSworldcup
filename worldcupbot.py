@@ -317,7 +317,7 @@ class MatchView(discord.ui.View):
         
         # 3. Submitter Section
         submitter = viewing.get('user', 'Unknown')
-        embed.add_field(name="\u200b", value=f"🗯️**submitted by: {submitter}**\n", inline=False)
+        embed.add_field(name="\u200b", value=f"🗯️ **Submitted by: {submitter}**\n", inline=False)
         
         # 4. Image
         if viewing.get('image'):
