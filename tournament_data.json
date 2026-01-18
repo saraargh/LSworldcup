@@ -271,6 +271,12 @@
             "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Clueless",
+            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -417,6 +423,14 @@
             "loser": "500 days of summer",
             "loser_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "Clueless vs Something Borrowed",
+            "winner": "Clueless",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Something Borrowed",
+            "loser_user": "<@1238834298338152498>",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -436,24 +450,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462267184637284468
-    },
+    "current_match": null,
     "final_winner": null
 }
