@@ -1156,7 +1156,7 @@ async def status(interaction: discord.Interaction):
                 f"**Current Round:** {round_name}\n"
                 f"**Match Progress:** {current_num} of {total_matches}\n"
                 f"`{bar}`\n\n"
-                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n\n"
                 f"📊 **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
