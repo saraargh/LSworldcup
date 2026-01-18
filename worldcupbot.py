@@ -181,7 +181,7 @@ class HistoryView(ui.View):
         description_text = ""
         for idx, entry in enumerate(chunk):
             count = start + idx + 1
-            description_text += f"{count}. 🏆 **{entry['cat'].upper()}**\n"
+            description_text += f"{count}. <:worldcup:1462292819526815877> **{entry['cat'].upper()}**\n"
             description_text += f"┕ Winner: **{entry['item']}**\n"
             description_text += f"┕ Submitter: {entry['user']}\n\n"
         
@@ -198,14 +198,14 @@ class HistoryView(ui.View):
         embed.set_footer(text=f"Page {self.page+1} of {total_pages}")
         return embed
 
-    @ui.button(label="⬅️ Previous", style=discord.ButtonStyle.gray, custom_id="hist_prev")
+    @ui.button(label="<:left:1462297168382656732> Previous", style=discord.ButtonStyle.gray, custom_id="hist_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
         self.page = max(0, self.page - 1)
         await interaction.response.edit_message(embed=self.create_embed())
 
-    @ui.button(label="Next ➡️", style=discord.ButtonStyle.gray, custom_id="hist_next")
+    @ui.button(label="Next <:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="hist_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
@@ -251,7 +251,7 @@ class ItemGallery(ui.View):
             color=0x3498db
         )
 
-    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="gal_prev")
+    @ui.button(label="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="gal_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
@@ -259,7 +259,7 @@ class ItemGallery(ui.View):
             self.index = (self.index - 1) % len(self.items)
         await interaction.response.edit_message(embed=self.create_content())
 
-    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="gal_next")
+    @ui.button(label="<:right:1462297211659358444>️", style=discord.ButtonStyle.gray, custom_id="gal_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
@@ -330,18 +330,18 @@ class MatchView(discord.ui.View):
         embed.add_field(name="\u200b", value=standings_text, inline=False)
 
         # 6. Optional Clean Footer
-        embed.set_footer(text="The Landing Strip World Cup System 🏆")
+        embed.set_footer(text="The Landing Strip World Cup System <:worldcup:1462292819526815877>")
         
         return embed
 
 
-    @discord.ui.button(label="⬅️", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    @discord.ui.button(label="<:left:1462297168382656732>", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "A"
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    @discord.ui.button(label="<:right:1462297211659358444>", style=discord.ButtonStyle.secondary, custom_id="view_b")
     async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "B"
@@ -391,7 +391,7 @@ class EndConfirmView(ui.View):
         
         if winner:
             # Post @everyone strictly ABOVE the embed
-            await interaction.channel.send(f"@everyone 🏆 **THE {self.data['current_cat'].upper()} WORLD CUP IS COMPLETE!**")
+            await interaction.channel.send(f"@everyone <:worldcup:1462292819526815877> **THE {self.data['current_cat'].upper()} WORLD CUP IS COMPLETE!**")
             
             embed = discord.Embed(
                 title="🎊 CHAMPION CROWNED 🎊", 
@@ -410,8 +410,8 @@ class EndConfirmView(ui.View):
                 value=(
                     f"🥈 **2nd Place:** {second['name']} (Submitted by: {second['user']})\n"
                     f"🥉 **3rd Place:** {third['name']} (Submitted by: {third['user']})\n\n"
-                    f"🔥 **Most Voted For:** {most['name']} ({most['count']} total votes)\n"
-                    f"💀 **Least Voted For:** {least['name']} ({least['count']} total votes)"
+                    f"<:spongebob:1462295496637812817> **Most Voted For:** {most['name']} ({most['count']} total votes)\n"
+                    f"<:patrick:1462296137921728533> **Least Voted For:** {least['name']} ({least['count']} total votes)"
                 ),
                 inline=False
             )
@@ -483,7 +483,7 @@ class ScoreboardView(discord.ui.View):
             # Use a field for the match info
             embed.add_field(
                 name=f"🔹 {match_name}",
-                value=f"🏆 **Winner:** {winner} ({score})",
+                value=f"<:worldcup:1462292819526815877> **Winner:** {winner} ({score})",
                 inline=False
             )
             
@@ -494,13 +494,13 @@ class ScoreboardView(discord.ui.View):
         embed.set_footer(text=f"Page {self.page + 1} of {total_pages} | The Landing Strip World Cup")
         return embed
 
-    @discord.ui.button(label="⬅️ Newer", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="<:left:1462297168382656732> Newer", style=discord.ButtonStyle.secondary)
     async def prev_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page -= 1
         self.update_buttons()
         await interaction.response.edit_message(embed=self.create_embed(), view=self)
 
-    @discord.ui.button(label="Older ➡️", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Older <:right:1462297211659358444>", style=discord.ButtonStyle.secondary)
     async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.page += 1
         self.update_buttons()
@@ -638,7 +638,7 @@ class WC_Bot(discord.Client):
 
 
         # === REGULAR ROUND WINNER ===
-        win_embed = discord.Embed(title="🏆 MATCH CONCLUDED", color=0x2ecc71)
+        win_embed = discord.Embed(title="<:worldcup:1462292819526815877> MATCH CONCLUDED", color=0x2ecc71)
         win_embed.description = f"### {winner['name']} has DEFEATED {loser['name']}!"
         win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
         win_embed.add_field(name="Advancing", value=f"⭐ {winner['name']}", inline=True)
@@ -825,7 +825,7 @@ async def nextmatch(interaction: discord.Interaction):
         # LOCKED IN: Force use of /endcup if winner exists
         if data.get('final_winner') or data.get('status') == "FINISHED":
             await interaction.followup.send(
-                "🏆 **Winner Detected!** You must run `/endcup` to post the winning embed and reset the system.",
+                "<:worldcup:1462292819526815877> **Winner Detected!** You must run `/endcup` to post the winning embed and reset the system.",
                 ephemeral=True
             )
             return
@@ -864,7 +864,7 @@ async def endcup(interaction: discord.Interaction):
     if is_early:
         msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
     else:
-        msg = f"🏆 **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
+        msg = f"<:worldcup:1462292819526815877> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
     
     view = EndConfirmView(data, sha, is_early=is_early)
     await interaction.followup.send(content=msg, view=view, ephemeral=True)
@@ -898,7 +898,7 @@ async def help(interaction: discord.Interaction):
         desc += "• `/endcup`: Finish the cup and save winner to history - Does not delete items\n"
         desc += "• `/resetcup`: Emergency wipe of the current cup - Deletes items."
 
-    embed = discord.Embed(title="🏆 World Cup Bot Help", description=desc, color=0x3498db)
+    embed = discord.Embed(title="<:worldcup:1462292819526815877> World Cup Bot Help", description=desc, color=0x3498db)
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
@@ -1125,7 +1125,7 @@ async def status(interaction: discord.Interaction):
     await interaction.response.defer()
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
-    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
+    embed = discord.Embed(title="<:worldcup:1462292819526815877> World Cup Dashboard", color=0x3498db)
     
     if status_mode == "IDLE":
         embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
