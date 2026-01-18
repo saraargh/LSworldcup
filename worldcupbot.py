@@ -629,7 +629,7 @@ class WC_Bot(discord.Client):
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 new_round = get_round_name(data)
-                await channel.send(f"<:shield:1462508730640765114> **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
+                await channel.send(f"<:shield:1462508730640765114> *Round Complete! Advancing survivors to the {new_round}...*")
             elif len(data.get('winners_pool', [])) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
@@ -658,8 +658,8 @@ class WC_Bot(discord.Client):
         # 4. Create the View & Message (Back to original simple call)
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: {match_num}** is now LIVE - Cast your votes below!", 
-            embed=view.create_embed(0), 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below!", 
+            embed=view.create_embed(0),
             view=view
         )
         
@@ -799,7 +799,7 @@ async def choosecategory(interaction: discord.Interaction):
     save_data(data, sha)
     
     announcement = (
-        f"@everyone <:worldcup:1462292819526815877> The theme for this tournament is: **{selected['name'].upper()}**!\n"
+        f"@everyone <:worldcup:1462292819526815877> The theme for this World Cup is: **{selected['name'].upper()}**!\n"
         f"(Theme suggested by {selected['user']})\n\n"
         "Submit your entries now using `/additem`!"
     )
