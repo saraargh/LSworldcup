@@ -281,16 +281,14 @@ class MatchView(ui.View):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        # Safety Default: If JSON is missing these, use these strings instead of None
-        self.round_name = round_name if round_name else "Active Match"
-        self.match_num = match_num if match_num else "1"
+        self.round_name = round_name or "Active Match"
+        self.match_num = match_num or "1"
         
         if self.item_a and self.item_b:
             self.vote_a.label = f"Vote for {self.item_a['name']}"
             self.vote_b.label = f"Vote for {self.item_b['name']}"
 
     def create_embed(self, page):
-        # Final safety check to prevent NoneType crash on .get()
         if self.item_a is None:
             return discord.Embed(title="Error", description="Match data not found.")
 
@@ -303,21 +301,17 @@ class MatchView(ui.View):
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
         
-        # This is safe because self.item_a check passed
-        item_desc = item.get('desc', 'No description provided.')
-        
         embed = discord.Embed(
-            title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
+            title=f"⚔️ {self.round_name} - Match {self.match_num}",
+            description=f"**Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
             color=color
         )
         embed.add_field(
-            name="\n\n📊 Current Standings", 
+            name="\n\n📊 Live Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
         embed.set_image(url=item['image'])
-        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
@@ -333,6 +327,8 @@ class MatchView(ui.View):
         await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
+        if not match: return await interaction.followup.send("❌ Match not active.", ephemeral=True)
+        
         match.setdefault("votes", {})[str(interaction.user.id)] = "A"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_a['name']}**!", ephemeral=True)
@@ -342,9 +338,12 @@ class MatchView(ui.View):
         await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
+        if not match: return await interaction.followup.send("❌ Match not active.", ephemeral=True)
+        
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+
 
 
 class EndConfirmView(ui.View):
@@ -514,42 +513,55 @@ class WC_Bot(discord.Client):
         
         # 1. Bracket logic - Advancement Detection
         if not data.get('bracket') or len(data['bracket']) < 2:
+            # If the bracket is empty but we have survivors in the pool
             if len(data.get('winners_pool', [])) >= 2:
-                # Calculate names before and after the move
                 old_round = get_round_name(data)
                 
-                # Move winners to the active bracket
+                # Move winners to the active bracket for the next round
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 
-                # Calculate the new round name
                 new_round = get_round_name(data)
-                
                 await channel.send(f"🛡️ **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
+            
+            # If ONLY ONE person is left in the pool, they are the champion
+            elif len(data.get('winners_pool', [])) == 1:
+                data['final_winner'] = data['winners_pool'][0]
+                data['status'] = "FINISHED"
+                data['current_match'] = None
+                save_data(data, sha)
+                
+                # Announcement of Final Finish
+                winner = data['final_winner']
+                embed = discord.Embed(
+                    title="🏁 TOURNAMENT COMPLETE 🏁",
+                    description=f"The bracket has concluded! Use **/endcup** to crown **{winner['name']}** and archive the results.",
+                    color=0xf1c40f
+                )
+                return await channel.send(embed=embed)
+            
             else:
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 return await channel.send("🎊 **Tournament Complete!**")
 
-        # 2. Pop competitors
+        # 2. Pop competitors (Requires 2 items in bracket list)
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
         
-        # 3. Calculate round info for the match
+        # 3. Calculate round info
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # 4. Create the View
+        # 4. Create the View & Message
         view = MatchView(comp_a, comp_b, round_name, match_num) 
-        
-        # 5. Send the match message
         msg = await channel.send(
             content=f"⚔️ **{round_name}** is now LIVE!", 
             embed=view.create_embed(0), 
             view=view
         )
         
-        # 6. Save data (Ensures setup_hook works on reboot)
+        # 5. Save state
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
@@ -566,6 +578,7 @@ class WC_Bot(discord.Client):
             await msg.pin()
         except:
             pass
+
 
 
     # --- THE ENGINE: RESOLVE MATCH ---
