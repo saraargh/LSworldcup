@@ -277,35 +277,54 @@ class ItemGallery(ui.View):
 
 
 class MatchView(ui.View):
-    def __init__(self, item_a, item_b):
+    def __init__(self, item_a, item_b, round_name=None, match_num=None):
         super().__init__(timeout=None)
         self.item_a = item_a
         self.item_b = item_b
-        # Set button labels to item names
-        self.vote_a.label = f"Vote for {item_a['name']}"
-        self.vote_b.label = f"Vote for {item_b['name']}"
+        # Safety Default: If JSON is missing these, use these strings instead of None
+        self.round_name = round_name if round_name else "Active Match"
+        self.match_num = match_num if match_num else "1"
+        
+        if self.item_a and self.item_b:
+            self.vote_a.label = f"Vote for {self.item_a['name']}"
+            self.vote_b.label = f"Vote for {self.item_b['name']}"
 
     def create_embed(self, page):
+        # Final safety check to prevent NoneType crash on .get()
+        if self.item_a is None:
+            return discord.Embed(title="Error", description="Match data not found.")
+
+        data, _ = load_data()
+        match = data.get("current_match", {})
+        votes = match.get("votes", {})
+        count_a = list(votes.values()).count("A")
+        count_b = list(votes.values()).count("B")
+
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
         
-        # We look for 'desc' specifically here
+        # This is safe because self.item_a check passed
         item_desc = item.get('desc', 'No description provided.')
         
         embed = discord.Embed(
-            title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
+            title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
+        )
+        embed.add_field(
+            name="\n\n📊 Current Standings", 
+            value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
+            inline=False
         )
         embed.set_image(url=item['image'])
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
 
-    @ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(0))
 
-    @ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.gray, custom_id="v_b_nav")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="v_b_nav")
     async def view_b(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(1))
 
@@ -326,7 +345,6 @@ class MatchView(ui.View):
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
-
 
 
 class EndConfirmView(ui.View):
@@ -475,13 +493,27 @@ class WC_Bot(discord.Client):
         self.processing_lock = asyncio.Lock()
 
     async def setup_hook(self):
-        # FIX: Remove self.add_view(MatchView()) from here!
-        # MatchView is created dynamically in post_next() instead.
-        await self.tree.sync()
-        print(f"Synced slash commands for {self.user}")
+        data, _ = load_data()
+        match = data.get("current_match")
 
-    async def on_ready(self):
-        print(f"Logged in as {self.user}")
+        # If a match is active in your JSON, we pass the real items
+        if match and "item_a" in match:
+            self.add_view(MatchView(
+                match['item_a'], 
+                match['item_b'], 
+                match.get('round_name', 'Grand Final'), # Default if missing from JSON
+                match.get('match_num', '1')             # Default if missing from JSON
+            ))
+        else:
+            # Only use None if the tournament hasn't started
+            self.add_view(MatchView(None, None, None, None))
+            
+        self.add_view(ScoreboardView())
+        self.add_view(ItemGallery())
+        self.add_view(HistoryView())
+        
+        await self.tree.sync()
+        print(f"✅ Synced and successfully loaded match from JSON.")
 
     # --- THE ENGINE: POST NEXT MATCH ---
     async def post_next(self, channel):
