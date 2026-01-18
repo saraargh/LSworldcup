@@ -527,6 +527,7 @@ class ScoreboardView(ui.View):
                     description_text += (
                         f"🔹 **{m['name']}**\n"
                         f"<:cutecup:1462480543449874442> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        )
                         
             embed.description = description_text
             total_pages = (len(self.matches) - 1) // 5 + 1 if self.matches else 1
@@ -628,7 +629,7 @@ class WC_Bot(discord.Client):
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 new_round = get_round_name(data)
-                await channel.send(f"🛡️ **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
+                await channel.send(f"<:shield:1462485732793909271> **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
             elif len(data.get('winners_pool', [])) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
@@ -1096,7 +1097,7 @@ async def matchups(interaction: discord.Interaction):
             bracket_text += f"• {a['name']} vs {b['name']}\n"
     
     if data.get('winners_pool'):
-        bracket_text += "\n🛡️ **WAITING FOR NEXT ROUND:**\n"
+        bracket_text += "\n<:shield:1462485732793909271> **WAITING FOR NEXT ROUND:**\n"
         names = [w['name'] for w in data['winners_pool']]
         bracket_text += ", ".join(names)
         
