@@ -265,6 +265,12 @@
             "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Angus, Thongs & Perfect Snogging",
+            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -419,6 +425,14 @@
             "loser": "Something Borrowed",
             "loser_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "Angus, Thongs & Perfect Snogging vs Mean Girls",
+            "winner": "Angus, Thongs & Perfect Snogging",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Mean Girls",
+            "loser_user": "<@1238834298338152498>",
+            "score": "0-0"
         }
     ],
     "leaderboard": [
@@ -438,22 +452,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Angus, Thongs & Perfect Snogging",
-            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Mean Girls",
-            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {},
-        "channel_id": 1438277790179921971,
-        "message_id": 1462267248801616169
-    },
+    "current_match": null,
     "final_winner": null
 }
