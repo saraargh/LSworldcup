@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Pretty Woman",
-            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Pitch Perfect",
             "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
@@ -412,6 +400,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Pretty Woman",
+            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462463855513833575,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 6
+    },
     "final_winner": null
 }
