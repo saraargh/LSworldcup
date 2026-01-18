@@ -434,7 +434,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
             "user": "<@1238834298338152498>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "B"
+        },
         "channel_id": 1438277790179921971,
         "message_id": 1462314486240120893
     },
