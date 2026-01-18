@@ -196,7 +196,12 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "movie",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "bracket": [
         {
             "name": "Eternal Sunshine of The Spotless Mind",
