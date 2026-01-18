@@ -198,14 +198,16 @@ class HistoryView(ui.View):
         embed.set_footer(text=f"Page {self.page+1} of {total_pages}")
         return embed
 
-    @ui.button(label="<:left:1462297168382656732> Previous", style=discord.ButtonStyle.gray, custom_id="hist_prev")
+        return embed
+
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="hist_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
         self.page = max(0, self.page - 1)
         await interaction.response.edit_message(embed=self.create_embed())
 
-    @ui.button(label="Next <:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="hist_next")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="hist_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
@@ -251,7 +253,7 @@ class ItemGallery(ui.View):
             color=0x3498db
         )
 
-    @ui.button(label="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="gal_prev")
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="gal_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
@@ -259,13 +261,14 @@ class ItemGallery(ui.View):
             self.index = (self.index - 1) % len(self.items)
         await interaction.response.edit_message(embed=self.create_content())
 
-    @ui.button(label="<:right:1462297211659358444>️", style=discord.ButtonStyle.gray, custom_id="gal_next")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="gal_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
         if self.items:
             self.index = (self.index + 1) % len(self.items)
         await interaction.response.edit_message(embed=self.create_content())
+
 
     @ui.button(label="Toggle View (List/Gallery)", style=discord.ButtonStyle.blurple, custom_id="gal_toggle")
     async def toggle(self, interaction: discord.Interaction, button: ui.Button):
@@ -496,17 +499,20 @@ class ScoreboardView(discord.ui.View):
         embed.set_footer(text=f"Page {self.page + 1} of {total_pages} | The Landing Strip World Cup")
         return embed
 
-    @discord.ui.button(label="<:left:1462297168382656732> Newer", style=discord.ButtonStyle.secondary)
-    async def prev_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.page -= 1
-        self.update_buttons()
-        await interaction.response.edit_message(embed=self.create_embed(), view=self)
+    @ui.button(label="Newer", emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="sb_newer")
+    async def prev(self, interaction: discord.Interaction, button: ui.Button):
+        data, _ = load_data()
+        self.view_mode = "HISTORY"
+        self.page = max(0, self.page - 1)
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="Older <:right:1462297211659358444>", style=discord.ButtonStyle.secondary)
-    async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.page += 1
-        self.update_buttons()
-        await interaction.response.edit_message(embed=self.create_embed(), view=self)
+    @ui.button(label="Older", emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="sb_older")
+    async def next(self, interaction: discord.Interaction, button: ui.Button):
+        data, _ = load_data()
+        self.view_mode = "HISTORY"
+        if (self.page + 1) * 5 < len(self.matches):
+            self.page += 1
+        await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
 
 # =========================================================
