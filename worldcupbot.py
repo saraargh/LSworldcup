@@ -526,7 +526,7 @@ class ScoreboardView(ui.View):
                 for m in chunk:
                     description_text += (
                         f"<:swords:1462508037683282125> **{m['name']}**\n"
-                        f"<:fireee:1462508732012560562> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        f"**Winner:** <:fireee:1462508732012560562> {m['winner']}** ({m.get('score', '0-0')})\n\n"
                         )
                         
             embed.description = description_text
