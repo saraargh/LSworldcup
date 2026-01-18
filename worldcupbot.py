@@ -492,13 +492,14 @@ class WC_Bot(discord.Client):
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
-        # Registering the view here fixes the "Interaction Failed" after reboots
-        self.add_view(MatchView(None, None))
+        # We pass four 'None' values to match the new MatchView requirements
+        self.add_view(MatchView(None, None, None, None))
         await self.tree.sync()
         print(f"✅ Synced slash commands for {self.user}")
 
     async def on_ready(self):
         print(f"🚀 Logged in as {self.user}")
+
 
     # === TOURNAMENT LOGIC ===
     def calculate_stats(self, data, winner, runner_up):
