@@ -197,20 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "bracket": [],
     "winners_pool": [
         {
             "name": "Bridget Jones Diary",
@@ -447,6 +434,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462316962133704707
+    },
     "final_winner": null
 }
