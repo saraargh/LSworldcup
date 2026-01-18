@@ -139,7 +139,7 @@ def get_round_name(data):
     elif total_alive == 2:
         return "Grand Final"
     else:
-        return "Tournament Complete"
+        return "Grand Final"
 
 
 # =========================================================
@@ -619,7 +619,7 @@ class WC_Bot(discord.Client):
 
     # --- THE ENGINE: POST NEXT MATCH ---
 
-    async def post_next(self, channel):
+    async def post_next(self, channel, interaction=None):
         data, sha = load_data()
         
         # 1. Bracket logic
@@ -635,17 +635,14 @@ class WC_Bot(discord.Client):
                 data['status'] = "FINISHED"
                 data['current_match'] = None
                 save_data(data, sha)
-                winner = data['final_winner']
-                embed = discord.Embed(
-                    title="🏁 TOURNAMENT COMPLETE 🏁",
-                    description=f"The bracket has concluded! Use **/endcup** to crown the winner and archive the results.",
-                    color=0xf1c40f
-                )
-                return await channel.send(embed=embed)
+                # Removed the yellow embed. Now it just tells the admin privately.
+                if interaction:
+                    return await interaction.followup.send("✅ **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
+                return
             else:
                 data['status'] = "FINISHED"
                 save_data(data, sha)
-                return await channel.send("🎊 **Tournament Complete!**")
+                return
 
         # 2. Pop competitors
         comp_a = data['bracket'].pop(0)
@@ -655,10 +652,10 @@ class WC_Bot(discord.Client):
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # 4. Create the View & Message (Back to original simple call)
+        # 4. Create the View & Message
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below!", 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name if match_num < 31 else '🏆 World Cup Final'}: Match {match_num}** is now LIVE - Cast your votes below!", 
             embed=view.create_embed(0),
             view=view
         )
@@ -685,8 +682,10 @@ class WC_Bot(discord.Client):
 
 
 
+
     # --- THE ENGINE: RESOLVE MATCH ---
-    async def resolve_match(self, data, sha):
+
+    async def resolve_match(self, data, sha, interaction=None):
         async with self.processing_lock:
             match = data.get('current_match')
             if not match:
@@ -696,12 +695,9 @@ class WC_Bot(discord.Client):
             if not channel:
                 channel = await self.fetch_channel(match['channel_id'])
 
-            # 1. Count Votes
             votes = list(match.get('votes', {}).values())
-            count_a = votes.count("A")
-            count_b = votes.count("B")
+            count_a, count_b = votes.count("A"), votes.count("B")
 
-            # 2. Determine Winner & Loser
             if count_a >= count_b:
                 winner, loser = match['item_a'], match['item_b']
                 winning_score, losing_score = count_a, count_b
@@ -709,7 +705,6 @@ class WC_Bot(discord.Client):
                 winner, loser = match['item_b'], match['item_a']
                 winning_score, losing_score = count_b, count_a
 
-            # 3. Archive Results for Scoreboard
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'],
@@ -718,42 +713,37 @@ class WC_Bot(discord.Client):
                 "score": f"{count_a}-{count_b}"
             })
 
-            # 4. Move Winner to next round pool
             data.setdefault('winners_pool', []).append(winner)
-            
-            # 5. Clean up current match state
             old_msg_id = match['message_id']
             data['current_match'] = None
             save_data(data, sha)
 
-            # 6. Unpin old match (Keeps the channel clean)
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
             except:
                 pass
 
-            # 7. THE WINNER EMBED (Restored Hype Version)
-            win_embed = discord.Embed(
-                title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
-                description=f"### {winner['name']} has DEFEATED {loser['name']}! <:beluga:1462299704107991172>",
-                color=0x2ecc71 # Victory Green
-            )
-            win_embed.add_field(name="Final Score", value=f"<:tick:1462508738194837606> **{winning_score}** —  <:cross:1462508739671101560> **{losing_score}**", inline=False)
-            win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
-            win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
-            
-            # Show the winning entry's image in the announcement
-            if winner.get('image'):
-                win_embed.set_thumbnail(url=winner['image'])
-            
-            win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
+            # CHECK: Is this the final match of the whole cup?
+            is_cup_final = (len(data.get('bracket', [])) == 0 and len(data.get('winners_pool', [])) == 1)
 
-            await channel.send(embed=win_embed)
+            # Only send the "DEFEATED" embed if it's NOT the final match
+            if not is_cup_final:
+                win_embed = discord.Embed(
+                    title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
+                    description=f"### {winner['name']} has DEFEATED {loser['name']}! <:beluga:1462299704107991172>",
+                    color=0x2ecc71 
+                )
+                win_embed.add_field(name="Final Score", value=f"<:tick:1462508738194837606> **{winning_score}** —  <:cross:1462508739671101560> **{losing_score}**", inline=False)
+                win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
+                win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
+                if winner.get('image'):
+                    win_embed.set_thumbnail(url=winner['image'])
+                win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
+                await channel.send(embed=win_embed)
             
-            # 8. Pause for effect, then post the next match
             await asyncio.sleep(4) 
-            await self.post_next(channel)
+            await self.post_next(channel, interaction)
 
 
 # --- CLASS ENDS HERE ---
@@ -910,11 +900,11 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    # 1. DO THIS FIRST. No code, no loading, nothing should be above this.
+    # 1. DO THIS FIRST.
     try:
         await interaction.response.defer(ephemeral=True)
     except:
-        pass # If it already deferred, ignore
+        pass 
 
     # 2. NOW do the slow work
     data, sha = load_data()
@@ -923,9 +913,10 @@ async def nextmatch(interaction: discord.Interaction):
         return await interaction.followup.send("<:cross:1462508739671101560> No match is currently active.")
 
     # 3. Resolve and move on
-    # Using followup.send because we already deferred
     await interaction.followup.send("<:processing:1462521277276225699> Closing votes and starting next match...")
-    await bot.resolve_match(data, sha)
+    # Pass 'interaction' here so resolve_match/post_next can use it
+    await bot.resolve_match(data, sha, interaction) 
+
 
 
 
