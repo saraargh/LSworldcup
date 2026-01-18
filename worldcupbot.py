@@ -738,19 +738,24 @@ async def startworldcup(interaction: discord.Interaction):
     if item_count != 32:
         return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})")
     
-    random.shuffle(data['items'])
-    data['bracket'] = list(data['items'])
+    # 1. Shuffle the 32 individual items
+    items_to_start = list(data['items'])
+    random.shuffle(items_to_start)
+    
+    # 2. Set the data so post_next can do its job
+    data['bracket'] = items_to_start  # 32 items in a flat list
     data['finished_matches'] = []
     data['winners_pool'] = []
     data['status'] = "MATCH_ACTIVE"
-    data['current_match'] = None # Ensure clean start
+    data['current_match'] = None # post_next will fill this in a second
     
     save_data(data, sha)
     
     await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
     
-    # We call post_next from the bot instance
+    # 3. Trigger post_next - it will pop the first 2 items from the bracket
     await bot.post_next(interaction.channel)
+
 
 
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
