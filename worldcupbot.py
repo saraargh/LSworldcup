@@ -305,33 +305,35 @@ class MatchView(discord.ui.View):
         
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 1. Currently Viewing (Top)
+        # 1. Currently Viewing
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # 2. Description Section (Left exactly as you have it)
+        # 2. Description Section
         desc_text = viewing.get('desc', 'No description provided.')
-        embed.add_field(
-            name="\u200b", 
-            value=f"**Description:** {desc_text}", 
-            inline=False
-        )
+        embed.add_field(name="\u200b", value=f"Description: {desc_text}", inline=False)
         
-        # 3. Submitter Section (Left exactly as you have it)
+        # 3. Submitter Section
         submitter = viewing.get('user', 'Unknown')
-        embed.add_field(
-            name="\u200b",
-            value=f"submitted by: {submitter}",
-            inline=False
-        )
+        embed.add_field(name="\u200b", value=f"submitted by: {submitter}", inline=False)
         
-        # 4. Image (Main center content)
+        # 4. Image
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
             
-        # 5. Standings (Moved to Footer to be under the image)
-        embed.set_footer(text=f"🗳️ Current Standings: {self.item_a['name']} ({cA}) — {self.item_b['name']} ({cB})\nThe Landing Strip World Cup System")
+        # 5. Standings (NOW ON NEW LINES BELOW THE IMAGE)
+        # Using a field here allows for the vertical list you want
+        standings_text = (
+            f"🗳️ **Current Standings:**\n"
+            f"{self.item_a['name']} ({cA})\n"
+            f"{self.item_b['name']} ({cB})"
+        )
+        embed.add_field(name="\u200b", value=standings_text, inline=False)
+
+        # 6. Optional Clean Footer
+        embed.set_footer(text="The Landing Strip World Cup System")
         
         return embed
+
 
     @discord.ui.button(label="⬅️", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
