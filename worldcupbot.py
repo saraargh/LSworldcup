@@ -386,7 +386,7 @@ class EndConfirmView(ui.View):
 
         # 3. Reset Data
         self.data.update({
-            "status": "IDLE", "items": [], "suggestions": [], 
+            "status": "IDLE", "suggestions": [], 
             "bracket": [], "winners_pool": [], "finished_matches": [],
             "current_match": None, "current_cat": None, "final_winner": None
         })
