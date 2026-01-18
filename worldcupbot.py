@@ -493,16 +493,31 @@ class WC_Bot(discord.Client):
         self.processing_lock = asyncio.Lock()
 
     async def setup_hook(self):
-        # Registering these here makes buttons work even after the bot reboots
-        self.add_view(MatchView(None, None, None, None))
+        # 1. Pull the actual saved data from GitHub on boot
+        data, _ = load_data()
+        match = data.get("current_match")
+
+        if match and match.get('item_a') and match.get('item_b'):
+            # 2. Register the view with the REAL data so it's not None
+            self.add_view(MatchView(
+                match['item_a'], 
+                match['item_b'], 
+                match.get('round_name'), 
+                match.get('match_num')
+            ))
+            print("✅ Restored active match from storage.")
+        else:
+            # 3. Only use None if there is literally no match in the JSON
+            self.add_view(MatchView(None, None, None, None))
+            
+        # Register other views
         self.add_view(ScoreboardView())
         self.add_view(ItemGallery())
         self.add_view(HistoryView())
+        
         await self.tree.sync()
         print(f"✅ Synced slash commands for {self.user}")
 
-    async def on_ready(self):
-        print(f"🚀 Logged in as {self.user}")
 
     # --- THE ENGINE: POST NEXT MATCH ---
     async def post_next(self, channel):
