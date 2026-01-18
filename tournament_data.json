@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging",
-            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "10 things i hate about you",
             "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
@@ -462,6 +450,22 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Clueless",
+            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Angus, Thongs & Perfect Snogging",
+            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "channel_id": 1438277790179921971,
+        "message_id": 1462273671732265112
+    },
     "final_winner": null
 }
