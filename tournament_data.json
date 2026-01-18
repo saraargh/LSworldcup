@@ -196,7 +196,12 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "moviess",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "bracket": [
         {
             "name": "13 Going on 30",
