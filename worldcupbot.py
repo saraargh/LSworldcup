@@ -10,6 +10,9 @@ import base64
 import requests
 import asyncio
 import os
+import discord
+from bot_utils import load_data, save_data  # Ensure these are your utility functions
+
 
 # =========================================================
 # KEEP ALIVE SERVER (Render 24/7)
@@ -493,10 +496,7 @@ class ScoreboardView(discord.ui.View):
 # BOT CORE CLASS
 # =========================================================
 
-import discord
-from discord import app_commands
-import asyncio
-from bot_utils import load_data, save_data  # Ensure these are your utility functions
+
 
 class WC_Bot(discord.Client):
     def __init__(self):
