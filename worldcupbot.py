@@ -289,25 +289,20 @@ class MatchView(ui.View):
             self.vote_a.label = f"Vote for {self.item_a['name']}"
             self.vote_b.label = f"Vote for {self.item_b['name']}"
 
-    def create_embed(self, page):
-        """Standard embed creation with live data fetch and safety checks."""
-        data, _ = load_data()
-        match = data.get("current_match")
+    def create_embed(self, page, match_data=None):
+        # 1. Use passed data if available, otherwise fetch from GitHub
+        if match_data:
+            match = match_data
+        else:
+            data, _ = load_data()
+            match = data.get("current_match", {})
         
-        # If match is missing or mid-save, show a placeholder instead of an Error block
-        if not match or not self.item_a or not self.item_b:
-            embed = discord.Embed(
-                title="🔄 Loading Match Data...",
-                description="The bracket is updating. Please wait a moment.",
-                color=0x95a5a6
-            )
-            return embed
-
-        votes = match.get("votes", {})
+        # 2. Extract votes safely (defaults to empty if match is None)
+        votes = match.get("votes", {}) if match else {}
         count_a = list(votes.values()).count("A")
         count_b = list(votes.values()).count("B")
 
-        # Determine which item to show based on 'page' (0 for A, 1 for B)
+        # 3. Build the embed using the items stored in 'self'
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
         
@@ -322,8 +317,9 @@ class MatchView(ui.View):
             inline=False
         )
         embed.set_image(url=item['image'])
-        embed.set_footer(text=f"Total Votes Cast: {len(votes)} | The Landing Strip World Cup System 🏁✨")
+        embed.set_footer(text=f"Total Votes Cast: {len(votes)}")
         return embed
+
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
