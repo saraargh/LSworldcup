@@ -306,7 +306,7 @@ class MatchView(ui.View):
         color = 0xff4757 if page == 0 else 0x2e86de
         
         embed = discord.Embed(
-            title=f"⚔️ {self.round_name} - Match {self.match_num}",
+            title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
             description=f"**Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
             color=color
         )
