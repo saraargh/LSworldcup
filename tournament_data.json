@@ -319,6 +319,12 @@
             "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Miss Congeliality",
+            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -391,6 +397,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "just like heaven",
             "score": "0-1"
+        },
+        {
+            "name": "Pitch Perfect vs Miss Congeliality",
+            "winner": "Miss Congeliality",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Pitch Perfect",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -405,26 +418,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Pitch Perfect",
-            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Miss Congeliality",
-            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462511976587723129,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 11
-    },
+    "current_match": null,
     "final_winner": null
 }
