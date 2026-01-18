@@ -343,6 +343,12 @@
             "desc": "Spanning decades, The Notebook tells the enduring love story of Noah and Allie\u2014two people drawn together by passion, separated by circumstance, and bound by memory. Framed through an elderly man reading from a notebook, the film explores devotion, loss, and the quiet heroism of loving someone fully. Intensely romantic and unapologetically emotional, it leans into grand gestures and heartbreak, making it a staple for anyone who believes love can be both beautiful and devastating\u2014and worth it anyway.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380335878144173/IMG_9308.jpg?ex=696a57ff&is=6969067f&hm=1bf46f08ca37f630982a54f83448b0b9754a36d987004ea99b843d2bc71fbf5d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -387,6 +393,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "Pretty Woman",
             "score": "1-0"
+        },
+        {
+            "name": "He\u2019s just not that into you vs Something Borrowed",
+            "winner": "Something Borrowed",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "He\u2019s just not that into you",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -401,26 +414,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462503802929156391,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 7
-    },
+    "current_match": null,
     "final_winner": null
 }
