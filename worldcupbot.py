@@ -1273,11 +1273,11 @@ async def status(interaction: discord.Interaction):
                 f"**Match Progress:** {current_num} of {total_matches}\n"
                 f"`{bar}`\n\n"
                 f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"<:graph:1462508734663233751> **Total Votes cast so far:** {vote_count}"
+                f"**Total Votes:** {vote_count}"
                 f"{time_info}"
             )
         else:
-            embed.description = "🔄 **Processing...** Moving to the next match."
+            embed.description = "<:processing:1462521277276225699> **Processing...** Moving to the next match."
 
     elif status_mode == "FINISHED":
         winner = data.get('final_winner')
@@ -1289,7 +1289,7 @@ async def status(interaction: discord.Interaction):
         if winner:
             embed.set_thumbnail(url=winner['image'])
 
-    embed.set_footer(text="The Landing Strip World Cup System")
+    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
     await interaction.followup.send(embed=embed)
 
 
