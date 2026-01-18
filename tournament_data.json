@@ -430,7 +430,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
             "user": "<@1238834298338152498>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "A"
+        },
         "channel_id": 1438277790179921971,
         "message_id": 1462308601728340100
     },
