@@ -1,6 +1,6 @@
 {
-    "status": "FINISHED",
-    "current_cat": "movie",
+    "status": "IDLE",
+    "current_cat": null,
     "title": [],
     "items": [
         {
@@ -197,213 +197,9 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "Love Actually",
-            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
-    "winners_pool": [
-        {
-            "name": "Eternal Sunshine of The Spotless Mind",
-            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
-    "finished_matches": [
-        {
-            "name": "Mean Girls vs Wild Child",
-            "winner": "Mean Girls",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Wild Child",
-            "score": "1-0"
-        },
-        {
-            "name": "50 first dates vs 10 things i hate about you",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "50 first dates",
-            "score": "0-1"
-        },
-        {
-            "name": "Mamma mia! vs Eternal Sunshine of The Spotless Mind",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Mamma mia!",
-            "score": "0-1"
-        },
-        {
-            "name": "Confessions of a Shopaholic vs Bridget Jones Diary",
-            "winner": "Bridget Jones Diary",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Confessions of a Shopaholic",
-            "score": "0-1"
-        },
-        {
-            "name": "A cinderella story vs Sisterhood of the travelling pants",
-            "winner": "A cinderella story",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Sisterhood of the travelling pants",
-            "score": "1-0"
-        },
-        {
-            "name": "The Notebook vs Pretty Woman",
-            "winner": "The Notebook",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Pretty Woman",
-            "score": "1-0"
-        },
-        {
-            "name": "He\u2019s just not that into you vs Something Borrowed",
-            "winner": "Something Borrowed",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "He\u2019s just not that into you",
-            "score": "0-1"
-        },
-        {
-            "name": "Bend it like beckham vs the devil wears prada",
-            "winner": "Bend it like beckham",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "the devil wears prada",
-            "score": "1-0"
-        },
-        {
-            "name": "White Chicks vs How to lose a guy in 10 days",
-            "winner": "How to lose a guy in 10 days",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "White Chicks",
-            "score": "0-1"
-        },
-        {
-            "name": "just like heaven vs Love Actually",
-            "winner": "Love Actually",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "just like heaven",
-            "score": "0-1"
-        },
-        {
-            "name": "Pitch Perfect vs Miss Congeliality",
-            "winner": "Miss Congeliality",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Pitch Perfect",
-            "score": "0-1"
-        },
-        {
-            "name": "Chloe vs When harry met sally",
-            "winner": "Chloe",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "When harry met sally",
-            "score": "1-0"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs legally blonde",
-            "winner": "legally blonde",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Angus, Thongs & Perfect Snogging",
-            "score": "0-1"
-        },
-        {
-            "name": "Camp Rock vs 13 Going on 30",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "13 Going on 30",
-            "score": "2-0"
-        },
-        {
-            "name": "Cruel Intentions vs Just my luck",
-            "winner": "Cruel Intentions",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Just my luck",
-            "score": "1-1"
-        },
-        {
-            "name": "500 days of summer vs Clueless",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Clueless",
-            "score": "1-1"
-        },
-        {
-            "name": "Mean Girls vs 10 things i hate about you",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Mean Girls",
-            "score": "0-1"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind vs Bridget Jones Diary",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Bridget Jones Diary",
-            "score": "2-0"
-        },
-        {
-            "name": "A cinderella story vs The Notebook",
-            "winner": "A cinderella story",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "The Notebook",
-            "score": "1-0"
-        },
-        {
-            "name": "Something Borrowed vs Bend it like beckham",
-            "winner": "Bend it like beckham",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Something Borrowed",
-            "score": "0-1"
-        },
-        {
-            "name": "How to lose a guy in 10 days vs Love Actually",
-            "winner": "Love Actually",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "How to lose a guy in 10 days",
-            "score": "0-1"
-        },
-        {
-            "name": "legally blonde vs Camp Rock",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "legally blonde",
-            "score": "0-1"
-        },
-        {
-            "name": "Cruel Intentions vs 500 days of summer",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Cruel Intentions",
-            "score": "0-1"
-        },
-        {
-            "name": "10 things i hate about you vs Eternal Sunshine of The Spotless Mind",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "10 things i hate about you",
-            "score": "0-2"
-        },
-        {
-            "name": "A cinderella story vs Bend it like beckham",
-            "winner": "A cinderella story",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Bend it like beckham",
-            "score": "1-0"
-        },
-        {
-            "name": "Love Actually vs Camp Rock",
-            "winner": "Love Actually",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "Camp Rock",
-            "score": "1-0"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind vs A cinderella story",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser_name": "A cinderella story",
-            "score": "2-1"
-        }
-    ],
+    "bracket": [],
+    "winners_pool": [],
+    "finished_matches": [],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -414,13 +210,13 @@
             "user": "<@1248020591823425626>",
             "item": "Ghost Stories (Dub)",
             "cat": "Anime"
+        },
+        {
+            "item": "Eternal Sunshine of The Spotless Mind",
+            "cat": "movie",
+            "user": "<@1238834298338152498>"
         }
     ],
     "current_match": null,
-    "final_winner": {
-        "name": "Eternal Sunshine of The Spotless Mind",
-        "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-        "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-        "user": "<@1238834298338152498>"
-    }
+    "final_winner": null
 }
