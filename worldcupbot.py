@@ -470,7 +470,7 @@ class EndConfirmView(ui.View):
                     description=f"# 👑 {winner['name'].upper()} <:winner:1462297763260923946>\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
-                embed.add_field(name="SPECIAL MENTIONS 🗯️✨", value=mentions, inline=False)
+                embed.add_field(name="SPECIAL MENTIONS <:speechbubble:1462490467315744828>✨", value=mentions, inline=False)
                 embed.set_image(url=winner['image'])
             
             # Save to leaderboard
