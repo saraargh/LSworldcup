@@ -294,6 +294,13 @@ class MatchView(ui.View):
             self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
+        # Fetch current vote totals
+        data, _ = load_data()
+        match = data.get("current_match", {})
+        votes = match.get("votes", {})
+        count_a = list(votes.values()).count("A")
+        count_b = list(votes.values()).count("B")
+
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
         
@@ -304,9 +311,18 @@ class MatchView(ui.View):
             description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
+
+        # Added vote tally field
+        embed.add_field(
+            name="\n\n📊 **Current Standings**", 
+            value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
+            inline=False
+        )
+
         embed.set_image(url=item['image'])
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
+
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
