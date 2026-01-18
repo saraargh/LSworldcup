@@ -57,26 +57,7 @@ STORAGE_CHANNEL_ID = 1461047591528562801
 # =========================================================
 # DATA PERSISTENCE (GITHUB SYNC LOGIC)
 # =========================================================
-def load_data():
-    try:
-        # Prevent GitHub caching with a random number
-        cache_buster = random.randint(1, 999999)
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
-        params = {"ref": GITHUB_BRANCH, "cb": cache_buster}
-        
-        response = requests.get(url, headers=HEADERS, params=params, timeout=20)
-        
-        if response.status_code == 200:
-            content = response.json()
-            # Decode Base64 from GitHub
-            decoded_bytes = base64.b64decode(content["content"])
-            decoded_str = decoded_bytes.decode()
-            return json.loads(decoded_str), content.get("sha")
-            
-    except Exception as e:
-        print(f"CRITICAL LOAD ERROR: {e}")
-        
-    # Return default template if load fails
+def default_data():
     return {
         "status": "IDLE",
         "title": "The Landing Strip World Cup",
@@ -89,7 +70,49 @@ def load_data():
         "current_match": None,
         "current_cat": None,
         "final_winner": None
-    }, None
+    }
+
+def load_data():
+    try:
+        cache_buster = random.randint(1, 999999)
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+        params = {"ref": GITHUB_BRANCH, "cb": cache_buster}
+
+        r = requests.get(url, headers=HEADERS, params=params, timeout=20)
+
+        if r.status_code != 200:
+            print(f"LOAD WARNING: GitHub status {r.status_code}: {r.text[:200]}")
+            return default_data(), None
+
+        content = r.json() or {}
+        raw_b64 = content.get("content")
+        sha = content.get("sha")
+
+        if not raw_b64:
+            print("LOAD WARNING: No 'content' field from GitHub")
+            return default_data(), sha
+
+        decoded = base64.b64decode(raw_b64).decode("utf-8", errors="replace")
+        loaded = json.loads(decoded)
+
+        # ✅ If JSON is 'null' or not an object, never return None
+        if not isinstance(loaded, dict):
+            print(f"LOAD WARNING: JSON was {type(loaded)} not dict (maybe null).")
+            return default_data(), sha
+
+        # ✅ Merge defaults so missing keys never break anything
+        d = default_data()
+        d.update(loaded)
+
+        # ✅ Fix bad types you already have in your file (title: [])
+        if not isinstance(d.get("title"), str):
+            d["title"] = "The Landing Strip World Cup"
+
+        return d, sha
+
+    except Exception as e:
+        print(f"CRITICAL LOAD ERROR: {e}")
+        return default_data(), None
 
 def save_data(data, sha=None):
     # If SHA isn't provided, fetch it so we can overwrite
@@ -761,27 +784,22 @@ async def startworldcup(interaction: discord.Interaction):
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    await interaction.response.defer(ephemeral=True)
     try:
-        data, sha = load_data()
-        
-        # LOCKED IN: Force use of /endcup if winner exists
-        if data.get('final_winner') or data.get('status') == "FINISHED":
-            await interaction.followup.send(
-                "<:worldcup:1462292819526815877> **Winner Detected!** You must run `/endcup` to post the winning embed and reset the system.",
-                ephemeral=True
-            )
-            return
+        await interaction.response.defer(ephemeral=True)
+    except:
+        pass
 
-        if data.get('current_match'):
-            await bot.resolve_match(data, sha)
-            await interaction.followup.send("✅ Match resolved.", ephemeral=True)
-        else:
-            await bot.post_next(interaction.channel)
-            await interaction.followup.send("🚀 Next match posted!", ephemeral=True)
-            
-    except Exception as e:
-        await interaction.followup.send(f"❌ Error: {e}", ephemeral=True)
+    data, sha = load_data()
+
+    # safety guard only (doesn't add any new actions)
+    if not isinstance(data, dict):
+        return await interaction.followup.send("❌ Data failed to load. Try again in a moment.", ephemeral=True)
+
+    if not data.get('current_match'):
+        return await interaction.followup.send("❌ No match is currently active.")
+
+    await interaction.followup.send("🔄 Closing votes and starting next match...")
+    await bot.resolve_match(data, sha)
 
 
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
