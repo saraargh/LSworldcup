@@ -306,7 +306,7 @@ class MatchView(discord.ui.View):
         cA, cB = votes.count("A"), votes.count("B")
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
-        embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
+        embed = discord.Embed(title=f"⚔️ {round_name} - {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
         # 1. Currently Viewing
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}\n", inline=False)
@@ -1143,9 +1143,10 @@ async def currentvotes(interaction: discord.Interaction):
 @bot.tree.command(name="status", description="Check tournament progress and time remaining")
 async def status(interaction: discord.Interaction):
     await interaction.response.defer()
+    
     data, _ = load_data()
     status_mode = data.get('status', 'IDLE')
-    embed = discord.Embed(title="<:worldcup:1462292819526815877> World Cup Dashboard", color=0x3498db)
+    embed = discord.Embed(title="🏆 World Cup Dashboard", color=0x3498db)
     
     if status_mode == "IDLE":
         embed.description = "The bot is currently **Idle**. Waiting for an admin to open suggestions."
@@ -1153,58 +1154,76 @@ async def status(interaction: discord.Interaction):
     elif status_mode == "SUGGESTIONS_OPEN":
         count = len(data.get('suggestions', []))
         embed.description = (
-            f"💡 **Theme Suggestions Open**\n\n"
-            f"Total Suggestions: **{count}**\n"
-            f"Use `/suggestcategory`!"
+            "💡 **Theme Suggestions**\n"
+            "We are currently collecting themes! Use `/suggestcategory` to join in.\n\n"
+            f"**Total Suggestions:** {count}"
         )
         
     elif status_mode == "ADDING_ITEMS":
         count = len(data.get('items', []))
-        filled = int((count / 32) * 10)
-        bar = "🟩" * filled + "⬜" * (10 - filled)
+        # Progress bar for item submissions (0 to 32)
+        pct = int((count / 32) * 10)
+        bar = "🟩" * pct + "⬜" * (10 - pct)
         embed.description = (
-            f"📦 **Submissions: {data.get('current_cat', 'Tournament').upper()}**\n\n"
-            f"Entries: {count}/32\n"
-            f"`{bar}`"
+            f"📦 **Submissions**\nTheme: **{data['current_cat'].upper()}**\n"
+            f"Submit entries with `/additem`!\n\n"
+            f"**Entries:** {count}/32\n`{bar}`"
         )
         
     elif status_mode == "MATCH_ACTIVE":
         match = data.get('current_match')
         if match:
+            vote_count = len(match.get('votes', {}))
             round_name = get_round_name(data)
             
-            # Timer Logic
+            # Match Progress (31 total matches in a 32-item bracket)
+            current_num = len(data.get('finished_matches', [])) + 1
+            total_matches = 31 
+            
+            # Progress bar for the tournament
+            pct = int((current_num / total_matches) * 10)
+            bar = "🟩" * pct + "⬜" * (10 - pct)
+            
             time_info = ""
             start_str = match.get("start_time")
             if start_str:
-                start_dt = datetime.datetime.fromisoformat(start_str)
-                end_dt = start_dt + datetime.timedelta(hours=24)
-                unix_end = int(end_dt.timestamp())
-                time_info = f"\n⏳ **Match ends:** <t:{unix_end}:R>"
+                start_time = datetime.datetime.fromisoformat(start_str)
+                end_time = start_time + datetime.timedelta(hours=24)
+                remaining = end_time - datetime.datetime.now()
+                
+                if remaining.total_seconds() > 0:
+                    hours, remainder = divmod(int(remaining.total_seconds()), 3600)
+                    minutes, _ = divmod(remainder, 60)
+                    time_info = f"\n⏳ **Time Remaining:** {hours}h {minutes}m"
+                else:
+                    time_info = "\n✅ **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"⚔️ **Current Stage:** {round_name}\n\n"
-                f"**Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"📊 **Votes cast:** {len(match.get('votes', {}))}"
+                f"⚔️ **Matches Live**\n"
+                f"Theme: **{data['current_cat'].upper()}**\n\n"
+                f"**Current Round:** {round_name}\n"
+                f"**Match Progress:** {current_num} of {total_matches}\n"
+                f"`{bar}`\n\n"
+                f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
+                f"📊 **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
         else:
-            embed.description = "🔄 **Processing...** Next match loading."
+            embed.description = "🔄 **Processing...** Moving to the next match."
 
     elif status_mode == "FINISHED":
         winner = data.get('final_winner')
+        embed.description = (
+            f"🏁 **Tournament Complete**\n"
+            f"The champion of **{data['current_cat']}** is **{winner['name']}**!\n\n"
+            "Waiting for admins to archive and reset."
+        )
         if winner:
-            embed.description = (
-                f"🏁 **Tournament Complete!**\n\n"
-                f"The champion is **{winner['name']}**!\n\n"
-                "⚠️ **Admin:** Use `/endcup` to crown the winner and reset."
-            )
             embed.set_thumbnail(url=winner['image'])
-        else:
-            embed.description = "Tournament finished, but no winner was recorded."
 
-    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    embed.set_footer(text="The Landing Strip World Cup System")
     await interaction.followup.send(embed=embed)
+
 
 
 # =========================================================
