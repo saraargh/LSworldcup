@@ -281,7 +281,7 @@ class ItemGallery(ui.View):
         await interaction.response.edit_message(embed=self.create_content())
 
 
-cclass MatchView(ui.View):
+class MatchView(ui.View):
     def __init__(self, item_a, item_b, round_name=None, match_num=None):
         super().__init__(timeout=None)
         self.item_a = item_a
