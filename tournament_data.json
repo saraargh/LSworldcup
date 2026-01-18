@@ -1,6 +1,6 @@
 {
-    "status": "MATCH_ACTIVE",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "moviess",
     "title": [],
     "items": [
         {
@@ -196,12 +196,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [
-        {
-            "name": "moviess",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [
         {
             "name": "How to lose a guy in 10 days",
