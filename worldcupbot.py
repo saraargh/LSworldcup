@@ -415,7 +415,7 @@ class EndConfirmView(ui.View):
             self.confirm_end.label = f"<:cutecup:1462480543449874442> CROWN {winner['name'].upper()}"
         else:
             self.confirm_end.style = discord.ButtonStyle.danger
-            self.confirm_end.label = "⚠️ CONFIRM: END TOURNAMENT EARLY"
+            self.confirm_end.label = "CONFIRM: END TOURNAMENT EARLY"
 
     @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
