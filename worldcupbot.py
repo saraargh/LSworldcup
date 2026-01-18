@@ -402,8 +402,6 @@ class MatchView(ui.View):
         await interaction.message.edit(embed=self.create_embed(current_page))
 
 
-
-
 class EndConfirmView(ui.View):
     def __init__(self, data, sha, is_early=False):
         super().__init__(timeout=60)
@@ -411,30 +409,69 @@ class EndConfirmView(ui.View):
         self.sha = sha
         self.is_early = is_early
         
-        # Check if there is a winner to determine button style
         winner = self.data.get("final_winner")
-        
         if winner:
-            # Tournament finished naturally
-            self.confirm_end.style = discord.ButtonStyle.success # Green
+            self.confirm_end.style = discord.ButtonStyle.success
             self.confirm_end.label = f"🏆 CROWN {winner['name'].upper()}"
         else:
-            # Tournament is being ended manually/early
-            self.confirm_end.style = discord.ButtonStyle.danger # Red
+            self.confirm_end.style = discord.ButtonStyle.danger
             self.confirm_end.label = "⚠️ CONFIRM: END TOURNAMENT EARLY"
 
     @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
         winner = self.data.get("final_winner")
         
-        # 1. Announce Winner
         if winner:
-            embed = discord.Embed(
-                title="🎊 CHAMPION CROWNED 🎊", 
-                description=f"# 👑 {winner['name'].upper()} 👑\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
-                color=0xf1c40f
-            )
-            embed.set_image(url=winner['image'])
+            history = self.data.get('finished_matches', [])
+            stats = {} # { "Movie Name": {"votes": X, "user": "Name"} }
+
+            for m in history:
+                votes = m.get('votes', {})
+                # Process Item A
+                na = m['item_a']['name']
+                stats.setdefault(na, {"votes": 0, "user": m['item_a'].get('user', 'Unknown')})
+                stats[na]["votes"] += list(votes.values()).count("A")
+                # Process Item B
+                nb = m['item_b']['name']
+                stats.setdefault(nb, {"votes": 0, "user": m['item_b'].get('user', 'Unknown')})
+                stats[nb]["votes"] += list(votes.values()).count("B")
+
+            if stats:
+                sorted_stats = sorted(stats.items(), key=lambda x: x[1]['votes'], reverse=True)
+                
+                # Logic for Most/Least Voted with Tie Handling
+                max_v = max(s['votes'] for s in stats.values())
+                min_v = min(s['votes'] for s in stats.values())
+                
+                most_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == max_v]
+                least_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == min_v]
+
+                # Podium items
+                second_text = "N/A"
+                if len(sorted_stats) > 1:
+                    n2, d2 = sorted_stats[1]
+                    second_text = f"{n2} (by {d2['user']})"
+                
+                third_text = "N/A"
+                if len(sorted_stats) > 2:
+                    n3, d3 = sorted_stats[2]
+                    third_text = f"{n3} (by {d3['user']})"
+
+                # --- BUILD THE SPECIAL MENTIONS STRING ---
+                mentions = (
+                    f"🥈 **Second Place:** {second_text}\n"
+                    f"🥉 **Third Place:** {third_text}\n\n"
+                    f"<:spongebob:1462295496637812817> **Most Votes Received:** {', '.join(most_list)} — **{max_v} votes**\n"
+                    f"<:patrick:1462296137921728533> **Least Votes Received:** {', '.join(least_list)} — **{min_v} votes**"
+                )
+
+                embed = discord.Embed(
+                    title="🎊 CHAMPION CROWNED 🎊", 
+                    description=f"# 👑 {winner['name'].upper()} 👑\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
+                    color=0xf1c40f
+                )
+                embed.add_field(name="SPECIAL MENTIONS 🗯️✨", value=mentions, inline=False)
+                embed.set_image(url=winner['image'])
             
             # Save to leaderboard
             self.data.setdefault('leaderboard', []).append({
@@ -446,29 +483,26 @@ class EndConfirmView(ui.View):
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
-        # 2. Sweep/Unpin all bot messages in the channel
+        # 2. Sweep Pins
         try:
             pins = await interaction.channel.pins()
             for pin in pins:
                 if pin.author.id == interaction.client.user.id:
                     await pin.unpin()
-        except:
-            pass
+        except: pass
 
         # 3. Reset Data
         self.data.update({
-            "status": "IDLE", 
-            "suggestions": [], 
-            "bracket": [], 
-            "winners_pool": [], 
-            "finished_matches": [],
-            "current_match": None, 
-            "current_cat": None, 
-            "final_winner": None
+            "status": "IDLE", "suggestions": [], "bracket": [], "winners_pool": [], 
+            "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None
         })
         
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament wiped, pins cleared, and bot reset.**", view=None)
+
+
+
+
 
 class ScoreboardView(ui.View):
     def __init__(self, matches=None):
