@@ -373,6 +373,12 @@
             "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Camp Rock",
+            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -381,6 +387,13 @@
             "winner": "Cruel Intentions",
             "winner_user": "<@1238834298338152498>",
             "loser_name": "The Notebook",
+            "score": "0-1"
+        },
+        {
+            "name": "Angus, Thongs & Perfect Snogging vs Camp Rock",
+            "winner": "Camp Rock",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Angus, Thongs & Perfect Snogging",
             "score": "0-1"
         }
     ],
@@ -396,26 +409,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Angus, Thongs & Perfect Snogging",
-            "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462468403997446165,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 2
-    },
+    "current_match": null,
     "final_winner": null
 }
