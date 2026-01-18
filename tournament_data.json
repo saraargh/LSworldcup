@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Mamma mia!",
-            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind",
-            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Confessions of a Shopaholic",
             "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
@@ -409,6 +397,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Mamma mia!",
+            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Eternal Sunshine of The Spotless Mind",
+            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462490049064210495,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 3
+    },
     "final_winner": null
 }
