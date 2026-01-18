@@ -312,7 +312,7 @@ class MatchView(ui.View):
             color=color
         )
         embed.add_field(
-            name="\n\n📊 Live Standings", 
+            name="\n\n<:graph:1462488724746014881> Live Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
@@ -341,7 +341,7 @@ class MatchView(ui.View):
         list_a = [f"<@{uid}>" for uid, choice in votes.items() if choice == "A"]
         list_b = [f"<@{uid}>" for uid, choice in votes.items() if choice == "B"]
         
-        embed = discord.Embed(title="📊 Current Voter Breakdown", color=0x95a5a6)
+        embed = discord.Embed(title="<:graph:1462488724746014881> Current Voter Breakdown", color=0x95a5a6)
         embed.add_field(name=f"Votes for {self.item_a['name']}", value="\n".join(list_a) if list_a else "None", inline=True)
         embed.add_field(name=f"Votes for {self.item_b['name']}", value="\n".join(list_b) if list_b else "None", inline=True)
         
@@ -517,7 +517,7 @@ class ScoreboardView(ui.View):
         if self.view_mode == "HISTORY":
             start = self.page * 5
             chunk = self.matches[start:start+5]
-            embed.title = "📊 Match History"
+            embed.title = "<:graph:1462488724746014881> Match History"
             
             description_text = "*Newest results at the top*\n\n"
             if not self.matches:
@@ -1267,7 +1267,7 @@ async def status(interaction: discord.Interaction):
                     time_info = "\n✅ **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"<:crossedswords:1462484325151801487> **Matches Live**\n"
+                f"⚔️ **Matches Live**\n"
                 f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
                 f"**Match Progress:** {current_num} of {total_matches}\n"
