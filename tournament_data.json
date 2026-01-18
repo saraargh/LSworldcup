@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Cruel Intentions",
-            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Just my luck",
-            "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "500 days of summer",
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
@@ -421,6 +409,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Cruel Intentions",
+            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Just my luck",
+            "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462514818031554751,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 16",
+        "match_num": 15
+    },
     "final_winner": null
 }
