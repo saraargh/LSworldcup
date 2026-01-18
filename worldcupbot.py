@@ -519,40 +519,61 @@ class WC_Bot(discord.Client):
     async def post_next(self, channel):
         data, sha = load_data()
         
-        # Pull from winners pool if bracket is empty
+        # 1. Bracket logic - Advancement Detection
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
+                # Calculate names before and after the move
+                old_round = get_round_name(data)
+                
+                # Move winners to the active bracket
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
-                await channel.send("🛡️ **Round Complete!** Advancing surviving entries...")
+                
+                # Calculate the new round name
+                new_round = get_round_name(data)
+                
+                await channel.send(f"🛡️ **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
             else:
                 data['status'] = "FINISHED"
                 save_data(data, sha)
                 return await channel.send("🎊 **Tournament Complete!**")
 
+        # 2. Pop competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
         
+        # 3. Calculate round info for the match
         round_name = get_round_name(data)
+        match_num = len(data.get('finished_matches', [])) + 1
         
-        # Initialize the View WITH the competitors
-        # This is where MatchView is actually "born"
-        view = MatchView(comp_a, comp_b) 
+        # 4. Create the View
+        view = MatchView(comp_a, comp_b, round_name, match_num) 
         
+        # 5. Send the match message
         msg = await channel.send(
             content=f"⚔️ **{round_name}** is now LIVE!", 
             embed=view.create_embed(0), 
             view=view
         )
         
-        # Save Match Data
+        # 6. Save data (Ensures setup_hook works on reboot)
         data['current_match'] = {
-            "item_a": comp_a, "item_b": comp_b, 
-            "votes": {}, "message_id": msg.id, "channel_id": channel.id
+            "item_a": comp_a, 
+            "item_b": comp_b, 
+            "votes": {}, 
+            "message_id": msg.id, 
+            "channel_id": channel.id,
+            "round_name": round_name,
+            "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
-        await msg.pin()
+        
+        try:
+            await msg.pin()
+        except:
+            pass
+
 
     # --- THE ENGINE: RESOLVE MATCH ---
     async def resolve_match(self, data, sha):
