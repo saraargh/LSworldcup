@@ -320,7 +320,7 @@ class MatchView(ui.View):
         )
 
         embed.set_image(url=item['image'])
-        embed.set_footer(text="Switch views to see both entries before voting!")
+        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
         return embed
 
 
@@ -1189,7 +1189,7 @@ async def status(interaction: discord.Interaction):
         if winner:
             embed.set_thumbnail(url=winner['image'])
 
-    embed.set_footer(text="The Landing Strip World Cup System")
+    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
     await interaction.followup.send(embed=embed)
 
 
