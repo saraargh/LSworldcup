@@ -739,8 +739,8 @@ class WC_Bot(discord.Client):
                 color=0x2ecc71 # Victory Green
             )
             win_embed.add_field(name="Final Score", value=f"✅ **{winning_score}** —  ❌ **{losing_score}**", inline=False)
-            win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
-            win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=True)
+            win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
+            win_embed.add_field(name="Submitted by", value=f"<:submitter:1462482380211097828> {winner.get('user', 'Unknown')}", inline=True)
             
             # Show the winning entry's image in the announcement
             if winner.get('image'):
