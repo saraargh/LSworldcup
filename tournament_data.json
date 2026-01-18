@@ -361,6 +361,12 @@
             "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Bridget Jones Diary",
+            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -384,6 +390,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "Mamma mia!",
             "score": "0-1"
+        },
+        {
+            "name": "Confessions of a Shopaholic vs Bridget Jones Diary",
+            "winner": "Bridget Jones Diary",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Confessions of a Shopaholic",
+            "score": "0-1"
         }
     ],
     "leaderboard": [
@@ -398,26 +411,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Bridget Jones Diary",
-            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462493789129281578,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 4
-    },
+    "current_match": null,
     "final_winner": null
 }
