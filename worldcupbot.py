@@ -1267,13 +1267,13 @@ async def status(interaction: discord.Interaction):
                     time_info = "\n✅ **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"⚔️ **Matches Live**\n"
+                f"<:crossedswords:1462484325151801487> **Matches Live**\n"
                 f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
                 f"**Match Progress:** {current_num} of {total_matches}\n"
                 f"`{bar}`\n\n"
                 f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"📊 **Total Votes cast so far:** {vote_count}"
+                f"<:graph:1462488724746014881> **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
         else:
