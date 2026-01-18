@@ -307,12 +307,12 @@ class MatchView(ui.View):
         color = 0xff4757 if page == 0 else 0x2e86de
         
         embed = discord.Embed(
-            title=f"<:crossedswords:1462484325151801487> {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
+            title=f"<:swords:1462508037683282125> {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
             description=f"**Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
             color=color
         )
         embed.add_field(
-            name="\n\n<:graph:1462488724746014881> Live Standings", 
+            name="\n\n<:graph:1462508734663233751> Live Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
@@ -341,7 +341,7 @@ class MatchView(ui.View):
         list_a = [f"<@{uid}>" for uid, choice in votes.items() if choice == "A"]
         list_b = [f"<@{uid}>" for uid, choice in votes.items() if choice == "B"]
         
-        embed = discord.Embed(title="<:graph:1462488724746014881> Current Voter Breakdown", color=0x95a5a6)
+        embed = discord.Embed(title="<:graph:1462508734663233751> Current Voter Breakdown", color=0x95a5a6)
         embed.add_field(name=f"Votes for {self.item_a['name']}", value="\n".join(list_a) if list_a else "None", inline=True)
         embed.add_field(name=f"Votes for {self.item_b['name']}", value="\n".join(list_b) if list_b else "None", inline=True)
         
@@ -352,21 +352,21 @@ class MatchView(ui.View):
         data, sha = load_data()
         match = data.get("current_match")
         if not match: 
-            return await interaction.response.send_message("<:cross:1462498457322258617> Match not active.", ephemeral=True)
+            return await interaction.response.send_message("<:cross:1462508739671101560> Match not active.", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
         
         # Check if already voted for A
         if existing_votes.get(user_id) == "A":
-            return await interaction.response.send_message(f"<:warning:1462499928239767602> You already voted for **{self.item_a['name']}**!", ephemeral=True)
+            return await interaction.response.send_message(f"<:warning:1462511393327681537> You already voted for **{self.item_a['name']}**!", ephemeral=True)
         
         # Save vote
         existing_votes[user_id] = "A"
         match["votes"] = existing_votes
         save_data(data, sha)
         
-        await interaction.response.send_message(f"<:tick:1462498400577781917> Voted for **{self.item_a['name']}**!", ephemeral=True)
+        await interaction.response.send_message(f"<:tick:1462508738194837606> Voted for **{self.item_a['name']}**!", ephemeral=True)
         
         # Smart Refresh: Keep user on current page (A or B)
         current_page = 0
@@ -379,21 +379,21 @@ class MatchView(ui.View):
         data, sha = load_data()
         match = data.get("current_match")
         if not match: 
-            return await interaction.response.send_message("<:cross:1462498457322258617> Match not active.", ephemeral=True)
+            return await interaction.response.send_message("<:cross:1462508739671101560> Match not active.", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
         
         # Check if already voted for B
         if existing_votes.get(user_id) == "B":
-            return await interaction.response.send_message(f"<:warning:1462499928239767602> You already voted for **{self.item_b['name']}**!", ephemeral=True)
+            return await interaction.response.send_message(f"<:warning:1462511393327681537> You already voted for **{self.item_b['name']}**!", ephemeral=True)
         
         # Save vote
         existing_votes[user_id] = "B"
         match["votes"] = existing_votes
         save_data(data, sha)
         
-        await interaction.response.send_message(f"<:tick:1462498400577781917> Voted for **{self.item_b['name']}**!", ephemeral=True)
+        await interaction.response.send_message(f"<:tick:1462508738194837606> Voted for **{self.item_b['name']}**!", ephemeral=True)
         
         # Smart Refresh: Keep user on current page
         current_page = 1
@@ -470,7 +470,7 @@ class EndConfirmView(ui.View):
                     description=f"# 👑 {winner['name'].upper()} <:winner:1462297763260923946>\n\nWinner of the **{self.data['current_cat']}** World Cup!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
-                embed.add_field(name="SPECIAL MENTIONS <:speechbubble:1462490467315744828>✨", value=mentions, inline=False)
+                embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
                 embed.set_image(url=winner['image'])
             
             # Save to leaderboard
@@ -498,7 +498,7 @@ class EndConfirmView(ui.View):
         })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="#<:tick:1462498400577781917> **Tournament wiped, pins cleared, and bot reset.**", view=None)
+        await interaction.response.edit_message(content="#<:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", view=None)
 
 
 
@@ -517,7 +517,7 @@ class ScoreboardView(ui.View):
         if self.view_mode == "HISTORY":
             start = self.page * 5
             chunk = self.matches[start:start+5]
-            embed.title = "<:graph:1462488724746014881> Match History"
+            embed.title = "<:graph:1462508734663233751> Match History"
             
             description_text = "*Newest results at the top*\n\n"
             if not self.matches:
@@ -525,8 +525,8 @@ class ScoreboardView(ui.View):
             else:
                 for m in chunk:
                     description_text += (
-                        f"<:crossedswords:1462484325151801487> **{m['name']}**\n"
-                        f"<:fireee:1462487668255359232> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        f"<:swords:1462508037683282125> **{m['name']}**\n"
+                        f"<:fireee:1462508732012560562> **{m['winner']}** ({m.get('score', '0-0')})\n\n"
                         )
                         
             embed.description = description_text
@@ -535,7 +535,7 @@ class ScoreboardView(ui.View):
 
         else:
             # --- SURVIVOR ONLY MODE ---
-            embed.title = "<:fireee:1462487668255359232> Remaining Survivors"
+            embed.title = "<:fireee:1462508732012560562> Remaining Survivors"
             
             survivors = []
             curr = data.get('current_match')
@@ -629,7 +629,7 @@ class WC_Bot(discord.Client):
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
                 new_round = get_round_name(data)
-                await channel.send(f"<:shield:1462485732793909271> **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
+                await channel.send(f"<:shield:1462508730640765114> **{old_round} Complete!** Advancing survivors to the **{new_round}**...")
             elif len(data.get('winners_pool', [])) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
@@ -739,7 +739,7 @@ class WC_Bot(discord.Client):
                 description=f"### {winner['name']} has DEFEATED {loser['name']}! <:beluga:1462299704107991172>",
                 color=0x2ecc71 # Victory Green
             )
-            win_embed.add_field(name="Final Score", value=f"<:tick:1462498400577781917> **{winning_score}** —  <:cross:1462498457322258617> **{losing_score}**", inline=False)
+            win_embed.add_field(name="Final Score", value=f"<:tick:1462508738194837606> **{winning_score}** —  <:cross:1462508739671101560> **{losing_score}**", inline=False)
             win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
             win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
             
@@ -766,7 +766,7 @@ bot = WC_Bot()
 @bot.tree.command(name="opensuggestions", description="Phase 1: Open theme suggestions for users")
 async def opensuggestions(interaction: discord.Interaction):
     if not is_admin(interaction.user): 
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only command.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only command.", ephemeral=True)
         
     data, sha = load_data()
     data['status'] = "SUGGESTIONS_OPEN"
@@ -776,7 +776,7 @@ async def opensuggestions(interaction: discord.Interaction):
 @bot.tree.command(name="choosecategory", description="Phase 2: Pick a random theme from user suggestions")
 async def choosecategory(interaction: discord.Interaction):
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     # Safety Defer
     try:
@@ -786,7 +786,7 @@ async def choosecategory(interaction: discord.Interaction):
 
     data, sha = load_data()
     if not data.get('suggestions'): 
-        return await interaction.followup.send("<:cross:1462498457322258617> No suggestions were found in the database.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> No suggestions were found in the database.", ephemeral=True)
     
     # We use followup because we deferred
     await interaction.followup.send("🎰 **Selecting a random category...**")
@@ -808,7 +808,7 @@ async def choosecategory(interaction: discord.Interaction):
 @bot.tree.command(name="removeitem", description="Admin: Remove an item by its list number")
 async def removeitem(interaction: discord.Interaction, index: int):
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
     if 1 <= index <= len(data['items']):
@@ -816,12 +816,12 @@ async def removeitem(interaction: discord.Interaction, index: int):
         save_data(data, sha)
         await interaction.response.send_message(f"🗑️ Successfully removed **{removed_item['name']}**.")
     else:
-        await interaction.response.send_message("<:cross:1462498457322258617> Invalid index number.", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number.", ephemeral=True)
 
 @bot.tree.command(name="edititem", description="Admin: Edit the name, description, or image of an entry")
 async def edititem(interaction: discord.Interaction, index: int, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
     if 1 <= index <= len(data['items']):
@@ -840,7 +840,7 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
         save_data(data, sha)
         await interaction.response.send_message(f"📝 Entry #{index} has been updated.")
     else:
-        await interaction.response.send_message("<:cross:1462498457322258617> Invalid index number.", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number.", ephemeral=True)
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
@@ -851,14 +851,14 @@ async def startworldcup(interaction: discord.Interaction):
         return # Interaction already failed
 
     if not is_admin(interaction.user):
-        return await interaction.followup.send("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Admin only.", ephemeral=True)
     
     # 2. Now it's safe to do the slow GitHub work
     data, sha = load_data()
     
     item_count = len(data.get('items', []))
     if item_count != 32:
-        return await interaction.followup.send(f"<:cross:1462498457322258617> You need exactly 32 items to start. (Current: {item_count})")
+        return await interaction.followup.send(f"<:cross:1462508739671101560> You need exactly 32 items to start. (Current: {item_count})")
 
     # 3. Prepare items
     shuffled = list(data['items'])
@@ -920,7 +920,7 @@ async def nextmatch(interaction: discord.Interaction):
     data, sha = load_data()
     
     if not data.get('current_match'):
-        return await interaction.followup.send("<:cross:1462498457322258617> No match is currently active.")
+        return await interaction.followup.send("<:cross:1462508739671101560> No match is currently active.")
 
     # 3. Resolve and move on
     # Using followup.send because we already deferred
@@ -932,15 +932,15 @@ async def nextmatch(interaction: discord.Interaction):
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
 async def resetcup(interaction: discord.Interaction):
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
     
     confirm_view = ResetConfirmView()
-    await interaction.response.send_message("<:warning:1462499928239767602> **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
+    await interaction.response.send_message("<:warning:1462511393327681537> **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
 
 @bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
 async def endcup(interaction: discord.Interaction):
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     await interaction.response.defer(ephemeral=True)
     data, sha = load_data()
@@ -950,7 +950,7 @@ async def endcup(interaction: discord.Interaction):
     is_early = winner is None
     
     if is_early:
-        msg = "<:warning:1462499928239767602> **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
+        msg = "<:warning:1462511393327681537> **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
     else:
         msg = f"<:cutecup:1462480543449874442> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
     
@@ -999,17 +999,17 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     clean_name = name.strip().lower()
     
     if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.followup.send("<:cross:1462498457322258617> Suggestions are closed.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
     
     # Check for duplicates
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462498457322258617> '{name}' has already been suggested!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
     # Check if user already suggested something (Admins bypass)
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
-            return await interaction.followup.send("<:cross:1462498457322258617> You've already submitted a theme!", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
     
     # Save the data
     data.setdefault('suggestions', []).append({
@@ -1034,15 +1034,15 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     clean_name = name.strip().lower()
 
     if data['status'] != "ADDING_ITEMS":
-        return await interaction.followup.send("<:cross:1462498457322258617> Submissions are closed.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Submissions are closed.", ephemeral=True)
     
     # Duplicate check
     for item in data['items']:
         if item['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462498457322258617> '{name}' is already in!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' is already in!", ephemeral=True)
 
     if len(data['items']) >= 32:
-        return await interaction.followup.send("<:cross:1462498457322258617> Bracket full!", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Bracket full!", ephemeral=True)
     
     # Upload Logic
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
@@ -1051,7 +1051,7 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
         storage_msg = await storage_channel.send(file=attachment_file)
         image_url = storage_msg.attachments[0].url
     except Exception as e:
-        return await interaction.followup.send("<:cross:1462498457322258617> Image upload failed.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Image upload failed.", ephemeral=True)
 
     # Save Data
     short_name = name[:75]
@@ -1066,7 +1066,7 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     
     # Final check: If the interaction is truly dead, this will log but at least data is saved
     try:
-        await interaction.followup.send(f"<:tick:1462498400577781917> **{short_name}** added! ({len(data['items'])}/32)")
+        await interaction.followup.send(f"<:tick:1462508738194837606> **{short_name}** added! ({len(data['items'])}/32)")
     except Exception as e:
         print(f"Could not send confirmation message: {e}")
 
@@ -1080,7 +1080,7 @@ async def matchups(interaction: discord.Interaction):
     data, _ = load_data()
     
     if data['status'] not in ["MATCH_ACTIVE", "FINISHED"]:
-        return await interaction.followup.send("<:cross:1462498457322258617> No active bracket to display.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> No active bracket to display.", ephemeral=True)
     
     bracket_text = ""
     current = data.get('current_match')
@@ -1097,12 +1097,12 @@ async def matchups(interaction: discord.Interaction):
             bracket_text += f"• {a['name']} vs {b['name']}\n"
     
     if data.get('winners_pool'):
-        bracket_text += "\n<:shield:1462485732793909271> **WAITING FOR NEXT ROUND:**\n"
+        bracket_text += "\n<:shield:1462508730640765114> **WAITING FOR NEXT ROUND:**\n"
         names = [w['name'] for w in data['winners_pool']]
         bracket_text += ", ".join(names)
         
     embed = discord.Embed(
-        title=f"<:crossedswords:1462484325151801487> {data.get('current_cat', 'Tournament').upper()} Live Bracket", 
+        title=f"<:swords:1462508037683282125> {data.get('current_cat', 'Tournament').upper()} Live Bracket", 
         description=bracket_text or "Tournament in transition...", 
         color=0x3498db
     )
@@ -1171,7 +1171,7 @@ async def currentvotes(interaction: discord.Interaction):
     match = data.get("current_match")
     
     if not match:
-        return await interaction.followup.send("<:cross:1462498457322258617> There is no active match right now.")
+        return await interaction.followup.send("<:cross:1462508739671101560> There is no active match right now.")
     
     votes = match.get("votes", {})
     
@@ -1264,16 +1264,16 @@ async def status(interaction: discord.Interaction):
                     minutes, _ = divmod(remainder, 60)
                     time_info = f"\n⏳ **Time Remaining:** {hours}h {minutes}m"
                 else:
-                    time_info = "\n<:tick:1462498400577781917> **Match time complete!** Admins can close this now."
+                    time_info = "\n<:tick:1462508738194837606> **Match time complete!** Admins can close this now."
 
             embed.description = (
-                f"<:crossedswords:1462484325151801487> **Matches Live**\n"
+                f"<:swords:1462508037683282125> **Matches Live**\n"
                 f"Theme: **{data['current_cat'].upper()}**\n\n"
                 f"**Current Round:** {round_name}\n"
                 f"**Match Progress:** {current_num} of {total_matches}\n"
                 f"`{bar}`\n\n"
                 f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
-                f"<:graph:1462488724746014881> **Total Votes cast so far:** {vote_count}"
+                f"<:graph:1462508734663233751> **Total Votes cast so far:** {vote_count}"
                 f"{time_info}"
             )
         else:
