@@ -275,13 +275,15 @@ class ItemGallery(ui.View):
             self.mode = "GALLERY"
         await interaction.response.edit_message(embed=self.create_content())
 
+
 class MatchView(discord.ui.View):
     def __init__(self, item_a=None, item_b=None, current_item="A"):
-        super().__init__(timeout=None) # NO TIMEOUT - Buttons stay active forever
+        super().__init__(timeout=None) # Persistent: Buttons never timeout
         self.item_a = item_a
         self.item_b = item_b
         self.current_item = current_item
 
+        # Persistent button labels
         if item_a:
             self.vote_a_button.label = f"Vote for {item_a['name']}"
         if item_b:
@@ -301,10 +303,10 @@ class MatchView(discord.ui.View):
         
         embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
-        # 1. Currently Viewing
+        # 1. Currently Viewing (Top)
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
 
-        # 2. Description Section (Space above)
+        # 2. Description Section (With spacing)
         desc_text = viewing.get('desc', 'No description provided.')
         embed.add_field(
             name="\u200b", 
@@ -312,34 +314,30 @@ class MatchView(discord.ui.View):
             inline=False
         )
         
-        # 3. Submitter Section (Matches first screenshot style exactly)
+        # 3. Submitter Section (Original style)
         submitter = viewing.get('user', 'Unknown')
         embed.add_field(
             name="\u200b",
-            value=f"**submitted by: {submitter}**",
+            value=f"submitted by: {submitter}",
             inline=False
         )
         
-        # 4. Standings Section (Space above)
-        embed.add_field(
-            name="\u200b", 
-            value=f"**🗳️ Current Standings:**\n{self.item_a['name']} - {cA} votes\n{self.item_b['name']} - {cB} votes", 
-            inline=False
-        )
-        
+        # 4. Image (Main center content)
         if viewing.get('image'):
             embed.set_image(url=viewing['image'])
             
-        embed.set_footer(text="The Landing Strip World Cup System")
+        # 5. Standings (Moved to Footer to be under the image)
+        embed.set_footer(text=f"🗳️ Current Standings: {self.item_a['name']} ({cA}) — {self.item_b['name']} ({cB})\nThe Landing Strip World Cup System")
+        
         return embed
 
-    @discord.ui.button(label="⬅️ View Entry A", style=discord.ButtonStyle.secondary, custom_id="view_a")
+    @discord.ui.button(label="⬅️", style=discord.ButtonStyle.secondary, custom_id="view_a")
     async def view_a(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "A"
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
-    @discord.ui.button(label="View Entry B ➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
+    @discord.ui.button(label="➡️", style=discord.ButtonStyle.secondary, custom_id="view_b")
     async def view_b(self, interaction: discord.Interaction, button: discord.ui.Button):
         data, _ = load_data()
         self.current_item = "B"
@@ -431,7 +429,6 @@ class ScoreboardView(discord.ui.View):
         self.update_buttons()
 
     def update_buttons(self):
-        # Safety check to prevent index errors
         if not self.matches:
             self.prev_button.disabled = True
             self.next_button.disabled = True
@@ -448,21 +445,29 @@ class ScoreboardView(discord.ui.View):
             embed.description = "No matches have finished yet!"
             return embed
 
+        # Calculate slice for pagination
         start = self.page * self.items_per_page
         end = start + self.items_per_page
-        # Get the slice of matches for this page
         current_batch = self.matches[start:end]
         
-        # We display newest matches at the top
         for m in current_batch:
-            # Clean display: Just Name vs Name and the Winner/Score
+            # Main match details
+            match_name = m.get('name', 'Unknown Match')
+            winner = m.get('winner', 'N/A')
+            score = m.get('score', '0-0')
+            
+            # Use a field for the match info
             embed.add_field(
-                name=f"🔹 {m.get('name', 'Unknown Match')}",
-                value=f"🏆 **Winner:** {m.get('winner', 'N/A')} ({m.get('score', '0-0')})",
+                name=f"🔹 {match_name}",
+                value=f"🏆 **Winner:** {winner} ({score})",
                 inline=False
             )
             
-        embed.set_footer(text=f"Page {self.page + 1} of {((len(self.matches)-1)//self.items_per_page) + 1}")
+            # Add an empty field to create a physical gap (prevents crowding)
+            embed.add_field(name="\u200b", value="───────────────────", inline=False)
+            
+        total_pages = ((len(self.matches) - 1) // self.items_per_page) + 1
+        embed.set_footer(text=f"Page {self.page + 1} of {total_pages} | The Landing Strip World Cup")
         return embed
 
     @discord.ui.button(label="⬅️ Newer", style=discord.ButtonStyle.secondary)
@@ -989,11 +994,14 @@ async def listitems(interaction: discord.Interaction):
 
 @bot.tree.command(name="scoreboard", description="View tournament history")
 async def scoreboard(interaction: discord.Interaction):
-    await interaction.response.defer() # Gives the bot time to load data
+    await interaction.response.defer() 
     data, _ = load_data()
-    matches = data.get('finished_matches', [])
+    # Get matches and reverse them so newest are first
+    matches = list(reversed(data.get('finished_matches', [])))
+    
     view = ScoreboardView(matches)
     await interaction.followup.send(embed=view.create_embed(), view=view)
+
 
 
 
