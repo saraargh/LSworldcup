@@ -294,7 +294,11 @@ class MatchView(ui.View):
             self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
-        # Fetch current vote totals
+        # 1. Safety check: If there's no match data (like during bot startup), return a simple embed
+        if self.item_a is None or self.item_b is None:
+            return discord.Embed(title="Match Loading...", description="Please wait for the next match to start.")
+
+        # 2. Fetch current vote totals
         data, _ = load_data()
         match = data.get("current_match", {})
         votes = match.get("votes", {})
@@ -312,16 +316,17 @@ class MatchView(ui.View):
             color=color
         )
 
-        # Added vote tally field
+        # 3. Added vote tally field
         embed.add_field(
-            name="\n\n📊 **Current Standings**", 
+            name="\n\n📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
 
         embed.set_image(url=item['image'])
-        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+        embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
+
 
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
