@@ -468,9 +468,7 @@ class ScoreboardView(ui.View):
             for m in chunk:
                 description_text += (
                     f"🔹 **{m['name']}**\n"
-                    f"🏆 **{m['winner']}** ({m.get('score', '0-0')})\n"
-                    f"┕ *Owner:* {m.get('winner_user', 'Unknown')}\n"
-                    f"┕ *Defeated:* {m.get('loser_name', 'TBD')}\n\n"
+                    f"🏆 Winner: **{m['winner']}** ({m.get('score', '0-0')})\n\n"
                 )
             embed.description = description_text
             total_pages = (len(self.matches) - 1) // 5 + 1
@@ -526,6 +524,7 @@ class ScoreboardView(ui.View):
             button.label = "🟢 Survivors"
             
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
+
 
 # =========================================================
 # BOT CORE CLASS
