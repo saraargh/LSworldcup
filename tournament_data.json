@@ -197,20 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "bracket": [],
     "winners_pool": [
         {
             "name": "Mean Girls",
@@ -422,6 +409,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Clueless",
+            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462516835487449240,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 16",
+        "match_num": 16
+    },
     "final_winner": null
 }
