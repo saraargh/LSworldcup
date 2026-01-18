@@ -319,6 +319,12 @@
             "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "the devil wears prada",
+            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -401,6 +407,14 @@
             "loser": "Mamma mia!",
             "loser_user": "<@1238834298338152498>",
             "score": "1-0"
+        },
+        {
+            "name": "the devil wears prada vs Pretty Woman",
+            "winner": "the devil wears prada",
+            "winner_user": "<@1238834298338152498>",
+            "loser": "Pretty Woman",
+            "loser_user": "<@1238834298338152498>",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -425,24 +439,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Pretty Woman",
-            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "channel_id": 1438277790179921971,
-        "message_id": 1462314643640029285
-    },
+    "current_match": null,
     "final_winner": null
 }
