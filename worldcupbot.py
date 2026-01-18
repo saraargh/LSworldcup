@@ -412,7 +412,7 @@ class EndConfirmView(ui.View):
         winner = self.data.get("final_winner")
         if winner:
             self.confirm_end.style = discord.ButtonStyle.success
-            self.confirm_end.label = f"<:cutecup:1462480543449874442> CROWN {winner['name'].upper()}"
+            self.confirm_end.label = f"CROWN WINNER 👑"
         else:
             self.confirm_end.style = discord.ButtonStyle.danger
             self.confirm_end.label = "CONFIRM: END TOURNAMENT EARLY"
@@ -1274,8 +1274,8 @@ async def status(interaction: discord.Interaction):
         winner = data.get('final_winner')
         embed.description = (
             f"🏁 **Tournament Complete**\n"
-            f"The champion of **{data['current_cat']}** is **{winner['name']}**!\n\n"
-            "Waiting for admins to archive and reset."
+            f"The champion of **{data['current_cat']}** has been decided!\n\n"
+            "Waiting for admins to announce, archive and reset."
         )
         if winner:
             embed.set_thumbnail(url=winner['image'])
