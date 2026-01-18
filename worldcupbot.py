@@ -412,41 +412,51 @@ class EndConfirmView(ui.View):
         winner = self.data.get("final_winner")
         if winner:
             self.confirm_end.style = discord.ButtonStyle.success
-            self.confirm_end.label = f"CROWN WINNER 👑"
+            self.confirm_end.label = f"CROWN {winner['name'].upper()}"
         else:
             self.confirm_end.style = discord.ButtonStyle.danger
-            self.confirm_end.label = "END TOURNAMENT EARLY ⚠️"
+            self.confirm_end.label = "CONFIRM: END TOURNAMENT EARLY"
 
     @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
+        # 1. Acknowledge the interaction immediately to prevent "Interaction Failed"
+        await interaction.response.defer()
+
         winner = self.data.get("final_winner")
         
         if winner:
             history = self.data.get('finished_matches', [])
-            stats = {} # { "Movie Name": {"votes": X, "user": "Name"} }
+            stats = {} 
 
             for m in history:
-                votes = m.get('votes', {})
-                # Process Item A
-                na = m['item_a']['name']
-                stats.setdefault(na, {"votes": 0, "user": m['item_a'].get('user', 'Unknown')})
-                stats[na]["votes"] += list(votes.values()).count("A")
-                # Process Item B
-                nb = m['item_b']['name']
-                stats.setdefault(nb, {"votes": 0, "user": m['item_b'].get('user', 'Unknown')})
-                stats[nb]["votes"] += list(votes.values()).count("B")
+                # Get the score (e.g., "2-1") and split it
+                score_str = m.get('score', '0-0')
+                try:
+                    score_parts = [int(x) for x in score_str.split('-')]
+                    v_win = max(score_parts)
+                    v_lose = min(score_parts)
+                except:
+                    v_win, v_lose = 0, 0
+
+                # Process the Winner
+                w_name = m['winner']
+                stats.setdefault(w_name, {"votes": 0, "user": m.get('winner_user', 'Unknown')})
+                stats[w_name]["votes"] += v_win
+
+                # Process the Loser
+                l_name = m['loser_name']
+                stats.setdefault(l_name, {"votes": 0, "user": "Unknown"})
+                stats[l_name]["votes"] += v_lose
 
             if stats:
                 sorted_stats = sorted(stats.items(), key=lambda x: x[1]['votes'], reverse=True)
                 
-                # Logic for Most/Least Voted with Tie Handling
                 max_v = max(s['votes'] for s in stats.values())
                 min_v = min(s['votes'] for s in stats.values())
                 
                 most_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == max_v]
                 least_list = [f"{n} (by {s['user']})" for n, s in stats.items() if s['votes'] == min_v]
 
-                # Podium items
                 second_text = "N/A"
                 if len(sorted_stats) > 1:
                     n2, d2 = sorted_stats[1]
@@ -457,7 +467,6 @@ class EndConfirmView(ui.View):
                     n3, d3 = sorted_stats[2]
                     third_text = f"{n3} (by {d3['user']})"
 
-                # --- BUILD THE SPECIAL MENTIONS STRING ---
                 mentions = (
                     f"🥈 **Second Place:** {second_text}\n"
                     f"🥉 **Third Place:** {third_text}\n\n"
@@ -473,7 +482,6 @@ class EndConfirmView(ui.View):
                 embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
                 embed.set_image(url=winner['image'])
             
-            # Save to leaderboard
             self.data.setdefault('leaderboard', []).append({
                 "item": winner['name'], 
                 "cat": self.data['current_cat'], 
@@ -483,7 +491,6 @@ class EndConfirmView(ui.View):
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
-        # 2. Sweep Pins
         try:
             pins = await interaction.channel.pins()
             for pin in pins:
@@ -491,15 +498,14 @@ class EndConfirmView(ui.View):
                     await pin.unpin()
         except: pass
 
-        # 3. Reset Data
         self.data.update({
             "status": "IDLE", "suggestions": [], "bracket": [], "winners_pool": [], 
             "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None
         })
         
         save_data(self.data, self.sha)
-        await interaction.response.edit_message(content="#<:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", view=None)
-
+        # Use followup.edit_message because we deferred earlier
+        await interaction.followup.edit_message(message_id=interaction.message.id, content="#<:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", view=None)
 
 
 
@@ -695,9 +701,12 @@ class WC_Bot(discord.Client):
             if not channel:
                 channel = await self.fetch_channel(match['channel_id'])
 
+            # 1. Count Votes
             votes = list(match.get('votes', {}).values())
-            count_a, count_b = votes.count("A"), votes.count("B")
+            count_a = votes.count("A")
+            count_b = votes.count("B")
 
+            # 2. Determine Winner & Loser
             if count_a >= count_b:
                 winner, loser = match['item_a'], match['item_b']
                 winning_score, losing_score = count_a, count_b
@@ -705,29 +714,36 @@ class WC_Bot(discord.Client):
                 winner, loser = match['item_b'], match['item_a']
                 winning_score, losing_score = count_b, count_a
 
+            # 3. Archive Results (Ensuring keys match the EndConfirmView logic)
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'],
                 "winner_user": winner.get('user', 'Unknown'),
                 "loser_name": loser['name'],
-                "score": f"{count_a}-{count_b}"
+                "score": f"{count_a}-{count_b}",
+                "votes": match.get('votes', {})
             })
 
+            # 4. Move Winner to next round pool
             data.setdefault('winners_pool', []).append(winner)
+            
+            # 5. Clean up current match state
             old_msg_id = match['message_id']
             data['current_match'] = None
             save_data(data, sha)
 
+            # 6. Unpin old match
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
             except:
                 pass
 
-            # CHECK: Is this the final match of the whole cup?
+            # --- THE SPOILER FIX ---
+            # Check if this was the last match of the tournament
             is_cup_final = (len(data.get('bracket', [])) == 0 and len(data.get('winners_pool', [])) == 1)
 
-            # Only send the "DEFEATED" embed if it's NOT the final match
+            # 7. Only send the "DEFEATED" embed if it's NOT the final match
             if not is_cup_final:
                 win_embed = discord.Embed(
                     title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
@@ -737,11 +753,14 @@ class WC_Bot(discord.Client):
                 win_embed.add_field(name="Final Score", value=f"<:tick:1462508738194837606> **{winning_score}** —  <:cross:1462508739671101560> **{losing_score}**", inline=False)
                 win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
                 win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
+                
                 if winner.get('image'):
                     win_embed.set_thumbnail(url=winner['image'])
+                
                 win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
                 await channel.send(embed=win_embed)
             
+            # 8. Pause for effect, then post the next match (Passes interaction for ephemeral message)
             await asyncio.sleep(4) 
             await self.post_next(channel, interaction)
 
@@ -895,29 +914,26 @@ async def startworldcup(interaction: discord.Interaction):
 
 
 
-
-
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
 @app_commands.checks.has_permissions(administrator=True)
 async def nextmatch(interaction: discord.Interaction):
-    # 1. DO THIS FIRST.
+    # 1. Acknowledge immediately to prevent "Interaction Failed"
     try:
         await interaction.response.defer(ephemeral=True)
     except:
         pass 
 
-    # 2. NOW do the slow work
+    # 2. Load data to check state
     data, sha = load_data()
     
     if not data.get('current_match'):
         return await interaction.followup.send("<:cross:1462508739671101560> No match is currently active.")
 
-    # 3. Resolve and move on
+    # 3. Inform the admin that processing has started
     await interaction.followup.send("<:processing:1462521277276225699> Closing votes and starting next match...")
-    # Pass 'interaction' here so resolve_match/post_next can use it
-    await bot.resolve_match(data, sha, interaction) 
-
-
+    
+    # 4. Run resolve_match (which now uses the interaction for private final messages)
+    await bot.resolve_match(data, sha, interaction)
 
 
 @bot.tree.command(name="resetcup", description="Admin: EMERGENCY WIPE of current tournament")
