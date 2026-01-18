@@ -289,37 +289,31 @@ class MatchView(ui.View):
         self.round_name = round_name or "Tournament"
         self.match_num = match_num or 0
         
+        # Only set labels if items are actually provided (prevents setup_hook crash)
         if item_a and item_b:
             self.vote_a.label = f"Vote for {item_a['name']}"
             self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
-        # SAFETY CHECK: Prevents 'NoneType' error during bot startup
-        if self.item_a is None or self.item_b is None:
-            return discord.Embed(title="Match Loading...", description="Please wait for the next match to start.")
-
-        data, _ = load_data()
-        match = data.get("current_match", {})
-        votes = match.get("votes", {})
-        count_a = list(votes.values()).count("A")
-        count_b = list(votes.values()).count("B")
-
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
+        
         item_desc = item.get('desc', 'No description provided.')
         
         embed = discord.Embed(
             title=f"⚔️ {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
+        
         embed.add_field(
-            name="📊 Current Standings", 
+            name="\n\n📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
+        
         embed.set_image(url=item['image'])
-        embed.set_footer(text="Switch views to see both entries before voting!")
+        embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
         return embed
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
@@ -347,6 +341,7 @@ class MatchView(ui.View):
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
+)
 
 
 
@@ -514,7 +509,7 @@ class WC_Bot(discord.Client):
     async def post_next(self, channel):
         data, sha = load_data()
         
-        # 1. Pull from winners pool if bracket is empty
+        # 1. Check if we need to advance the round
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
                 data['bracket'] = list(data['winners_pool'])
@@ -525,15 +520,15 @@ class WC_Bot(discord.Client):
                 save_data(data, sha)
                 return await channel.send("🎊 **Tournament Complete!**")
 
-        # 2. Get competitors
+        # 2. Get the next two competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
         
-        # 3. Define the info for the title
+        # 3. DEFINE the variables that were missing
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # 4. Initialize View with the new variables
+        # 4. Create the view using the variables defined above
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         
         msg = await channel.send(
@@ -542,19 +537,20 @@ class WC_Bot(discord.Client):
             view=view
         )
         
-        # 5. Save Match Data with match info included
+        # 5. Save everything to GitHub
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
             "votes": {}, 
             "message_id": msg.id, 
             "channel_id": channel.id,
-            "round_name": round_name,
+            "round_name": round_name, 
             "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
         await msg.pin()
+
 
     # --- THE ENGINE: RESOLVE MATCH ---
     async def resolve_match(self, data, sha):
