@@ -306,7 +306,7 @@ class MatchView(discord.ui.View):
         cA, cB = votes.count("A"), votes.count("B")
         viewing = self.item_a if self.current_item == "A" else self.item_b
         
-        embed = discord.Embed(title=f"⚔️ {round_name} - {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
+        embed = discord.Embed(title=f"⚔️ {self.item_a['name']} vs {self.item_b['name']}", color=0xff4757)
         
         # 1. Currently Viewing
         embed.add_field(name="\u200b", value=f"**Currently Viewing:** {viewing['name']}", inline=False)
