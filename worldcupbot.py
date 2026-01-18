@@ -924,7 +924,7 @@ async def nextmatch(interaction: discord.Interaction):
 
     # 3. Resolve and move on
     # Using followup.send because we already deferred
-    await interaction.followup.send("🔄 Closing votes and starting next match...")
+    await interaction.followup.send("<:processing:1462521277276225699> Closing votes and starting next match...")
     await bot.resolve_match(data, sha)
 
 
