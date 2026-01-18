@@ -1,6 +1,6 @@
 {
-    "status": "FINISHED",
-    "current_cat": "Movies",
+    "status": "IDLE",
+    "current_cat": null,
     "title": [],
     "items": [
         {
@@ -198,264 +198,8 @@
     ],
     "suggestions": [],
     "bracket": [],
-    "winners_pool": [
-        {
-            "name": "10 things i hate about you",
-            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
-    "finished_matches": [
-        {
-            "name": "Just my luck vs Sisterhood of the travelling pants",
-            "winner": "Sisterhood of the travelling pants",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Just my luck",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Pitch Perfect vs Camp Rock",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Pitch Perfect",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "How to lose a guy in 10 days vs legally blonde",
-            "winner": "How to lose a guy in 10 days",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "legally blonde",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "White Chicks vs 500 days of summer",
-            "winner": "500 days of summer",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "White Chicks",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Clueless vs Pretty Woman",
-            "winner": "Clueless",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Pretty Woman",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Confessions of a Shopaholic vs Something Borrowed",
-            "winner": "Something Borrowed",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Confessions of a Shopaholic",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs Bend it like beckham",
-            "winner": "Angus, Thongs & Perfect Snogging",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Bend it like beckham",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Mean Girls vs Wild Child",
-            "winner": "Mean Girls",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Wild Child",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "just like heaven vs Mamma mia!",
-            "winner": "Mamma mia!",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "just like heaven",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "10 things i hate about you vs When harry met sally",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "When harry met sally",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Miss Congeliality vs 13 Going on 30",
-            "winner": "13 Going on 30",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Miss Congeliality",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Chloe vs He\u2019s just not that into you",
-            "winner": "Chloe",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "He\u2019s just not that into you",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Bridget Jones Diary vs The Notebook",
-            "winner": "Bridget Jones Diary",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "The Notebook",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "50 first dates vs Love Actually",
-            "winner": "Love Actually",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "50 first dates",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind vs the devil wears prada",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "the devil wears prada",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Cruel Intentions vs A cinderella story",
-            "winner": "Cruel Intentions",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "A cinderella story",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Sisterhood of the travelling pants vs Camp Rock",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Sisterhood of the travelling pants",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "How to lose a guy in 10 days vs 500 days of summer",
-            "winner": "How to lose a guy in 10 days",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "500 days of summer",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Clueless vs Something Borrowed",
-            "winner": "Clueless",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Something Borrowed",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Angus, Thongs & Perfect Snogging vs Mean Girls",
-            "winner": "Angus, Thongs & Perfect Snogging",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Mean Girls",
-            "loser_user": "<@1238834298338152498>",
-            "score": "0-0"
-        },
-        {
-            "name": "Mamma mia! vs 10 things i hate about you",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Mamma mia!",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "13 Going on 30 vs Chloe",
-            "winner": "13 Going on 30",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Chloe",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Bridget Jones Diary vs Love Actually",
-            "winner": "Bridget Jones Diary",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Love Actually",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Eternal Sunshine of The Spotless Mind vs Cruel Intentions",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Cruel Intentions",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Camp Rock vs How to lose a guy in 10 days",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "How to lose a guy in 10 days",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Clueless vs Angus, Thongs & Perfect Snogging",
-            "winner": "Clueless",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Angus, Thongs & Perfect Snogging",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "10 things i hate about you vs 13 Going on 30",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "13 Going on 30",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Bridget Jones Diary vs Eternal Sunshine of The Spotless Mind",
-            "winner": "Eternal Sunshine of The Spotless Mind",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Bridget Jones Diary",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Camp Rock vs Clueless",
-            "winner": "Camp Rock",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Clueless",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "10 things i hate about you vs Eternal Sunshine of The Spotless Mind",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Eternal Sunshine of The Spotless Mind",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        },
-        {
-            "name": "Camp Rock vs 10 things i hate about you",
-            "winner": "10 things i hate about you",
-            "winner_user": "<@1238834298338152498>",
-            "loser": "Camp Rock",
-            "loser_user": "<@1238834298338152498>",
-            "score": "1-0"
-        }
-    ],
+    "winners_pool": [],
+    "finished_matches": [],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -471,13 +215,13 @@
             "item": "500 days of summer",
             "cat": "Films",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "item": "10 things i hate about you",
+            "cat": "Movies",
+            "user": "<@1238834298338152498>"
         }
     ],
     "current_match": null,
-    "final_winner": {
-        "name": "10 things i hate about you",
-        "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
-        "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
-        "user": "<@1238834298338152498>"
-    }
+    "final_winner": null
 }
