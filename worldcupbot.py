@@ -359,7 +359,7 @@ class MatchView(ui.View):
         
         # Check if already voted for A
         if existing_votes.get(user_id) == "A":
-            return await interaction.response.send_message(f"⚠️ You already voted for **{self.item_a['name']}**!", ephemeral=True)
+            return await interaction.response.send_message(f"<:warning:1462499928239767602> You already voted for **{self.item_a['name']}**!", ephemeral=True)
         
         # Save vote
         existing_votes[user_id] = "A"
@@ -386,7 +386,7 @@ class MatchView(ui.View):
         
         # Check if already voted for B
         if existing_votes.get(user_id) == "B":
-            return await interaction.response.send_message(f"⚠️ You already voted for **{self.item_b['name']}**!", ephemeral=True)
+            return await interaction.response.send_message(f"<:warning:1462499928239767602> You already voted for **{self.item_b['name']}**!", ephemeral=True)
         
         # Save vote
         existing_votes[user_id] = "B"
@@ -935,7 +935,7 @@ async def resetcup(interaction: discord.Interaction):
         return await interaction.response.send_message("<:cross:1462498457322258617> Admin only.", ephemeral=True)
     
     confirm_view = ResetConfirmView()
-    await interaction.response.send_message("⚠️ **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
+    await interaction.response.send_message("<:warning:1462499928239767602> **Are you sure you want to delete all current tournament progress?**", view=confirm_view, ephemeral=True)
 
 @bot.tree.command(name="endcup", description="Phase 4: Crown winner and move to Hall of Fame")
 async def endcup(interaction: discord.Interaction):
@@ -950,7 +950,7 @@ async def endcup(interaction: discord.Interaction):
     is_early = winner is None
     
     if is_early:
-        msg = "⚠️ **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
+        msg = "<:warning:1462499928239767602> **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
     else:
         msg = f"<:cutecup:1462480543449874442> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
     
