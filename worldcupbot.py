@@ -477,10 +477,9 @@ class ScoreboardView(ui.View):
             embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
 
         else:
-            # --- SURVIVOR & GRAVEYARD MODE ---
-            embed.title = "🟢 Remaining Survivors & 💀 Graveyard"
+            # --- SURVIVOR MODE ONLY ---
+            embed.title = "🟢 Remaining Survivors"
             
-            # 1. Collect Survivors
             survivors = []
             curr = data.get('current_match')
             if curr:
@@ -491,19 +490,11 @@ class ScoreboardView(ui.View):
             for item in data.get('winners_pool', []):
                 survivors.append(f"{item['name']} ({item['user']})")
 
-            # 2. Collect Recently Eliminated (Last 5 losers)
-            graveyard = []
-            for m in self.matches[:5]:
-                graveyard.append(m.get('loser_name', 'Unknown'))
-
             survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
-            graveyard_list = "\n".join([f"💀 {g}" for g in graveyard]) if graveyard else "No one eliminated yet."
 
             embed.description = (
                 f"**{len(survivors)} entries still in the running:**\n"
-                f"{survivor_list}\n\n"
-                f"**Recently Eliminated:**\n"
-                f"{graveyard_list}"
+                f"{survivor_list}"
             )
             embed.set_footer(text="The path to the Grand Final")
 
@@ -527,7 +518,6 @@ class ScoreboardView(ui.View):
     @ui.button(label="🟢 Survivors", style=discord.ButtonStyle.success, custom_id="sb_toggle_surv")
     async def toggle_survivors(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
-        # Toggle logic
         if self.view_mode == "HISTORY":
             self.view_mode = "SURVIVORS"
             button.label = "📜 View History"
