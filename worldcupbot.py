@@ -745,62 +745,65 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
+    # 1. DEFER IMMEDIATELY - Do not put anything above this!
+    try:
+        await interaction.response.defer(ephemeral=False)
+    except:
+        return # Interaction already failed
+
     if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
+        return await interaction.followup.send("❌ Admin only.", ephemeral=True)
     
-    await interaction.response.defer(ephemeral=False)
-        
+    # 2. Now it's safe to do the slow GitHub work
     data, sha = load_data()
-    item_count = len(data['items'])
     
+    item_count = len(data.get('items', []))
     if item_count != 32:
         return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})")
-    
-    # 1. Shuffle the 32 individual items
-    items_to_start = list(data['items'])
-    random.shuffle(items_to_start)
-    
-    # 2. Pop the first two items immediately for the first match
-    comp_a = items_to_start.pop(0)
-    comp_b = items_to_start.pop(0)
-    
-    # 3. Setup match details
-    round_name = "Round of 32"
-    match_num = 1
-    
-    # 4. Create the Match View
-    view = MatchView(comp_a, comp_b, round_name, match_num)
-    
-    # 5. Send the Start Announcement AND the first match
-    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
-    
-    msg = await interaction.channel.send(
-        content=f"⚔️ **{round_name}** is now LIVE!", 
-        embed=view.create_embed(0), 
-        view=view
-    )
 
-    # 6. Save EVERYTHING to data
-    data['bracket'] = items_to_start  # The remaining 30 items
-    data['finished_matches'] = []
-    data['winners_pool'] = []
+    # 3. Prepare items
+    shuffled = list(data['items'])
+    random.shuffle(shuffled)
+    comp_a = shuffled.pop(0)
+    comp_b = shuffled.pop(0)
+
+    # 4. Save tournament state
     data['status'] = "MATCH_ACTIVE"
+    data['bracket'] = shuffled
+    data['winners_pool'] = []
+    data['finished_matches'] = []
     data['current_match'] = {
         "item_a": comp_a, 
         "item_b": comp_b, 
         "votes": {}, 
-        "message_id": msg.id, 
-        "channel_id": interaction.channel.id,
-        "round_name": round_name,
-        "match_num": match_num
+        "round_name": "Round of 32",
+        "match_num": 1,
+        "channel_id": interaction.channel_id
     }
+    save_data(data, sha)
+
+    # 5. Create view and send message
+    # MatchView.create_embed now has the safety check we added earlier
+    view = MatchView(comp_a, comp_b, "Round of 32", 1)
     
+    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    
+    msg = await interaction.channel.send(
+        content="⚔️ **Round of 32** is now LIVE!", 
+        embed=view.create_embed(0), 
+        view=view
+    )
+    
+    # 6. Update message ID and pin
+    data, sha = load_data()
+    data['current_match']['message_id'] = msg.id
     save_data(data, sha)
     
     try:
         await msg.pin()
     except:
         pass
+
 
 
 
