@@ -341,7 +341,6 @@ class MatchView(ui.View):
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
-)
 
 
 
