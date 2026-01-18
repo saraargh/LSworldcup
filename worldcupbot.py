@@ -281,7 +281,7 @@ class ItemGallery(ui.View):
         await interaction.response.edit_message(embed=self.create_content())
 
 
-class MatchView(ui.View):
+cclass MatchView(ui.View):
     def __init__(self, item_a, item_b, round_name=None, match_num=None):
         super().__init__(timeout=None)
         self.item_a = item_a
@@ -294,11 +294,10 @@ class MatchView(ui.View):
             self.vote_b.label = f"Vote for {item_b['name']}"
 
     def create_embed(self, page):
-        # 1. Safety check: If there's no match data (like during bot startup), return a simple embed
+        # SAFETY CHECK: Prevents 'NoneType' error during bot startup
         if self.item_a is None or self.item_b is None:
             return discord.Embed(title="Match Loading...", description="Please wait for the next match to start.")
 
-        # 2. Fetch current vote totals
         data, _ = load_data()
         match = data.get("current_match", {})
         votes = match.get("votes", {})
@@ -307,7 +306,6 @@ class MatchView(ui.View):
 
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
-        
         item_desc = item.get('desc', 'No description provided.')
         
         embed = discord.Embed(
@@ -315,20 +313,14 @@ class MatchView(ui.View):
             description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item_desc}\n\n**Submitted by:** {item.get('user', 'Unknown')}",
             color=color
         )
-
-        # 3. Added vote tally field
         embed.add_field(
             name="📊 Current Standings", 
             value=f"**{self.item_a['name']}:** {count_a} votes\n**{self.item_b['name']}:** {count_b} votes", 
             inline=False
         )
-
         embed.set_image(url=item['image'])
         embed.set_footer(text="Switch views to see both entries before voting!")
         return embed
-
-
-
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav")
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
@@ -355,7 +347,6 @@ class MatchView(ui.View):
         match.setdefault("votes", {})[str(interaction.user.id)] = "B"
         save_data(data, sha)
         await interaction.followup.send(f"✅ Voted for **{self.item_b['name']}**!", ephemeral=True)
-
 
 
 
@@ -425,6 +416,7 @@ class EndConfirmView(ui.View):
         save_data(self.data, self.sha)
         await interaction.response.edit_message(content="✅ **Tournament reset and results archived.**", view=None)
 
+
 class ScoreboardView(ui.View):
     def __init__(self, matches=None):
         super().__init__(timeout=None)
@@ -434,12 +426,10 @@ class ScoreboardView(ui.View):
 
     def create_embed(self, data):
         embed = discord.Embed(color=0x3498db)
-        
         if self.view_mode == "HISTORY":
             start = self.page * 5
             chunk = self.matches[start:start+5]
             embed.title = "📊 Match History"
-            
             description_text = "*Newest results at the top*\n\n"
             for m in chunk:
                 description_text += (
@@ -449,11 +439,8 @@ class ScoreboardView(ui.View):
             embed.description = description_text
             total_pages = (len(self.matches) - 1) // 5 + 1
             embed.set_footer(text=f"Page {self.page + 1} of {total_pages}")
-
         else:
-            # --- SURVIVOR MODE ONLY ---
             embed.title = "🟢 Remaining Survivors"
-            
             survivors = []
             curr = data.get('current_match')
             if curr:
@@ -465,13 +452,8 @@ class ScoreboardView(ui.View):
                 survivors.append(f"{item['name']} ({item['user']})")
 
             survivor_list = "\n".join([f"🟢 {s}" for s in survivors]) if survivors else "No survivors."
-
-            embed.description = (
-                f"**{len(survivors)} entries still in the running:**\n"
-                f"{survivor_list}"
-            )
+            embed.description = f"**{len(survivors)} entries still in the running:**\n{survivor_list}"
             embed.set_footer(text="The path to the Grand Final")
-
         return embed
 
     @ui.button(label="Newer", emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="sb_newer")
@@ -498,7 +480,6 @@ class ScoreboardView(ui.View):
         else:
             self.view_mode = "HISTORY"
             button.label = "🟢 Survivors"
-            
         await interaction.response.edit_message(embed=self.create_embed(data), view=self)
 
 
@@ -508,150 +489,32 @@ class ScoreboardView(ui.View):
 
 
 
+# =========================================================
+# BOT CORE CLASS
+# =========================================================
 class WC_Bot(discord.Client):
     def __init__(self):
         super().__init__(intents=discord.Intents.all())
         self.tree = app_commands.CommandTree(self)
+        self.processing_lock = asyncio.Lock()
 
     async def setup_hook(self):
-        # We pass four 'None' values to match the new MatchView requirements
+        # Registering these here makes buttons work even after the bot reboots
         self.add_view(MatchView(None, None, None, None))
+        self.add_view(ScoreboardView())
+        self.add_view(ItemGallery())
+        self.add_view(HistoryView())
         await self.tree.sync()
         print(f"✅ Synced slash commands for {self.user}")
 
     async def on_ready(self):
         print(f"🚀 Logged in as {self.user}")
 
-
-    # === TOURNAMENT LOGIC ===
-    def calculate_stats(self, data, winner, runner_up):
-        history = data.get('finished_matches', [])
-        
-        # 1. 2nd Place
-        second = runner_up['name']
-        second_user = runner_up.get('user', 'Unknown')
-
-        # 2. 3rd Place (Loser of the semi-final/previous match)
-        third = "Unknown"
-        third_user = "Unknown"
-        if len(history) >= 1:
-            last_match = history[-1]
-            third = last_match.get('loser', 'Unknown')
-            third_user = last_match.get('loser_user', 'Unknown')
-
-        # 3. Vote Statistics
-        tally = {}
-        for m in history:
-            try:
-                parts = m['score'].split('-')
-                w_votes = int(parts[0])
-                l_votes = int(parts[1])
-                tally[m['winner']] = tally.get(m['winner'], 0) + w_votes
-                if 'loser' in m:
-                    tally[m['loser']] = tally.get(m['loser'], 0) + l_votes
-            except: pass
-
-        if tally:
-            sorted_votes = sorted(tally.items(), key=lambda x: x[1], reverse=True)
-            most_voted_item, most_votes = sorted_votes[0]
-            least_voted_item, least_votes = sorted_votes[-1]
-        else:
-            most_voted_item, most_votes = "None", 0
-            least_voted_item, least_votes = "None", 0
-
-        return {
-            "second": second, "second_user": second_user,
-            "third": third, "third_user": third_user,
-            "most_voted": most_voted_item, "most_votes": most_votes,
-            "least_voted": least_voted_item, "least_votes": least_votes
-        }
-
-    async def resolve_match(self, data, sha):
-        match = data.get('current_match')
-        if not match: return
-
-        channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
-
-        # Count Votes
-        votes = list(match.get('votes', {}).values())
-        cA, cB = votes.count("A"), votes.count("B")
-        
-        winner, loser = (match['item_a'], match['item_b']) if cA >= cB else (match['item_b'], match['item_a'])
-        win_score, lose_score = (cA, cB) if cA >= cB else (cB, cA)
-
-        # Update History
-        data.setdefault('finished_matches', []).append({
-            "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
-            "winner": winner['name'],
-            "winner_user": winner.get('user', 'Unknown'),
-            "loser": loser['name'],
-            "loser_user": loser.get('user', 'Unknown'),
-            "score": f"{win_score}-{lose_score}"
-        })
-        data.setdefault('winners_pool', []).append(winner)
-        
-        old_msg_id = match['message_id']
-        data['current_match'] = None 
-        save_data(data, sha)
-
-        # Unpin old match
-        try:
-            old_msg = await channel.fetch_message(old_msg_id)
-            await old_msg.unpin()
-        except: pass
-
-        # === GRAND FINALE CHECK ===
-        is_tournament_over = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
-
-        if is_tournament_over:
-            # 1. Calculate the final stats from the history
-            stats = self.calculate_stats(data, winner, loser)
-            
-            # 2. Store EVERYTHING in the data dictionary so /endcup can see it
-            data['status'] = "FINISHED"
-            data['final_winner'] = winner
-            
-            # Map the results for the Special Mentions
-            data['second_place'] = {"name": loser['name'], "user": loser.get('user', 'Unknown')}
-            
-            # Get 3rd place from the previous match loser
-            if len(data.get('finished_matches', [])) >= 2:
-                prev_match = data['finished_matches'][-2]
-                data['third_place'] = {"name": prev_match['loser'], "user": prev_match['loser_user']}
-            else:
-                data['third_place'] = {"name": "N/A", "user": "N/A"}
-
-            # Map the vote counts
-            data['most_voted_stats'] = {"name": stats['most_voted'], "count": stats['most_votes']}
-            data['least_voted_stats'] = {"name": stats['least_voted'], "count": stats['least_votes']}
-
-            # Save to GitHub
-            save_data(data, sha)
-            
-            # 3. Just send a simple text alert to the channel (NOT the winner embed)
-            await channel.send("🏁 **The Grand Final is over!** Admin, use `/endcup` to post results and reset.")
-            return
-
-
-        # === REGULAR ROUND WINNER ===
-        win_embed = discord.Embed(title="<:worldcup:1462292819526815877> MATCH CONCLUDED", color=0x2ecc71)
-        win_embed.description = f"### {winner['name']} has DEFEATED {loser['name']}!"
-        win_embed.add_field(name="Final Score", value=f"✅ **{win_score}** — ❌ **{lose_score}**", inline=False)
-        win_embed.add_field(name="Advancing", value=f"⭐ {winner['name']}", inline=True)
-        
-        if winner.get('image'):
-            win_embed.set_thumbnail(url=winner['image'])
-        
-        await channel.send(embed=win_embed)
-
-        # Small delay before next match
-        await asyncio.sleep(2)
-        await self.post_next(channel)
-
+    # --- THE ENGINE: POST NEXT MATCH ---
     async def post_next(self, channel):
         data, sha = load_data()
         
-        # 1. Check if we need to advance the round
+        # 1. Pull from winners pool if bracket is empty
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
                 data['bracket'] = list(data['winners_pool'])
@@ -662,15 +525,15 @@ class WC_Bot(discord.Client):
                 save_data(data, sha)
                 return await channel.send("🎊 **Tournament Complete!**")
 
-        # 2. Get the next two competitors
+        # 2. Get competitors
         comp_a = data['bracket'].pop(0)
         comp_b = data['bracket'].pop(0)
         
-        # 3. DEFINE the variables that were missing
+        # 3. Define the info for the title
         round_name = get_round_name(data)
         match_num = len(data.get('finished_matches', [])) + 1
         
-        # 4. Create the view using the variables defined above
+        # 4. Initialize View with the new variables
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         
         msg = await channel.send(
@@ -679,19 +542,81 @@ class WC_Bot(discord.Client):
             view=view
         )
         
-        # 5. Save everything to GitHub
+        # 5. Save Match Data with match info included
         data['current_match'] = {
             "item_a": comp_a, 
             "item_b": comp_b, 
             "votes": {}, 
             "message_id": msg.id, 
             "channel_id": channel.id,
-            "round_name": round_name, 
+            "round_name": round_name,
             "match_num": match_num
         }
         data['status'] = "MATCH_ACTIVE"
         save_data(data, sha)
         await msg.pin()
+
+    # --- THE ENGINE: RESOLVE MATCH ---
+    async def resolve_match(self, data, sha):
+        async with self.processing_lock:
+            match = data.get('current_match')
+            if not match:
+                return
+
+            channel = self.get_channel(match['channel_id'])
+            if not channel:
+                channel = await self.fetch_channel(match['channel_id'])
+
+            votes = list(match.get('votes', {}).values())
+            count_a = votes.count("A")
+            count_b = votes.count("B")
+
+            if count_a >= count_b:
+                winner, loser = match['item_a'], match['item_b']
+                winning_score, losing_score = count_a, count_b
+            else:
+                winner, loser = match['item_b'], match['item_a']
+                winning_score, losing_score = count_b, count_a
+
+            data.setdefault('finished_matches', []).append({
+                "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
+                "winner": winner['name'],
+                "winner_user": winner.get('user', 'Unknown'),
+                "loser_name": loser['name'],
+                "score": f"{count_a}-{count_b}"
+            })
+
+            data.setdefault('winners_pool', []).append(winner)
+            
+            old_msg_id = match['message_id']
+            data['current_match'] = None
+            save_data(data, sha)
+
+            try:
+                old_msg = await channel.fetch_message(old_msg_id)
+                await old_msg.unpin()
+            except:
+                pass
+
+            win_embed = discord.Embed(
+                title="🏆 MATCH CONCLUDED",
+                description=f"### {winner['name']} has DEFEATED {loser['name']}!",
+                color=0x2ecc71 
+            )
+            win_embed.add_field(name="Final Score", value=f"✅ **{winning_score}** —  ❌ **{losing_score}**", inline=False)
+            win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=True)
+            win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=True)
+            
+            if winner.get('image'):
+                win_embed.set_thumbnail(url=winner['image'])
+            
+            win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
+
+            await channel.send(embed=win_embed)
+            
+            await asyncio.sleep(4) 
+            await self.post_next(channel)
+
 
 
 
