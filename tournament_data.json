@@ -337,6 +337,12 @@
             "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Bend it like beckham",
+            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -388,6 +394,13 @@
             "winner_user": "<@1238834298338152498>",
             "loser_name": "He\u2019s just not that into you",
             "score": "0-1"
+        },
+        {
+            "name": "Bend it like beckham vs the devil wears prada",
+            "winner": "Bend it like beckham",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "the devil wears prada",
+            "score": "1-0"
         }
     ],
     "leaderboard": [
@@ -402,26 +415,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Bend it like beckham",
-            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1462503958315663577,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 8
-    },
+    "current_match": null,
     "final_winner": null
 }
