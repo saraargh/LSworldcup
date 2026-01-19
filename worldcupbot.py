@@ -920,17 +920,19 @@ async def startworldcup(interaction: discord.Interaction):
         return await interaction.followup.send("<:cross:1462508739671101560> **Error:** No category has been set! Set a category before starting.")
 
     # 3. Check for exactly 32 items
-    # Note: Using data.get('suggestions') as that is where items are stored in your setup
-    suggestions = data.get('suggestions', [])
-    item_count = len(suggestions)
+    # FIX: Changed 'suggestions' to 'items' to match your data structure
+    items_list = data.get('items', [])
+    item_count = len(items_list)
     if item_count != 32:
         return await interaction.followup.send(f"<:cross:1462508739671101560> You need exactly 32 items to start. (Current: {item_count})")
 
     # 4. Prepare items
-    shuffled = list(suggestions)
+    # FIX: Using items_list here
+    shuffled = list(items_list)
     random.shuffle(shuffled)
     comp_a = shuffled.pop(0)
     comp_b = shuffled.pop(0)
+
 
     # 5. Save tournament state
     data['status'] = "MATCH_ACTIVE"
