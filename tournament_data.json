@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "10 things i hate about you",
-            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Chloe",
-            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Sisterhood of the travelling pants",
             "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
@@ -432,6 +420,24 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "10 things i hate about you",
+            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Chloe",
+            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462608364713541714,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 6
+    },
     "final_winner": null
 }
