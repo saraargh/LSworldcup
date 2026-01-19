@@ -846,12 +846,21 @@ async def removeitem(interaction: discord.Interaction, index: int):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
+
+    # PREVENTION: Lock removal once the bracket exists or cup is finished
+    if data.get('status') not in ["IDLE", "SUGGESTIONS"]:
+        return await interaction.response.send_message(
+            "<:cross:1462508739671101560> **You cannot remove items during this stage!**", 
+            ephemeral=True
+        )
+
     if 1 <= index <= len(data['items']):
         removed_item = data['items'].pop(index - 1)
         save_data(data, sha)
         await interaction.response.send_message(f"🗑️ Successfully removed **{removed_item['name']}**.")
     else:
-        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number.", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use the entry number from /listitems!", ephemeral=True)
+
 
 @bot.tree.command(name="edititem", description="Admin: Edit the name, description, or image of an entry")
 async def edititem(interaction: discord.Interaction, index: int, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
@@ -859,6 +868,14 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
+
+    # PREVENTION: Lock editing during the World Cup
+    if data.get('status') not in ["IDLE", "SUGGESTIONS"]:
+        return await interaction.response.send_message(
+            "<:cross:1462508739671101560> **You cannot edit items during this stage!**", 
+            ephemeral=True
+        )
+
     if 1 <= index <= len(data['items']):
         target = data['items'][index - 1]
         
@@ -875,7 +892,7 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
         save_data(data, sha)
         await interaction.response.send_message(f"📝 Entry #{index} has been updated.")
     else:
-        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number.", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use entry number from /itemlist!", ephemeral=True)
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
@@ -883,25 +900,37 @@ async def startworldcup(interaction: discord.Interaction):
     try:
         await interaction.response.defer(ephemeral=False)
     except:
-        return # Interaction already failed
+        return 
 
     if not is_admin(interaction.user):
         return await interaction.followup.send("<:cross:1462508739671101560> Admin only.", ephemeral=True)
     
-    # 2. Now it's safe to do the slow GitHub work
+    # 2. Load data and run safety checks
     data, sha = load_data()
     
-    item_count = len(data.get('items', []))
+    # PREVENTION: Check if already running or finished
+    if data.get('status') in ["MATCH_ACTIVE", "MATCH_PENDING", "FINISHED"]:
+        return await interaction.followup.send("<:cross:1462508739671101560> **Error:** A World Cup is already in progress or finished. Use `/endcup` first.")
+
+    # PREVENTION: Check for Category to avoid NoneType.upper() error
+    cat_name = data.get('current_cat')
+    if not cat_name:
+        return await interaction.followup.send("<:cross:1462508739671101560> **Error:** No category has been set! Set a category before starting.")
+
+    # 3. Check for exactly 32 items
+    # Note: Using data.get('suggestions') as that is where items are stored in your setup
+    suggestions = data.get('suggestions', [])
+    item_count = len(suggestions)
     if item_count != 32:
         return await interaction.followup.send(f"<:cross:1462508739671101560> You need exactly 32 items to start. (Current: {item_count})")
 
-    # 3. Prepare items
-    shuffled = list(data['items'])
+    # 4. Prepare items
+    shuffled = list(suggestions)
     random.shuffle(shuffled)
     comp_a = shuffled.pop(0)
     comp_b = shuffled.pop(0)
 
-    # 4. Save tournament state
+    # 5. Save tournament state
     data['status'] = "MATCH_ACTIVE"
     data['bracket'] = shuffled
     data['winners_pool'] = []
@@ -916,11 +945,11 @@ async def startworldcup(interaction: discord.Interaction):
     }
     save_data(data, sha)
 
-    # 5. Create view and send message
-    # MatchView.create_embed now has the safety check we added earlier
+    # 6. Create view and send announcement
     view = MatchView(comp_a, comp_b, "Round of 32", 1)
     
-    await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {data['current_cat'].upper()} IS UPON US!**")
+    # Safety: Use upper() now that we've confirmed cat_name exists
+    await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {cat_name.upper()} IS UPON US!**")
     
     msg = await interaction.channel.send(
         content="<:exclaim:1462504669699117188> @everyone - **Round of 32: Match 1** is now LIVE - Cast your votes below", 
@@ -928,7 +957,8 @@ async def startworldcup(interaction: discord.Interaction):
         view=view
     )
     
-    # 6. Update message ID and pin
+    # 7. Update message ID and pin
+    # Re-loading to ensure we have the most recent SHA before updating the message_id
     data, sha = load_data()
     data['current_match']['message_id'] = msg.id
     save_data(data, sha)
@@ -937,6 +967,7 @@ async def startworldcup(interaction: discord.Interaction):
         await msg.pin()
     except:
         pass
+
 
 
 
