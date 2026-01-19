@@ -119,27 +119,22 @@ def is_admin(user):
     return False
 
 def get_round_name(data):
-    # We now pass 'data' so we can count EVERYONE still in the tournament
-    bracket_count = len(data.get('bracket', []))
-    pool_count = len(data.get('winners_pool', []))
-    
-    # Check if a match is currently happening (adds 2 more people)
-    current_match_count = 2 if data.get('current_match') else 0
-    
-    total_alive = bracket_count + pool_count + current_match_count
+    # Get the current match number from data (default to 1)
+    match_info = data.get('current_match', {})
+    match_num = match_info.get('match_num', 1)
 
-    if total_alive > 16:
+    # Fixed logic based on a 31-match tournament (32 items)
+    if match_num <= 16:
         return "Round of 32"
-    elif total_alive > 8:
+    elif match_num <= 24:
         return "Round of 16"
-    elif total_alive > 4:
+    elif match_num <= 28:
         return "Quarter-Finals"
-    elif total_alive > 2:
+    elif match_num <= 30:
         return "Semi-Finals"
-    elif total_alive == 2:
-        return "Grand Final"
     else:
         return "Grand Final"
+
 
 
 # =========================================================
@@ -277,7 +272,6 @@ class ItemGallery(ui.View):
             self.mode = "GALLERY"
         await interaction.response.edit_message(embed=self.create_content())
 
-
 class MatchView(ui.View):
     def __init__(self, item_a, item_b, round_name=None, match_num=None):
         super().__init__(timeout=None)
@@ -353,8 +347,10 @@ class MatchView(ui.View):
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: 
-            return await interaction.response.send_message("<:cross:1462508739671101560> Match not active.", ephemeral=True)
+        
+        # OLD EMBED CHECK: Prevent voting on expired matches
+        if not match or interaction.message.id != match.get("message_id"):
+            return await interaction.response.send_message("<:cross:1462508739671101560> **This matchup is over!** Please vote on the current match.", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
@@ -380,8 +376,10 @@ class MatchView(ui.View):
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
         data, sha = load_data()
         match = data.get("current_match")
-        if not match: 
-            return await interaction.response.send_message("<:cross:1462508739671101560> Match not active.", ephemeral=True)
+        
+        # OLD EMBED CHECK: Prevent voting on expired matches
+        if not match or interaction.message.id != match.get("message_id"):
+            return await interaction.response.send_message("<:cross:1462508739671101560> **This matchup is over!** Please vote on the current match.", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
@@ -499,7 +497,7 @@ class EndConfirmView(ui.View):
 
                 embed = discord.Embed(
                     title="🎊 CHAMPION CROWNED 🎊", 
-                    description=f"#<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nIs The World Cup of {self.data['current_cat']} Winner!\n**Submitted by:** {winner['user']}", 
+                    description=f"<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nIs The World Cup of {self.data['current_cat']} Winner!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
                 embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
@@ -510,7 +508,7 @@ class EndConfirmView(ui.View):
                 "cat": self.data['current_cat'], 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone <:cutecup:1462480543449874442> **THE WORLD CUP IS COMPLETE!**", embed=embed)
+            await interaction.channel.send("@everyone **THE WORLD CUP OF {cat_name.upper()} IS COMPLETE!** <:cutecup:1462480543449874442>", embed=embed)
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
@@ -659,9 +657,11 @@ class WC_Bot(discord.Client):
         # 1. Bracket logic
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
-                old_round = get_round_name(data)
+                # FIX: Move items to bracket first so the match counter stays in sync
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
+                
+                # Logic now correctly identifies the next round (e.g., Round of 16)
                 new_round = get_round_name(data)
                 await channel.send(f"<:shield:1462508730640765114> *Round Complete! Advancing survivors to the {new_round}...*")
             elif len(data.get('winners_pool', [])) == 1:
@@ -669,9 +669,8 @@ class WC_Bot(discord.Client):
                 data['status'] = "FINISHED"
                 data['current_match'] = None
                 save_data(data, sha)
-                # Removed the yellow embed. Now it just tells the admin privately.
                 if interaction:
-                    return await interaction.followup.send("✅ **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
+                    return await interaction.followup.send("<:tick:1462508738194837606> **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
                 return
             else:
                 data['status'] = "FINISHED"
@@ -711,6 +710,7 @@ class WC_Bot(discord.Client):
             await msg.pin()
         except:
             pass
+
 
 
 
