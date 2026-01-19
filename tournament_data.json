@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Chloe",
-            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Just my luck",
             "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
@@ -418,6 +406,24 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "He\u2019s just not that into you",
+            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Chloe",
+            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1462622048663765114,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 3
+    },
     "final_winner": null
 }
