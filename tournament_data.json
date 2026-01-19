@@ -373,6 +373,12 @@
             "desc": "Henry falls for Lucy, only to discover she loses her memory every day. Determined to win her heart repeatedly, he commits to loving her despite the emotional challenge. Balancing humour with sincerity, 50 First Dates explores devotion in an unconventional way. It\u2019s about choosing someone again and again, even when it\u2019s hard. Beneath the comedy lies a tender meditation on patience, empathy, and the idea that love isn\u2019t just remembered\u2014it\u2019s demonstrated daily.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386599148290280/IMG_9325.webp?ex=696a5dd4&is=69690c54&hm=673f3d6d274098093c0716cad8103116a030a3e6d455918fd059cf0209bd63dc&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Camp Rock",
+            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -383,6 +389,16 @@
             "loser_name": "Wild Child",
             "score": "0-0",
             "votes": {}
+        },
+        {
+            "name": "Camp Rock vs Confessions of a Shopaholic",
+            "winner": "Camp Rock",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Confessions of a Shopaholic",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -402,26 +418,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1462621684593856573,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 2
-    },
+    "current_match": null,
     "final_winner": null
 }
