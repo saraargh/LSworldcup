@@ -331,6 +331,12 @@
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "the devil wears prada",
+            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -411,6 +417,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "When harry met sally vs the devil wears prada",
+            "winner": "the devil wears prada",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "When harry met sally",
+            "score": "0-1",
+            "votes": {
+                "1238834298338152498": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -430,26 +446,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "When harry met sally",
-            "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1462622614638956566,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 9
-    },
+    "current_match": null,
     "final_winner": null
 }
