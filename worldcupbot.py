@@ -180,14 +180,14 @@ class HistoryView(ui.View):
         for idx, entry in enumerate(chunk):
             count = start + idx + 1
             description_text += f"{count}. <:cutecup:1462480543449874442> **{entry['cat'].upper()}**\n"
-            description_text += f"┕ Winner: **{entry['item']}**\n"
-            description_text += f"┕ Submitter: {entry['user']}\n\n"
+            description_text += f"┕ **Winner:** {entry['item']}\n"
+            description_text += f"┕ **Submitter:** {entry['user']}\n\n"
         
         if not description_text:
             description_text = "The Hall of Fame is currently empty."
             
         embed = discord.Embed(
-            title="🎖️ Hall of Fame History", 
+            title="<:worldcup:1462292819526815877> Hall of Fame History", 
             description=description_text, 
             color=0xf1c40f
         )
@@ -196,20 +196,21 @@ class HistoryView(ui.View):
         embed.set_footer(text=f"Page {self.page+1} of {total_pages}")
         return embed
 
-    @ui.button(label="⬅️ Previous", style=discord.ButtonStyle.gray, custom_id="hist_prev")
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="hist_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
         self.page = max(0, self.page - 1)
         await interaction.response.edit_message(embed=self.create_embed())
 
-    @ui.button(label="Next ➡️", style=discord.ButtonStyle.gray, custom_id="hist_next")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="hist_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.data = data.get('leaderboard', [])
         if (self.page + 1) * 5 < len(self.data):
             self.page += 1
         await interaction.response.edit_message(embed=self.create_embed())
+
 
 class ItemGallery(ui.View):
     def __init__(self, items=None):
@@ -249,7 +250,7 @@ class ItemGallery(ui.View):
             color=0x3498db
         )
 
-    @ui.button(label="⬅️", style=discord.ButtonStyle.gray, custom_id="gal_prev")
+    @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="gal_prev")
     async def prev(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
@@ -257,13 +258,14 @@ class ItemGallery(ui.View):
             self.index = (self.index - 1) % len(self.items)
         await interaction.response.edit_message(embed=self.create_content())
 
-    @ui.button(label="➡️", style=discord.ButtonStyle.gray, custom_id="gal_next")
+    @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="gal_next")
     async def next(self, interaction: discord.Interaction, button: ui.Button):
         data, _ = load_data()
         self.items = data.get('items', [])
         if self.items:
             self.index = (self.index + 1) % len(self.items)
         await interaction.response.edit_message(embed=self.create_content())
+
 
     @ui.button(label="Toggle View (List/Gallery)", style=discord.ButtonStyle.blurple, custom_id="gal_toggle")
     async def toggle(self, interaction: discord.Interaction, button: ui.Button):
@@ -308,7 +310,7 @@ class MatchView(ui.View):
         
         embed = discord.Embed(
             title=f"<:swords:1462508037683282125> {self.round_name} - Match {self.match_num}: {self.item_a['name']} vs {self.item_b['name']}",
-            description=f"**Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
+            description=f"**Currently Viewing:** {item['name']}\n\n**Description:** {item.get('desc', 'No description.')}\n\n**Submitter:** {item.get('user', 'Unknown')}",
             color=color
         )
         embed.add_field(
@@ -558,7 +560,7 @@ class ScoreboardView(ui.View):
                 for m in chunk:
                     description_text += (
                         f"<:swords:1462508037683282125> **{m['name']}**\n"
-                        f"**Winner:** <:fireee:1462508732012560562> {m['winner']}** ({m.get('score', '0-0')})\n\n"
+                        f"**Winner:** {m['winner']} ({m.get('score', '0-0')})\n\n"
                         )
                         
             embed.description = description_text
