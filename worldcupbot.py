@@ -651,7 +651,7 @@ class WC_Bot(discord.Client):
 
     # --- THE ENGINE: POST NEXT MATCH ---
 
-    async def post_next(self, channel, interaction=None):
+      async def post_next(self, channel, interaction=None):
         data, sha = load_data()
         
         # 1. Bracket logic
@@ -670,7 +670,7 @@ class WC_Bot(discord.Client):
                 data['current_match'] = None
                 save_data(data, sha)
                 if interaction:
-                    return await interaction.followup.send("<:tick:1462508738194837606> **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
+                    return await interaction.followup.send("✅ **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
                 return
             else:
                 data['status'] = "FINISHED"
@@ -710,6 +710,7 @@ class WC_Bot(discord.Client):
             await msg.pin()
         except:
             pass
+
 
 
 
