@@ -651,8 +651,10 @@ class WC_Bot(discord.Client):
 
     # --- THE ENGINE: POST NEXT MATCH ---
 
-    async def post_next(self, channel, interaction=None):
-        data, sha = load_data()
+    async def post_next(self, channel, interaction=None, data=None, sha=None):
+        # 1. Load data only if it wasn't passed from resolve_match
+        if data is None:
+            data, sha = load_data()
         
         # 1. Bracket logic
         if not data.get('bracket') or len(data['bracket']) < 2:
@@ -663,7 +665,15 @@ class WC_Bot(discord.Client):
                 
                 # Logic now correctly identifies the next round (e.g., Round of 16)
                 new_round = get_round_name(data)
+                
+                # Save state here so the transition is recorded
+                save_data(data, sha)
+                
                 await channel.send(f"<:shield:1462508730640765114> *Round Complete! Advancing survivors to the {new_round}...*")
+                
+                # Refresh data for the next match selection
+                await asyncio.sleep(2)
+                data, sha = load_data()
             elif len(data.get('winners_pool', [])) == 1:
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
@@ -688,7 +698,7 @@ class WC_Bot(discord.Client):
         # 4. Create the View & Message
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name if match_num < 31 else '🏆 World Cup Final'}: Match {match_num}** is now LIVE - Cast your votes below!", 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below!", 
             embed=view.create_embed(0),
             view=view
         )
@@ -710,11 +720,6 @@ class WC_Bot(discord.Client):
             await msg.pin()
         except:
             pass
-
-
-
-
-
 
 
     # --- THE ENGINE: RESOLVE MATCH ---
