@@ -758,7 +758,9 @@ class WC_Bot(discord.Client):
             # 5. Clean up current match state
             old_msg_id = match['message_id']
             data['current_match'] = None
+            data['status'] = "MATCH_PENDING" # Add this line
             save_data(data, sha)
+
 
             # 6. Unpin old match
             try:
