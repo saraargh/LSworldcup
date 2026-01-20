@@ -1,5 +1,5 @@
 {
-    "status": "MATCH_ACTIVE",
+    "status": "MATCH_PENDING",
     "current_cat": "mov",
     "title": [],
     "items": [
@@ -379,8 +379,26 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "winners_pool": [],
-    "finished_matches": [],
+    "winners_pool": [
+        {
+            "name": "White Chicks",
+            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
+            "user": "<@1238834298338152498>"
+        }
+    ],
+    "finished_matches": [
+        {
+            "name": "White Chicks vs the devil wears prada",
+            "winner": "White Chicks",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "the devil wears prada",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
+        }
+    ],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -403,26 +421,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "White Chicks",
-            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "round_name": "Round of 32",
-        "match_num": 1,
-        "channel_id": 1438277790179921971,
-        "message_id": 1463200322540404870
-    },
+    "current_match": null,
     "final_winner": null
 }
