@@ -416,7 +416,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
             "user": "<@1238834298338152498>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "A"
+        },
         "round_name": "Round of 32",
         "match_num": 1,
         "channel_id": 1438277790179921971,
