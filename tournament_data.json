@@ -196,7 +196,12 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "mooovies",
+            "user": "<@1238834298338152498>"
+        }
+    ],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
