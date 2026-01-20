@@ -1,6 +1,6 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": "Moovies",
+    "status": "ADDING_ITEMS",
+    "current_cat": "mooovies",
     "title": [],
     "items": [
         {
@@ -196,12 +196,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [
-        {
-            "name": "mooovies",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
