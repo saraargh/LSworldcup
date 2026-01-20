@@ -419,7 +419,8 @@
         "votes": {},
         "round_name": "Round of 32",
         "match_num": 1,
-        "channel_id": 1438277790179921971
+        "channel_id": 1438277790179921971,
+        "message_id": 1463168043873079390
     },
     "final_winner": null
 }
