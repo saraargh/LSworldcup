@@ -1,5 +1,5 @@
 {
-    "status": "MATCH_ACTIVE",
+    "status": "MATCH_PENDING",
     "current_cat": "movies",
     "title": [],
     "items": [
@@ -379,8 +379,26 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "winners_pool": [],
-    "finished_matches": [],
+    "winners_pool": [
+        {
+            "name": "Bridget Jones Diary",
+            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
+            "user": "<@1238834298338152498>"
+        }
+    ],
+    "finished_matches": [
+        {
+            "name": "Bridget Jones Diary vs Wild Child",
+            "winner": "Bridget Jones Diary",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Wild Child",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
+        }
+    ],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -403,26 +421,6 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Bridget Jones Diary",
-            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Wild Child",
-            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "round_name": "Round of 32",
-        "match_num": 1,
-        "channel_id": 1438277790179921971,
-        "message_id": 1463171764954730547
-    },
+    "current_match": null,
     "final_winner": null
 }
