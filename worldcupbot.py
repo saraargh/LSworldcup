@@ -651,103 +651,82 @@ class WC_Bot(discord.Client):
 
     # --- THE ENGINE: POST NEXT MATCH ---
 
+    # --- THE ENGINE: POST NEXT MATCH ---
+
     async def post_next(self, channel, interaction=None, data=None, sha=None):
-        # 1. Load data only if it wasn't passed from resolve_match
+        # 1. Always ensure we have the latest data if not provided
         if data is None:
             data, sha = load_data()
         
-        # 1. Bracket logic
+        # 2. Logic to advance to the NEXT ROUND (e.g. from Round of 32 to Round of 16)
+        # If bracket is empty, but winners are waiting
         if not data.get('bracket') or len(data['bracket']) < 2:
             if len(data.get('winners_pool', [])) >= 2:
-                # FIX: Move items to bracket first so the match counter stays in sync
                 data['bracket'] = list(data['winners_pool'])
                 data['winners_pool'] = []
-                
-                # Logic now correctly identifies the next round (e.g., Round of 16)
-                new_round = get_round_name(data)
-                
-                # Save state here so the transition is recorded
                 save_data(data, sha)
                 
-                await channel.send(f"<:shield:1462508730640765114> *Round Complete! Advancing survivors to the {new_round}...*")
+                new_round = get_round_name(data)
+                await channel.send(f"<:shield:1462508730640765114> **Round Complete!** Advancing survivors to the **{new_round}**...")
                 
-                # Refresh data for the next match selection
                 await asyncio.sleep(2)
-                data, sha = load_data()
-            elif len(data.get('winners_pool', [])) == 1:
+                data, sha = load_data() # Refresh data to get the new bracket
+            
+            elif len(data.get('winners_pool', [])) == 1 and not data.get('bracket'):
+                # Tournament is over
                 data['final_winner'] = data['winners_pool'][0]
                 data['status'] = "FINISHED"
-                data['current_match'] = None
                 save_data(data, sha)
                 if interaction:
-                    return await interaction.followup.send("<:tick:1462508738194837606> **Final match concluded.** Use `/endcup` to crown the winner!", ephemeral=True)
-                return
-            else:
-                data['status'] = "FINISHED"
-                save_data(data, sha)
+                    await interaction.followup.send("🏆 Tournament complete! Use `/endcup`.", ephemeral=True)
                 return
 
-        # 2. Pop competitors
-        comp_a = data['bracket'].pop(0)
-        comp_b = data['bracket'].pop(0)
-        
-        # 3. Calculate round info
-        round_name = get_round_name(data)
-        match_num = len(data.get('finished_matches', [])) + 1
-        
-        # 4. Create the View & Message
-        view = MatchView(comp_a, comp_b, round_name, match_num) 
-        msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below!", 
-            embed=view.create_embed(0),
-            view=view
-        )
-        
-        # 5. Save state
-        data['current_match'] = {
-            "item_a": comp_a, 
-            "item_b": comp_b, 
-            "votes": {}, 
-            "message_id": msg.id, 
-            "channel_id": channel.id,
-            "round_name": round_name,
-            "match_num": match_num
-        }
-        data['status'] = "MATCH_ACTIVE"
-        save_data(data, sha)
-        
-        try:
-            await msg.pin()
-        except:
-            pass
-
+        # 3. Trigger the next match if items exist in bracket
+        if len(data.get('bracket', [])) >= 2:
+            comp_a = data['bracket'].pop(0)
+            comp_b = data['bracket'].pop(0)
+            
+            round_name = get_round_name(data)
+            match_num = len(data.get('finished_matches', [])) + 1
+            
+            view = MatchView(comp_a, comp_b, round_name, match_num) 
+            msg = await channel.send(
+                content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE!", 
+                embed=view.create_embed(0, match_data={"item_a": comp_a, "item_b": comp_b, "votes": {}}),
+                view=view
+            )
+            
+            data['current_match'] = {
+                "item_a": comp_a, 
+                "item_b": comp_b, 
+                "votes": {}, 
+                "message_id": msg.id, 
+                "channel_id": channel.id,
+                "round_name": round_name,
+                "match_num": match_num
+            }
+            data['status'] = "MATCH_ACTIVE"
+            save_data(data, sha)
+            
+            try: await msg.pin()
+            except: pass
 
     # --- THE ENGINE: RESOLVE MATCH ---
 
     async def resolve_match(self, data, sha, interaction=None):
         async with self.processing_lock:
             match = data.get('current_match')
-            if not match:
-                return
+            if not match: return
 
-            channel = self.get_channel(match['channel_id'])
-            if not channel:
-                channel = await self.fetch_channel(match['channel_id'])
+            channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
 
-            # 1. Count Votes
             votes = list(match.get('votes', {}).values())
-            count_a = votes.count("A")
-            count_b = votes.count("B")
+            count_a, count_b = votes.count("A"), votes.count("B")
 
-            # 2. Determine Winner & Loser
-            if count_a >= count_b:
-                winner, loser = match['item_a'], match['item_b']
-                winning_score, losing_score = count_a, count_b
-            else:
-                winner, loser = match['item_b'], match['item_a']
-                winning_score, losing_score = count_b, count_a
+            winner, loser = (match['item_a'], match['item_b']) if count_a >= count_b else (match['item_b'], match['item_a'])
+            win_s, lose_s = (count_a, count_b) if count_a >= count_b else (count_b, count_a)
 
-            # 3. Archive Results (Ensuring keys match the EndConfirmView logic)
+            # Archive match
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'],
@@ -757,47 +736,36 @@ class WC_Bot(discord.Client):
                 "votes": match.get('votes', {})
             })
 
-            # 4. Move Winner to next round pool
             data.setdefault('winners_pool', []).append(winner)
-            
-            # 5. Clean up current match state
             old_msg_id = match['message_id']
             data['current_match'] = None
-            data['status'] = "MATCH_PENDING" # Add this line
-            save_data(data, sha)
-
-
-            # 6. Unpin old match
+            
+            # UNPIN OLD MESSAGE
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
-            except:
-                pass
+            except: pass
 
-            # --- THE SPOILER FIX ---
-            # Check if this was the last match of the tournament
-            is_cup_final = (len(data.get('bracket', [])) == 0 and len(data.get('winners_pool', [])) == 1)
+            # Check if this was the very last match
+            is_final = (len(data.get('bracket', [])) == 0 and len(data.get('winners_pool', [])) == 1)
 
-            # 7. Only send the "DEFEATED" embed if it's NOT the final match
-            if not is_cup_final:
+            if not is_final:
                 win_embed = discord.Embed(
                     title="<:cutecup:1462480543449874442> MATCH CONCLUDED",
-                    description=f"### {winner['name']} has DEFEATED {loser['name']}! <:beluga:1462299704107991172>",
+                    description=f"### {winner['name']} has DEFEATED {loser['name']}!",
                     color=0x2ecc71 
                 )
-                win_embed.add_field(name="Final Score", value=f"<:tick:1462508738194837606> **{winning_score}** —  <:cross:1462508739671101560> **{losing_score}**", inline=False)
-                win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=True)
-                win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=True)
-                
-                if winner.get('image'):
-                    win_embed.set_thumbnail(url=winner['image'])
-                
-                win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
+                win_embed.add_field(name="Final Score", value=f"**{win_s}** — **{lose_s}**")
+                win_embed.set_thumbnail(url=winner['image'])
                 await channel.send(embed=win_embed)
             
-            # 8. Pause for effect, then post the next match (Passes interaction for ephemeral message)
+            # SAVE EVERYTHING BEFORE STARTING NEXT
+            save_data(data, sha)
+            
             await asyncio.sleep(4) 
-            await self.post_next(channel, interaction)
+            # Re-fetch the saved data to ensure post_next has the updated bracket/winners
+            new_data, new_sha = load_data()
+            await self.post_next(channel, interaction, data=new_data, sha=new_sha)
 
 
 # --- CLASS ENDS HERE ---
