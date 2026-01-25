@@ -1,6 +1,6 @@
 {
-    "status": "MATCH_ACTIVE",
-    "current_cat": null,
+    "status": "IDLE",
+    "current_cat": movies,
     "title": [],
     "items": [
         {
