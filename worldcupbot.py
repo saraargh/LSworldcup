@@ -882,81 +882,38 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
     else:
         await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use entry number from /itemlist!", ephemeral=True)
 
+
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
-    # 1. DEFER IMMEDIATELY - Do not put anything above this!
-    try:
-        await interaction.response.defer(ephemeral=False)
-    except:
-        return 
-
     if not is_admin(interaction.user):
-        return await interaction.followup.send("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
     
-    # 2. Load data and run safety checks
+    await interaction.response.defer(ephemeral=False)
+        
     data, sha = load_data()
+    item_count = len(data['items'])
     
-    # PREVENTION: Check if already running or finished
-    if data.get('status') in ["MATCH_ACTIVE", "MATCH_PENDING", "FINISHED"]:
-        return await interaction.followup.send("<:cross:1462508739671101560> **Error:** A World Cup is already in progress or finished. Use `/endcup` first.")
-
-    # PREVENTION: Check for Category to avoid NoneType.upper() error
-    cat_name = data.get('current_cat')
-    if not cat_name:
-        return await interaction.followup.send("<:cross:1462508739671101560> **Error:** No category has been set! Set a category before starting.")
-
-    # 3. Check for exactly 32 items
-    # FIX: Changed 'suggestions' to 'items' to match your data structure
-    items_list = data.get('items', [])
-    item_count = len(items_list)
     if item_count != 32:
-        return await interaction.followup.send(f"<:cross:1462508739671101560> You need exactly 32 items to start. (Current: {item_count})")
-
-    # 4. Prepare items
-    # FIX: Using items_list here
-    shuffled = list(items_list)
-    random.shuffle(shuffled)
-    comp_a = shuffled.pop(0)
-    comp_b = shuffled.pop(0)
-
-
-    # 5. Save tournament state
-    data['status'] = "MATCH_ACTIVE"
-    data['bracket'] = shuffled
-    data['winners_pool'] = []
+        return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})")
+    
+    # 1. Shuffle the 32 individual items
+    items_to_start = list(data['items'])
+    random.shuffle(items_to_start)
+    
+    # 2. Set the data so post_next can do its job
+    data['bracket'] = items_to_start  # 32 items in a flat list
     data['finished_matches'] = []
-    data['current_match'] = {
-        "item_a": comp_a, 
-        "item_b": comp_b, 
-        "votes": {}, 
-        "round_name": "Round of 32",
-        "match_num": 1,
-        "channel_id": interaction.channel_id
-    }
+    data['winners_pool'] = []
+    data['status'] = "MATCH_ACTIVE"
+    data['current_match'] = None # post_next will fill this in a second
+    
     save_data(data, sha)
+    
+    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    
+    # 3. Trigger post_next - it will pop the first 2 items from the bracket
+    await bot.post_next(interaction.channel)
 
-    # 6. Create view and send announcement
-    view = MatchView(comp_a, comp_b, "Round of 32", 1)
-    
-    # Safety: Use upper() now that we've confirmed cat_name exists
-    await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {cat_name.upper()} IS UPON US!**")
-    
-    msg = await interaction.channel.send(
-        content="<:exclaim:1462504669699117188> @everyone - **Round of 32: Match 1** is now LIVE - Cast your votes below", 
-        embed=view.create_embed(0), 
-        view=view
-    )
-    
-    # 7. Update message ID and pin
-    # Re-loading to ensure we have the most recent SHA before updating the message_id
-    data, sha = load_data()
-    data['current_match']['message_id'] = msg.id
-    save_data(data, sha)
-    
-    try:
-        await msg.pin()
-    except:
-        pass
 
 
 
