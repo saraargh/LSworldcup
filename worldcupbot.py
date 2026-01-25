@@ -882,39 +882,66 @@ async def edititem(interaction: discord.Interaction, index: int, new_name: str =
     else:
         await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use entry number from /itemlist!", ephemeral=True)
 
-
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
-    if not is_admin(interaction.user):
-        return await interaction.response.send_message("❌ Admin only.", ephemeral=True)
-    
     await interaction.response.defer(ephemeral=False)
-        
+
+    if not is_admin(interaction.user):
+        return await interaction.followup.send("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+    
     data, sha = load_data()
-    item_count = len(data['items'])
     
-    if item_count != 32:
-        return await interaction.followup.send(f"❌ You need exactly 32 items to start. (Current: {item_count})")
+    if data.get('status') in ["MATCH_ACTIVE", "FINISHED"]:
+        return await interaction.followup.send("<:cross:1462508739671101560> **Error:** A World Cup is already in progress.")
+
+    items_list = data.get('items', [])
+    if len(items_list) != 32:
+        return await interaction.followup.send(f"<:cross:1462508739671101560> You need exactly 32 items to start. (Current: {len(items_list)})")
+
+    # Prepare bracket
+    shuffled = list(items_list)
+    random.shuffle(shuffled)
     
-    # 1. Shuffle the 32 individual items
-    items_to_start = list(data['items'])
-    random.shuffle(items_to_start)
-    
-    # 2. Set the data so post_next can do its job
-    data['bracket'] = items_to_start  # 32 items in a flat list
-    data['finished_matches'] = []
-    data['winners_pool'] = []
+    # Pop the first two for the first match
+    comp_a = shuffled.pop(0)
+    comp_b = shuffled.pop(0)
+
     data['status'] = "MATCH_ACTIVE"
-    data['current_match'] = None # post_next will fill this in a second
+    data['bracket'] = shuffled  # Remaining 30 items
+    data['winners_pool'] = []
+    data['finished_matches'] = []
     
+    # Initial save to set the bracket
     save_data(data, sha)
     
-    await interaction.followup.send(f"🏆 **THE {data['current_cat'].upper()} WORLD CUP HAS BEGUN!**")
+    # Send Announcement
+    cat_name = data.get('current_cat', 'Tournament')
+    await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {cat_name.upper()} IS UPON US!**")
     
-    # 3. Trigger post_next - it will pop the first 2 items from the bracket
-    await bot.post_next(interaction.channel)
+    # Manually trigger the first match post
+    await bot.post_match_initial(interaction.channel, comp_a, comp_b)
 
-
+# Helper function to handle the first post since startworldcup is a followup
+async def post_match_initial(self, channel, comp_a, comp_b):
+    data, sha = load_data()
+    round_name = "Round of 32"
+    match_num = 1
+    
+    view = MatchView(comp_a, comp_b, round_name, match_num)
+    msg = await channel.send(
+        content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below", 
+        embed=view.create_embed(0), 
+        view=view
+    )
+    
+    data['current_match'] = {
+        "item_a": comp_a, "item_b": comp_b, "votes": {}, 
+        "message_id": msg.id, "channel_id": channel.id,
+        "round_name": round_name, "match_num": match_num
+    }
+    save_data(data, sha)
+    try: await msg.pin()
+    except: pass
 
 
 
