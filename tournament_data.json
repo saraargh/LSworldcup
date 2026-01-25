@@ -1,6 +1,6 @@
 {
     "status": "IDLE",
-    "current_cat": movies,
+    "current_cat": "movies",
     "title": [],
     "items": [
         {
