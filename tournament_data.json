@@ -1,5 +1,5 @@
 {
-    "status": "IDLE",
+    "status": "MATCH_ACTIVE",
     "current_cat": "movies",
     "title": [],
     "items": [
@@ -199,171 +199,9 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "just like heaven",
-            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Wild Child",
-            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Bend it like beckham",
-            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Cruel Intentions",
-            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Sisterhood of the travelling pants",
-            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Chloe",
-            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "legally blonde",
-            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "How to lose a guy in 10 days",
-            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Just my luck",
-            "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "When harry met sally",
-            "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "The Notebook",
-            "desc": "Spanning decades, The Notebook tells the enduring love story of Noah and Allie\u2014two people drawn together by passion, separated by circumstance, and bound by memory. Framed through an elderly man reading from a notebook, the film explores devotion, loss, and the quiet heroism of loving someone fully. Intensely romantic and unapologetically emotional, it leans into grand gestures and heartbreak, making it a staple for anyone who believes love can be both beautiful and devastating\u2014and worth it anyway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380335878144173/IMG_9308.jpg?ex=696a57ff&is=6969067f&hm=1bf46f08ca37f630982a54f83448b0b9754a36d987004ea99b843d2bc71fbf5d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Mamma mia!",
-            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Love Actually",
-            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Pitch Perfect",
-            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Mean Girls",
-            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "13 Going on 30",
-            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Miss Congeliality",
             "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "50 first dates",
-            "desc": "Henry falls for Lucy, only to discover she loses her memory every day. Determined to win her heart repeatedly, he commits to loving her despite the emotional challenge. Balancing humour with sincerity, 50 First Dates explores devotion in an unconventional way. It\u2019s about choosing someone again and again, even when it\u2019s hard. Beneath the comedy lies a tender meditation on patience, empathy, and the idea that love isn\u2019t just remembered\u2014it\u2019s demonstrated daily.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386599148290280/IMG_9325.webp?ex=696a5dd4&is=69690c54&hm=673f3d6d274098093c0716cad8103116a030a3e6d455918fd059cf0209bd63dc&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "White Chicks",
-            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Pretty Woman",
-            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
             "user": "<@1238834298338152498>"
         },
         {
@@ -373,9 +211,171 @@
             "user": "<@1238834298338152498>"
         },
         {
+            "name": "Eternal Sunshine of The Spotless Mind",
+            "desc": "After a painful breakup, Joel discovers his ex Clementine has erased him from her memory\u2014and decides to do the same. As the procedure unfolds, Joel relives their relationship in reverse, clinging to moments he thought he wanted gone. Blending romance, sci-fi, and melancholy, the film explores memory, regret, and whether love\u2019s pain is inseparable from its meaning. It\u2019s intimate, strange, and deeply human, suggesting that even when relationships fail, the experiences shape us\u2014and that forgetting isn\u2019t the same as healing.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395997698691313/IMG_9341.jpg?ex=696a6695&is=69691515&hm=6458fb372019a91401793ba9031a25097ef5021de39ec298becb0f20f18b3d7d&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "How to lose a guy in 10 days",
+            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "He\u2019s just not that into you",
+            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "White Chicks",
+            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Wild Child",
+            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Clueless",
+            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Mamma mia!",
+            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Bend it like beckham",
+            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "13 Going on 30",
+            "desc": "After wishing to be \u201cthirty, flirty, and thriving,\u201d awkward teen Jenna wakes up as her 30-year-old self with everything she thought she wanted\u2014except the heart she lost along the way. This warm, nostalgic rom-com explores growing up without growing cold, reminding us that ambition doesn\u2019t have to mean compromise. Sweet, sincere, and filled with early-2000s charm, 13 Going on 30 balances fantasy with emotional grounding, celebrating kindness, authenticity, and the idea that who you were can still guide who you become.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373254408212522/IMG_9306.jpg?ex=696a5166&is=6968ffe6&hm=b6f0ed23b5fc0f38a54501b813e0312dc001a47f751e283992d4d29537f78f8e&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Mean Girls",
+            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "the devil wears prada",
+            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "legally blonde",
+            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Camp Rock",
+            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
+        },
+        {
             "name": "Angus, Thongs & Perfect Snogging",
             "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Pitch Perfect",
+            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Love Actually",
+            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Chloe",
+            "desc": "A psychological thriller centered on obsession and control, Chloe follows a woman who hires an escort to test her husband\u2019s fidelity\u2014only for boundaries to collapse. The film is tense and atmospheric, exploring jealousy, insecurity, and emotional manipulation. Rather than romance, it focuses on power dynamics and vulnerability within relationships. Stylish and unsettling, it examines how mistrust can distort reality and how desire becomes dangerous when driven by fear rather than intimacy.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395670299709585/IMG_9340.jpg?ex=696a6647&is=696914c7&hm=e1413acc4376499b257b60a5b5ae732f2573552431c1276148b33e2bf008989d&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "When harry met sally",
+            "desc": "This classic romantic comedy asks one deceptively simple question: can men and women ever just be friends? Following Harry and Sally across years of chance encounters, evolving friendships, and emotional detours, the film explores love as something that sneaks up on you rather than strikes instantly. Witty, conversational, and grounded in character rather than spectacle, it captures the messiness of relationships and timing. Its charm lies in realism, sharp dialogue, and the comforting belief that love often grows where you least expect it.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380453767577802/IMG_9309.JXL?ex=696a581b&is=6969069b&hm=556b24d477ec2d2e0c715f364e6195818ed3157f1f9341bb77533f2b95e932bc&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "A cinderella story",
+            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Confessions of a Shopaholic",
+            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Sisterhood of the travelling pants",
+            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "10 things i hate about you",
+            "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Just my luck",
+            "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "just like heaven",
+            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "50 first dates",
+            "desc": "Henry falls for Lucy, only to discover she loses her memory every day. Determined to win her heart repeatedly, he commits to loving her despite the emotional challenge. Balancing humour with sincerity, 50 First Dates explores devotion in an unconventional way. It\u2019s about choosing someone again and again, even when it\u2019s hard. Beneath the comedy lies a tender meditation on patience, empathy, and the idea that love isn\u2019t just remembered\u2014it\u2019s demonstrated daily.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386599148290280/IMG_9325.webp?ex=696a5dd4&is=69690c54&hm=673f3d6d274098093c0716cad8103116a030a3e6d455918fd059cf0209bd63dc&",
+            "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Pretty Woman",
+            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
             "user": "<@1238834298338152498>"
         }
     ],
