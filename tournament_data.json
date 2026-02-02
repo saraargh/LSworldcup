@@ -1,6 +1,6 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "poo 2",
     "title": [],
     "items": [
         {
@@ -196,24 +196,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [
-        {
-            "name": "poo",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "poo 2",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "poo 3",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "poo 4",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
