@@ -1132,34 +1132,42 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    # 1. DEFER FIRST to stop the 3-second timer
+    # 1. DEFER immediately to prevent interaction timeout
     await interaction.response.defer(ephemeral=False)
     
-    # 2. Now do the slow GitHub stuff
+    # 2. Load data from GitHub
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
     
-    if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
+    # Check if suggestions are actually open
+    if data.get('status') != "SUGGESTIONS_OPEN":
+        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are not currently open!", ephemeral=True)
     
+    # Initialize the suggestions list if it doesn't exist
+    if 'suggestions' not in data:
+        data['suggestions'] = []
+
+    # Duplicate Check: Theme Name
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '**{name}**' has already been suggested!", ephemeral=True)
     
+    # Duplicate Check: Per User (Admins bypass)
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
-            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme for this round!", ephemeral=True)
     
-    data.setdefault('suggestions', []).append({
+    # 3. Add to the list and save
+    data['suggestions'].append({
         "name": name[:100], 
         "user": user_mention
     })
+    
     save_data(data, sha)
     
-    # 3. Use followup because we deferred
+    # 4. Success message using followup
     await interaction.followup.send(f"<:bulb:1468293924245209089> **{name}** has been added to suggestions!")
-
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
