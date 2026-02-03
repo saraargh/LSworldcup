@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Miss Congeliality",
-            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Love Actually",
-            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "Angus, Thongs & Perfect Snogging",
             "desc": "Through diary entries, Georgia navigates adolescence, obsession, and insecurity with brutal honesty and humour. Her exaggerated inner world captures the intensity of teenage emotions, where everything feels like the end of the world. The film is messy, awkward, and deeply relatable, portraying growing up as confusing rather than glamorous. Beneath the comedy is a tender story about self-acceptance, friendship, and learning that validation doesn\u2019t come from boys alone.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394794768105648/IMG_9334.avif?ex=696a6576&is=696913f6&hm=90dad9ae34f5d1653a1bd9d92ed575f30885c61308f142412f17facb1505b323&",
@@ -475,6 +463,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Miss Congeliality",
+            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Love Actually",
+            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1468348896097861715,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 16",
+        "match_num": 18
+    },
     "final_winner": null
 }
