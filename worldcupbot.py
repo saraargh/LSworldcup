@@ -777,6 +777,24 @@ class WC_Bot(discord.Client):
 
 bot = WC_Bot()
 
+#########AUTOCOMPLETE FOR REMOVING AND EDITING#####
+async def category_autocomplete(interaction: discord.Interaction, current: str) -> list[app_commands.Choice[str]]:
+    data, _ = load_data()
+    return [app_commands.Choice(name=s['name'], value=s['name']) 
+            for s in data.get('suggestions', []) if current.lower() in s['name'].lower()][:25]
+
+# Function for Tournament Items
+async def item_name_autocomplete(
+    interaction: discord.Interaction,
+    current: str,
+) -> list[app_commands.Choice[str]]:
+    data, _ = load_data()
+    items = data.get('items', [])
+    return [
+        app_commands.Choice(name=i['name'], value=i['name'])
+        for i in items if current.lower() in i['name'].lower()
+    ][:25]
+
 
 # =========================================================
 # SLASH COMMANDS - ADMINS
@@ -787,15 +805,53 @@ async def opensuggestions(interaction: discord.Interaction):
     if not is_admin(interaction.user): 
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only command.", ephemeral=True)
     
-    # Acknowledge immediately to prevent 10062 error
-    await interaction.response.defer()
+    # Parental defer to buy time for GitHub
+    await interaction.response.defer(ephemeral=False)
         
     data, sha = load_data()
     data['status'] = "SUGGESTIONS_OPEN"
     save_data(data, sha)
     
-    # Use followup since we deferred
     await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone <:bulb:1468293924245209089>\n\n Use `/suggestcategory` to make a suggestion!")
+
+@bot.tree.command(name="removecategory", description="Admin: Remove a specific theme suggestion")
+async def removecategory(interaction: discord.Interaction, name: str):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    
+    original_count = len(data.get('suggestions', []))
+    # Keep everything EXCEPT the one we want to delete
+    data['suggestions'] = [s for s in data.get('suggestions', []) if s['name'].lower() != name.lower()]
+    
+    if len(data['suggestions']) == original_count:
+        return await interaction.followup.send(f"<:cross:1462508739671101560> Could not find a suggestion named '{name}'.", ephemeral=True)
+
+    save_data(data, sha)
+    await interaction.followup.send(f"<:check:1462508739671101560> Removed suggestion: **{name}**", ephemeral=True)
+
+@bot.tree.command(name="editcategory", description="Admin: Edit an existing theme suggestion")
+async def editcategory(interaction: discord.Interaction, old_name: str, new_name: str):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    
+    found = False
+    for s in data.get('suggestions', []):
+        if s['name'].lower() == old_name.lower():
+            s['name'] = new_name[:100] # Update the name
+            found = True
+            break
+            
+    if not found:
+        return await interaction.followup.send(f"<:cross:1462508739671101560> Could not find '{old_name}'.", ephemeral=True)
+
+    save_data(data, sha)
+    await interaction.followup.send(f"<:check:1462508739671101560> Updated '**{old_name}**' to '**{new_name}**'", ephemeral=True)
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Spin the roulette to pick the next theme!")
 async def choosecategory(interaction: discord.Interaction):
@@ -861,59 +917,64 @@ async def choosecategory(interaction: discord.Interaction):
     ))
 
 
-@bot.tree.command(name="removeitem", description="Admin: Remove an item by its list number")
-async def removeitem(interaction: discord.Interaction, index: int):
+@bot.tree.command(name="removeitem", description="Admin: Remove an item by its name")
+@app_commands.autocomplete(name=item_name_autocomplete)
+async def removeitem(interaction: discord.Interaction, name: str):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
 
-    # PREVENTION: Lock removal once the bracket exists or cup is finished
-    if data.get('status') not in ["IDLE", "SUGGESTIONS"]:
+    # Guardrail
+    if data.get('status') not in ["IDLE", "SUGGESTIONS", "ADDING_ITEMS"]:
         return await interaction.response.send_message(
             "<:cross:1462508739671101560> **You cannot remove items during this stage!**", 
             ephemeral=True
         )
 
-    if 1 <= index <= len(data['items']):
-        removed_item = data['items'].pop(index - 1)
+    # Filter out the item with the matching name
+    initial_len = len(data.get('items', []))
+    data['items'] = [i for i in data.get('items', []) if i['name'] != name]
+
+    if len(data['items']) < initial_len:
         save_data(data, sha)
-        await interaction.response.send_message(f"🗑️ Successfully removed **{removed_item['name']}**.")
+        await interaction.response.send_message(f"🗑️ Successfully removed **{name}**.")
     else:
-        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use the entry number from /listitems!", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Item not found!", ephemeral=True)
 
 
 @bot.tree.command(name="edititem", description="Admin: Edit the name, description, or image of an entry")
-async def edititem(interaction: discord.Interaction, index: int, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
+@app_commands.autocomplete(old_name=item_name_autocomplete)
+async def edititem(interaction: discord.Interaction, old_name: str, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
         
     data, sha = load_data()
 
-    # PREVENTION: Lock editing during the World Cup
-    if data.get('status') not in ["IDLE", "SUGGESTIONS"]:
+    if data.get('status') not in ["IDLE", "SUGGESTIONS", "ADDING_ITEMS"]:
         return await interaction.response.send_message(
             "<:cross:1462508739671101560> **You cannot edit items during this stage!**", 
             ephemeral=True
         )
 
-    if 1 <= index <= len(data['items']):
-        target = data['items'][index - 1]
-        
+    found_item = next((i for i in data.get('items', []) if i['name'] == old_name), None)
+    
+    if found_item:
         if new_name:
-            target['name'] = new_name[:75]
+            found_item['name'] = new_name[:75]
         if new_desc:
-            target['desc'] = new_desc
+            found_item['desc'] = new_desc
         if new_image:
-            # Re-upload the new image to the storage channel
+            # Your exact image re-upload logic
             storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
             stored_msg = await storage_channel.send(file=await new_image.to_file())
-            target['image'] = stored_msg.attachments[0].url
+            found_item['image'] = stored_msg.attachments[0].url
             
         save_data(data, sha)
-        await interaction.response.send_message(f"📝 Entry #{index} has been updated.")
+        await interaction.response.send_message(f"📝 Entry **{old_name}** has been updated.")
     else:
-        await interaction.response.send_message("<:cross:1462508739671101560> Invalid index number - Use entry number from /itemlist!", ephemeral=True)
+        await interaction.response.send_message("<:cross:1462508739671101560> Item not found!", ephemeral=True)
+
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
 async def startworldcup(interaction: discord.Interaction):
@@ -1038,22 +1099,21 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-
-    
+    # No defer here to allow the mixed privacy you want
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
     
     if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
+        return await interaction.response.send_message("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
     
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
+            return await interaction.response.send_message(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
-            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
+            return await interaction.response.send_message("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
     
     data.setdefault('suggestions', []).append({
         "name": name[:100], 
@@ -1061,7 +1121,8 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     })
     save_data(data, sha)
     
-    await interaction.followup.send(f"<:bulb:1468293924245209089> **{name}** Has been added to suggestions!", ephemeral=False)
+    # Success message (Public)
+    await interaction.response.send_message(f"<:bulb:1468293924245209089> **{name}** Has been added to suggestions!", ephemeral=False)
 
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
