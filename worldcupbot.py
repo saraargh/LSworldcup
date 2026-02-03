@@ -149,19 +149,31 @@ class ResetConfirmView(ui.View):
 
     @ui.button(label="Confirm FULL Reset", style=discord.ButtonStyle.danger, custom_id="reset_confirm_btn")
     async def confirm(self, interaction: discord.Interaction, button: ui.Button):
-        data, sha = load_data()
-        data["status"] = "IDLE"
-        data["items"] = []
-        data["suggestions"] = []
-        data["bracket"] = []
-        data["winners_pool"] = []
-        data["finished_matches"] = []
-        data["current_match"] = None
-        data["current_cat"] = None
-        data["final_winner"] = None
+        # 1. Tell Discord to wait so the GitHub API doesn't time out the interaction
+        await interaction.response.defer() 
         
+        # 2. Force a fresh load
+        data, sha = load_data()
+        
+        # 3. Wipe everything
+        data.update({
+            "status": "IDLE",
+            "items": [],
+            "suggestions": [],
+            "bracket": [],
+            "winners_pool": [],
+            "finished_matches": [],
+            "current_match": None,
+            "current_cat": None,
+            "final_winner": None
+        })
+        
+        # 4. Save and wait for confirmation
         save_data(data, sha)
-        await interaction.response.edit_message(content="🧨 **Tournament Reset Successful.**", view=None)
+        
+        # 5. Now update the message
+        await interaction.edit_original_response(content="🧨 **Tournament Reset Successful.**", view=None)
+
 
 class HistoryView(ui.View):
     def __init__(self, history_data=None):
