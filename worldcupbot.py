@@ -677,7 +677,7 @@ class WC_Bot(discord.Client):
                 winner = data['winners_pool'][0]
                 data['status'] = "FINISHED"
                 save_data(data, sha)
-                await channel.send(f"🎊 **The World Cup has concluded! The winner is {winner['name']}!**")
+                await channel.send(f"🎊 **The World Cup has concluded!**")
                 return
 
         if not data.get('bracket'): return
@@ -744,6 +744,7 @@ class WC_Bot(discord.Client):
 
             # Check if that was the Grand Final
             is_final = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
+            
             if is_final:
                 data['final_winner'] = winner
                 data['status'] = "FINISHED"
@@ -775,12 +776,16 @@ class WC_Bot(discord.Client):
             await channel.send(embed=win_embed)
             
             if is_final:
-                # The Cue to use /endcup
-                await channel.send(f"🏁 **THE GRAND FINAL IS OVER!**\n\n Admins, use `/endcup` to crown **{winner['name']}** and archive the results! <:cutecup:1462480543449874442>")
+                if interaction:
+                    await interaction.followup.send(
+                        "**Grand Final completed successfully.** No more matches to post. Please use `/endcup` whenever you are ready to archive and reset.", 
+                        ephemeral=True
+                    )
             else:
                 # Wait 3 seconds then post the next match automatically
                 await asyncio.sleep(3) 
                 await self.post_next(channel, interaction)
+
 
 bot = WC_Bot()
 
