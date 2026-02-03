@@ -641,7 +641,7 @@ class WC_Bot(discord.Client):
         
         view = MatchView(comp_a, comp_b, round_name, match_num)
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below", 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num} is now LIVE** - Cast your votes below", 
             embed=view.create_embed(0), 
             view=view
         )
@@ -795,7 +795,7 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send(" <:bulb:1468293924245209089> @everyone Theme suggestions are now open for the next World Cup - Use `/suggestcategory` to make a suggestion and '/listcategories' to view suggestions!")
+    await interaction.followup.send(" <:bulb:1468293924245209089> @everyone **Theme suggestions are now open for the next World Cup** \n\n Use `/suggestcategory` to make a suggestion!")
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Set the tournament category and open entries")
 async def choosecategory(interaction: discord.Interaction, category: str):
@@ -829,7 +829,7 @@ async def choosecategory(interaction: discord.Interaction, category: str):
 
     # 4. ANNOUNCEMENT
     await interaction.followup.send(
-        f"<:cutecup:1462480543449874442> @everyone **The next World Cup theme is: {category}**\n\n"
+        f"<:cutecup:1462480543449874442> @everyone **The next World Cup theme is: {category}** - Suggestion courtesy of {suggested_by}\n\n"
         f"<Use `/additem` to submit your entry!"
     )
 
