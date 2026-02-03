@@ -1050,15 +1050,15 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     clean_name = name.strip().lower()
 
     if data['status'] != "ADDING_ITEMS":
-        return await interaction.followup.send("<:cross:1462508739671101560> Submissions are closed.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Submissions are not currently open.", ephemeral=True)
     
     # Duplicate check
     for item in data['items']:
         if item['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' is already in!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
 
     if len(data['items']) >= 32:
-        return await interaction.followup.send("<:cross:1462508739671101560> Bracket full!", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Bracket full - 32 entries maximum!", ephemeral=True)
     
     # Upload Logic
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
