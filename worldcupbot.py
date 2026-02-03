@@ -119,11 +119,12 @@ def is_admin(user):
     return False
 
 def get_round_name(data):
-    # Get the current match number from data (default to 1)
-    match_info = data.get('current_match', {})
-    match_num = match_info.get('match_num', 1)
+    # Count how many matches have already been completed
+    finished_count = len(data.get('finished_matches', []))
+    # The match we are about to post is the next one
+    match_num = finished_count + 1
 
-    # Fixed logic based on a 31-match tournament (32 items)
+    # Logic for a 31-match tournament (32 items)
     if match_num <= 16:
         return "Round of 32"
     elif match_num <= 24:
@@ -134,6 +135,7 @@ def get_round_name(data):
         return "Semi-Finals"
     else:
         return "Grand Final"
+
 
 
 
