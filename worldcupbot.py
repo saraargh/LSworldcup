@@ -1038,7 +1038,7 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    await interaction.response.defer
+
     
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
