@@ -282,25 +282,21 @@ class MatchView(ui.View):
         self.round_name = round_name or "Active Match"
         self.match_num = match_num or "1"
         
-        # Set button labels based on item names
         if self.item_a and self.item_b:
             self.vote_a.label = f"Vote for {self.item_a['name']}"
             self.vote_b.label = f"Vote for {self.item_b['name']}"
 
     def create_embed(self, page, match_data=None):
-        # 1. Use passed data if available, otherwise fetch from GitHub
         if match_data:
             match = match_data
         else:
             data, _ = load_data()
             match = data.get("current_match", {})
         
-        # 2. Extract votes safely (defaults to empty if match is None)
         votes = match.get("votes", {}) if match else {}
         count_a = list(votes.values()).count("A")
         count_b = list(votes.values()).count("B")
 
-        # 3. Build the embed using the items stored in 'self'
         item = self.item_a if page == 0 else self.item_b
         color = 0xff4757 if page == 0 else 0x2e86de
         
@@ -318,7 +314,6 @@ class MatchView(ui.View):
         embed.set_footer(text=f"Total Votes Cast: {len(votes)}")
         return embed
 
-
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
         await interaction.response.edit_message(embed=self.create_embed(0))
@@ -329,12 +324,13 @@ class MatchView(ui.View):
 
     @ui.button(label="Show Voter List", style=discord.ButtonStyle.success, custom_id="view_voters", row=0)
     async def view_voters(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer(ephemeral=True)
         data, _ = load_data()
         match = data.get("current_match", {})
         votes = match.get("votes", {})
         
         if not votes:
-            return await interaction.response.send_message("No votes have been cast yet!", ephemeral=True)
+            return await interaction.followup.send("No votes have been cast yet!", ephemeral=True)
         
         list_a = [f"<@{uid}>" for uid, choice in votes.items() if choice == "A"]
         list_b = [f"<@{uid}>" for uid, choice in votes.items() if choice == "B"]
@@ -343,32 +339,29 @@ class MatchView(ui.View):
         embed.add_field(name=f"Votes for {self.item_a['name']}", value="\n".join(list_a) if list_a else "None", inline=True)
         embed.add_field(name=f"Votes for {self.item_b['name']}", value="\n".join(list_b) if list_b else "None", inline=True)
         
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+        await interaction.followup.send(embed=embed, ephemeral=True)
 
     @ui.button(style=discord.ButtonStyle.danger, custom_id="vote_a_match", row=1)
     async def vote_a(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
         
-        # OLD EMBED CHECK: Prevent voting on expired matches
         if not match or interaction.message.id != match.get("message_id"):
-            return await interaction.response.send_message("<:cross:1462508739671101560> **This matchup is over!** Please vote on the current match.", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> **This matchup is over!**", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
         
-        # Check if already voted for A
         if existing_votes.get(user_id) == "A":
-            return await interaction.response.send_message(f"<:warning:1462511393327681537> You already voted for **{self.item_a['name']}**!", ephemeral=True)
+            return await interaction.followup.send(f"<:warning:1462511393327681537> You already voted for **{self.item_a['name']}**!", ephemeral=True)
         
-        # Save vote
         existing_votes[user_id] = "A"
         match["votes"] = existing_votes
         save_data(data, sha)
         
-        await interaction.response.send_message(f"<:tick:1462508738194837606> Voted for **{self.item_a['name']}**!", ephemeral=True)
+        await interaction.followup.send(f"<:tick:1462508738194837606> Voted for **{self.item_a['name']}**!", ephemeral=True)
         
-        # Smart Refresh: Keep user on current page (A or B)
         current_page = 0
         if interaction.message.embeds and self.item_b['name'] in interaction.message.embeds[0].description:
             current_page = 1
@@ -376,28 +369,25 @@ class MatchView(ui.View):
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.defer(ephemeral=True)
         data, sha = load_data()
         match = data.get("current_match")
         
-        # OLD EMBED CHECK: Prevent voting on expired matches
         if not match or interaction.message.id != match.get("message_id"):
-            return await interaction.response.send_message("<:cross:1462508739671101560> **This matchup is over!** Please vote on the current match.", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> **This matchup is over!**", ephemeral=True)
         
         user_id = str(interaction.user.id)
         existing_votes = match.get("votes", {})
         
-        # Check if already voted for B
         if existing_votes.get(user_id) == "B":
-            return await interaction.response.send_message(f"<:warning:1462511393327681537> You already voted for **{self.item_b['name']}**!", ephemeral=True)
+            return await interaction.followup.send(f"<:warning:1462511393327681537> You already voted for **{self.item_b['name']}**!", ephemeral=True)
         
-        # Save vote
         existing_votes[user_id] = "B"
         match["votes"] = existing_votes
         save_data(data, sha)
         
-        await interaction.response.send_message(f"<:tick:1462508738194837606> Voted for **{self.item_b['name']}**!", ephemeral=True)
+        await interaction.followup.send(f"<:tick:1462508738194837606> Voted for **{self.item_b['name']}**!", ephemeral=True)
         
-        # Smart Refresh: Keep user on current page
         current_page = 1
         if interaction.message.embeds and self.item_a['name'] in interaction.message.embeds[0].description:
             current_page = 0
@@ -421,10 +411,11 @@ class EndConfirmView(ui.View):
 
     @ui.button(label="CONFIRM END", style=discord.ButtonStyle.secondary)
     async def confirm_end(self, interaction: discord.Interaction, button: ui.Button):
-        # 1. Immediate acknowledgment to prevent "Interaction Failed"
+        # 1. Buy 15 minutes of time from Discord immediately
         await interaction.response.defer()
 
         winner = self.data.get("final_winner")
+        cat_name = self.data.get('current_cat', 'Tournament')
         
         if winner:
             history = self.data.get('finished_matches', [])
@@ -448,7 +439,6 @@ class EndConfirmView(ui.View):
                         "total_accumulated": 0
                     }
                 
-                # Track peak single-round score
                 if v_win > stats[w_name]["peak_votes"]:
                     stats[w_name]["peak_votes"] = v_win
                 stats[w_name]["total_accumulated"] += v_win
@@ -462,24 +452,18 @@ class EndConfirmView(ui.View):
                         "total_accumulated": 0
                     }
                 
-                # Track peak single-round score
                 if v_lose > stats[l_name]["peak_votes"]:
                     stats[l_name]["peak_votes"] = v_lose
                 stats[l_name]["total_accumulated"] += v_lose
 
             if stats:
-                # Sort 2nd/3rd by total performance across the cup
                 sorted_stats = sorted(stats.items(), key=lambda x: x[1]['total_accumulated'], reverse=True)
-                
-                # Highest/Lowest peak round scores
                 max_v = max(s['peak_votes'] for s in stats.values())
                 min_v = min(s['peak_votes'] for s in stats.values())
                 
-                # Names only for most/least lists
                 most_list = [n for n, s in stats.items() if s['peak_votes'] == max_v]
                 least_list = [n for n, s in stats.items() if s['peak_votes'] == min_v]
 
-                # Format Second and Third Place (with users)
                 second_text = "N/A"
                 if len(sorted_stats) > 1:
                     n2, d2 = sorted_stats[1]
@@ -499,7 +483,7 @@ class EndConfirmView(ui.View):
 
                 embed = discord.Embed(
                     title="🎊 CHAMPION CROWNED 🎊", 
-                    description=f"<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nIs The World Cup of {self.data['current_cat']} Winner!\n**Submitted by:** {winner['user']}", 
+                    description=f"<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nIs The World Cup of {cat_name} Winner!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
                 embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
@@ -507,10 +491,11 @@ class EndConfirmView(ui.View):
             
             self.data.setdefault('leaderboard', []).append({
                 "item": winner['name'], 
-                "cat": self.data['current_cat'], 
+                "cat": cat_name, 
                 "user": winner['user']
             })
-            await interaction.channel.send("@everyone **THE WORLD CUP OF {cat_name.upper()} IS COMPLETE!** <:cutecup:1462480543449874442>", embed=embed)
+            # Send result to channel (since we deferred, we don't use followup here for the public announcement)
+            await interaction.channel.send(f"@everyone **THE WORLD CUP OF {cat_name.upper()} IS COMPLETE!** <:cutecup:1462480543449874442>", embed=embed)
         else:
             await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
         
@@ -522,7 +507,7 @@ class EndConfirmView(ui.View):
                     await pin.unpin()
         except: pass
 
-        # Reset tournament state
+        # Reset state
         self.data.update({
             "status": "IDLE", "suggestions": [], "bracket": [], "winners_pool": [], 
             "finished_matches": [], "current_match": None, "current_cat": None, "final_winner": None
@@ -530,7 +515,7 @@ class EndConfirmView(ui.View):
         
         save_data(self.data, self.sha)
         
-        # Edit the interaction message to confirm completion
+        # 2. Update the original interaction button to show it finished
         await interaction.followup.edit_message(
             message_id=interaction.message.id, 
             content="# <:tick:1462508738194837606> **Tournament wiped, pins cleared, and bot reset.**", 
@@ -801,11 +786,16 @@ bot = WC_Bot()
 async def opensuggestions(interaction: discord.Interaction):
     if not is_admin(interaction.user): 
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only command.", ephemeral=True)
+    
+    # Acknowledge immediately to prevent 10062 error
+    await interaction.response.defer()
         
     data, sha = load_data()
     data['status'] = "SUGGESTIONS_OPEN"
     save_data(data, sha)
-    await interaction.response.send_message("@everyone 💡 **The World Cup is starting!** Theme suggestions are now OPEN! Use `/suggestcategory`!")
+    
+    # Use followup since we deferred
+    await interaction.followup.send("@everyone 💡 **The World Cup is starting!** Theme suggestions are now OPEN! Use `/suggestcategory`!")
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Pick a random theme from user suggestions")
 async def choosecategory(interaction: discord.Interaction):
@@ -1009,7 +999,6 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    # 1. Defer immediately to give GitHub time to respond
     await interaction.response.defer(ephemeral=True)
     
     data, sha = load_data()
@@ -1019,25 +1008,22 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     if data['status'] != "SUGGESTIONS_OPEN":
         return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
     
-    # Check for duplicates
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
-    # Check if user already suggested something (Admins bypass)
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
             return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
     
-    # Save the data
     data.setdefault('suggestions', []).append({
         "name": name[:100], 
         "user": user_mention
     })
     save_data(data, sha)
     
-    # 2. Use followup.send instead of response.send_message
     await interaction.followup.send(f"💡 Logged suggestion: **{name}**", ephemeral=False)
+
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
