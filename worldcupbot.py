@@ -769,7 +769,7 @@ class WC_Bot(discord.Client):
             
             if is_final:
                 # The Cue to use /endcup
-                await channel.send(f"🏁 **THE GRAND FINAL IS OVER!**\nAdmins, use `/endcup` to crown **{winner['name']}** and archive the results! <:cutecup:1462480543449874442>")
+                await channel.send(f"🏁 **THE GRAND FINAL IS OVER!**\n\n Admins, use `/endcup` to crown **{winner['name']}** and archive the results! <:cutecup:1462480543449874442>")
             else:
                 # Wait 3 seconds then post the next match automatically
                 await asyncio.sleep(3) 
