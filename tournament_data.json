@@ -197,20 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [
-        {
-            "name": "Mean Girls",
-            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "50 first dates",
-            "desc": "Henry falls for Lucy, only to discover she loses her memory every day. Determined to win her heart repeatedly, he commits to loving her despite the emotional challenge. Balancing humour with sincerity, 50 First Dates explores devotion in an unconventional way. It\u2019s about choosing someone again and again, even when it\u2019s hard. Beneath the comedy lies a tender meditation on patience, empathy, and the idea that love isn\u2019t just remembered\u2014it\u2019s demonstrated daily.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386599148290280/IMG_9325.webp?ex=696a5dd4&is=69690c54&hm=673f3d6d274098093c0716cad8103116a030a3e6d455918fd059cf0209bd63dc&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "bracket": [],
     "winners_pool": [
         {
             "name": "13 Going on 30",
@@ -497,6 +484,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Mean Girls",
+            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "50 first dates",
+            "desc": "Henry falls for Lucy, only to discover she loses her memory every day. Determined to win her heart repeatedly, he commits to loving her despite the emotional challenge. Balancing humour with sincerity, 50 First Dates explores devotion in an unconventional way. It\u2019s about choosing someone again and again, even when it\u2019s hard. Beneath the comedy lies a tender meditation on patience, empathy, and the idea that love isn\u2019t just remembered\u2014it\u2019s demonstrated daily.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386599148290280/IMG_9325.webp?ex=696a5dd4&is=69690c54&hm=673f3d6d274098093c0716cad8103116a030a3e6d455918fd059cf0209bd63dc&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1468349775064600607,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 16",
+        "match_num": 24
+    },
     "final_winner": null
 }
