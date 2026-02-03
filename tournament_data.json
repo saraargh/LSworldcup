@@ -367,6 +367,12 @@
             "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Miss Congeliality",
+            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -389,6 +395,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "just like heaven vs Miss Congeliality",
+            "winner": "Miss Congeliality",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "just like heaven",
+            "score": "0-1",
+            "votes": {
+                "1238834298338152498": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -403,26 +419,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "just like heaven",
-            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Miss Congeliality",
-            "desc": "An unpolished FBI agent goes undercover in a beauty pageant to stop a threat, only to discover strength, intelligence, and warmth in a world she initially dismisses. The film blends comedy with empowerment, challenging assumptions about femininity and competence. As Gracie learns to embrace different versions of womanhood, the story celebrates confidence without conformity. Lighthearted and fun, it reinforces that strength comes in many forms\u2014and none cancel the others out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461388425218363546/IMG_9326.jpg?ex=696a5f87&is=69690e07&hm=2d75441ab79f67fcc8e2dd6d0e1e091099831fbc466abc5d9e42677dfbf8ab7b&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1468343451585085613,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 3
-    },
+    "current_match": null,
     "final_winner": null
 }
