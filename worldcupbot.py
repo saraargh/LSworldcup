@@ -1084,28 +1084,44 @@ async def endcup(interaction: discord.Interaction):
 async def help(interaction: discord.Interaction):
     is_admin_user = is_admin(interaction.user)
     
-    desc = "**User Commands:**\n"
-    desc += "• `/suggestcategory`: Suggest a theme for the next cup.\n"
-    desc += "• `/listcategories`: See all current theme suggestions.\n"
-    desc += "• `/additem`: Submit your entry (Name, Desc, Image).\n"
-    desc += "• `/matchups`: View the live bracket and upcoming pairs.\n"
-    desc += "• `/scoreboard`: See results of finished matches.\n"
-    desc += "• `/listitems`: View all entries in the current cup.\n"
-    desc += "• `/cuphistory`: View the Hall of Fame archive.\n"
+    # --- USER SECTION ---
+    desc = "### 🏆 **Tournament Participation**\n"
+    desc += "• `/suggestcategory` — Submit a theme idea for the next cup\n"
+    desc += "• `/listcategories` — View all current theme suggestions\n"
+    desc += "• `/additem` — Submit your entry (Name, Desc, Image)\n\n"
     
-    if is_admin_user:
-        desc += "\n**Admin Commands:**\n"
-        desc += "• `/opensuggestions`: Allow theme suggestions.\n"
-        desc += "• `/choosecategory`: Randomly pick the cup theme.\n"
-        desc += "• `/startworldcup`: Start the bracket (Requires 32 items).\n"
-        desc += "• `/nextmatch`: End the current poll and post the next.\n"
-        desc += "• `/edititem`: Fix an entry's name/description.\n"
-        desc += "• `/removeitem`: Delete an entry from the list.\n"
-        desc += "• `/endcup`: Finish the cup and save winner to history.\n"
-        desc += "• `/resetcup`: Emergency wipe of the current cup."
+    desc += "### 📊 **Live Match Info**\n"
+    desc += "• `/matchups` — View the bracket and upcoming pairs\n"
+    desc += "• `/status` — Check cup progress and total entries\n"
+    desc += "• `/currentvotes` — See who has voted in the active match\n\n"
 
-    embed = discord.Embed(title="<:cutecup:1462480543449874442> World Cup Bot Help", description=desc, color=0x3498db)
+    desc += "### 📜 **Archive & History**\n"
+    desc += "• `/listitems` — Gallery of all entries in this cup\n"
+    desc += "• `/scoreboard` — History of finished match results\n"
+    desc += "• `/cuphistory` — View the Hall of Fame records\n"
+    
+    # --- ADMIN SECTION ---
+    if is_admin_user:
+        desc += "\n---"
+        desc += "\n### 🛠️ **Admin Management**\n"
+        desc += "• `/opensuggestions` — Open the floor for themes\n"
+        desc += "• `/editcategory` / `/removecategory` — Manage themes\n"
+        desc += "• `/choosecategory` — Spin the roulette for a theme\n"
+        desc += "• `/startworldcup` — Lock entries and begin (32 items)\n"
+        desc += "• `/nextmatch` — Force-close current match and post next\n"
+        desc += "• `/edititem` / `/removeitem` — Manage entry details\n"
+        desc += "• `/endcup` — Crown the champion and archive results\n"
+        desc += "• `/resetcup` — 🧨 **EMERGENCY WIPE** of all progress\n"
+
+    embed = discord.Embed(
+        title="<:cutecup:1462480543449874442> The Landing Strip World Cup Guide", 
+        description=desc, 
+        color=0xf1c40f # Gold color for the help guide
+    )
+    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    
     await interaction.response.send_message(embed=embed, ephemeral=True)
+
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
@@ -1323,7 +1339,8 @@ async def currentvotes(interaction: discord.Interaction):
     
     await interaction.followup.send(embed=embed)
 
-@bot.tree.command(name="status", description="Check tournament progress and time remaining")
+
+@bot.tree.command(name="status", description="Check tournament progress")
 async def status(interaction: discord.Interaction):
     # 1. Defer first to avoid timeout errors
     await interaction.response.defer()
@@ -1345,7 +1362,6 @@ async def status(interaction: discord.Interaction):
         
     elif status_mode == "ADDING_ITEMS":
         count = len(data.get('items', []))
-        # Progress bar for item submissions (0 to 32)
         filled = int((count / 32) * 10)
         bar = "🟩" * filled + "⬜" * (10 - filled)
         embed.description = (
@@ -1364,24 +1380,8 @@ async def status(interaction: discord.Interaction):
             current_num = len(data.get('finished_matches', [])) + 1
             total_matches = 31 
             
-            # Progress bar for the tournament (0 to 31)
             pct = int((current_num / total_matches) * 10)
             bar = "🟩" * pct + "⬜" * (10 - pct)
-            
-            # Time Calculation
-            time_info = ""
-            start_str = match.get("start_time")
-            if start_str:
-                start_time = datetime.datetime.fromisoformat(start_str)
-                end_time = start_time + datetime.timedelta(hours=24)
-                remaining = end_time - datetime.datetime.now()
-                
-                if remaining.total_seconds() > 0:
-                    hours, remainder = divmod(int(remaining.total_seconds()), 3600)
-                    minutes, _ = divmod(remainder, 60)
-                    time_info = f"\n⏳ **Time Remaining:** {hours}h {minutes}m"
-                else:
-                    time_info = "\n<:tick:1462508738194837606> **Match time complete!** Admins can close this now."
 
             embed.description = (
                 f"<:swords:1462508037683282125> **Matches Live**\n"
@@ -1391,7 +1391,6 @@ async def status(interaction: discord.Interaction):
                 f"`{bar}`\n\n"
                 f"**Active Match:** {match['item_a']['name']} vs {match['item_b']['name']}\n"
                 f"**Total Votes:** {vote_count}"
-                f"{time_info}"
             )
         else:
             embed.description = "<:processing:1462521277276225699> **Processing...** Moving to the next match."
@@ -1408,6 +1407,7 @@ async def status(interaction: discord.Interaction):
 
     embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
     await interaction.followup.send(embed=embed)
+
 
 
 
