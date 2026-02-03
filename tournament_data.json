@@ -2,7 +2,14 @@
     "status": "ADDING_ITEMS",
     "current_cat": "films",
     "title": [],
-    "items": [],
+    "items": [
+        {
+            "name": "poop",
+            "desc": "btgurnfurnfurnfurnf",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468374310019268936/IMG_0339.png?ex=6983c9a4&is=69827824&hm=88843286a5836da55d65a009bb47317d8c899970bb96ba19d2bf67e9407c6575&",
+            "user": "<@1450514816958599220>"
+        }
+    ],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
