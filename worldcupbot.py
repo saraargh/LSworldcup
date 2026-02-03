@@ -149,31 +149,19 @@ class ResetConfirmView(ui.View):
 
     @ui.button(label="Confirm FULL Reset", style=discord.ButtonStyle.danger, custom_id="reset_confirm_btn")
     async def confirm(self, interaction: discord.Interaction, button: ui.Button):
-        # 1. Tell Discord to wait so the GitHub API doesn't time out the interaction
-        await interaction.response.defer() 
-        
-        # 2. Force a fresh load
         data, sha = load_data()
+        data["status"] = "IDLE"
+        data["items"] = []
+        data["suggestions"] = []
+        data["bracket"] = []
+        data["winners_pool"] = []
+        data["finished_matches"] = []
+        data["current_match"] = None
+        data["current_cat"] = None
+        data["final_winner"] = None
         
-        # 3. Wipe everything
-        data.update({
-            "status": "IDLE",
-            "items": [],
-            "suggestions": [],
-            "bracket": [],
-            "winners_pool": [],
-            "finished_matches": [],
-            "current_match": None,
-            "current_cat": None,
-            "final_winner": None
-        })
-        
-        # 4. Save and wait for confirmation
         save_data(data, sha)
-        
-        # 5. Now update the message
-        await interaction.edit_original_response(content="🧨 **Tournament Reset Successful.**", view=None)
-
+        await interaction.response.edit_message(content="🧨 **Tournament Reset Successful.**", view=None)
 
 class HistoryView(ui.View):
     def __init__(self, history_data=None):
@@ -830,14 +818,17 @@ async def opensuggestions(interaction: discord.Interaction):
     if not is_admin(interaction.user): 
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only command.", ephemeral=True)
     
-    # Parental defer to buy time for GitHub
     await interaction.response.defer(ephemeral=False)
         
-    data, sha = load_data()
+    # FORCE a fresh load right before saving to ensure we have the newest SHA
+    data, sha = load_data() 
     data['status'] = "SUGGESTIONS_OPEN"
+    
+    # This update MUST succeed for users to be able to suggest
     save_data(data, sha)
     
     await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone <:bulb:1468293924245209089>\n\n Use `/suggestcategory` to make a suggestion!")
+
 
 @bot.tree.command(name="removecategory", description="Admin: Remove a specific theme suggestion")
 @app_commands.autocomplete(name=category_autocomplete)
@@ -1144,42 +1135,34 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    # 1. DEFER immediately to prevent interaction timeout
+    # 1. DEFER FIRST to stop the 3-second timer
     await interaction.response.defer(ephemeral=False)
     
-    # 2. Load data from GitHub
+    # 2. Now do the slow GitHub stuff
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
     
-    # Check if suggestions are actually open
-    if data.get('status') != "SUGGESTIONS_OPEN":
-        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are not currently open!", ephemeral=True)
+    if data['status'] != "SUGGESTIONS_OPEN":
+        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
     
-    # Initialize the suggestions list if it doesn't exist
-    if 'suggestions' not in data:
-        data['suggestions'] = []
-
-    # Duplicate Check: Theme Name
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.followup.send(f"<:cross:1462508739671101560> '**{name}**' has already been suggested!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
-    # Duplicate Check: Per User (Admins bypass)
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
-            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme for this round!", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
     
-    # 3. Add to the list and save
-    data['suggestions'].append({
+    data.setdefault('suggestions', []).append({
         "name": name[:100], 
         "user": user_mention
     })
-    
     save_data(data, sha)
     
-    # 4. Success message using followup
+    # 3. Use followup because we deferred
     await interaction.followup.send(f"<:bulb:1468293924245209089> **{name}** has been added to suggestions!")
+
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
 async def additem(interaction: discord.Interaction, name: str, description: str, image: discord.Attachment):
@@ -1196,15 +1179,10 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     if data['status'] != "ADDING_ITEMS":
         return await interaction.followup.send("<:cross:1462508739671101560> Submissions are not currently open.", ephemeral=True)
     
-    # Duplicate check (Name)
+    # Duplicate check
     for item in data['items']:
         if item['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
-
-    # PER-USER LIMIT CHECK (Matches your category logic)
-    if not is_admin(interaction.user):
-        if any(item['user'] == user_mention for item in data.get('items', [])):
-            return await interaction.followup.send("<:cross:1462508739671101560> You have already submitted an entry for this World Cup!", ephemeral=True)
 
     if len(data['items']) >= 32:
         return await interaction.followup.send("<:cross:1462508739671101560> Bracket full - 32 entries maximum!", ephemeral=True)
