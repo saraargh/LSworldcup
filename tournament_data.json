@@ -3,7 +3,12 @@
     "current_cat": null,
     "title": [],
     "items": [],
-    "suggestions": [],
+    "suggestions": [
+        {
+            "name": "moooovird",
+            "user": "<@1450514816958599220>"
+        }
+    ],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
