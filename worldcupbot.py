@@ -176,7 +176,7 @@ class HistoryView(ui.View):
         description_text = ""
         for idx, entry in enumerate(chunk):
             count = start + idx + 1
-            description_text += f"{count}. <:cutecup:1462480543449874442> **{entry['cat'].upper()}**\n"
+            description_text += f"{count}. <:crown:1468289809612275793> **{entry['cat'].upper()}**\n"
             description_text += f"┕ **Winner:** {entry['item']}\n"
             description_text += f"┕ **Submitter:** {entry['user']}\n\n"
         
