@@ -822,8 +822,8 @@ async def choosecategory(interaction: discord.Interaction):
     msg = await interaction.followup.send(f"**SPINNING THE ROULETTE...** {reels[0]}")
     
     # Quick flicker effect
-    for i in range(1, 4):
-        await asyncio.sleep(0.7)
+    for i in range(1, 6):
+        await asyncio.sleep(0.5)
         await msg.edit(content=f"**SPINNING THE ROULETTE...** {reels[i % len(reels)]}")
 
     # 4. PICK THE WINNER
