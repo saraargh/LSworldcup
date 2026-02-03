@@ -723,18 +723,16 @@ class WC_Bot(discord.Client):
             votes = list(match.get('votes', {}).values())
             count_a, count_b = votes.count("A"), votes.count("B")
 
-            # Format the score display exactly: [Emoji] Number — [Emoji] Number
-            # Using your specific custom emoji IDs from the images
+            # Score display: [Emoji] Number — [Emoji] Number
             score_display = f"<:tick:1462508738194837606> **{count_a}** — <:cross:1462508739671101560> **{count_b}**"
             
             if count_a >= count_b:
                 winner, loser = match['item_a'], match['item_b']
             else:
                 winner, loser = match['item_b'], match['item_a']
-                # Flip score display if B won so the tick stays with the winner
                 score_display = f"<:cross:1462508739671101560> **{count_a}** — <:tick:1462508738194837606> **{count_b}**"
 
-            # Archive the result in history
+            # Archive result
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'], 
@@ -746,10 +744,11 @@ class WC_Bot(discord.Client):
 
             data.setdefault('winners_pool', []).append(winner)
             old_msg_id = match['message_id']
+            
+            # Wipe current match AFTER using its data
             data['current_match'] = None
 
-            # --- GRAND FINAL LOGIC ---
-            # If no items left in bracket and only 1 winner remains in the pool
+            # Check if that was the Grand Final
             is_final = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
             if is_final:
                 data['final_winner'] = winner
@@ -757,13 +756,13 @@ class WC_Bot(discord.Client):
 
             save_data(data, sha)
 
-            # Unpin the old match message
+            # Unpin old message
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
             except: pass
 
-            # THE EXACT EMBED FORMAT FROM YOUR SCREENSHOTS
+            # Match Concluded Embed
             win_embed = discord.Embed(
                 description=f"### 🏆 MATCH CONCLUDED\n\n"
                             f"## **{winner['name']} has DEFEATED {loser['name']}!** <:beluga:1462299704107991172>",
@@ -781,15 +780,13 @@ class WC_Bot(discord.Client):
             
             await channel.send(embed=win_embed)
             
-            # --- NEXT STEPS ---
             if is_final:
-                # Tell you to use /endcup
+                # The Cue to use /endcup
                 await channel.send(f"🏁 **THE GRAND FINAL IS OVER!**\nAdmins, use `/endcup` to crown **{winner['name']}** and archive the results! <:cutecup:1462480543449874442>")
             else:
-                # Auto-trigger next match after 3 seconds if not the end
+                # Wait 3 seconds then post the next match automatically
                 await asyncio.sleep(3) 
                 await self.post_next(channel, interaction)
-
 
 bot = WC_Bot()
 
