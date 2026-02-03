@@ -795,25 +795,43 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send(" <:bulb:1468293924245209089> @everyone **Theme suggestions are now open for the next World Cup** \n\n Use `/suggestcategory` to make a suggestion!")
+    await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone \n\n Use `/suggestcategory` to make a suggestion!")
 
-@bot.tree.command(name="choosecategory", description="Phase 2: Set the tournament category and open entries")
-async def choosecategory(interaction: discord.Interaction, category: str):
+@bot.tree.command(name="choosecategory", description="Phase 2: Spin the roulette to pick the next theme!")
+async def choosecategory(interaction: discord.Interaction):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
 
-    # 1. DEFER immediately to prevent 10062/404 errors
+    # 1. DEFER immediately
     await interaction.response.defer()
 
     data, sha = load_data()
 
-    # 2. STRICT GUARDRAIL - Prevents overwriting an active cup
+    # 2. STRICT GUARDRAIL
     if data.get('status') not in ["IDLE", "SUGGESTIONS_OPEN"]:
         current = data.get('current_cat', 'a tournament')
         return await interaction.followup.send(
             f"<:warning:1462511393327681537> A tournament for **{current}** is already in progress - Use `/endcup` if you need to start over.", ephemeral=True)
 
-    # 3. SET THE CATEGORY
+    suggestions = data.get('suggestions', [])
+    if not suggestions:
+        return await interaction.followup.send("<:cross:1462508739671101560> No suggestions found to pick from!", ephemeral=True)
+
+    # 3. THE CASINO REELS (The Hype)
+    reels = ["🎰", "🍒", "💎", "🔔", "7️⃣"]
+    msg = await interaction.followup.send(f"**SPINNING THE ROULETTE...** {reels[0]}")
+    
+    # Quick flicker effect
+    for i in range(1, 4):
+        await asyncio.sleep(0.7)
+        await msg.edit(content=f"**SPINNING THE ROULETTE...** {reels[i % len(reels)]}")
+
+    # 4. PICK THE WINNER
+    picked = random.choice(suggestions)
+    category = picked['name']
+    suggested_by = picked['user']
+
+    # Update Data
     data['current_cat'] = category
     data['status'] = "ADDING_ITEMS"
     data['items'] = []
@@ -821,17 +839,15 @@ async def choosecategory(interaction: discord.Interaction, category: str):
     data['winners_pool'] = []
     data['finished_matches'] = []
     data['current_match'] = None
-    
-    # Optional: Clear suggestions if they were open
-    data['suggestions'] = []
+    data['suggestions'] = [] # Clear the pool
 
     save_data(data, sha)
 
-    # 4. ANNOUNCEMENT
-    await interaction.followup.send(
-        f"<:cutecup:1462480543449874442> @everyone **The next World Cup theme is: {category}** - Suggestion courtesy of {suggested_by}\n\n"
-        f"<Use `/additem` to submit your entry!"
-    )
+    # 5. FINAL ANNOUNCEMENT (Your exact format)
+    await msg.edit(content=(
+        f"<:cutecup:1462480543449874442> @everyone **The Landing Strip World Cup theme is: {category}** - Suggestion courtesy of {suggested_by}\n\n"
+        f"Use `/additem` to submit your entry!"
+    ))
 
 
 @bot.tree.command(name="removeitem", description="Admin: Remove an item by its list number")
