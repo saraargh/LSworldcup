@@ -1176,10 +1176,15 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     if data['status'] != "ADDING_ITEMS":
         return await interaction.followup.send("<:cross:1462508739671101560> Submissions are not currently open.", ephemeral=True)
     
-    # Duplicate check
+    # Duplicate check (Name)
     for item in data['items']:
         if item['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
+
+    # PER-USER LIMIT CHECK (Matches your category logic)
+    if not is_admin(interaction.user):
+        if any(item['user'] == user_mention for item in data.get('items', [])):
+            return await interaction.followup.send("<:cross:1462508739671101560> You have already submitted an entry for this World Cup!", ephemeral=True)
 
     if len(data['items']) >= 32:
         return await interaction.followup.send("<:cross:1462508739671101560> Bracket full - 32 entries maximum!", ephemeral=True)
