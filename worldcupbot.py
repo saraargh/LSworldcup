@@ -311,7 +311,7 @@ class MatchView(ui.View):
             inline=False
         )
         embed.set_image(url=item['image'])
-        embed.set_footer(text=f"Total Votes Cast: {len(votes)}")
+        embed.set_footer(text=f"🗳️ Total Votes Cast: {len(votes)}")
         return embed
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
@@ -572,7 +572,7 @@ class ScoreboardView(ui.View):
                 f"**{len(survivors)} entries still in the running:**\n\n"
                 f"{survivor_list}"
             )
-            embed.set_footer(text="The path to the Grand Final")
+            embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
 
         return embed
 
@@ -763,7 +763,7 @@ class WC_Bot(discord.Client):
             if winner.get('image'): 
                 win_embed.set_thumbnail(url=winner['image'])
             
-            win_embed.set_footer(text=f"The tournament continues... | Total Votes: {len(votes)}")
+            win_embed.set_footer(text=f"The Landing Strip World Cup System 🏁✨ | 🗳️ Total Votes: {len(votes)}")
             
             await channel.send(embed=win_embed)
             
@@ -1218,7 +1218,7 @@ async def currentvotes(interaction: discord.Interaction):
     embed.add_field(name=f"🔵 {match['item_a']['name']} ({len(list_a)})", value=str_a, inline=True)
     embed.add_field(name=f"🔴 {match['item_b']['name']} ({len(list_b)})", value=str_b, inline=True)
     
-    embed.set_footer(text=f"Total Votes: {len(votes)}")
+    embed.set_footer(text=f"🗳️ Total Votes: {len(votes)}")
     
     await interaction.followup.send(embed=embed)
 
