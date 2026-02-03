@@ -818,8 +818,8 @@ async def choosecategory(interaction: discord.Interaction):
         return await interaction.followup.send("<:cross:1462508739671101560> No suggestions found to pick from!", ephemeral=True)
 
     # 3. THE CASINO REELS (Multi-Emoji Spin)
-    reels = ["🎰🎰🎰", "🍒💎🔔", "💎🔔7️⃣", "🔔7️⃣🍒", "7️⃣🍒💎"]
-    msg = await interaction.followup.send(f"**SPINNING THE ROULETTE...**\n{reels[0]}")
+    reels = ["🎰🎰🎰🎰🎰", "🍒💎🔔7️⃣🎰", "💎🍒🔔🎰7️⃣", "🔔💎7️⃣🎰🍒", "7️⃣🔔🍒🎰💎"]
+    msg = await interaction.followup.send(f"**@everyone WE ARE SPINNING THE ROULETTE...**\n{reels[0]}")
     
     # Quick flicker effect
     for i in range(1, 8):
@@ -1022,7 +1022,7 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer
     
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
