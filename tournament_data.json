@@ -1,14 +1,9 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "moooovird",
     "title": [],
     "items": [],
-    "suggestions": [
-        {
-            "name": "moooovird",
-            "user": "<@1450514816958599220>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
