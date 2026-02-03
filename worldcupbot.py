@@ -795,7 +795,7 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone \n\n Use `/suggestcategory` to make a suggestion! <:bulb:1468293924245209089>")
+    await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone <:bulb:1468293924245209089>\n\n Use `/suggestcategory` to make a suggestion!")
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Spin the roulette to pick the next theme!")
 async def choosecategory(interaction: discord.Interaction):
