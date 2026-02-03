@@ -204,6 +204,12 @@
             "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "A cinderella story",
+            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -494,6 +500,16 @@
             "votes": {
                 "1238834298338152498": "B"
             }
+        },
+        {
+            "name": "A cinderella story vs Mean Girls",
+            "winner": "A cinderella story",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Mean Girls",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -508,26 +524,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Mean Girls",
-            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468358625977434256,
-        "channel_id": 1438277790179921971,
-        "round_name": "Semi-Finals",
-        "match_num": 30
-    },
+    "current_match": null,
     "final_winner": null
 }
