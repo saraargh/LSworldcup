@@ -1133,7 +1133,7 @@ async def help(interaction: discord.Interaction):
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
     # 1. DEFER FIRST to stop the 3-second timer
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=False)
     
     # 2. Now do the slow GitHub stuff
     data, sha = load_data()
