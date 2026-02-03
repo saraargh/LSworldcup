@@ -1176,27 +1176,35 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
 
-    if data['status'] != "ADDING_ITEMS":
+    # 1. Check if submissions are open
+    if data.get('status') != "ADDING_ITEMS":
         return await interaction.followup.send("<:cross:1462508739671101560> Submissions are not currently open.", ephemeral=True)
     
-    # Duplicate check
-    for item in data['items']:
+    # 2. Duplicate Item Name check
+    for item in data.get('items', []):
         if item['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
 
-    if len(data['items']) >= 32:
+    # 3. ONE ENTRY PER PERSON check (Admins are exempt)
+    if not is_admin(interaction.user):
+        if any(item.get('user') == user_mention for item in data.get('items', [])):
+            return await interaction.followup.send("<:cross:1462508739671101560> You have already submitted an entry for this World Cup!", ephemeral=True)
+
+    # 4. Total Capacity check
+    if len(data.get('items', [])) >= 32:
         return await interaction.followup.send("<:cross:1462508739671101560> Bracket full - 32 entries maximum!", ephemeral=True)
     
-    # Upload Logic
+    # 5. Upload Logic
     storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
     try:
         attachment_file = await image.to_file()
         storage_msg = await storage_channel.send(file=attachment_file)
         image_url = storage_msg.attachments[0].url
     except Exception as e:
+        print(f"UPLOAD ERROR: {e}")
         return await interaction.followup.send("<:cross:1462508739671101560> Image upload failed.", ephemeral=True)
 
-    # Save Data
+    # 6. Save Data
     short_name = name[:75]
     data['items'].append({
         "name": short_name, 
@@ -1207,11 +1215,12 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     
     save_data(data, sha)
     
-    # Final check: If the interaction is truly dead, this will log but at least data is saved
+    # Final confirmation
     try:
         await interaction.followup.send(f"<:tick:1462508738194837606> **{short_name}** added! ({len(data['items'])}/32)")
     except Exception as e:
         print(f"Could not send confirmation message: {e}")
+
 
 
 
