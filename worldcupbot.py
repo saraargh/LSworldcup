@@ -316,11 +316,15 @@ class MatchView(ui.View):
 
     @ui.button(emoji="<:left:1462297168382656732>", style=discord.ButtonStyle.gray, custom_id="v_a_nav", row=0)
     async def view_a(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.edit_message(embed=self.create_embed(0))
+        # Format fix: Added defer to prevent "Interaction Failed"
+        await interaction.response.defer()
+        await interaction.edit_original_response(embed=self.create_embed(0))
 
     @ui.button(emoji="<:right:1462297211659358444>", style=discord.ButtonStyle.gray, custom_id="v_b_nav", row=0)
     async def view_b(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.edit_message(embed=self.create_embed(1))
+        # Format fix: Added defer to prevent "Interaction Failed"
+        await interaction.response.defer()
+        await interaction.edit_original_response(embed=self.create_embed(1))
 
     @ui.button(label="Show Voter List", style=discord.ButtonStyle.success, custom_id="view_voters", row=0)
     async def view_voters(self, interaction: discord.Interaction, button: ui.Button):
@@ -365,7 +369,8 @@ class MatchView(ui.View):
         current_page = 0
         if interaction.message.embeds and self.item_b['name'] in interaction.message.embeds[0].description:
             current_page = 1
-        await interaction.message.edit(embed=self.create_embed(current_page))
+        # Passed match_data=match to save a GitHub request
+        await interaction.message.edit(embed=self.create_embed(current_page, match_data=match))
 
     @ui.button(style=discord.ButtonStyle.primary, custom_id="vote_b_match", row=1)
     async def vote_b(self, interaction: discord.Interaction, button: ui.Button):
@@ -391,7 +396,9 @@ class MatchView(ui.View):
         current_page = 1
         if interaction.message.embeds and self.item_a['name'] in interaction.message.embeds[0].description:
             current_page = 0
-        await interaction.message.edit(embed=self.create_embed(current_page))
+        # Passed match_data=match to save a GitHub request
+        await interaction.message.edit(embed=self.create_embed(current_page, match_data=match))
+
 
 
 class EndConfirmView(ui.View):
@@ -1102,21 +1109,24 @@ async def help(interaction: discord.Interaction):
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
 async def suggestcategory(interaction: discord.Interaction, name: str):
-    # No defer here to allow the mixed privacy you want
+    # 1. DEFER FIRST to stop the 3-second timer
+    await interaction.response.defer(ephemeral=True)
+    
+    # 2. Now do the slow GitHub stuff
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
     
     if data['status'] != "SUGGESTIONS_OPEN":
-        return await interaction.response.send_message("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
+        return await interaction.followup.send("<:cross:1462508739671101560> Suggestions are closed.", ephemeral=True)
     
     for s in data['suggestions']:
         if s['name'].lower() == clean_name:
-            return await interaction.response.send_message(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
+            return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
-            return await interaction.response.send_message("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
+            return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
     
     data.setdefault('suggestions', []).append({
         "name": name[:100], 
@@ -1124,8 +1134,8 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     })
     save_data(data, sha)
     
-    # Success message (Public)
-    await interaction.response.send_message(f"<:bulb:1468293924245209089> **{name}** Has been added to suggestions!", ephemeral=False)
+    # 3. Use followup because we deferred
+    await interaction.followup.send(f"<:bulb:1468293924245209089> **{name}** has been added to suggestions!")
 
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
