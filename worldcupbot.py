@@ -815,6 +815,7 @@ async def opensuggestions(interaction: discord.Interaction):
     await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone <:bulb:1468293924245209089>\n\n Use `/suggestcategory` to make a suggestion!")
 
 @bot.tree.command(name="removecategory", description="Admin: Remove a specific theme suggestion")
+@app_commands.autocomplete(name=category_autocomplete)
 async def removecategory(interaction: discord.Interaction, name: str):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
@@ -833,6 +834,7 @@ async def removecategory(interaction: discord.Interaction, name: str):
     await interaction.followup.send(f"<:check:1462508739671101560> Removed suggestion: **{name}**", ephemeral=True)
 
 @bot.tree.command(name="editcategory", description="Admin: Edit an existing theme suggestion")
+@app_commands.autocomplete(old_name=category_autocomplete)
 async def editcategory(interaction: discord.Interaction, old_name: str, new_name: str):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
@@ -974,6 +976,7 @@ async def edititem(interaction: discord.Interaction, old_name: str, new_name: st
         await interaction.response.send_message(f"📝 Entry **{old_name}** has been updated.")
     else:
         await interaction.response.send_message("<:cross:1462508739671101560> Item not found!", ephemeral=True)
+
 
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
