@@ -795,7 +795,7 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone \n\n Use `/suggestcategory` to make a suggestion!")
+    await interaction.followup.send(" <:bulb:1468293924245209089> **Theme suggestions are now open for the next World Cup** @everyone \n\n Use `/suggestcategory` to make a suggestion! <:bulb:1468293924245209089>")
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Spin the roulette to pick the next theme!")
 async def choosecategory(interaction: discord.Interaction):
@@ -845,8 +845,8 @@ async def choosecategory(interaction: discord.Interaction):
 
     # 5. FINAL ANNOUNCEMENT (Your exact format)
     await msg.edit(content=(
-        f"<:cutecup:1462480543449874442> @everyone **The Landing Strip World Cup theme is: {category}** - Suggestion courtesy of {suggested_by}\n\n"
-        f"Use `/additem` to submit your entry!"
+        f"<:cutecup:1462480543449874442> **The Landing Strip World Cup theme is: {category} - Suggestion courtesy of {suggested_by}**\n\n"
+        f"@everyone Use `/additem` to submit your entry!"
     ))
 
 
