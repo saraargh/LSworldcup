@@ -497,7 +497,7 @@ class EndConfirmView(ui.View):
             # Send result to channel (since we deferred, we don't use followup here for the public announcement)
             await interaction.channel.send(f"@everyone **THE WORLD CUP OF {cat_name.upper()} IS COMPLETE!** <:cutecup:1462480543449874442>", embed=embed)
         else:
-            await interaction.channel.send("🛑 **TOURNAMENT ENDED MANUALLY.**")
+            await interaction.channel.send("<:exclaim:1462504669699117188> **TOURNAMENT ENDED MANUALLY.**")
         
         # Clear pins
         try:
@@ -683,7 +683,7 @@ class WC_Bot(discord.Client):
         
         view = MatchView(comp_a, comp_b, round_name, match_num) 
         msg = await channel.send(
-            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num}** is now LIVE - Cast your votes below", 
+            content=f"<:exclaim:1462504669699117188> @everyone - **{round_name}: Match {match_num} is now LIVE** - Cast your votes below", 
             embed=view.create_embed(0),
             view=view
         )
@@ -795,7 +795,7 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send("@everyone 💡 **The next World Cup is almost upon us!** Theme suggestions are now OPEN! Use `/suggestcategory`!")
+    await interaction.followup.send(" <:bulb:1468293924245209089> @everyone Theme suggestions are now open for the next World Cup - Use `/suggestcategory` to make a suggestion and '/listcategories' to view suggestions!")
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Set the tournament category and open entries")
 async def choosecategory(interaction: discord.Interaction, category: str):
@@ -829,8 +829,8 @@ async def choosecategory(interaction: discord.Interaction, category: str):
 
     # 4. ANNOUNCEMENT
     await interaction.followup.send(
-        f"<:cutecup:1462480543449874442> @everyone **The next world cup theme is: {category.upper()}**\n\n"
-        f"<:tick:1462508738194837606> Please use `/additem` to add your entries!"
+        f"<:cutecup:1462480543449874442> @everyone **The next World Cup theme is: {category}**\n\n"
+        f"<Use `/additem` to submit your entry!"
     )
 
 
