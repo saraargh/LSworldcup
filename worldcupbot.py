@@ -707,7 +707,7 @@ class WC_Bot(discord.Client):
 
 
     async def resolve_match(self, data, sha, interaction=None):
-        """Resolves the current match without posting a public conclusion embed."""
+        """Resolves match: Shows embed for normal rounds, skips it for the Grand Final."""
         async with self.processing_lock:
             match = data.get('current_match')
             if not match: return
@@ -717,13 +717,16 @@ class WC_Bot(discord.Client):
             votes = list(match.get('votes', {}).values())
             count_a, count_b = votes.count("A"), votes.count("B")
 
-            # Determine winner and loser logic
+            # Score display logic
+            score_display = f"<:tick:1462508738194837606> **{count_a}** — <:cross:1462508739671101560> **{count_b}**"
+            
             if count_a >= count_b:
                 winner, loser = match['item_a'], match['item_b']
             else:
                 winner, loser = match['item_b'], match['item_a']
+                score_display = f"<:cross:1462508739671101560> **{count_a}** — <:tick:1462508738194837606> **{count_b}**"
 
-            # Archive result in history
+            # Archive result
             data.setdefault('finished_matches', []).append({
                 "name": f"{match['item_a']['name']} vs {match['item_b']['name']}",
                 "winner": winner['name'], 
@@ -733,45 +736,56 @@ class WC_Bot(discord.Client):
                 "votes": match.get('votes', {})
             })
 
-            # Advance winner to the next pool
             data.setdefault('winners_pool', []).append(winner)
             old_msg_id = match['message_id']
             
-            # Wipe current match state
             data['current_match'] = None
 
-            # Check if that was the Grand Final
+            # Check if this was the Grand Final
             is_final = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
             
             if is_final:
                 data['final_winner'] = winner
                 data['status'] = "FINISHED"
 
-            # Sync to GitHub
             save_data(data, sha)
 
-            # Unpin the old voting message
+            # Unpin old message
             try:
                 old_msg = await channel.fetch_message(old_msg_id)
                 await old_msg.unpin()
-            except: 
-                pass
+            except: pass
 
-            # Final check: If it's the Grand Final, tell the admin. Otherwise, post the next match.
+            # --- CONDITIONAL EMBED ---
+            # We ONLY send this if it's NOT the final match
+            if not is_final:
+                win_embed = discord.Embed(
+                    description=f"### <:crown:1468289809612275793> MATCH CONCLUDED\n\n"
+                                f"## **{winner['name']} has DEFEATED {loser['name']}!** <:beluga:1462299704107991172>",
+                    color=0x2ecc71 
+                )
+                win_embed.add_field(name="Final Score", value=score_display, inline=False)
+                win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=False)
+                win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=False)
+                
+                if winner.get('image'): 
+                    win_embed.set_thumbnail(url=winner['image'])
+                
+                win_embed.set_footer(text=f"The Landing Strip World Cup System 🏁✨ | 🗳️ Total Votes: {len(votes)}")
+                
+                await channel.send(embed=win_embed)
+
+            # Handle what happens next
             if is_final:
                 if interaction:
                     await interaction.followup.send(
-                        "**Grand Final completed successfully.** Winner recorded. Use `/endcup` to crown them.", 
+                        "**Grand Final completed successfully.** No public embed posted yet. Use `/endcup` to trigger the final ceremony.", 
                         ephemeral=True
                     )
             else:
-                # Private confirmation for the admin during regular rounds
-                if interaction:
-                    await interaction.followup.send(f"Match resolved. **{winner['name']}** advances.", ephemeral=True)
-                
-                # Wait 3 seconds then post the next match automatically
                 await asyncio.sleep(3) 
                 await self.post_next(channel, interaction)
+
 
 
 bot = WC_Bot()
