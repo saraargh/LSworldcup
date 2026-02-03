@@ -795,39 +795,44 @@ async def opensuggestions(interaction: discord.Interaction):
     save_data(data, sha)
     
     # Use followup since we deferred
-    await interaction.followup.send("@everyone 💡 **The World Cup is starting!** Theme suggestions are now OPEN! Use `/suggestcategory`!")
+    await interaction.followup.send("@everyone 💡 **The next World Cup is almost upon us!** Theme suggestions are now OPEN! Use `/suggestcategory`!")
 
-@bot.tree.command(name="choosecategory", description="Phase 2: Pick a random theme from user suggestions")
-async def choosecategory(interaction: discord.Interaction):
+@bot.tree.command(name="choosecategory", description="Phase 2: Set the tournament category and open entries")
+async def choosecategory(interaction: discord.Interaction, category: str):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
-        
-    # Safety Defer
-    try:
-        await interaction.response.defer(ephemeral=False)
-    except:
-        pass
+
+    # 1. DEFER immediately to prevent 10062/404 errors
+    await interaction.response.defer()
 
     data, sha = load_data()
-    if not data.get('suggestions'): 
-        return await interaction.followup.send("<:cross:1462508739671101560> No suggestions were found in the database.", ephemeral=True)
-    
-    # We use followup because we deferred
-    await interaction.followup.send("🎰 **Selecting a random category...**")
-    
-    selected = random.choice(data['suggestions'])
-    data['current_cat'] = selected['name']
-    data['suggestions'] = [] # Clear for next cycle
+
+    # 2. STRICT GUARDRAIL - Prevents overwriting an active cup
+    if data.get('status') not in ["IDLE", "SUGGESTIONS_OPEN"]:
+        current = data.get('current_cat', 'a tournament')
+        return await interaction.followup.send(
+            f"<:warning:1462511393327681537> A tournament for **{current}** is already in progress - Use `/endcup` if you need to start over.", ephemeral=True)
+
+    # 3. SET THE CATEGORY
+    data['current_cat'] = category
     data['status'] = "ADDING_ITEMS"
+    data['items'] = []
+    data['bracket'] = []
+    data['winners_pool'] = []
+    data['finished_matches'] = []
+    data['current_match'] = None
     
+    # Optional: Clear suggestions if they were open
+    data['suggestions'] = []
+
     save_data(data, sha)
-    
-    announcement = (
-        f"@everyone <:worldcup:1462292819526815877> The theme for this World Cup is: **{selected['name'].upper()}**!\n"
-        f"(Theme suggested by {selected['user']})\n\n"
-        "Submit your entries now using `/additem`!"
+
+    # 4. ANNOUNCEMENT
+    await interaction.followup.send(
+        f"<:cutecup:1462480543449874442> @everyone **The next world cup theme is: {category.upper()}**\n\n"
+        f"<:tick:1462508738194837606> Please use `/additem` to add your entries!"
     )
-    await interaction.channel.send(announcement)
+
 
 @bot.tree.command(name="removeitem", description="Admin: Remove an item by its list number")
 async def removeitem(interaction: discord.Interaction, index: int):
@@ -890,8 +895,13 @@ async def startworldcup(interaction: discord.Interaction):
         return await interaction.followup.send("<:cross:1462508739671101560> Admin only.", ephemeral=True)
     
     data, sha = load_data()
-    cat_name = data.get('current_cat')
     
+    # --- ADDED GUARDRAIL START ---
+    if data.get('status') == "MATCH_ACTIVE":
+        return await interaction.followup.send(f"<:warning:1462511393327681537> **A match is already active!** You cannot restart the cup until this one is finished or ended with `/endcup`.", ephemeral=True)
+    # --- ADDED GUARDRAIL END ---
+
+    cat_name = data.get('current_cat')
     if not cat_name:
         return await interaction.followup.send("<:cross:1462508739671101560> **Error:** No category is set. Use `/choosecategory` first.")
 
@@ -903,16 +913,18 @@ async def startworldcup(interaction: discord.Interaction):
     random.shuffle(shuffled)
     comp_a, comp_b = shuffled.pop(0), shuffled.pop(0)
 
-    data.update({"status": "MATCH_ACTIVE", "bracket": shuffled, "winners_pool": [], "finished_matches": []})
+    # We clear progress here because this IS the start of the tournament
+    data.update({
+        "status": "MATCH_ACTIVE", 
+        "bracket": shuffled, 
+        "winners_pool": [], 
+        "finished_matches": []
+    })
     save_data(data, sha)
     
-    # Capitalize the category as you like
     await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {cat_name.upper()} IS UPON US!**")
     
-    # Use the bot method to post the first match
     await bot.post_match_initial(interaction.channel, comp_a, comp_b)
-
-
 
 
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
