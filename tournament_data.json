@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Bridget Jones Diary",
-            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "The Notebook",
             "desc": "Spanning decades, The Notebook tells the enduring love story of Noah and Allie\u2014two people drawn together by passion, separated by circumstance, and bound by memory. Framed through an elderly man reading from a notebook, the film explores devotion, loss, and the quiet heroism of loving someone fully. Intensely romantic and unapologetically emotional, it leans into grand gestures and heartbreak, making it a staple for anyone who believes love can be both beautiful and devastating\u2014and worth it anyway.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380335878144173/IMG_9308.jpg?ex=696a57ff&is=6969067f&hm=1bf46f08ca37f630982a54f83448b0b9754a36d987004ea99b843d2bc71fbf5d&",
@@ -419,6 +407,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Clueless",
+            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Bridget Jones Diary",
+            "desc": "Bridget Jones is flawed, funny, insecure, and deeply relatable as she documents her chaotic love life, career anxieties, and self-improvement attempts. Torn between the charmingly unreliable Daniel and the reserved but principled Mark, Bridget navigates romance with humour and vulnerability. The film celebrates imperfection, rejecting the idea that personal worth is tied to weight, success, or relationship status. Warm, awkward, and self-aware, it\u2019s a rom-com that feels honest about adulthood\u2014where growth isn\u2019t linear and confidence comes in waves.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380587838247015/IMG_9310.webp?ex=696a583b&is=696906bb&hm=38edcb25386c1cd54e9688eb31048f48ff4a2b80140fe15b5e48c3cecce27cde&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1468280963464298732,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 4
+    },
     "final_winner": null
 }
