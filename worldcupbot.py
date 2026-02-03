@@ -751,14 +751,14 @@ class WC_Bot(discord.Client):
 
             # Match Concluded Embed
             win_embed = discord.Embed(
-                description=f"### 🏆 MATCH CONCLUDED\n\n"
+                description=f"### <:cutecup:1462480543449874442> MATCH CONCLUDED\n\n"
                             f"## **{winner['name']} has DEFEATED {loser['name']}!** <:beluga:1462299704107991172>",
                 color=0x2ecc71 
             )
             
             win_embed.add_field(name="Final Score", value=score_display, inline=False)
-            win_embed.add_field(name="Advancing to Next Round", value=f"⭐ {winner['name']}", inline=False)
-            win_embed.add_field(name="Submitted by", value=f"👤 {winner.get('user', 'Unknown')}", inline=False)
+            win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=False)
+            win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=False)
             
             if winner.get('image'): 
                 win_embed.set_thumbnail(url=winner['image'])
