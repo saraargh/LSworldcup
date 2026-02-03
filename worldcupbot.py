@@ -404,7 +404,7 @@ class EndConfirmView(ui.View):
         winner = self.data.get("final_winner")
         if winner:
             self.confirm_end.style = discord.ButtonStyle.success
-            self.confirm_end.label = f"CROWN {winner['name'].upper()}"
+            self.confirm_end.label = f"CROWN WINNER"
         else:
             self.confirm_end.style = discord.ButtonStyle.danger
             self.confirm_end.label = "CONFIRM: END TOURNAMENT EARLY"
@@ -482,7 +482,7 @@ class EndConfirmView(ui.View):
                 )
 
                 embed = discord.Embed(
-                    title="🎊 CHAMPION CROWNED 🎊", 
+                    title="<:crown:1468289809612275793> CHAMPION CROWNED <:crown:1468289809612275793>", 
                     description=f"<:winner:1462297763260923946> {winner['name'].upper()} <:winner:1462297763260923946>\n\nIs The World Cup of {cat_name} Winner!\n**Submitted by:** {winner['user']}", 
                     color=0xf1c40f
                 )
@@ -751,7 +751,7 @@ class WC_Bot(discord.Client):
 
             # Match Concluded Embed
             win_embed = discord.Embed(
-                description=f"### <:cutecup:1462480543449874442> MATCH CONCLUDED\n\n"
+                description=f"### <:crown:1468289809612275793> MATCH CONCLUDED\n\n"
                             f"## **{winner['name']} has DEFEATED {loser['name']}!** <:beluga:1462299704107991172>",
                 color=0x2ecc71 
             )
@@ -972,7 +972,7 @@ async def endcup(interaction: discord.Interaction):
     if is_early:
         msg = "<:warning:1462511393327681537> **WARNING:** The tournament has not finished yet! Clicking below will delete all current progress and reset the bot without crowning a winner."
     else:
-        msg = f"<:cutecup:1462480543449874442> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
+        msg = f"<:crown:1468289809612275793> **Winner Detected: {winner['name']}**\nClick below to archive this result and reset for the next cup."
     
     view = EndConfirmView(data, sha, is_early=is_early)
     await interaction.followup.send(content=msg, view=view, ephemeral=True)
