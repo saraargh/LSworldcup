@@ -373,6 +373,12 @@
             "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "500 days of summer",
+            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -381,6 +387,16 @@
             "winner": "Camp Rock",
             "winner_user": "<@1238834298338152498>",
             "loser_name": "50 first dates",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
+        },
+        {
+            "name": "500 days of summer vs Bend it like beckham",
+            "winner": "500 days of summer",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Bend it like beckham",
             "score": "1-0",
             "votes": {
                 "1238834298338152498": "A"
@@ -399,26 +415,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "500 days of summer",
-            "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Bend it like beckham",
-            "desc": "Jess dreams of playing football despite cultural expectations that push her toward a more traditional path. When she joins a women\u2019s team, she must balance family, friendship, and ambition. Bend It Like Beckham is an uplifting story about identity, independence, and carving your own future without rejecting where you come from. Energetic and heartfelt, it celebrates women in sport while addressing generational tension with humour and empathy, making it both empowering and emotionally grounded.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383369345597543/IMG_9320.webp?ex=696a5ad2&is=69690952&hm=73346dd5105f37a37b897dce2f6fa1def16b148e6fc71ce46f31ae607bff8925&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468267193593499874,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 2
-    },
+    "current_match": null,
     "final_winner": null
 }
