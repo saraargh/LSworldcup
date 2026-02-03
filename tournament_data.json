@@ -331,6 +331,12 @@
             "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "the devil wears prada",
+            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -413,6 +419,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "the devil wears prada vs He\u2019s just not that into you",
+            "winner": "the devil wears prada",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "He\u2019s just not that into you",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -427,26 +443,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468347300828156180,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 9
-    },
+    "current_match": null,
     "final_winner": null
 }
