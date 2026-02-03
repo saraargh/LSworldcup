@@ -1,6 +1,6 @@
 {
-    "status": "ADDING_ITEMS",
-    "current_cat": "moooovird",
+    "status": "IDLE",
+    "current_cat": null,
     "title": [],
     "items": [],
     "suggestions": [],
