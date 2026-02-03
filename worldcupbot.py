@@ -1045,7 +1045,7 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     })
     save_data(data, sha)
     
-    await interaction.followup.send(f"<:bulb:1468293924245209089> Logged suggestion: **{name}**", ephemeral=False)
+    await interaction.followup.send(f"<:bulb:1468293924245209089> **{name}** Has been added to suggestions!", ephemeral=False)
 
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
