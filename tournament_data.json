@@ -343,6 +343,12 @@
             "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -405,6 +411,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "Something Borrowed vs legally blonde",
+            "winner": "Something Borrowed",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "legally blonde",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -419,26 +435,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "legally blonde",
-            "desc": "Elle Woods is underestimated at every turn\u2014until she proves intelligence and femininity aren\u2019t opposites. Following her journey through law school, the film flips stereotypes on their head, celebrating confidence, kindness, and determination. Legally Blonde is empowering without being preachy, blending comedy with a surprisingly strong message about self-belief. Elle doesn\u2019t succeed by changing who she is, but by owning it completely, making the film an enduring reminder that ambition and authenticity can coexist.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386348291166385/IMG_9324.jpg?ex=696a5d98&is=69690c18&hm=6adde90077e3084359e3819a4dbdf162a0bd9833fc502d65ed68334d5790326f&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468345970570956851,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 7
-    },
+    "current_match": null,
     "final_winner": null
 }
