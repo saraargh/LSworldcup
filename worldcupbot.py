@@ -807,8 +807,8 @@ async def choosecategory(interaction: discord.Interaction):
 
     data, sha = load_data()
 
-    # 2. STRICT GUARDRAIL
-    if data.get('status') not in ["IDLE", "SUGGESTIONS_OPEN"]:
+    # 2. STRICT GUARDRAIL - No spinning if a cup is already active
+    if data.get('status') in ["MATCH_ACTIVE", "FINISHED"]:
         current = data.get('current_cat', 'a tournament')
         return await interaction.followup.send(
             f"<:warning:1462511393327681537> A tournament for **{current}** is already in progress - Use `/endcup` if you need to start over.", ephemeral=True)
@@ -817,35 +817,30 @@ async def choosecategory(interaction: discord.Interaction):
     if not suggestions:
         return await interaction.followup.send("<:cross:1462508739671101560> No suggestions found to pick from!", ephemeral=True)
 
-    # 3. THE CASINO REELS (The Hype)
-    reels = ["🎰", "🍒", "💎", "🔔", "7️⃣"]
-    msg = await interaction.followup.send(f"**SPINNING THE ROULETTE...** {reels[0]}")
+    # 3. THE CASINO REELS (Multi-Emoji Spin)
+    reels = ["🎰🎰🎰", "🍒💎🔔", "💎🔔7️⃣", "🔔7️⃣🍒", "7️⃣🍒💎"]
+    msg = await interaction.followup.send(f"**SPINNING THE ROULETTE...**\n{reels[0]}")
     
     # Quick flicker effect
-    for i in range(1, 6):
-        await asyncio.sleep(0.5)
-        await msg.edit(content=f"**SPINNING THE ROULETTE...** {reels[i % len(reels)]}")
+    for i in range(1, 8):
+        await asyncio.sleep(0.4)
+        await msg.edit(content=f"**SPINNING THE ROULETTE...**\n{reels[i % len(reels)]}")
 
     # 4. PICK THE WINNER
     picked = random.choice(suggestions)
     category = picked['name']
     suggested_by = picked['user']
 
-    # Update Data
+    # 5. UPDATE DATA (STRICTLY NO ITEM WIPING)
     data['current_cat'] = category
     data['status'] = "ADDING_ITEMS"
-    data['items'] = []
-    data['bracket'] = []
-    data['winners_pool'] = []
-    data['finished_matches'] = []
-    data['current_match'] = None
-    data['suggestions'] = [] # Clear the pool
+    data['suggestions'] = [] # Clear the pool since we've picked
 
     save_data(data, sha)
 
-    # 5. FINAL ANNOUNCEMENT (Your exact format)
+    # 6. FINAL ANNOUNCEMENT (Exact Format Preserved)
     await msg.edit(content=(
-        f"<:cutecup:1462480543449874442> **The Landing Strip World Cup theme is: {category} - Suggestion courtesy of {suggested_by}**\n\n"
+        f"<:cutecup:1462480543449874442> **The Landing Strip World Cup theme is: {category} - Suggestion courtesy of {suggested_by}** <:cutecup:1462480543449874442>\n\n"
         f"@everyone Use `/additem` to submit your entry!"
     ))
 
