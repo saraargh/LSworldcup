@@ -1,6 +1,6 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "Films",
     "title": [],
     "items": [
         {
@@ -196,24 +196,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
-    "suggestions": [
-        {
-            "name": "Movies",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Films",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Moving Pictures",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Mewvies",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
