@@ -817,31 +817,47 @@ async def choosecategory(interaction: discord.Interaction):
     if not suggestions:
         return await interaction.followup.send("<:cross:1462508739671101560> No suggestions found to pick from!", ephemeral=True)
 
-    # 3. THE CASINO REELS (Multi-Emoji Spin)
-    reels = ["🎰🎰🎰🎰🎰", "🍒💎🔔7️⃣🎰", "💎🍒🔔🎰7️⃣", "🔔💎7️⃣🎰🍒", "7️⃣🔔🍒🎰💎"]
-    msg = await interaction.followup.send(f"**@everyone WE ARE SPINNING THE ROULETTE...**\n{reels[0]}")
+    # 3. THE CASINO REELS SETUP
+    emoji_pool = ["🍒", "💎", "🔔", "7️⃣", "🎰"]
+    # Grab up to 7 random unique suggestion names for the "near misses"
+    fake_spins = [s['name'].upper() for s in random.sample(suggestions, min(len(suggestions), 7))]
     
-    # Quick flicker effect
-    for i in range(1, 8):
+    msg = await interaction.followup.send(f"**@everyone WE ARE SPINNING THE ROULETTE...**\n🎰🎰🎰🎰🎰 [ **STARTING** ] 🎰🎰🎰🎰🎰")
+    
+    # 4. THE ANIMATION LOOP
+    for name in fake_spins:
         await asyncio.sleep(0.4)
-        await msg.edit(content=f"**SPINNING THE ROULETTE...**\n{reels[i % len(reels)]}")
+        # Randomize the order of emojis for both sides each time
+        random.shuffle(emoji_pool)
+        left_side = "".join(emoji_pool)
+        random.shuffle(emoji_pool)
+        right_side = "".join(emoji_pool)
+        
+        await msg.edit(content=f"**@everyone WE ARE SPINNING THE ROULETTE...**\n{left_side}  **{name}** {right_side}")
 
-    # 4. PICK THE WINNER
+    # 5. PICK THE ACTUAL WINNER
     picked = random.choice(suggestions)
     category = picked['name']
     suggested_by = picked['user']
 
-    # 5. UPDATE DATA (STRICTLY NO ITEM WIPING)
+    # 6. UPDATE DATA (STRICTLY NO ITEM WIPING)
     data['current_cat'] = category
     data['status'] = "ADDING_ITEMS"
     data['suggestions'] = [] # Clear the pool since we've picked
 
     save_data(data, sha)
 
-    # 6. FINAL ANNOUNCEMENT (Exact Format Preserved)
+    # 7. FINAL ANNOUNCEMENT
+    # Final shuffle for the winner's frame
+    random.shuffle(emoji_pool)
+    win_left = "".join(emoji_pool)
+    random.shuffle(emoji_pool)
+    win_right = "".join(emoji_pool)
+
     await msg.edit(content=(
+        f"**@everyone THE ROULETTE HAS SETTLED!**\n{win_left}  **{category.upper()}** {win_right}\n\n"
         f"<:cutecup:1462480543449874442> **The Landing Strip World Cup theme is: {category} - Suggestion courtesy of {suggested_by}** <:cutecup:1462480543449874442>\n\n"
-        f"@everyone Use `/additem` to submit your entry!"
+        f"Use `/additem` to submit your entry!"
     ))
 
 
