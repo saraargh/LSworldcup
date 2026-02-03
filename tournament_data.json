@@ -1,18 +1,9 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": ".",
+    "status": "ADDING_ITEMS",
+    "current_cat": "Movies",
     "title": [],
     "items": [],
-    "suggestions": [
-        {
-            "name": "Movies",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Movies 2",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
