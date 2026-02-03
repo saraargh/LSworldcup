@@ -1085,42 +1085,43 @@ async def help(interaction: discord.Interaction):
     is_admin_user = is_admin(interaction.user)
     
     # --- USER SECTION ---
-    desc = "### 🏆 **Tournament Participation**\n"
+    desc = "### <:crown:1468289809612275793> **Tournament Participation**\n"
     desc += "• `/suggestcategory` — Submit a theme idea for the next cup\n"
     desc += "• `/listcategories` — View all current theme suggestions\n"
-    desc += "• `/additem` — Submit your entry (Name, Desc, Image)\n\n"
+    desc += "• `/additem` — Submit your entry (Name, Desc, Image)\n"
+    desc += "• `/listitems` — Gallery of all entries in this cup\n\n"
     
-    desc += "### 📊 **Live Match Info**\n"
+    desc += "### <:graph:1462508734663233751> **Live Match Info**\n"
     desc += "• `/matchups` — View the bracket and upcoming pairs\n"
-    desc += "• `/status` — Check cup progress and total entries\n"
+    desc += "• `/status` — Check cup progress and item count\n"
     desc += "• `/currentvotes` — See who has voted in the active match\n\n"
 
-    desc += "### 📜 **Archive & History**\n"
-    desc += "• `/listitems` — Gallery of all entries in this cup\n"
+    desc += "### <:shield:1462508730640765114> **Archive & History**\n"
     desc += "• `/scoreboard` — History of finished match results\n"
     desc += "• `/cuphistory` — View the Hall of Fame records\n"
     
     # --- ADMIN SECTION ---
     if is_admin_user:
         desc += "\n---"
-        desc += "\n### 🛠️ **Admin Management**\n"
+        desc += "\n### <:bulb:1468293924245209089> **Admin Management**\n"
         desc += "• `/opensuggestions` — Open the floor for themes\n"
         desc += "• `/editcategory` / `/removecategory` — Manage themes\n"
+        desc += "• `/edititem` / `/removeitem` — Manage entry details\n"
         desc += "• `/choosecategory` — Spin the roulette for a theme\n"
         desc += "• `/startworldcup` — Lock entries and begin (32 items)\n"
         desc += "• `/nextmatch` — Force-close current match and post next\n"
-        desc += "• `/edititem` / `/removeitem` — Manage entry details\n"
         desc += "• `/endcup` — Crown the champion and archive results\n"
         desc += "• `/resetcup` — 🧨 **EMERGENCY WIPE** of all progress\n"
 
     embed = discord.Embed(
         title="<:cutecup:1462480543449874442> The Landing Strip World Cup Guide", 
         description=desc, 
-        color=0xf1c40f # Gold color for the help guide
+        color=0xf1c40f 
     )
-    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    embed.set_footer(text="Use the buttons below matches to cast your votes!")
     
     await interaction.response.send_message(embed=embed, ephemeral=True)
+
 
 
 @bot.tree.command(name="suggestcategory", description="Submit a theme idea")
