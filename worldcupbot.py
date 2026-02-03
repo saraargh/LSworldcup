@@ -1050,7 +1050,7 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
     })
     save_data(data, sha)
     
-    await interaction.followup.send(f"💡 Logged suggestion: **{name}**", ephemeral=False)
+    await interaction.followup.send(f"<:bulb:1468293924245209089> Logged suggestion: **{name}**", ephemeral=False)
 
 
 @bot.tree.command(name="additem", description="Submit an item for the bracket")
@@ -1191,7 +1191,7 @@ async def listcategories(interaction: discord.Interaction):
     for idx, s in enumerate(data['suggestions']):
         txt += f"{idx+1}. **{s['name']}** (Suggested by {s['user']})\n"
         
-    embed = discord.Embed(title="💡 Theme Suggestions", description=txt, color=0x3498db)
+    embed = discord.Embed(title="<:bulb:1468293924245209089> Theme Suggestions", description=txt, color=0x3498db)
     await interaction.followup.send(embed=embed)
 
 @bot.tree.command(name="currentvotes", description="See who has voted in the active match")
@@ -1253,7 +1253,7 @@ async def status(interaction: discord.Interaction):
     elif status_mode == "SUGGESTIONS_OPEN":
         count = len(data.get('suggestions', []))
         embed.description = (
-            "💡 **Theme Suggestions**\n"
+            "<:bulb:1468293924245209089> **Theme Suggestions**\n"
             "We are currently collecting themes! Use `/suggestcategory` to join in.\n\n"
             f"**Total Suggestions:** {count}"
         )
