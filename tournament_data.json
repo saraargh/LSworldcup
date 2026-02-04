@@ -197,8 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [],
-    "winners_pool": [
+    "bracket": [
         {
             "name": "A cinderella story",
             "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
@@ -224,6 +223,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
+    "winners_pool": [],
     "finished_matches": [
         {
             "name": "Eternal Sunshine of The Spotless Mind vs The Notebook",
