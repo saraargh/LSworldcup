@@ -641,7 +641,12 @@ class WC_Bot(discord.Client):
         await self.tree.sync()
         print(f"✅ Synced and successfully loaded match from JSON.")
 
+
     async def post_match_initial(self, channel, comp_a, comp_b, data, sha):
+        # Safety check: Ensure items exist and have names
+        if not comp_a or 'name' not in comp_a or not comp_b or 'name' not in comp_b:
+            return await channel.send("<:cross:1462508739671101560> **Error:** One of the match entries is corrupted or missing a name.")
+
         round_name = "Round of 32"
         match_num = 1
         
@@ -657,10 +662,10 @@ class WC_Bot(discord.Client):
             "message_id": msg.id, "channel_id": channel.id,
             "round_name": round_name, "match_num": match_num
         }
-        # Saving here ensures the message_id is captured immediately
         save_data(data, sha)
         try: await msg.pin()
         except: pass
+
 
     async def post_next(self, channel, interaction=None):
         """The missing piece that keeps the tournament moving"""
