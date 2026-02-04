@@ -271,6 +271,12 @@
             "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -458,6 +464,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "Something Borrowed vs Mamma mia!",
+            "winner": "Something Borrowed",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Mamma mia!",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -472,26 +488,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Mamma mia!",
-            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468598227887722618,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 16",
-        "match_num": 19
-    },
+    "current_match": null,
     "final_winner": null
 }
