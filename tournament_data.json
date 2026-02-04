@@ -2,14 +2,7 @@
     "status": "IDLE",
     "current_cat": null,
     "title": [],
-    "items": [
-        {
-            "name": "Testie 1",
-            "desc": "(757 tvtvybuhuhimoo hihi",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468497941642739867/IMG_9747.png?ex=69843cc8&is=6982eb48&hm=7cd068de9381f3079727ffcc8a54993c87111a4667552cf38e7e0547e3d5976a&",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "items": [],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
