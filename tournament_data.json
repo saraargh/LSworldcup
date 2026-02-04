@@ -2,7 +2,14 @@
     "status": "ADDING_ITEMS",
     "current_cat": "Movies",
     "title": [],
-    "items": [],
+    "items": [
+        {
+            "name": "Fight Club",
+            "desc": "this guy hates his job, thinks everything is shit and gets off on going to help groups to see sad people. He meets this fella on a flight and ends up starting a fight club with him. Antics ensue.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468662646273216696/fightclub_1.jpg?ex=6984d62d&is=698384ad&hm=285cd8d45d7b02ae9a1846da0ad205538e2ab63503647a39164a34e8fc3078e9&",
+            "user": "<@217015976300904465>"
+        }
+    ],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
