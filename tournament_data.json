@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Pitch Perfect",
-            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "10 things i hate about you",
             "desc": "A modern adaptation of Shakespeare, the film centers on sharp-tongued Kat and the unexpected romance that challenges her guarded worldview. As schemes unfold, genuine feelings emerge, blending humour with emotional honesty. 10 Things I Hate About You balances teen comedy with heart, celebrating individuality and vulnerability. Its enduring appeal lies in witty dialogue, strong characters, and the idea that love doesn\u2019t soften you\u2014it helps you feel safe enough to be yourself.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393700218208450/IMG_9331.webp?ex=696a6471&is=696912f1&hm=8382071f25350a59523730cc5f128906e0d752cd2341d1555cca76c0df29f407&",
@@ -431,6 +419,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Pitch Perfect",
+            "desc": "A college a cappella group battles rivals while redefining teamwork, confidence, and identity. Blending music, comedy, and character-driven arcs, the film celebrates finding your voice\u2014literally and socially. Its energy comes from ensemble chemistry and a playful approach to competition. Pitch Perfect balances humour with empowerment, highlighting that belonging isn\u2019t about fitting a mold but contributing something unique. It\u2019s loud, fun, and rooted in creative self-expression.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395012523786311/IMG_9335.jpg?ex=696a65aa&is=6969142a&hm=8e2c9327038a6d4f4a963d353e4606be7edbd489c53d5150d218a29cba23bba2&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Camp Rock",
+            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1468586767039991939,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 32",
+        "match_num": 7
+    },
     "final_winner": null
 }
