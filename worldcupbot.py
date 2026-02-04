@@ -712,24 +712,30 @@ class WC_Bot(discord.Client):
 
 
     async def resolve_match(self, data, sha, interaction=None):
-        """Resolves match: Shows embed for normal rounds, skips it for the Grand Final."""
+        """Resolves match: Handles ties with a casino-style flip and advances the tournament."""
         async with self.processing_lock:
             match = data.get('current_match')
             if not match: return
 
             channel = self.get_channel(match['channel_id']) or await self.fetch_channel(match['channel_id'])
-
             votes = list(match.get('votes', {}).values())
             count_a, count_b = votes.count("A"), votes.count("B")
 
-            # Score display logic
-            score_display = f"<:tick:1462508738194837606> **{count_a}** — <:cross:1462508739671101560> **{count_b}**"
-            
-            if count_a >= count_b:
+            # Determine Winner
+            is_tie = (count_a == count_b)
+            if count_a > count_b:
                 winner, loser = match['item_a'], match['item_b']
-            else:
+                score_display = f"<:tick:1462508738194837606> **{count_a}** — <:cross:1462508739671101560> **{count_b}**"
+            elif count_b > count_a:
                 winner, loser = match['item_b'], match['item_a']
                 score_display = f"<:cross:1462508739671101560> **{count_a}** — <:tick:1462508738194837606> **{count_b}**"
+            else:
+                # IT'S A TIE - Setup random winner
+                winner, loser = random.choice([
+                    (match['item_a'], match['item_b']), 
+                    (match['item_b'], match['item_a'])
+                ])
+                score_display = f"⚖️ **{count_a}** — **{count_b}** (Tie-Breaker)"
 
             # Archive result
             data.setdefault('finished_matches', []).append({
@@ -743,12 +749,9 @@ class WC_Bot(discord.Client):
 
             data.setdefault('winners_pool', []).append(winner)
             old_msg_id = match['message_id']
-            
             data['current_match'] = None
 
-            # Check if this was the Grand Final
             is_final = not data.get('bracket') and len(data.get('winners_pool', [])) == 1
-            
             if is_final:
                 data['final_winner'] = winner
                 data['status'] = "FINISHED"
@@ -761,8 +764,19 @@ class WC_Bot(discord.Client):
                 await old_msg.unpin()
             except: pass
 
-            # --- CONDITIONAL EMBED ---
-            # We ONLY send this if it's NOT the final match
+            # --- CASINO TIE-BREAKER ANIMATION ---
+            if is_tie and not is_final:
+                tie_msg = await channel.send(f"⚖️ **DRAW DETECTED!** Preparing the Sudden Death Coin Flip...")
+                # Fun animation frames
+                casino_frames = ["🎰 [ 🟥 ]", "🎰 [ 🟦 ]", "🎰 [ 🟥 ]", "🎰 [ 🟦 ]", "🎰 [ ✨ ]"]
+                for frame in casino_frames:
+                    await asyncio.sleep(0.6)
+                    await tie_msg.edit(content=f"⚖️ **TIE-BREAKER SPINNING:** {frame}")
+                
+                await tie_msg.edit(content=f"🏁 **Tie-Breaker Complete!** Result: **{winner['name']}** wins the flip!")
+                await asyncio.sleep(1.5)
+
+            # --- POST WINNER EMBED ---
             if not is_final:
                 win_embed = discord.Embed(
                     description=f"### <:crown:1468289809612275793> MATCH CONCLUDED\n\n"
@@ -771,13 +785,11 @@ class WC_Bot(discord.Client):
                 )
                 win_embed.add_field(name="Final Score", value=score_display, inline=False)
                 win_embed.add_field(name="Advancing to Next Round", value=f"<:cutestar:1462482027273129994> {winner['name']}", inline=False)
-                win_embed.add_field(name="Submitted by", value=f"<:subs:1462495830941503498> {winner.get('user', 'Unknown')}", inline=False)
                 
                 if winner.get('image'): 
                     win_embed.set_thumbnail(url=winner['image'])
                 
                 win_embed.set_footer(text=f"The Landing Strip World Cup System 🏁✨ | 🗳️ Total Votes: {len(votes)}")
-                
                 await channel.send(embed=win_embed)
 
             # Handle what happens next
@@ -788,6 +800,7 @@ class WC_Bot(discord.Client):
                         ephemeral=True
                     )
             else:
+                # Wait 3 seconds so users can see the winner before the next match pops up
                 await asyncio.sleep(3) 
                 await self.post_next(channel, interaction)
 
