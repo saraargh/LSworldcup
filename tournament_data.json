@@ -349,6 +349,12 @@
             "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Mamma mia!",
+            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -401,6 +407,16 @@
             "votes": {
                 "1238834298338152498": "B"
             }
+        },
+        {
+            "name": "Mamma mia! vs just like heaven",
+            "winner": "Mamma mia!",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "just like heaven",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -415,26 +431,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Mamma mia!",
-            "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "just like heaven",
-            "desc": "A lonely man moves into an apartment haunted by the spirit of its former occupant, who isn\u2019t quite gone. As they form a connection across realities, the film blends romance with fantasy. Just Like Heaven explores grief, letting go, and emotional openness, using supernatural elements to soften heavy themes. Gentle and sentimental, it\u2019s about learning to live fully again after loss, even when love appears in unexpected forms.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395479131721933/IMG_9338.jpg?ex=696a6619&is=69691499&hm=3ddd34756574c4d41453171717bb7bd48f82a08ffb23598911ba36aa491dd401&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468586664610889817,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 6
-    },
+    "current_match": null,
     "final_winner": null
 }
