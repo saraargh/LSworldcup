@@ -343,6 +343,12 @@
             "desc": "Set on a sun-drenched Greek island, Mamma Mia! blends romance, family, and ABBA\u2019s iconic music into pure escapism. As Sophie prepares for her wedding, she secretly invites three men who could be her father, setting off emotional revelations and joyful chaos. The film thrives on energy rather than realism, celebrating love in all its forms\u2014romantic, maternal, and chosen. Big performances, infectious songs, and unapologetic silliness make it a feel-good film about embracing life, messiness included.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380725021610126/IMG_9311.jpg?ex=696a585b&is=696906db&hm=a411b3d12f940f7ff0e65c1fcb47d0d567caafc6214fb362ac5ad6355d10232d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Mean Girls",
+            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -407,6 +413,17 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "Mean Girls vs Camp Rock",
+            "winner": "Mean Girls",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Camp Rock",
+            "score": "1-1",
+            "votes": {
+                "1238834298338152498": "B",
+                "1450514816958599220": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -421,27 +438,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Mean Girls",
-            "desc": "When homeschooled Cady Heron enters the brutal ecosystem of an American high school, she\u2019s quickly pulled into the orbit of the Plastics, the school\u2019s most powerful clique. What starts as a plan to infiltrate and expose them spirals into Cady becoming exactly what she set out to destroy. Sharp, quotable, and endlessly rewatchable, Mean Girls is a satire on popularity, insecurity, and teenage cruelty, balancing absurd humour with surprisingly sharp observations about identity, friendship, and how easy it is to lose yourself when validation becomes the goal.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379446937354302/IMG_9304.jpg?ex=696a572b&is=696905ab&hm=8103abad0ba0f7b33b766b532f21af30a46e1aad7a459c594da6fca6def60342&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Camp Rock",
-            "desc": "Set at a competitive summer music camp, Camp Rock follows Mitchie, a talented but insecure teen desperate to belong. As rivalries spark and egos clash, she\u2019s forced to confront her own voice\u2014literally and figuratively. Bursting with catchy songs and earnest emotion, the film is a classic coming-of-age story wrapped in Disney optimism. It explores confidence, class, and staying true to yourself while navigating talent, crushes, and pressure, making it a comfort watch for anyone who ever felt out of place but still dreamed big.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461373374940053535/IMG_9307.jpg?ex=696a5183&is=69690003&hm=10f79e1b36acb65f3c71992eef14a07848296d24ebd62a276cdd1990428c38c3&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B",
-            "1450514816958599220": "A"
-        },
-        "message_id": 1468594177364459616,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 7
-    },
+    "current_match": null,
     "final_winner": null
 }
