@@ -295,6 +295,12 @@
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Confessions of a Shopaholic",
+            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -438,6 +444,17 @@
                 "1450514816958599220": "A",
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "Confessions of a Shopaholic vs How to lose a guy in 10 days",
+            "winner": "Confessions of a Shopaholic",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "How to lose a guy in 10 days",
+            "score": "1-1",
+            "votes": {
+                "1238834298338152498": "A",
+                "1450514816958599220": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -452,27 +469,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Confessions of a Shopaholic",
-            "desc": "Rebecca Bloomwood lives for fashion and spending, even as debt spirals out of control. When she lands a job giving financial advice, her secret threatens everything. The film explores consumerism, identity, and self-control with humour and colour. While exaggerated, it taps into real anxieties about money and self-worth, ultimately focusing on accountability and growth. It\u2019s a glossy cautionary tale that pairs rom-com charm with a message about facing consequences.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461397505899102300/IMG_9327.webp?ex=696a67fc&is=6969167c&hm=d723f76521986828d87e981364623bc42dd5e41fe00b0a40a7d84f3946fbabec&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "How to lose a guy in 10 days",
-            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A",
-            "1450514816958599220": "B"
-        },
-        "message_id": 1468587470840135731,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 15
-    },
+    "current_match": null,
     "final_winner": null
 }
