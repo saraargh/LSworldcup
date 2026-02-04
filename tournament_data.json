@@ -373,6 +373,12 @@
             "desc": "Spanning decades, The Notebook tells the enduring love story of Noah and Allie\u2014two people drawn together by passion, separated by circumstance, and bound by memory. Framed through an elderly man reading from a notebook, the film explores devotion, loss, and the quiet heroism of loving someone fully. Intensely romantic and unapologetically emotional, it leans into grand gestures and heartbreak, making it a staple for anyone who believes love can be both beautiful and devastating\u2014and worth it anyway.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380335878144173/IMG_9308.jpg?ex=696a57ff&is=6969067f&hm=1bf46f08ca37f630982a54f83448b0b9754a36d987004ea99b843d2bc71fbf5d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "How to lose a guy in 10 days",
+            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -385,6 +391,16 @@
             "votes": {
                 "1238834298338152498": "A",
                 "1450514816958599220": "B"
+            }
+        },
+        {
+            "name": "Pretty Woman vs How to lose a guy in 10 days",
+            "winner": "How to lose a guy in 10 days",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Pretty Woman",
+            "score": "0-1",
+            "votes": {
+                "1238834298338152498": "B"
             }
         }
     ],
@@ -400,26 +416,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Pretty Woman",
-            "desc": "A chance encounter between a wealthy businessman and a sex worker evolves into an unexpected romance that challenges assumptions about class and worth. While undeniably a fairy tale, the film leans into charm, transformation, and mutual respect. Pretty Woman is glossy and aspirational, offering escapism rather than realism. Its appeal lies in chemistry and fantasy, presenting love as something that sees beyond circumstance\u2014even if it simplifies the realities it touches.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390923198894326/IMG_9329.jpg?ex=696a61db&is=6969105b&hm=9ccd01cf3ef72367e1de19f9e1dda6cc8c3a651cd798d9459dd838e55729e99b&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "How to lose a guy in 10 days",
-            "desc": "A journalist determined to write an expos\u00e9 on relationship sabotage targets an ad executive who\u2019s secretly trying to make a woman fall in love with him\u2014fast. Their opposing agendas collide in escalating chaos, turning manipulation into genuine connection. Playful, sharp, and built on chemistry, the film embraces classic rom-com antics while poking fun at dating clich\u00e9s. It\u2019s a battle of wills that slowly reveals vulnerability beneath bravado, proving honesty beats strategy every time.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386478746603672/IMG_9323.webp?ex=696a5db7&is=69690c37&hm=9ed1327b55a5fc503efc21d0c9638b346e09d0cf6e8813d67e1f63916ede0b81&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1468593729018400808,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 2
-    },
+    "current_match": null,
     "final_winner": null
 }
