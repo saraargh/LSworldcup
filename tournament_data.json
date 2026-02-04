@@ -197,8 +197,7 @@
         }
     ],
     "suggestions": [],
-    "bracket": [],
-    "winners_pool": [
+    "bracket": [
         {
             "name": "Sisterhood of the travelling pants",
             "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
@@ -296,6 +295,7 @@
             "user": "<@1238834298338152498>"
         }
     ],
+    "winners_pool": [],
     "finished_matches": [
         {
             "name": "Pretty Woman vs Sisterhood of the travelling pants",
