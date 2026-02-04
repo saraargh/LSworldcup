@@ -520,7 +520,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
             "user": "<@1238834298338152498>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "B"
+        },
         "message_id": 1468613985510363220,
         "channel_id": 1438277790179921971,
         "round_name": "Quarter-Finals",
