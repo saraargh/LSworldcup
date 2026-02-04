@@ -1,22 +1,9 @@
 {
-    "status": "SUGGESTIONS_OPEN",
-    "current_cat": null,
+    "status": "ADDING_ITEMS",
+    "current_cat": "films",
     "title": [],
     "items": [],
-    "suggestions": [
-        {
-            "name": "movies",
-            "user": "<@1450514816958599220>"
-        },
-        {
-            "name": "films",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "motion pictures",
-            "user": "<@1238834298338152498>"
-        }
-    ],
+    "suggestions": [],
     "bracket": [],
     "winners_pool": [],
     "finished_matches": [],
