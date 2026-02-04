@@ -331,6 +331,12 @@
             "desc": "Ashley Albright is the luckiest woman in New York\u2014everything goes her way, effortlessly. Jake Hardin is her complete opposite, plagued by constant bad luck that affects every part of his life. When the two meet and share a kiss, their fortunes mysteriously swap, turning Ashley\u2019s perfect life upside down while Jake\u2019s finally starts to shine. As Ashley scrambles to reverse the curse, she\u2019s forced to confront who she is without her good fortune. Light, playful, and unapologetically early-2000s, Just My Luck is a rom-com about fate, gratitude, and finding confidence beyond circumstance.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461398155789865113/IMG_9345.jpg?ex=696a6897&is=69691717&hm=a0bc0e17512a8b0bc7a025e40c2fd84f39af0e94fc5af8e14bac87d4f62c92ff&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Love Actually",
+            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -416,6 +422,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "White Chicks vs Love Actually",
+            "winner": "Love Actually",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "White Chicks",
+            "score": "0-1",
+            "votes": {
+                "1238834298338152498": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -430,26 +446,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "White Chicks",
-            "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Love Actually",
-            "desc": "Interweaving multiple love stories in the lead-up to Christmas, Love Actually explores romance in all its forms\u2014messy, hopeful, awkward, and fleeting. From grand declarations to quiet sacrifices, the film embraces sentimentality while acknowledging heartbreak. Though uneven by design, its charm lies in emotional sincerity and variety, suggesting that love isn\u2019t one experience but many. It\u2019s a warm, seasonal comfort watch that believes love is everywhere, even when it\u2019s imperfect or unreturned.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461383091225624788/IMG_9319.webp?ex=696a5a90&is=69690910&hm=ddf695f986184517334e44b382070545b05fa208231bd96675f17dde7eab13bd&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "B"
-        },
-        "message_id": 1468594346138931334,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 9
-    },
+    "current_match": null,
     "final_winner": null
 }
