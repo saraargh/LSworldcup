@@ -253,6 +253,12 @@
             "desc": "Two disgraced FBI agents go undercover in the most ridiculous way possible: disguised as wealthy white socialites to foil a kidnapping plot. What follows is a chaotic collision of identity swaps, social satire, and absurd physical comedy. White Chicks leans unapologetically into outrageous humour, lampooning class, privilege, and social performance while delivering endlessly meme-able moments. It\u2019s not subtle, it\u2019s not refined\u2014but it knows exactly what it is: a loud, silly comedy built on commitment to the bit and complete disbelief suspension.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461379393938128998/IMG_9305.jpg?ex=696a571e&is=6969059e&hm=69cbcb4e388766e47b81a58441b3d093e0f50637cd618408cc7cd3abe03a60c1&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Something Borrowed",
+            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -471,6 +477,17 @@
                 "1450514816958599220": "A",
                 "1238834298338152498": "B"
             }
+        },
+        {
+            "name": "Clueless vs Something Borrowed",
+            "winner": "Something Borrowed",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Clueless",
+            "score": "1-1",
+            "votes": {
+                "1450514816958599220": "B",
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -485,27 +502,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Clueless",
-            "desc": "Set in a hyper-stylised version of Beverly Hills, Clueless follows Cher, a wealthy and well-meaning teen who believes she has life figured out. As she meddles in others\u2019 lives, she slowly learns about empathy, growth, and self-awareness. Bright, witty, and endlessly quotable, the film is a modern adaptation of classic literature with a sharp understanding of social hierarchy. Beneath the fashion and humour lies a sincere coming-of-age story about evolving beyond surface-level confidence.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461386209996836947/IMG_9321.webp?ex=696a5d77&is=69690bf7&hm=b4237e89782dd87dcc23441b59f1075cba6be661f880ea20454fd4562785267a&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Something Borrowed",
-            "desc": "Two best friends find their relationship tested when one falls for the other\u2019s fianc\u00e9. The film explores loyalty, desire, and moral grey areas, challenging the idea that love is always neat or fair. While controversial, it reflects real emotional conflict\u2014how timing and honesty shape relationships. Something Borrowed asks uncomfortable questions about friendship and romantic entitlement, leaving viewers to decide whether love excuses betrayal or demands restraint.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395599856238901/IMG_9339.avif?ex=696a6636&is=696914b6&hm=279db24d3c19c76e461a7244e9733bd88e6751cdb7fcd021bf86ba0fd4880cd1&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1450514816958599220": "B",
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468588144550084841,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 16",
-        "match_num": 22
-    },
+    "current_match": null,
     "final_winner": null
 }
