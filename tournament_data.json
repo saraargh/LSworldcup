@@ -288,6 +288,12 @@
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "He\u2019s just not that into you",
+            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -445,6 +451,16 @@
                 "1238834298338152498": "A",
                 "1450514816958599220": "A"
             }
+        },
+        {
+            "name": "He\u2019s just not that into you vs the devil wears prada",
+            "winner": "He\u2019s just not that into you",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "the devil wears prada",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -459,26 +475,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "He\u2019s just not that into you",
-            "desc": "Interconnected storylines explore dating miscommunication, mixed signals, and the truths people avoid. The film confronts romantic delusion head-on, suggesting clarity is kinder than hope built on excuses. While light in tone, it delivers blunt insights about self-respect and emotional availability. He\u2019s Just Not That Into You isn\u2019t cynical\u2014it\u2019s pragmatic, encouraging viewers to value consistency over fantasy and to stop chasing people who won\u2019t meet them halfway.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461393837263159387/IMG_9332.avif?ex=696a6492&is=69691312&hm=dd9eabfab1f0b3233ac5e18ae4f3b64abf261c0acb70512b1251b8db43add7cb&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "the devil wears prada",
-            "desc": "When aspiring journalist Andy lands a job at a top fashion magazine, she\u2019s thrown into a ruthless world ruled by the formidable Miranda Priestly. As ambition begins to reshape her priorities, Andy must decide what success is worth. Slick, sharp, and character-driven, the film explores power, identity, and the compromises people make in high-pressure environments. It\u2019s both a fashion fantasy and a cautionary tale, showing how easy it is to drift from yourself when approval becomes currency.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461381040647045327/IMG_9313.jpg?ex=696a58a7&is=69690727&hm=480ba13ec5c5bf64b1d19ffe94cb50cc5181198e6c2ca3b52749c251aa1d6fbf&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468597112433545351,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 32",
-        "match_num": 16
-    },
+    "current_match": null,
     "final_winner": null
 }
