@@ -641,8 +641,7 @@ class WC_Bot(discord.Client):
         await self.tree.sync()
         print(f"✅ Synced and successfully loaded match from JSON.")
 
-    async def post_match_initial(self, channel, comp_a, comp_b):
-        data, sha = load_data()
+    async def post_match_initial(self, channel, comp_a, comp_b, data, sha):
         round_name = "Round of 32"
         match_num = 1
         
@@ -658,6 +657,7 @@ class WC_Bot(discord.Client):
             "message_id": msg.id, "channel_id": channel.id,
             "round_name": round_name, "match_num": match_num
         }
+        # Saving here ensures the message_id is captured immediately
         save_data(data, sha)
         try: await msg.pin()
         except: pass
@@ -1003,10 +1003,9 @@ async def startworldcup(interaction: discord.Interaction):
     
     data, sha = load_data()
     
-    # --- ADDED GUARDRAIL START ---
+    # --- GUARDRAIL ---
     if data.get('status') == "MATCH_ACTIVE":
         return await interaction.followup.send(f"<:warning:1462511393327681537> **A match is already active!** You cannot restart the cup until this one is finished or ended with `/endcup`.", ephemeral=True)
-    # --- ADDED GUARDRAIL END ---
 
     cat_name = data.get('current_cat')
     if not cat_name:
@@ -1020,18 +1019,19 @@ async def startworldcup(interaction: discord.Interaction):
     random.shuffle(shuffled)
     comp_a, comp_b = shuffled.pop(0), shuffled.pop(0)
 
-    # We clear progress here because this IS the start of the tournament
+    # Prepare the data object
     data.update({
         "status": "MATCH_ACTIVE", 
         "bracket": shuffled, 
         "winners_pool": [], 
         "finished_matches": []
     })
-    save_data(data, sha)
     
+    # Send the text announcement
     await interaction.followup.send(f"<:cutecup:1462480543449874442> @everyone **THE WORLD CUP OF {cat_name.upper()} IS UPON US!**")
     
-    await bot.post_match_initial(interaction.channel, comp_a, comp_b)
+    # Pass data and sha directly to the posting function to avoid the GitHub cache lag
+    await bot.post_match_initial(interaction.channel, comp_a, comp_b, data, sha)
 
 
 @bot.tree.command(name="nextmatch", description="Force the next match to start")
