@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Sisterhood of the travelling pants",
-            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
-            "user": "<@1238834298338152498>"
-        },
-        {
-            "name": "Cruel Intentions",
-            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
-            "user": "<@1238834298338152498>"
-        },
-        {
             "name": "500 days of summer",
             "desc": "Told out of order, 500 Days of Summer dissects a relationship from hopeful beginning to painful end, challenging traditional rom-com narratives. It\u2019s a story about expectations, projection, and the danger of romanticising people instead of seeing them clearly. Through Tom\u2019s perspective, the film explores heartbreak with honesty and self-critique, reminding viewers that chemistry isn\u2019t compatibility. Stylish, introspective, and bittersweet, it\u2019s less about finding \u201cthe one\u201d and more about learning from love when it doesn\u2019t work out.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380854667542592/IMG_9312.jpg?ex=696a587a&is=696906fa&hm=557d56d6a559e875b0fcc600928e26906c639daafae43493c1d5267dd2e2ad97&",
@@ -500,6 +488,24 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Sisterhood of the travelling pants",
+            "desc": "Four lifelong friends share a pair of jeans that somehow fits them all, staying connected while spending their first summer apart. Each girl\u2019s journey explores love, grief, identity, and independence. The jeans become a symbol of friendship\u2019s durability across distance and change. Warm and sincere, the film captures the emotional intensity of adolescence and the comfort of shared history. It\u2019s a gentle reminder that true friendships evolve but rarely disappear.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461390793817460766/IMG_9328.jpg?ex=696a61bc&is=6969103c&hm=0b18ae4b0357a5646e066cabfaa270efac560e14dbce1d5196fd08873ee9fb53&",
+            "user": "<@1238834298338152498>"
+        },
+        "item_b": {
+            "name": "Cruel Intentions",
+            "desc": "Set among privileged teenagers, Cruel Intentions is a dark, seductive story of manipulation, power, and desire. Two step-siblings make a dangerous bet that spirals into real emotion and devastating consequences. Stylish and provocative, the film explores morality in a world where reputation and control are currency. It\u2019s less about romance and more about corruption, revealing how vulnerability becomes collateral damage when people treat others as games.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461392972812783819/IMG_9330.jpg?ex=696a63c4&is=69691244&hm=25fdcb88efbc46bd22f7ea47f934d7ea664eac12f5ea3b8dd95d5512fecb2f69&",
+            "user": "<@1238834298338152498>"
+        },
+        "votes": {},
+        "message_id": 1468613321908420861,
+        "channel_id": 1438277790179921971,
+        "round_name": "Round of 16",
+        "match_num": 23
+    },
     "final_winner": null
 }
