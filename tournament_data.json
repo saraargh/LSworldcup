@@ -277,6 +277,12 @@
             "desc": "Spanning decades, The Notebook tells the enduring love story of Noah and Allie\u2014two people drawn together by passion, separated by circumstance, and bound by memory. Framed through an elderly man reading from a notebook, the film explores devotion, loss, and the quiet heroism of loving someone fully. Intensely romantic and unapologetically emotional, it leans into grand gestures and heartbreak, making it a staple for anyone who believes love can be both beautiful and devastating\u2014and worth it anyway.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461380335878144173/IMG_9308.jpg?ex=696a57ff&is=6969067f&hm=1bf46f08ca37f630982a54f83448b0b9754a36d987004ea99b843d2bc71fbf5d&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "A cinderella story",
+            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -454,6 +460,16 @@
             "votes": {
                 "1238834298338152498": "A"
             }
+        },
+        {
+            "name": "A cinderella story vs Wild Child",
+            "winner": "A cinderella story",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Wild Child",
+            "score": "1-0",
+            "votes": {
+                "1238834298338152498": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -468,26 +484,6 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "A cinderella story",
-            "desc": "A modern retelling of the fairy tale, the film follows Sam, a hardworking teen trapped by family expectations, who connects anonymously with a mystery boy online. As identity and confidence collide, she learns to step into her own power. Sweet and hopeful, the story emphasizes self-belief and choosing your future. While predictable, its charm lies in empowerment and optimism, reminding viewers that dreams require courage as much as destiny.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461394565784277245/IMG_9333.jpg?ex=696a653f&is=696913bf&hm=d93d69f587fca6665d1b93f28468733b62421426a9318b6e21bf6e2766034501&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Wild Child",
-            "desc": "A spoiled teen is sent to a strict British boarding school, where culture shock forces her to confront entitlement and insecurity. Through rivalries and friendships, she learns accountability and empathy. The film thrives on contrast\u2014chaos meeting structure\u2014and explores growth through discipline and connection. While playful and dramatic, it ultimately centers on maturity and self-reflection, showing that rebellion can evolve into confidence when guided by purpose.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1461395220716454122/IMG_9337.jpg?ex=696a65dc&is=6969145c&hm=ba38d2458048e8c8501351d38183a9c3bb14160ac169a86e90f4947b167c459f&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "1238834298338152498": "A"
-        },
-        "message_id": 1468597842158555242,
-        "channel_id": 1438277790179921971,
-        "round_name": "Round of 16",
-        "match_num": 18
-    },
+    "current_match": null,
     "final_winner": null
 }
