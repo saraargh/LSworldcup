@@ -489,8 +489,8 @@ class EndConfirmView(ui.View):
                 )
 
                 embed = discord.Embed(
-                    title="<:crown:1468289809612275793> CHAMPION CROWNED - {winner['name'].upper()} <:crown:1468289809612275793>", 
-                    description=f"<:winner:1462297763260923946> {winner['name']} <:winner:1462297763260923946> is The World Cup of {cat_name} Winner!\n\n **Submitted by:** {winner['user']}\n\n", 
+                    title=f"<:crown:1468289809612275793> CHAMPION CROWNED - {winner['name'].upper()} <:crown:1468289809612275793>", 
+                    description=f"<:winner:1462297763260923946> {winner['name']} is The World Cup of {cat_name} Winner!\n\n **Submitted by:** {winner['user']}\n\n", 
                     color=0xf1c40f
                 )
                 embed.add_field(name="SPECIAL MENTIONS <:speech:1462508736173052161>✨", value=mentions, inline=False)
