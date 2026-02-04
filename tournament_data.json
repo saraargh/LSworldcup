@@ -2,7 +2,14 @@
     "status": "ADDING_ITEMS",
     "current_cat": "films",
     "title": [],
-    "items": [],
+    "items": [
+        {
+            "name": "poo poo",
+            "desc": "poo poo poo",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468571597588795533/IMG_0342.png?ex=69848161&is=69832fe1&hm=c27e7ed8a93d46789ea2ce6398f21c661a4f37d30b103313eb099848dfa16e5e&",
+            "user": "<@1450514816958599220>"
+        }
+    ],
     "suggestions": [],
     "bracket": [],
     "winners_pool": [],
