@@ -79,6 +79,7 @@ def load_data():
         "status": "IDLE",
         "title": "The Landing Strip World Cup",
         "items": [],
+        "max_items_per_user": 1, 
         "suggestions": [],
         "leaderboard": [],
         "bracket": [],
@@ -983,38 +984,81 @@ async def removeitem(interaction: discord.Interaction, name: str):
         await interaction.response.send_message("<:cross:1462508739671101560> Item not found!", ephemeral=True)
 
 
-@bot.tree.command(name="edititem", description="Admin: Edit the name, description, or image of an entry")
-@app_commands.autocomplete(old_name=item_name_autocomplete)
-async def edititem(interaction: discord.Interaction, old_name: str, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
+@bot.tree.command(name="setmaxitems", description="Admin: Set how many items each person can submit")
+async def setmaxitems(interaction: discord.Interaction, amount: int):
     if not is_admin(interaction.user):
         return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
-        
+    
+    await interaction.response.defer()
     data, sha = load_data()
+    
+    data['max_items_per_user'] = amount
+    save_data(data, sha)
 
-    if data.get('status') not in ["IDLE", "SUGGESTIONS", "ADDING_ITEMS"]:
-        return await interaction.response.send_message(
-            "<:cross:1462508739671101560> **You cannot edit items during this stage!**", 
+    embed = discord.Embed(
+        title="📝 Submission Update",
+        description=f"The rules have been updated! Each user can now submit up to **{amount}** entries for this tournament.",
+        color=0x2ecc71
+    )
+    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    
+    await interaction.followup.send(content="@everyone", embed=embed)
+
+
+@bot.tree.command(name="edititem", description="Edit an entry (Admins can edit anything, users can edit their own)")
+@app_commands.autocomplete(old_name=item_name_autocomplete)
+async def edititem(interaction: discord.Interaction, old_name: str, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
+    # 1. Defer to handle GitHub/Image processing
+    await interaction.response.defer(ephemeral=True)
+    
+    data, sha = load_data()
+    user_mention = f"<@{interaction.user.id}>"
+
+    # 2. Phase Check: Can only edit while items are being added
+    if data.get('status') not in ["IDLE", "ADDING_ITEMS"]:
+        return await interaction.followup.send(
+            "<:cross:1462508739671101560> **Items cannot be edited once the World Cup has started!**", 
             ephemeral=True
         )
 
+    # 3. Find the item
     found_item = next((i for i in data.get('items', []) if i['name'] == old_name), None)
     
-    if found_item:
-        if new_name:
-            found_item['name'] = new_name[:75]
-        if new_desc:
-            found_item['desc'] = new_desc
-        if new_image:
-            # Your exact image re-upload logic
+    if not found_item:
+        return await interaction.followup.send("<:cross:1462508739671101560> Item not found!", ephemeral=True)
+
+    # 4. Permission Check: Admin OR the Original Submitter
+    is_owner = found_item.get('user') == user_mention
+    if not is_admin(interaction.user) and not is_owner:
+        return await interaction.followup.send("<:cross:1462508739671101560> You can only edit your own entries!", ephemeral=True)
+
+    # 5. Apply Changes
+    if new_name:
+        # Check if the new name is already taken by someone else
+        clean_new = new_name.strip().lower()
+        if any(i['name'].lower() == clean_new for i in data.get('items', []) if i['name'] != old_name):
+             return await interaction.followup.send(f"<:cross:1462508739671101560> An item named '{new_name}' already exists!", ephemeral=True)
+        found_item['name'] = new_name[:75]
+        
+    if new_desc:
+        found_item['desc'] = new_desc
+        
+    if new_image:
+        try:
             storage_channel = bot.get_channel(STORAGE_CHANNEL_ID)
             stored_msg = await storage_channel.send(file=await new_image.to_file())
             found_item['image'] = stored_msg.attachments[0].url
+        except Exception as e:
+            return await interaction.followup.send("<:cross:1462508739671101560> Failed to upload new image.", ephemeral=True)
             
-        save_data(data, sha)
-        await interaction.response.send_message(f"📝 Entry **{old_name}** has been updated.")
-    else:
-        await interaction.response.send_message("<:cross:1462508739671101560> Item not found!", ephemeral=True)
-
+    # 6. Save back to GitHub
+    save_data(data, sha)
+    
+    msg = f"<:tick:1462508738194837606> Entry **{old_name}** has been updated"
+    if new_name: msg += f" and renamed to **{new_name}**."
+    else: msg += "."
+    
+    await interaction.followup.send(msg, ephemeral=False)
 
 
 @bot.tree.command(name="startworldcup", description="Phase 3: Close entries and begin the matches")
@@ -1207,10 +1251,16 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
         if item['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
 
-    # 3. ONE ENTRY PER PERSON check (Admins are exempt)
+    # 3. CUSTOM MAX ENTRY check (Admins are exempt)
     if not is_admin(interaction.user):
-        if any(item.get('user') == user_mention for item in data.get('items', [])):
-            return await interaction.followup.send("<:cross:1462508739671101560> You have already submitted an entry for this World Cup!", ephemeral=True)
+        max_allowed = data.get('max_items_per_user', 1)
+        user_current_count = sum(1 for item in data.get('items', []) if item.get('user') == user_mention)
+        
+        if user_current_count >= max_allowed:
+            return await interaction.followup.send(
+                f"<:cross:1462508739671101560> The current limit is **{max_allowed}** entry per person. You have already reached this limit!", 
+                ephemeral=False
+            )
 
     # 4. Total Capacity check
     if len(data.get('items', [])) >= 32:
