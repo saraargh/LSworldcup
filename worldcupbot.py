@@ -889,10 +889,10 @@ async def editcategory(interaction: discord.Interaction, old_name: str, new_name
             break
             
     if not found:
-        return await interaction.followup.send(f"<:cross:1462508739671101560> Could not find '{old_name}'.", ephemeral=True)
+        return await interaction.followup.send(f"<:cross:1462508739671101560> Could not find '{old_name}'.", ephemeral=False)
 
     save_data(data, sha)
-    await interaction.followup.send(f"<:check:1462508739671101560> Updated '**{old_name}**' to '**{new_name}**'", ephemeral=True)
+    await interaction.followup.send(f"<:check:1462508739671101560> Updated '**{old_name}**' to '**{new_name}**'", ephemeral=False)
 
 @bot.tree.command(name="choosecategory", description="Phase 2: Spin the roulette to pick the next theme!")
 async def choosecategory(interaction: discord.Interaction):
@@ -1250,6 +1250,10 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     for item in data.get('items', []):
         if item['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been submitted!", ephemeral=True)
+
+    # grr. Description Length Check (New 4000 char limit)
+    if len(description) > 2000:
+        return await interaction.followup.send("<:cross:1462508739671101560> Description is too long! (Max 2000 characters)", ephemeral=True)
 
     # 3. CUSTOM MAX ENTRY check (Admins are exempt)
     if not is_admin(interaction.user):
