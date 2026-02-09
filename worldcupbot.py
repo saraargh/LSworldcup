@@ -1032,6 +1032,8 @@ async def edititem(interaction: discord.Interaction, old_name: str, new_name: st
     if not is_admin(interaction.user) and not is_owner:
         return await interaction.followup.send("<:cross:1462508739671101560> You can only edit your own entries!", ephemeral=True)
 
+
+
     # 5. Apply Changes
     if new_name:
         # Check if the new name is already taken by someone else
@@ -1041,7 +1043,10 @@ async def edititem(interaction: discord.Interaction, old_name: str, new_name: st
         found_item['name'] = new_name[:75]
         
     if new_desc:
+        if len(new_desc) > 2000:
+            return await interaction.followup.send("<:cross:1462508739671101560> New description is too long! (Max 2000 characters)", ephemeral=True)
         found_item['desc'] = new_desc
+
         
     if new_image:
         try:
