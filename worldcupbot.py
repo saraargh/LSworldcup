@@ -79,7 +79,8 @@ def load_data():
         "status": "IDLE",
         "title": "The Landing Strip World Cup",
         "items": [],
-        "max_items_per_user": 1, 
+        "max_items_per_user": 1,
+        "banned_users": [],
         "suggestions": [],
         "leaderboard": [],
         "bracket": [],
@@ -1155,6 +1156,43 @@ async def endcup(interaction: discord.Interaction):
     view = EndConfirmView(data, sha, is_early=is_early)
     await interaction.followup.send(content=msg, view=view, ephemeral=True)
 
+@bot.tree.command(name="ban_user", description="Admin: Ban a user from submitting items or themes")
+async def ban_user(interaction: discord.Interaction, user: discord.Member):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    
+    if "banned_users" not in data:
+        data["banned_users"] = []
+
+    user_id = str(user.id)
+    if user_id in data["banned_users"]:
+        return await interaction.followup.send(f"<:warning:1462511393327681537> {user.display_name} is already banned.")
+
+    data["banned_users"].append(user_id)
+    save_data(data, sha)
+    
+    await interaction.followup.send(f"<:tick:1462508738194837606> **{user.display_name}** has been banned from participating.")
+
+@bot.tree.command(name="unban_user", description="Admin: Unban a user")
+async def unban_user(interaction: discord.Interaction, user: discord.Member):
+    if not is_admin(interaction.user):
+        return await interaction.response.send_message("<:cross:1462508739671101560> Admin only.", ephemeral=True)
+
+    await interaction.response.defer(ephemeral=True)
+    data, sha = load_data()
+    
+    user_id = str(user.id)
+    if "banned_users" in data and user_id in data["banned_users"]:
+        data["banned_users"].remove(user_id)
+        save_data(data, sha)
+        await interaction.followup.send(f"<:tick:1462508738194837606> **{user.display_name}** has been unbanned.")
+    else:
+        await interaction.followup.send("<:cross:1462508739671101560> User is not in the ban list.")
+
+
 
 # =========================================================
 # SLASH COMMANDS - USERS
@@ -1221,9 +1259,15 @@ async def suggestcategory(interaction: discord.Interaction, name: str):
         if s['name'].lower() == clean_name:
             return await interaction.followup.send(f"<:cross:1462508739671101560> '{name}' has already been suggested!", ephemeral=True)
     
+    # Ban Check
+    if str(interaction.user.id) in data.get("banned_users", []):
+        return await interaction.followup.send("<:cross:1462508739671101560> You are banned from participating in this World Cup.", ephemeral=True)
+
+
     if not is_admin(interaction.user):
         if any(s['user'] == user_mention for s in data['suggestions']):
             return await interaction.followup.send("<:cross:1462508739671101560> You've already submitted a theme!", ephemeral=True)
+    
     
     data.setdefault('suggestions', []).append({
         "name": name[:100], 
@@ -1246,6 +1290,10 @@ async def additem(interaction: discord.Interaction, name: str, description: str,
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
     clean_name = name.strip().lower()
+    
+    # Ban Check
+    if str(interaction.user.id) in data.get("banned_users", []):
+        return await interaction.followup.send("<:cross:1462508739671101560> You are banned from participating in this World Cup.", ephemeral=True)
 
     # 1. Check if submissions are open
     if data.get('status') != "ADDING_ITEMS":
