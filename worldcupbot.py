@@ -1009,7 +1009,7 @@ async def setmaxitems(interaction: discord.Interaction, amount: int):
 @app_commands.autocomplete(old_name=item_name_autocomplete)
 async def edititem(interaction: discord.Interaction, old_name: str, new_name: str = None, new_desc: str = None, new_image: discord.Attachment = None):
     # 1. Defer to handle GitHub/Image processing
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=False)
     
     data, sha = load_data()
     user_mention = f"<@{interaction.user.id}>"
