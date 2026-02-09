@@ -203,7 +203,5 @@
     "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
-    "banned_users": [
-        "154278268755771393"
-    ]
+    "banned_users": []
 }
