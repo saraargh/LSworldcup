@@ -379,8 +379,41 @@
             "user": "<@1213578451731357720>"
         }
     ],
-    "winners_pool": [],
-    "finished_matches": [],
+    "winners_pool": [
+        {
+            "name": "Fight Club",
+            "desc": "this guy hates his job, thinks everything is shit and gets off on going to help groups to see sad people. He meets this fella on a flight and ends up starting a fight club with him. Antics ensue.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468662646273216696/fightclub_1.jpg?ex=6984d62d&is=698384ad&hm=285cd8d45d7b02ae9a1846da0ad205538e2ab63503647a39164a34e8fc3078e9&",
+            "user": "<@217015976300904465>"
+        }
+    ],
+    "finished_matches": [
+        {
+            "name": "Fight Club vs The Substance",
+            "winner": "Fight Club",
+            "winner_user": "<@217015976300904465>",
+            "loser_name": "The Substance",
+            "score": "11-5",
+            "votes": {
+                "581896881555374081": "A",
+                "300738774332080128": "A",
+                "1213578451731357720": "A",
+                "217015976300904465": "A",
+                "865401742274330674": "B",
+                "924686780408676392": "A",
+                "847045429086126082": "A",
+                "1258358477903102024": "A",
+                "1238834298338152498": "B",
+                "154278268755771393": "A",
+                "636981787310161930": "B",
+                "871450866186608730": "A",
+                "487879272875425792": "A",
+                "536620158047879179": "A",
+                "1016515115450892349": "B",
+                "702589225018851348": "B"
+            }
+        }
+    ],
     "leaderboard": [
         {
             "user": "<@460480780460752907>",
@@ -393,42 +426,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Fight Club",
-            "desc": "this guy hates his job, thinks everything is shit and gets off on going to help groups to see sad people. He meets this fella on a flight and ends up starting a fight club with him. Antics ensue.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468662646273216696/fightclub_1.jpg?ex=6984d62d&is=698384ad&hm=285cd8d45d7b02ae9a1846da0ad205538e2ab63503647a39164a34e8fc3078e9&",
-            "user": "<@217015976300904465>"
-        },
-        "item_b": {
-            "name": "The Substance",
-            "desc": "An unhinged nightmare about what happens when you take \u201cI wish I was younger\u201d a little too seriously.\n\nA once-famous aerobics queen gets pushed out of the spotlight the second she\u2019s deemed \u201ctoo old,\u201d because in her world a woman\u2019s value basically has an expiry date. Desperate to stay relevant, she takes a sketchy glow-up drug that literally creates a younger, hotter version of herself to take her place.\n\nAt first it\u2019s all perfect skin, perfect body, and everyone obsessed again, but sharing a life with your own younger replacement quickly turns into jealousy, identity crises, and some very melty, very not-glam side effects.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469172319296422071/IMG_9867.jpg?ex=6986b0d8&is=69855f58&hm=d521acbaf443e3f3e93008112f3caf90a4c149be2d3b4facb6cde0354ef807cc&",
-            "user": "<@1238834298338152498>"
-        },
-        "votes": {
-            "581896881555374081": "A",
-            "300738774332080128": "A",
-            "1213578451731357720": "A",
-            "217015976300904465": "A",
-            "865401742274330674": "B",
-            "924686780408676392": "A",
-            "847045429086126082": "A",
-            "1258358477903102024": "A",
-            "1238834298338152498": "B",
-            "154278268755771393": "A",
-            "636981787310161930": "B",
-            "871450866186608730": "A",
-            "487879272875425792": "A",
-            "536620158047879179": "A",
-            "1016515115450892349": "B",
-            "702589225018851348": "B"
-        },
-        "message_id": 1470814272543129876,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 1
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
