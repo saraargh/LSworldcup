@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "500 days of summer",
-            "desc": "romantic",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470139322249383986/IMG_1402.jpg?ex=698a3570&is=6988e3f0&hm=5b3de15dca645eb46043a9ace28092b8a078646e95e421fcde97605e80ee9697&",
-            "user": "<@1288992263095062531>"
-        },
-        {
-            "name": "pitch perfect",
-            "desc": "Beca joins a Capella group and goes against a boy Capella group it\u2019s SO fucking funny man",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663765565440104/IMG_8175.jpg?ex=6984d738&is=698385b8&hm=6cfecc44c52ce58de47ff031fb0193ba01387c535f162c01334245f7bec1a5da&",
-            "user": "<@636981787310161930>"
-        },
-        {
             "name": "Legend",
             "desc": "Based on the Kray Twins (infamous gangsters of London?) I think it's London I forgot. Anyways Tom Hardy does a masterclass in this film, I'd recommend it. It's all about the twins rise to the top and their downfall.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663187694948403/Legend-movie1.jpg?ex=6984d6ae&is=6983852e&hm=a020369cb51f05c9c43278d46b1c262ff1f8708e28d6eaca4d3217449bfd2057&",
@@ -426,7 +414,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "500 days of summer",
+            "desc": "romantic",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470139322249383986/IMG_1402.jpg?ex=698a3570&is=6988e3f0&hm=5b3de15dca645eb46043a9ace28092b8a078646e95e421fcde97605e80ee9697&",
+            "user": "<@1288992263095062531>"
+        },
+        "item_b": {
+            "name": "pitch perfect",
+            "desc": "Beca joins a Capella group and goes against a boy Capella group it\u2019s SO fucking funny man",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663765565440104/IMG_8175.jpg?ex=6984d738&is=698385b8&hm=6cfecc44c52ce58de47ff031fb0193ba01387c535f162c01334245f7bec1a5da&",
+            "user": "<@636981787310161930>"
+        },
+        "votes": {},
+        "message_id": 1471222327533637666,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 2
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
