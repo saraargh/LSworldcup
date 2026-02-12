@@ -447,7 +447,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019748418453768/Saw_II_poster.jpg?ex=698622c1&is=6984d141&hm=ca70b01ea7c28cd6aa7f0835097cec80bc6d4b6cc11c39fbced3f283d78df0dc&",
             "user": "<@1016515115450892349>"
         },
-        "votes": {},
+        "votes": {
+            "300738774332080128": "A"
+        },
         "message_id": 1471490735340654613,
         "channel_id": 1404129198641250334,
         "round_name": "Round of 32",
