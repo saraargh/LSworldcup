@@ -355,6 +355,12 @@
             "desc": "girlboss but make it magic, little witch kiki moves to a seaside town with her kitty sidekick jiji and eats lots of bread, flies around with a big bow and survives on vibes alone (and meets a neeky boy of course)",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470182160920088850/IMG_9901.jpg?ex=698a5d55&is=69890bd5&hm=eb77c3f0beba77d934c45af6acbaa1834311881b3de702b956f567a3e08c2760&",
             "user": "<@1238834298338152498>"
+        },
+        {
+            "name": "Pirates of The Carribean",
+            "desc": "legendary drunk pirate captain Jack Sparrow sails the seven seas with Will turner and Elizabeth Smith to search for his ship the black pearl and his soul from Davey Jones along with some treasure and rum.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468706723345858824/Screenshot_20260204-202453.Google.jpg?ex=6984ff3a&is=6983adba&hm=848de40a61712e81b7b31f0d4267c370ad019cfbd7ffd4644be9f5aa76f373c6&",
+            "user": "<@1355886703767847064>"
         }
     ],
     "finished_matches": [
@@ -455,6 +461,28 @@
                 "277271767964188673": "A",
                 "460480780460752907": "B"
             }
+        },
+        {
+            "name": "Pirates of The Carribean vs A taste of honey",
+            "winner": "Pirates of The Carribean",
+            "winner_user": "<@1355886703767847064>",
+            "loser_name": "A taste of honey",
+            "score": "13-0",
+            "votes": {
+                "1213578451731357720": "A",
+                "300738774332080128": "A",
+                "154278268755771393": "A",
+                "1355886703767847064": "A",
+                "217015976300904465": "A",
+                "865401742274330674": "A",
+                "1258358477903102024": "A",
+                "1089732038304731169": "A",
+                "924686780408676392": "A",
+                "1238834298338152498": "A",
+                "861041196586893313": "A",
+                "536620158047879179": "A",
+                "847045429086126082": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -469,39 +497,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Pirates of The Carribean",
-            "desc": "legendary drunk pirate captain Jack Sparrow sails the seven seas with Will turner and Elizabeth Smith to search for his ship the black pearl and his soul from Davey Jones along with some treasure and rum.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468706723345858824/Screenshot_20260204-202453.Google.jpg?ex=6984ff3a&is=6983adba&hm=848de40a61712e81b7b31f0d4267c370ad019cfbd7ffd4644be9f5aa76f373c6&",
-            "user": "<@1355886703767847064>"
-        },
-        "item_b": {
-            "name": "A taste of honey",
-            "desc": "A Taste of Honey (1961) is a landmark British New Wave film directed by Tony Richardson, adapted from Shelagh Delaney's play, starring Rita Tushingham as a working-class teenager in industrial Manchester who becomes pregnant by a Black sailor and finds an unlikely ally in a gay art student. Known for its \"kitchen sink realism,\" it tackles themes of class, race, and sexuality with a sensitive, modern approach, earning critical acclaim and awards, including BAFTAs for Tushingham and Dora Bryan (who plays her mother).",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470450096285024419/IMG_7703.jpg?ex=698b56de&is=698a055e&hm=ed817f11fe65dce87c47b2c6cdee0cde367fe59d4b4dbe514ec120c8043703fa&",
-            "user": "<@277271767964188673>"
-        },
-        "votes": {
-            "1213578451731357720": "A",
-            "300738774332080128": "A",
-            "154278268755771393": "A",
-            "1355886703767847064": "A",
-            "217015976300904465": "A",
-            "865401742274330674": "A",
-            "1258358477903102024": "A",
-            "1089732038304731169": "A",
-            "924686780408676392": "A",
-            "1238834298338152498": "A",
-            "861041196586893313": "A",
-            "536620158047879179": "A",
-            "847045429086126082": "A"
-        },
-        "message_id": 1472182207652036692,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 5
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
