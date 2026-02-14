@@ -361,6 +361,12 @@
             "desc": "Saw II is a 2005 horror film and the second installment in the Saw franchise, centered around the Jigsaw Killer's new game involving a group of people trapped in a house filling with nerve gas.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019748418453768/Saw_II_poster.jpg?ex=698622c1&is=6984d141&hm=ca70b01ea7c28cd6aa7f0835097cec80bc6d4b6cc11c39fbced3f283d78df0dc&",
             "user": "<@1016515115450892349>"
+        },
+        {
+            "name": "kiki\u2019s delivery service",
+            "desc": "girlboss but make it magic, little witch kiki moves to a seaside town with her kitty sidekick jiji and eats lots of bread, flies around with a big bow and survives on vibes alone (and meets a neeky boy of course)",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470182160920088850/IMG_9901.jpg?ex=698a5d55&is=69890bd5&hm=eb77c3f0beba77d934c45af6acbaa1834311881b3de702b956f567a3e08c2760&",
+            "user": "<@1238834298338152498>"
         }
     ],
     "finished_matches": [
@@ -436,6 +442,31 @@
                 "702589225018851348": "B",
                 "1016515115450892349": "B"
             }
+        },
+        {
+            "name": "kiki\u2019s delivery service vs Steins;Gate: The Movie \u2212 Load Region of D\u00e9j\u00e0 Vu",
+            "winner": "kiki\u2019s delivery service",
+            "winner_user": "<@1238834298338152498>",
+            "loser_name": "Steins;Gate: The Movie \u2212 Load Region of D\u00e9j\u00e0 Vu",
+            "score": "9-7",
+            "votes": {
+                "217015976300904465": "A",
+                "694674563031760977": "A",
+                "300738774332080128": "B",
+                "636981787310161930": "A",
+                "1238834298338152498": "A",
+                "924686780408676392": "A",
+                "847045429086126082": "A",
+                "154278268755771393": "B",
+                "1451765667618357281": "B",
+                "1355886703767847064": "B",
+                "702589225018851348": "A",
+                "1258358477903102024": "B",
+                "1213578451731357720": "B",
+                "865401742274330674": "A",
+                "277271767964188673": "A",
+                "460480780460752907": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -450,42 +481,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "kiki\u2019s delivery service",
-            "desc": "girlboss but make it magic, little witch kiki moves to a seaside town with her kitty sidekick jiji and eats lots of bread, flies around with a big bow and survives on vibes alone (and meets a neeky boy of course)",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470182160920088850/IMG_9901.jpg?ex=698a5d55&is=69890bd5&hm=eb77c3f0beba77d934c45af6acbaa1834311881b3de702b956f567a3e08c2760&",
-            "user": "<@1238834298338152498>"
-        },
-        "item_b": {
-            "name": "Steins;Gate: The Movie \u2212 Load Region of D\u00e9j\u00e0 Vu",
-            "desc": "Steins;Gate: The Movie \u2013 Load Region of D\u00e9j\u00e0 Vu is a love letter to the series that trades high-concept chaos for something more intimate and quietly devastating.  Set after the events of the anime, the film explores what happens when the cost of saving the world doesn\u2019t end with a final choice. Memories blur, reality wavers, and the emotional toll of defying fate comes due. Rather than escalating the stakes with bigger conspiracies, the movie zooms in on identity, loss, and the terrifying idea of being forgotten\u2014not just by history, but by the people who matter most.  It\u2019s slower, more reflective, and deeply character-driven, giving the cast room to breathe and feel the weight of everything they\u2019ve been through. The sci-fi mechanics are still clever and satisfying, but they exist in service of a powerful emotional core that hits hardest if you\u2019re already attached to these characters.  If Steins;Gate is about fighting destiny, the movie is about living with the scars afterward\u2014and why some connections are strong enough to pull someone back from the edge of existence itself. \ud83d\udd70\ufe0f\ud83d\udc94",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470139792317747293/download.jpg?ex=698a35e0&is=6988e460&hm=86c965932144f19b94781e21d5a497a79e0900d04ecf58eea2337cb9016d64e7&",
-            "user": "<@487879272875425792>"
-        },
-        "votes": {
-            "217015976300904465": "A",
-            "694674563031760977": "A",
-            "300738774332080128": "B",
-            "636981787310161930": "A",
-            "1238834298338152498": "A",
-            "924686780408676392": "A",
-            "847045429086126082": "A",
-            "154278268755771393": "B",
-            "1451765667618357281": "B",
-            "1355886703767847064": "B",
-            "702589225018851348": "A",
-            "1258358477903102024": "B",
-            "1213578451731357720": "B",
-            "865401742274330674": "A",
-            "277271767964188673": "A",
-            "460480780460752907": "B"
-        },
-        "message_id": 1471962782650863880,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 4
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
