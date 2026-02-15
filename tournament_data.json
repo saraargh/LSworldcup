@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "x men days of future past",
-            "desc": "Wolverine time-travels to 1973 to prevent Mystique from killing Bolivar Trask, an evil military scientist, whose murder had led to the creation of robots meant to slaughter humans and mutants.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470720845239423040/X-Men_Days_of_Future_Past_poster.jpg?ex=698c5306&is=698b0186&hm=13c85871dd4736dfe7dae8c4fa4e3086fea2ae7726ee152a9e056c7692b26ac9&",
-            "user": "<@1355886703767847064>"
-        },
-        {
-            "name": "The Wolf of Wall Street",
-            "desc": "I could tell you how the blend of comedic and serious tones blend effortlessly to make the perfect storm, where there are no heroes or villains just people making choices\n\nI could tell you this blockbuster cast led by Leo DiCaprio all put in hall of fame performances \n\nI could tell you Margot Robbie is a mega bunda lengers\n\nBut by far the best part is that this movie is 3 hrs long and you will get to the credits wanting more. Martin Scorsese at his absolute peak",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470447255302701128/IMG_2112.jpg?ex=698b5439&is=698a02b9&hm=99810751789a124c5771726f0253dc74e3706ed2fe8c14c20fbfac725e4a2445&",
-            "user": "<@536620158047879179>"
-        },
-        {
             "name": "Spirited Away",
             "desc": "A young girl moves to a new place, she finds herself in a world of magic and mystery. her parents get merked and transformed, she gotta free them and that. It\u2019s class.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663838986600632/IMG_0286.webp?ex=6984d749&is=698385c9&hm=b1ddbb7f4885dd03bab71a146c67488780716c1bdfc95d1c35a30893ccdd3c83&",
@@ -515,7 +503,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "x men days of future past",
+            "desc": "Wolverine time-travels to 1973 to prevent Mystique from killing Bolivar Trask, an evil military scientist, whose murder had led to the creation of robots meant to slaughter humans and mutants.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470720845239423040/X-Men_Days_of_Future_Past_poster.jpg?ex=698c5306&is=698b0186&hm=13c85871dd4736dfe7dae8c4fa4e3086fea2ae7726ee152a9e056c7692b26ac9&",
+            "user": "<@1355886703767847064>"
+        },
+        "item_b": {
+            "name": "The Wolf of Wall Street",
+            "desc": "I could tell you how the blend of comedic and serious tones blend effortlessly to make the perfect storm, where there are no heroes or villains just people making choices\n\nI could tell you this blockbuster cast led by Leo DiCaprio all put in hall of fame performances \n\nI could tell you Margot Robbie is a mega bunda lengers\n\nBut by far the best part is that this movie is 3 hrs long and you will get to the credits wanting more. Martin Scorsese at his absolute peak",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470447255302701128/IMG_2112.jpg?ex=698b5439&is=698a02b9&hm=99810751789a124c5771726f0253dc74e3706ed2fe8c14c20fbfac725e4a2445&",
+            "user": "<@536620158047879179>"
+        },
+        "votes": {},
+        "message_id": 1472640459867422986,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 7
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
