@@ -534,7 +534,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470448526885650476/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzA0MzljODE3LTgzMDMtNGRiOS1iOTM0LTM1ODk1ODMwNDIyOC53ZWJw.jpg?ex=698b5568&is=698a03e8&hm=4f80f9abef8a4f7b87275547eff08a1772adc3f156f76b136349d0b0d770012a&",
             "user": "<@154278268755771393>"
         },
-        "votes": {},
+        "votes": {
+            "277271767964188673": "A"
+        },
         "message_id": 1473017669333549106,
         "channel_id": 1404129198641250334,
         "round_name": "Round of 32",
