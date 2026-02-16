@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Spirited Away",
-            "desc": "A young girl moves to a new place, she finds herself in a world of magic and mystery. her parents get merked and transformed, she gotta free them and that. It\u2019s class.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663838986600632/IMG_0286.webp?ex=6984d749&is=698385c9&hm=b1ddbb7f4885dd03bab71a146c67488780716c1bdfc95d1c35a30893ccdd3c83&",
-            "user": "<@300738774332080128>"
-        },
-        {
-            "name": "Bee Movie",
-            "desc": "the bee movie script or some shit",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470448526885650476/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzA0MzljODE3LTgzMDMtNGRiOS1iOTM0LTM1ODk1ODMwNDIyOC53ZWJw.jpg?ex=698b5568&is=698a03e8&hm=4f80f9abef8a4f7b87275547eff08a1772adc3f156f76b136349d0b0d770012a&",
-            "user": "<@154278268755771393>"
-        },
-        {
             "name": "Ready or Not",
             "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
@@ -533,7 +521,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Spirited Away",
+            "desc": "A young girl moves to a new place, she finds herself in a world of magic and mystery. her parents get merked and transformed, she gotta free them and that. It\u2019s class.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663838986600632/IMG_0286.webp?ex=6984d749&is=698385c9&hm=b1ddbb7f4885dd03bab71a146c67488780716c1bdfc95d1c35a30893ccdd3c83&",
+            "user": "<@300738774332080128>"
+        },
+        "item_b": {
+            "name": "Bee Movie",
+            "desc": "the bee movie script or some shit",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470448526885650476/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzA0MzljODE3LTgzMDMtNGRiOS1iOTM0LTM1ODk1ODMwNDIyOC53ZWJw.jpg?ex=698b5568&is=698a03e8&hm=4f80f9abef8a4f7b87275547eff08a1772adc3f156f76b136349d0b0d770012a&",
+            "user": "<@154278268755771393>"
+        },
+        "votes": {},
+        "message_id": 1473017669333549106,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 8
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
