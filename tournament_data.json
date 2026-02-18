@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Ready or Not",
-            "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
-            "user": "<@702589225018851348>"
-        },
-        {
-            "name": "All quiet on the western front",
-            "desc": "War breaks out in Germany in 1914. Paul B\u00e4umer and his classmates quickly enlist in the army to serve their fatherland. No sooner are they drafted than the first images from the battlefield show them the reality of war.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470184799502073999/Screenshot_20260208_221949_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=698a5fca&is=69890e4a&hm=2ef90ef94f3c9df5aff5a66057a87f3b286094f793321f86880cf9c8f65334d6&",
-            "user": "<@924686780408676392>"
-        },
-        {
             "name": "Interstellar",
             "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470768868543959279/IMG_5668.jpg?ex=698c7fbf&is=698b2e3f&hm=e4d903d2bc4a982f127be018af52decd37a482a7e14a7139cb335cf59fd9502f&",
@@ -549,7 +537,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Ready or Not",
+            "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
+            "user": "<@702589225018851348>"
+        },
+        "item_b": {
+            "name": "All quiet on the western front",
+            "desc": "War breaks out in Germany in 1914. Paul B\u00e4umer and his classmates quickly enlist in the army to serve their fatherland. No sooner are they drafted than the first images from the battlefield show them the reality of war.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470184799502073999/Screenshot_20260208_221949_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=698a5fca&is=69890e4a&hm=2ef90ef94f3c9df5aff5a66057a87f3b286094f793321f86880cf9c8f65334d6&",
+            "user": "<@924686780408676392>"
+        },
+        "votes": {},
+        "message_id": 1473742074577686689,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 9
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
