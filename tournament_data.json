@@ -331,6 +331,12 @@
             "desc": "A young girl moves to a new place, she finds herself in a world of magic and mystery. her parents get merked and transformed, she gotta free them and that. It\u2019s class.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663838986600632/IMG_0286.webp?ex=6984d749&is=698385c9&hm=b1ddbb7f4885dd03bab71a146c67488780716c1bdfc95d1c35a30893ccdd3c83&",
             "user": "<@300738774332080128>"
+        },
+        {
+            "name": "Ready or Not",
+            "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
+            "user": "<@702589225018851348>"
         }
     ],
     "finished_matches": [
@@ -523,6 +529,23 @@
                 "1016515115450892349": "B",
                 "217015976300904465": "A"
             }
+        },
+        {
+            "name": "Ready or Not vs All quiet on the western front",
+            "winner": "Ready or Not",
+            "winner_user": "<@702589225018851348>",
+            "loser_name": "All quiet on the western front",
+            "score": "6-2",
+            "votes": {
+                "1213578451731357720": "A",
+                "1089732038304731169": "A",
+                "1355886703767847064": "A",
+                "924686780408676392": "B",
+                "1238834298338152498": "A",
+                "217015976300904465": "A",
+                "847045429086126082": "B",
+                "1016515115450892349": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -537,34 +560,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Ready or Not",
-            "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
-            "user": "<@702589225018851348>"
-        },
-        "item_b": {
-            "name": "All quiet on the western front",
-            "desc": "War breaks out in Germany in 1914. Paul B\u00e4umer and his classmates quickly enlist in the army to serve their fatherland. No sooner are they drafted than the first images from the battlefield show them the reality of war.",
-            "image": "https://cdn.discordapp.com/ephemeral-attachments/1450222619327729757/1473748848244691116/IMG_0050.jpg?ex=69975712&is=69960592&hm=182a54aa931e718eb5eceb34909fe49580003fa2b0eb4337d4d4bf621863bf4c&",
-            "user": "<@924686780408676392>"
-        },
-        "votes": {
-            "1213578451731357720": "A",
-            "1089732038304731169": "A",
-            "1355886703767847064": "A",
-            "924686780408676392": "B",
-            "1238834298338152498": "A",
-            "217015976300904465": "A",
-            "847045429086126082": "B",
-            "1016515115450892349": "A"
-        },
-        "message_id": 1473742074577686689,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 9
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
