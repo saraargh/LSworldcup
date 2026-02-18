@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Interstellar",
-            "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470768868543959279/IMG_5668.jpg?ex=698c7fbf&is=698b2e3f&hm=e4d903d2bc4a982f127be018af52decd37a482a7e14a7139cb335cf59fd9502f&",
-            "user": "<@871450866186608730>"
-        },
-        {
-            "name": "Se7en",
-            "desc": "A dark, rain-soaked thriller where two detectives hunt a serial killer who\u2019s turning the seven deadly sins into a twisted, real-life sermon. The deeper they go, the more disturbing the crimes become\u2014until the case ends with one of the most chilling finales ever.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470459261506031774/IMG_9903.jpg?ex=698b5f67&is=698a0de7&hm=5b05f4b159a7343cb5f04c9585f0806b2141d9a861ca5d31736b8a4f0f507366&",
-            "user": "<@460480780460752907>"
-        },
-        {
             "name": "Chainsaw Man \u2013 The Movie: Reze Arc",
             "desc": "Following on from Season One, the goat Denji with powers due to a chainsaw devil sacrificing itself for him meets a lovely friend called Reze but is all as it seems?",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470173263807385632/IMG_0296.jpg?ex=698a550c&is=6989038c&hm=8a3121bc830e0c56af99494372973b7baee450741f7aee61fdb3f568c3ec6c59&",
@@ -560,7 +548,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Interstellar",
+            "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470768868543959279/IMG_5668.jpg?ex=698c7fbf&is=698b2e3f&hm=e4d903d2bc4a982f127be018af52decd37a482a7e14a7139cb335cf59fd9502f&",
+            "user": "<@871450866186608730>"
+        },
+        "item_b": {
+            "name": "Se7en",
+            "desc": "A dark, rain-soaked thriller where two detectives hunt a serial killer who\u2019s turning the seven deadly sins into a twisted, real-life sermon. The deeper they go, the more disturbing the crimes become\u2014until the case ends with one of the most chilling finales ever.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470459261506031774/IMG_9903.jpg?ex=698b5f67&is=698a0de7&hm=5b05f4b159a7343cb5f04c9585f0806b2141d9a861ca5d31736b8a4f0f507366&",
+            "user": "<@460480780460752907>"
+        },
+        "votes": {},
+        "message_id": 1473768156014051458,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 10
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
