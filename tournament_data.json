@@ -575,7 +575,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470195494750912586/Saw-X-title-inpaint-10-11-2023-upscale-3239340510.jpg?ex=698a69c0&is=69891840&hm=e3ff1595b8de61dfecd73c447da1a29c5133813a051c8273bc1d2b5c9892ac93&",
             "user": "<@847045429086126082>"
         },
-        "votes": {},
+        "votes": {
+            "1238834298338152498": "A"
+        },
         "message_id": 1474098671292252262,
         "channel_id": 1404129198641250334,
         "round_name": "Round of 32",
