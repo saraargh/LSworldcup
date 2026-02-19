@@ -325,6 +325,12 @@
             "desc": "Ready or Not (2019) is a horror-comedy film about a young bride, Grace (Samara Weaving), whose wedding night turns into a deadly game of hide-and-seek with her new, wealthy in-laws, who must hunt her down as part of a family tradition. Directed by Matt Bettinelli-Olpin and Tyler Gillett, the R-rated movie follows Grace as she fights to survive until dawn, eventually turning the tables on her pursuers in a bloody and satirical showdown.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468745910526939168/MV5BMTViMDA4YjgtZDQ4NC00ZDk2LTg0MWItOTc4MTkwMmVkZWRmXkEyXkFqcGc._V1_FMjpg_UX1000_.jpg?ex=698523b9&is=6983d239&hm=3ad291830c4d878897e753c439dd5e808fba0873041d981e2fcd31c6bbed8e5b&",
             "user": "<@702589225018851348>"
+        },
+        {
+            "name": "Interstellar",
+            "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470768868543959279/IMG_5668.jpg?ex=698c7fbf&is=698b2e3f&hm=e4d903d2bc4a982f127be018af52decd37a482a7e14a7139cb335cf59fd9502f&",
+            "user": "<@871450866186608730>"
         }
     ],
     "finished_matches": [
@@ -534,6 +540,26 @@
                 "847045429086126082": "B",
                 "1016515115450892349": "A"
             }
+        },
+        {
+            "name": "Interstellar vs Se7en",
+            "winner": "Interstellar",
+            "winner_user": "<@871450866186608730>",
+            "loser_name": "Se7en",
+            "score": "7-4",
+            "votes": {
+                "217015976300904465": "B",
+                "1213578451731357720": "A",
+                "636981787310161930": "A",
+                "924686780408676392": "A",
+                "1355886703767847064": "A",
+                "861041196586893313": "A",
+                "1238834298338152498": "B",
+                "847045429086126082": "A",
+                "1016515115450892349": "B",
+                "460480780460752907": "B",
+                "581896881555374081": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -548,37 +574,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Interstellar",
-            "desc": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470768868543959279/IMG_5668.jpg?ex=698c7fbf&is=698b2e3f&hm=e4d903d2bc4a982f127be018af52decd37a482a7e14a7139cb335cf59fd9502f&",
-            "user": "<@871450866186608730>"
-        },
-        "item_b": {
-            "name": "Se7en",
-            "desc": "A dark, rain-soaked thriller where two detectives hunt a serial killer who\u2019s turning the seven deadly sins into a twisted, real-life sermon. The deeper they go, the more disturbing the crimes become\u2014until the case ends with one of the most chilling finales ever.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470459261506031774/IMG_9903.jpg?ex=698b5f67&is=698a0de7&hm=5b05f4b159a7343cb5f04c9585f0806b2141d9a861ca5d31736b8a4f0f507366&",
-            "user": "<@460480780460752907>"
-        },
-        "votes": {
-            "217015976300904465": "B",
-            "1213578451731357720": "A",
-            "636981787310161930": "A",
-            "924686780408676392": "A",
-            "1355886703767847064": "A",
-            "861041196586893313": "A",
-            "1238834298338152498": "B",
-            "847045429086126082": "A",
-            "1016515115450892349": "B",
-            "460480780460752907": "B",
-            "581896881555374081": "A"
-        },
-        "message_id": 1473768156014051458,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 10
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
