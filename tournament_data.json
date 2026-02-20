@@ -591,7 +591,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470183428015263835/Black_Panther_film_poster.jpg?ex=698a5e83&is=69890d03&hm=9af9167406fd2aec10ecd236ad457eee382afdb378d8af02b904d9e275fcf0ab&",
             "user": "<@865401742274330674>"
         },
-        "votes": {},
+        "votes": {
+            "1355886703767847064": "A"
+        },
         "message_id": 1474399782221905963,
         "channel_id": 1404129198641250334,
         "round_name": "Round of 32",
