@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "A silent voice",
-            "desc": "quite possibly the worst description ever but: So young menace bullies a deaf girl then gets bullied for it (even tho the people bullying him bullied her too) then many a year later this ex menace tries to slime himself out but pussies out and his mum catches on so she black mailed him by threatening to torch his money so he doesn't end it anymore\nHe learns sign language then returns the deaf girls note book that she had back in his menace days to her and they become besties then they live their happy days as besties until one day she confesses to him, but since her speaking is kinda cooked he's more lost that the guy I domed from 400m away with a bolt action, and in the end she goes home sad however they continue to be friends up until the night of the fireworks festival where she leaves early to \"study\" but Shokos(the deaf girl) brother or sister can't remember tells him to go and grab their camera, when he gets there she's tryna jump off the balcony but he manages to catch and pull her up but he slips off and falls since this is getting long he makes a recovery then him and Shoko bum, happy ever after the end\nIt's peak I promise \ud83d\ude2d",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468715143398559774/Screenshot_20260204_205510_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=69850711&is=6983b591&hm=c06a21556cae353a9f3e821f5767271083dbfb5d31e84ce2249a2409c75c1d33&",
-            "user": "<@924686780408676392>"
-        },
-        {
-            "name": "Black Panther",
-            "desc": "After his father's death, T'Challa returns to the advanced, hidden African nation of Wakanda to take the throne, but must fight for his place when his cousin Erik Killmonger threatens to overthrow him. As the new Black Panther, T'Challa battles to stop Killmonger's plan to use Wakandan technology to empower oppressed people worldwide, ultimate choosing to share Wakanda\u2019s resources safely and opening the nation to the world.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470183428015263835/Black_Panther_film_poster.jpg?ex=698a5e83&is=69890d03&hm=9af9167406fd2aec10ecd236ad457eee382afdb378d8af02b904d9e275fcf0ab&",
-            "user": "<@865401742274330674>"
-        },
-        {
             "name": "Sinners",
             "desc": "It follows twin brothers Smoke and Stack Moore, played by Michael B. Jordan, returning to Jim Crow Mississippi in 1932 from Chicago's criminal underworld to build a new life by opening a juke joint, but they find themselves confronting both deep-seated racism and a looming supernatural threat that even their street smarts can't handle, forcing them to face dangers that challenge their dreams of freedom and redemption.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663646191227136/5ed24f6e-0c9d-4802-8b6a-c0b787c50d28_999x1480.jpg?ex=6984d71b&is=6983859b&hm=ce1b3fc0acb4c8d0876209ddae31693bb87b917d9cec3dbfe2f0c9c5a36a924a&",
@@ -590,7 +578,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "A silent voice",
+            "desc": "quite possibly the worst description ever but: So young menace bullies a deaf girl then gets bullied for it (even tho the people bullying him bullied her too) then many a year later this ex menace tries to slime himself out but pussies out and his mum catches on so she black mailed him by threatening to torch his money so he doesn't end it anymore\nHe learns sign language then returns the deaf girls note book that she had back in his menace days to her and they become besties then they live their happy days as besties until one day she confesses to him, but since her speaking is kinda cooked he's more lost that the guy I domed from 400m away with a bolt action, and in the end she goes home sad however they continue to be friends up until the night of the fireworks festival where she leaves early to \"study\" but Shokos(the deaf girl) brother or sister can't remember tells him to go and grab their camera, when he gets there she's tryna jump off the balcony but he manages to catch and pull her up but he slips off and falls since this is getting long he makes a recovery then him and Shoko bum, happy ever after the end\nIt's peak I promise \ud83d\ude2d",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468715143398559774/Screenshot_20260204_205510_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=69850711&is=6983b591&hm=c06a21556cae353a9f3e821f5767271083dbfb5d31e84ce2249a2409c75c1d33&",
+            "user": "<@924686780408676392>"
+        },
+        "item_b": {
+            "name": "Black Panther",
+            "desc": "After his father's death, T'Challa returns to the advanced, hidden African nation of Wakanda to take the throne, but must fight for his place when his cousin Erik Killmonger threatens to overthrow him. As the new Black Panther, T'Challa battles to stop Killmonger's plan to use Wakandan technology to empower oppressed people worldwide, ultimate choosing to share Wakanda\u2019s resources safely and opening the nation to the world.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470183428015263835/Black_Panther_film_poster.jpg?ex=698a5e83&is=69890d03&hm=9af9167406fd2aec10ecd236ad457eee382afdb378d8af02b904d9e275fcf0ab&",
+            "user": "<@865401742274330674>"
+        },
+        "votes": {},
+        "message_id": 1474399782221905963,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 12
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
