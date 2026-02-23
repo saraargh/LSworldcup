@@ -313,6 +313,12 @@
             "desc": "Following on from Season One, the goat Denji with powers due to a chainsaw devil sacrificing itself for him meets a lovely friend called Reze but is all as it seems?",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470173263807385632/IMG_0296.jpg?ex=698a550c&is=6989038c&hm=8a3121bc830e0c56af99494372973b7baee450741f7aee61fdb3f568c3ec6c59&",
             "user": "<@300738774332080128>"
+        },
+        {
+            "name": "A silent voice",
+            "desc": "quite possibly the worst description ever but: So young menace bullies a deaf girl then gets bullied for it (even tho the people bullying him bullied her too) then many a year later this ex menace tries to slime himself out but pussies out and his mum catches on so she black mailed him by threatening to torch his money so he doesn't end it anymore\nHe learns sign language then returns the deaf girls note book that she had back in his menace days to her and they become besties then they live their happy days as besties until one day she confesses to him, but since her speaking is kinda cooked he's more lost that the guy I domed from 400m away with a bolt action, and in the end she goes home sad however they continue to be friends up until the night of the fireworks festival where she leaves early to \"study\" but Shokos(the deaf girl) brother or sister can't remember tells him to go and grab their camera, when he gets there she's tryna jump off the balcony but he manages to catch and pull her up but he slips off and falls since this is getting long he makes a recovery then him and Shoko bum, happy ever after the end\nIt's peak I promise \ud83d\ude2d",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468715143398559774/Screenshot_20260204_205510_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=69850711&is=6983b591&hm=c06a21556cae353a9f3e821f5767271083dbfb5d31e84ce2249a2409c75c1d33&",
+            "user": "<@924686780408676392>"
         }
     ],
     "finished_matches": [
@@ -564,6 +570,25 @@
                 "1016515115450892349": "B",
                 "277271767964188673": "A"
             }
+        },
+        {
+            "name": "A silent voice vs Black Panther",
+            "winner": "A silent voice",
+            "winner_user": "<@924686780408676392>",
+            "loser_name": "Black Panther",
+            "score": "5-5",
+            "votes": {
+                "1355886703767847064": "A",
+                "1089732038304731169": "B",
+                "536620158047879179": "A",
+                "749336767072567368": "B",
+                "619350934245605377": "B",
+                "636981787310161930": "B",
+                "1016515115450892349": "A",
+                "1238834298338152498": "B",
+                "924686780408676392": "A",
+                "487879272875425792": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -578,36 +603,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "A silent voice",
-            "desc": "quite possibly the worst description ever but: So young menace bullies a deaf girl then gets bullied for it (even tho the people bullying him bullied her too) then many a year later this ex menace tries to slime himself out but pussies out and his mum catches on so she black mailed him by threatening to torch his money so he doesn't end it anymore\nHe learns sign language then returns the deaf girls note book that she had back in his menace days to her and they become besties then they live their happy days as besties until one day she confesses to him, but since her speaking is kinda cooked he's more lost that the guy I domed from 400m away with a bolt action, and in the end she goes home sad however they continue to be friends up until the night of the fireworks festival where she leaves early to \"study\" but Shokos(the deaf girl) brother or sister can't remember tells him to go and grab their camera, when he gets there she's tryna jump off the balcony but he manages to catch and pull her up but he slips off and falls since this is getting long he makes a recovery then him and Shoko bum, happy ever after the end\nIt's peak I promise \ud83d\ude2d",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468715143398559774/Screenshot_20260204_205510_com_google_android_googlequicksearchbox_GoogleAppActivi.jpg?ex=69850711&is=6983b591&hm=c06a21556cae353a9f3e821f5767271083dbfb5d31e84ce2249a2409c75c1d33&",
-            "user": "<@924686780408676392>"
-        },
-        "item_b": {
-            "name": "Black Panther",
-            "desc": "After his father's death, T'Challa returns to the advanced, hidden African nation of Wakanda to take the throne, but must fight for his place when his cousin Erik Killmonger threatens to overthrow him. As the new Black Panther, T'Challa battles to stop Killmonger's plan to use Wakandan technology to empower oppressed people worldwide, ultimate choosing to share Wakanda\u2019s resources safely and opening the nation to the world.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470183428015263835/Black_Panther_film_poster.jpg?ex=698a5e83&is=69890d03&hm=9af9167406fd2aec10ecd236ad457eee382afdb378d8af02b904d9e275fcf0ab&",
-            "user": "<@865401742274330674>"
-        },
-        "votes": {
-            "1355886703767847064": "A",
-            "1089732038304731169": "B",
-            "536620158047879179": "A",
-            "749336767072567368": "B",
-            "619350934245605377": "B",
-            "636981787310161930": "B",
-            "1016515115450892349": "A",
-            "1238834298338152498": "B",
-            "924686780408676392": "A",
-            "487879272875425792": "A"
-        },
-        "message_id": 1474399782221905963,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 12
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
