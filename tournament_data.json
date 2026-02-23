@@ -604,7 +604,9 @@
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468694843923501300/IMG_8041.jpg?ex=6984f429&is=6983a2a9&hm=0d549151ab9021aa0072be780be971285ce0c06a733a50f4b78dac14a671beff&",
             "user": "<@1213578451731357720>"
         },
-        "votes": {},
+        "votes": {
+            "277271767964188673": "B"
+        },
         "message_id": 1475483040456380447,
         "channel_id": 1404129198641250334,
         "round_name": "Round of 32",
