@@ -199,18 +199,6 @@
     "suggestions": [],
     "bracket": [
         {
-            "name": "Sinners",
-            "desc": "It follows twin brothers Smoke and Stack Moore, played by Michael B. Jordan, returning to Jim Crow Mississippi in 1932 from Chicago's criminal underworld to build a new life by opening a juke joint, but they find themselves confronting both deep-seated racism and a looming supernatural threat that even their street smarts can't handle, forcing them to face dangers that challenge their dreams of freedom and redemption.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663646191227136/5ed24f6e-0c9d-4802-8b6a-c0b787c50d28_999x1480.jpg?ex=6984d71b&is=6983859b&hm=ce1b3fc0acb4c8d0876209ddae31693bb87b917d9cec3dbfe2f0c9c5a36a924a&",
-            "user": "<@865401742274330674>"
-        },
-        {
-            "name": "the attack of the killer tomatoes",
-            "desc": "a comedy movie that was originally supposed to be a horror film about sentient tomatoes who kill on sight. They changed it to a comedy movie half way through due to the extremely low budget as well as the writers realising it wasn\u2019t scary half way through production.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468694843923501300/IMG_8041.jpg?ex=6984f429&is=6983a2a9&hm=0d549151ab9021aa0072be780be971285ce0c06a733a50f4b78dac14a671beff&",
-            "user": "<@1213578451731357720>"
-        },
-        {
             "name": "4 Lions",
             "desc": "Rubber dingy rapidzzzz broooooo. Kdai\u2019s national film. Kameh bro. Teri mauni puddiiiiii <:18:1405228333620396144> but on a level, this move is peak British humour \ud83d\udc4c\ud83c\udffc",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019920455962634/IMG_9574.png?ex=698622ea&is=6984d16a&hm=379af585cda2d844126888a08b38295b2e10b485c2e255e9ce9866c66ca4d906&",
@@ -603,7 +591,25 @@
             "cat": "Anime"
         }
     ],
-    "current_match": null,
+    "current_match": {
+        "item_a": {
+            "name": "Sinners",
+            "desc": "It follows twin brothers Smoke and Stack Moore, played by Michael B. Jordan, returning to Jim Crow Mississippi in 1932 from Chicago's criminal underworld to build a new life by opening a juke joint, but they find themselves confronting both deep-seated racism and a looming supernatural threat that even their street smarts can't handle, forcing them to face dangers that challenge their dreams of freedom and redemption.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468663646191227136/5ed24f6e-0c9d-4802-8b6a-c0b787c50d28_999x1480.jpg?ex=6984d71b&is=6983859b&hm=ce1b3fc0acb4c8d0876209ddae31693bb87b917d9cec3dbfe2f0c9c5a36a924a&",
+            "user": "<@865401742274330674>"
+        },
+        "item_b": {
+            "name": "the attack of the killer tomatoes",
+            "desc": "a comedy movie that was originally supposed to be a horror film about sentient tomatoes who kill on sight. They changed it to a comedy movie half way through due to the extremely low budget as well as the writers realising it wasn\u2019t scary half way through production.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468694843923501300/IMG_8041.jpg?ex=6984f429&is=6983a2a9&hm=0d549151ab9021aa0072be780be971285ce0c06a733a50f4b78dac14a671beff&",
+            "user": "<@1213578451731357720>"
+        },
+        "votes": {},
+        "message_id": 1475483040456380447,
+        "channel_id": 1404129198641250334,
+        "round_name": "Round of 32",
+        "match_num": 13
+    },
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
