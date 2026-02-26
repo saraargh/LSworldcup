@@ -301,6 +301,12 @@
             "desc": "a comedy movie that was originally supposed to be a horror film about sentient tomatoes who kill on sight. They changed it to a comedy movie half way through due to the extremely low budget as well as the writers realising it wasn\u2019t scary half way through production.",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468694843923501300/IMG_8041.jpg?ex=6984f429&is=6983a2a9&hm=0d549151ab9021aa0072be780be971285ce0c06a733a50f4b78dac14a671beff&",
             "user": "<@1213578451731357720>"
+        },
+        {
+            "name": "4 Lions",
+            "desc": "Rubber dingy rapidzzzz broooooo. Kdai\u2019s national film. Kameh bro. Teri mauni puddiiiiii <:18:1405228333620396144> but on a level, this move is peak British humour \ud83d\udc4c\ud83c\udffc",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019920455962634/IMG_9574.png?ex=698622ea&is=6984d16a&hm=379af585cda2d844126888a08b38295b2e10b485c2e255e9ce9866c66ca4d906&",
+            "user": "<@1089732038304731169>"
         }
     ],
     "finished_matches": [
@@ -594,6 +600,26 @@
                 "636981787310161930": "A",
                 "300738774332080128": "A"
             }
+        },
+        {
+            "name": "4 Lions vs Wendell and Wild",
+            "winner": "4 Lions",
+            "winner_user": "<@1089732038304731169>",
+            "loser_name": "Wendell and Wild",
+            "score": "8-3",
+            "votes": {
+                "217015976300904465": "A",
+                "1238834298338152498": "A",
+                "861041196586893313": "B",
+                "865401742274330674": "B",
+                "1213578451731357720": "A",
+                "924686780408676392": "A",
+                "636981787310161930": "B",
+                "460480780460752907": "A",
+                "1089732038304731169": "A",
+                "1186356073884561568": "A",
+                "1355886703767847064": "A"
+            }
         }
     ],
     "leaderboard": [
@@ -608,37 +634,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "4 Lions",
-            "desc": "Rubber dingy rapidzzzz broooooo. Kdai\u2019s national film. Kameh bro. Teri mauni puddiiiiii <:18:1405228333620396144> but on a level, this move is peak British humour \ud83d\udc4c\ud83c\udffc",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019920455962634/IMG_9574.png?ex=698622ea&is=6984d16a&hm=379af585cda2d844126888a08b38295b2e10b485c2e255e9ce9866c66ca4d906&",
-            "user": "<@1089732038304731169>"
-        },
-        "item_b": {
-            "name": "Wendell and Wild",
-            "desc": "A girl name Kat comes back to her home town, where she lived with her parents but they were killed due to her actions. She\u2019s coming back as a juvenile from the system and is going to attend a catholic private all girl school. But there are 2 demons, Wendell and Wild, who entice Kat with a deal to get her parents back.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1470173897671315579/IMG_8212.jpg?ex=698a55a3&is=69890423&hm=ca2c4848c264e7b37ddf8434764ff51886bf5acd89b083997a433ccf549d3bef&",
-            "user": "<@636981787310161930>"
-        },
-        "votes": {
-            "217015976300904465": "A",
-            "1238834298338152498": "A",
-            "861041196586893313": "B",
-            "865401742274330674": "B",
-            "1213578451731357720": "A",
-            "924686780408676392": "A",
-            "636981787310161930": "B",
-            "460480780460752907": "A",
-            "1089732038304731169": "A",
-            "1186356073884561568": "A",
-            "1355886703767847064": "A"
-        },
-        "message_id": 1475864533384822965,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 14
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
