@@ -295,6 +295,12 @@
             "desc": "Rubber dingy rapidzzzz broooooo. Kdai\u2019s national film. Kameh bro. Teri mauni puddiiiiii <:18:1405228333620396144> but on a level, this move is peak British humour \ud83d\udc4c\ud83c\udffc",
             "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469019920455962634/IMG_9574.png?ex=698622ea&is=6984d16a&hm=379af585cda2d844126888a08b38295b2e10b485c2e255e9ce9866c66ca4d906&",
             "user": "<@1089732038304731169>"
+        },
+        {
+            "name": "Inception",
+            "desc": "Inception (2010) is a sci-fi action film directed by Christopher Nolan, starring Leonardo DiCaprio as Dom Cobb, a thief who steals corporate secrets through shared dream technology. To return home, Cobb must perform the inverse: \"inception,\" planting an idea rather than stealing one, by navigating deeply layered dreamscapes with a specialized team.",
+            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468691003123830835/IMG_9766.jpg?ex=6984f096&is=69839f16&hm=88e4475644c7d3b38f724d63f7d77021709431b695704c01e08af6f0739b1ba1&",
+            "user": "<@1451765667618357281>"
         }
     ],
     "finished_matches": [
@@ -608,6 +614,27 @@
                 "1186356073884561568": "A",
                 "1355886703767847064": "A"
             }
+        },
+        {
+            "name": "Training Day vs Inception",
+            "winner": "Inception",
+            "winner_user": "<@1451765667618357281>",
+            "loser_name": "Training Day",
+            "score": "3-9",
+            "votes": {
+                "217015976300904465": "B",
+                "300738774332080128": "B",
+                "847045429086126082": "B",
+                "1355886703767847064": "B",
+                "924686780408676392": "B",
+                "1238834298338152498": "A",
+                "1213578451731357720": "B",
+                "460480780460752907": "A",
+                "1089732038304731169": "A",
+                "865401742274330674": "B",
+                "1186356073884561568": "B",
+                "636981787310161930": "B"
+            }
         }
     ],
     "leaderboard": [
@@ -622,38 +649,7 @@
             "cat": "Anime"
         }
     ],
-    "current_match": {
-        "item_a": {
-            "name": "Training Day",
-            "desc": "Bright eyed rookie Jake Hoyt is thrown into the grim reality of police work as he trains under the wing of Alonzo Harries. With twists, turns, laughs & the greatest monologue of all time by Thee Denzel- Training Day is super clear",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1469051733983363237/IMG_2080.webp?ex=6986408b&is=6984ef0b&hm=645c45c5ea6ef8387232d31519eae61e4943636aff513e183f537a8d86415772&",
-            "user": "<@536620158047879179>"
-        },
-        "item_b": {
-            "name": "Inception",
-            "desc": "Inception (2010) is a sci-fi action film directed by Christopher Nolan, starring Leonardo DiCaprio as Dom Cobb, a thief who steals corporate secrets through shared dream technology. To return home, Cobb must perform the inverse: \"inception,\" planting an idea rather than stealing one, by navigating deeply layered dreamscapes with a specialized team.",
-            "image": "https://cdn.discordapp.com/attachments/1461047591528562801/1468691003123830835/IMG_9766.jpg?ex=6984f096&is=69839f16&hm=88e4475644c7d3b38f724d63f7d77021709431b695704c01e08af6f0739b1ba1&",
-            "user": "<@1451765667618357281>"
-        },
-        "votes": {
-            "217015976300904465": "B",
-            "300738774332080128": "B",
-            "847045429086126082": "B",
-            "1355886703767847064": "B",
-            "924686780408676392": "B",
-            "1238834298338152498": "A",
-            "1213578451731357720": "B",
-            "460480780460752907": "A",
-            "1089732038304731169": "A",
-            "865401742274330674": "B",
-            "1186356073884561568": "B",
-            "636981787310161930": "B"
-        },
-        "message_id": 1476507830843478160,
-        "channel_id": 1404129198641250334,
-        "round_name": "Round of 32",
-        "match_num": 15
-    },
+    "current_match": null,
     "final_winner": null,
     "max_items_per_user": 2,
     "banned_users": []
