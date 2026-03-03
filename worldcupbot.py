@@ -18,7 +18,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "The Landing Strip World Cup Bot is Online and Fully Operational!"
+    return "The World Cup Bot is Online and Fully Operational!"
 
 def run_flask():
     # Render uses the PORT environment variable
@@ -42,15 +42,12 @@ HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 # Admin Role IDs
 ALLOWED_ROLE_IDS = [
-    1413545658006110401, 
-    1404098545006546954, 
-    1420817462290681936, 
-    1404105470204969000, 
-    1404104881098195015
+    1476765248856920125, 
+    1476738036694913106
 ]
 
 # Storage Channel for re-hosting images
-STORAGE_CHANNEL_ID = 1461047591528562801
+STORAGE_CHANNEL_ID = 1478423720975663205
 
 # =========================================================
 # DATA PERSISTENCE (GITHUB SYNC LOGIC)
@@ -77,7 +74,7 @@ def load_data():
     # Return default template if load fails
     return {
         "status": "IDLE",
-        "title": "The Landing Strip World Cup",
+        "title": "The World Cup",
         "items": [],
         "max_items_per_user": 1,
         "banned_users": [],
@@ -581,7 +578,7 @@ class ScoreboardView(ui.View):
                 f"**{len(survivors)} entries still in the running:**\n\n"
                 f"{survivor_list}"
             )
-            embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+            embed.set_footer(text="World Cup System 🏁✨")
 
         return embed
 
@@ -795,7 +792,7 @@ class WC_Bot(discord.Client):
                 if winner.get('image'): 
                     win_embed.set_thumbnail(url=winner['image'])
                 
-                win_embed.set_footer(text=f"The Landing Strip World Cup System 🏁✨ | 🗳️ Total Votes: {len(votes)}")
+                win_embed.set_footer(text=f"The World Cup System 🏁✨ | 🗳️ Total Votes: {len(votes)}")
                 await channel.send(embed=win_embed)
 
             # Handle what happens next
@@ -954,7 +951,7 @@ async def choosecategory(interaction: discord.Interaction):
 
     await msg.edit(content=(
         f"**@everyone THE ROULETTE HAS SETTLED!**\n{win_left}  **{category.upper()}** {win_right}\n\n"
-        f"<:cutecup:1462480543449874442> **The Landing Strip World Cup theme is: {category} - Suggestion courtesy of {suggested_by}** <:cutecup:1462480543449874442>\n\n"
+        f"<:cutecup:1462480543449874442> **The New World Cup theme is: {category} - Suggestion courtesy of {suggested_by}** <:cutecup:1462480543449874442>\n\n"
         f"Use `/additem` to submit your entry!"
     ))
 
@@ -1001,7 +998,7 @@ async def setmaxitems(interaction: discord.Interaction, amount: int):
         description=f"The rules have been updated! Each user can now submit up to **{amount}** entries for this tournament.",
         color=0x2ecc71
     )
-    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    embed.set_footer(text="The World Cup System 🏁✨")
     
     await interaction.followup.send(content="@everyone", embed=embed)
 
@@ -1232,7 +1229,7 @@ async def help(interaction: discord.Interaction):
         desc += "• `/resetcup` — 🧨 **EMERGENCY WIPE** of all progress\n"
 
     embed = discord.Embed(
-        title="<:cutecup:1462480543449874442> The Landing Strip World Cup Guide", 
+        title="<:cutecup:1462480543449874442> The World Cup Guide", 
         description=desc, 
         color=0xf1c40f 
     )
@@ -1553,7 +1550,7 @@ async def status(interaction: discord.Interaction):
         if winner:
             embed.set_thumbnail(url=winner['image'])
 
-    embed.set_footer(text="The Landing Strip World Cup System 🏁✨")
+    embed.set_footer(text="The World Cup System 🏁✨")
     await interaction.followup.send(embed=embed)
 
 
